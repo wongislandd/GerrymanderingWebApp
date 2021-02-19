@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Tabs, Tab} from 'react-materialize'
 import ToolbarContentContainer from './ToolbarContentContainer'
+import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
 
 const TabOptions = {
     duration: 300,
@@ -19,13 +20,13 @@ export default class ToolbarTabsManager extends Component {
             options={TabOptions}
             title="Options"
         >
-            <ToolbarContentContainer/>
+            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.SETTINGS} bottomMode={ToolbarUtilities.MODES.STATS}/>
         </Tab>
         <Tab
             options={TabOptions}
             title="Stats"
         >
-            <ToolbarContentContainer/>
+            <ToolbarContentContainer />
         </Tab>
         <Tab
             options={TabOptions}

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class ToolbarContentContainer extends Component {
+export default class StatsMode extends Component {
     render() {
         return (
             <div>
-                test 1
+                stats
             </div>
         )
     }

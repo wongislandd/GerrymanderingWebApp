@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import ToolbarTabsManager from './ToolbarTabsManager'
 
-export default class MapSidebar extends Component {
+export default class Toolbar extends Component {
     render() {
         return (
-            <div class="toolbar-right">
+            <div class="toolbar">
                 <ToolbarTabsManager/>
             </div>
         )
