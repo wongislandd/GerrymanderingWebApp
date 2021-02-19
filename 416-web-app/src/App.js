@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
+import ReactMapGL from "react-map-gl"
+import React, {useState} from "react"
+import MapSidebar from './components/MapToolbar';
+
 
 function App() {
+  const [viewport, setViewport] = useState({
+    longitude: -73.11563514995987,
+    latitude : 40.914992863470744, 
+    width: "80vw",
+    height: "100vh",
+    zoom: 10
+  })
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className = "primary-flex-container">
+      <ReactMapGL 
+      className = "map-display"
+      {...viewport} 
+      mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
+      onViewportChange={viewport=> {
+        setViewport(viewport)
+      }}
+      >
+      </ReactMapGL>
+      <MapSidebar/>
     </div>
   );
 }
