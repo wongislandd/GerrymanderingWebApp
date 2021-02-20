@@ -2,6 +2,16 @@ import React, {useState} from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
 import geoData from '../../data/NorthCarolinaVotingPrecincts.json'
 
+
+function getRandomColor() {
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  const r = randomBetween(0, 255);
+  const g = randomBetween(0, 255);
+  const b = randomBetween(0, 255);
+  const rgb = `rgb(${r},${g},${b})`;
+  return rgb
+}
+
 function MapBoxComponent() {
   const [viewport, setViewport] = useState({
     latitude : 35.490477690914446, 
@@ -10,6 +20,31 @@ function MapBoxComponent() {
     height: "100vh",
     zoom: 6.75
   })
+
+  
+
+  const precincts = []
+  /** We will use the enr_desc, which I think is the precinct description, as a unique key to access
+   *  the precincts.
+   */
+
+  for (var index in geoData.features) {
+      var currentFeature = geoData.features[index];
+      precincts.push(
+      <Source
+        id = {currentFeature.properties.enr_desc}
+        type="geojson"
+        data = {geoData.features[index]} />,
+      <Layer
+          id = {currentFeature.properties.enr_desc + "-layer"}
+          type="fill"
+          source={currentFeature.properties.enr_desc}
+          paint={{
+            "fill-color" : getRandomColor(),
+            "fill-opacity": 0.35
+          }}/>)
+  }
+  console.log(precincts)
   return (
       <ReactMapGL 
       className = "map-display"
@@ -19,18 +54,7 @@ function MapBoxComponent() {
         setViewport(viewport)
       }}
       >
-        <Source
-          id="north-carolina-geodata"
-          type="geojson"
-          data = {geoData} />
-        <Layer
-          id="anything"
-          type="fill"
-          source="north-carolina-geodata"
-          paint={{
-            "fill-color" : "#228b22",
-            "fill-opacity": 0.35
-          }}/>
+        {precincts.slice(0,1000)}
       </ReactMapGL>
   )
 }
