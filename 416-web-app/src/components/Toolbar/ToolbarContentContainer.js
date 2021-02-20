@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import DynamicToolbarContent from './DynamicToolbarContent'
 
+
+/**
+ * ToolbarContentContainer
+ * Wrapper around DynamicToolbarContent 
+ */
 export default class ToolbarContentContainer extends Component {
     constructor(props) {
         super(props)

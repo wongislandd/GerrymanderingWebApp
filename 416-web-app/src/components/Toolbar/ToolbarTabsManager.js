@@ -10,6 +10,10 @@ const TabOptions = {
       swipeable: false
 }
 
+/**
+ * ToolbarTabsManager
+ * Used for controlling what content gets displayed in the toolbar under each tab.
+ */
 export default class ToolbarTabsManager extends Component {
     render() {
         return (

@@ -4,7 +4,7 @@ import ToolbarTabsManager from './ToolbarTabsManager'
 export default class Toolbar extends Component {
     render() {
         return (
-            <div class="toolbar">
+            <div className="toolbar">
                 <ToolbarTabsManager/>
             </div>
         )
