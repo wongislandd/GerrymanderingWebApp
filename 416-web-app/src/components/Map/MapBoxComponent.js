@@ -1,9 +1,7 @@
 import React, {useState} from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
 //import geoData from '../../data/TestGeoJson.json'
-import geoData from '../../data/NorthCarolinaVotingPrecincts.json'
-
-console.log(geoData)
+import geoData from '../../data/NorthCarolinaVotingPrecincts.geojson'
 
 function MapBoxComponent() {
   const [viewport, setViewport] = useState({
@@ -33,6 +31,7 @@ function MapBoxComponent() {
           type="fill"
           source="ncgeodata"
           paint={{
+            /* Access the RGB properties of each individual feature */
             "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
             "fill-opacity": 0.35
           }}/>
