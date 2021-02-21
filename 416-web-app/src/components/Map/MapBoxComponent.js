@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
 //import geoData from '../../data/TestGeoJson.json'
-import geoData from '../../data/NorthCarolinaVotingPrecincts.geojson'
+import geoData from '../../data/SortedNCGeoDataColored.json'
 
 function MapBoxComponent() {
   const [viewport, setViewport] = useState({
@@ -11,7 +11,7 @@ function MapBoxComponent() {
     height: "100vh",
     zoom: 6.75
   })
-
+  console.log(geoData)
 
   return (
       <ReactMapGL 
