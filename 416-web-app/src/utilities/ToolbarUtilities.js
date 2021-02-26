@@ -4,7 +4,8 @@ export const MODES = {
     STATS : "stats",
     HISTORY : "history",
     TENTATIVE_STATS : "tentative_stats",
-    FILTER : "filter_mode"
+    FILTER_SETTINGS : "filter_settings",
+    FILTER_SUMMARY : "filter_summary"
 }
 
 

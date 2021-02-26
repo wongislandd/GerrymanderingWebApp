@@ -42,7 +42,7 @@ export default class ToolbarTabsManager extends Component {
             options={TabOptions}
             title={ToolbarUtilities.LABELS.TOOLBAR_FILTER_HEADER_LABEL}
         >
-            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.FILTER}/>
+            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.FILTER_SETTINGS} bottomMode={ToolbarUtilities.MODES.FILTER_SUMMARY}/>
         </Tab>
         </Tabs>
             </div>

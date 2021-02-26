@@ -90,3 +90,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   z-index: 999;
   pointer-events: none;
 }
+
+.confirmationButton {
+  
+}

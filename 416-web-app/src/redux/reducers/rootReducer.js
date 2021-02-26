@@ -4,6 +4,7 @@ import React from 'react'
 import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011.json'
 import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016.json'
 import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019.json'
+import Filter from '../../utilities/Filter'
 
 /* Eventually I think it'll be best to load all these JSON files in through network instead of local storage. */
 const placeholderHistory = [
@@ -20,6 +21,16 @@ const initState = {
     FeaturedPrecinct : null,
     /* Map Reference */
     MapRef : React.createRef(),
+
+
+    /* Filtering Settings */
+    FilterSettings : [
+        new Filter("Majority Minority", 5, 0, 10, 1),
+        new Filter("Filter 1", 5, 0, 10, 1),
+        new Filter("Filter 2", 5, 0, 10, 1)
+    ],
+
+
 
     /* Usable Map */
     Map : null,
@@ -93,6 +104,13 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 Loaded : action.Loaded
+            }
+        case ActionTypes.UPDATE_FILTER_SETTINGS:
+            let newSettings = state.FilterSettings
+            newSettings[action.Key].value = action.NewValue
+            return {
+                ...state,
+                FilterSettings : newSettings
             }
         default:
             return state;

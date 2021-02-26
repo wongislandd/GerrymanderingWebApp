@@ -68,3 +68,11 @@ export const setLoadedStatus = (bool) => {
         Loaded : bool
     }
 }
+
+export const updateFilterSettings = (key, newValue) => {
+    return {
+        type : ActionTypes.UPDATE_FILTER_SETTINGS,
+        Key : key,
+        NewValue : newValue
+    }
+}
