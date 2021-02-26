@@ -31,6 +31,8 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 .toolbar-content-top {
   border: 2px rgba(133, 148, 140, 0.767);
   border-style: none none solid none;
+  max-height: 450px;
+  overflow-y: scroll;
 }
 
 .toolbar-content-bottom {
@@ -39,8 +41,21 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .toolbar-content-full {
-  
+  max-height: 850px;
+  overflow-y: scroll;
 }
+
+/* Hide scrollbar in Chrome */
+.toolbar-content-full::-webkit-scrollbar, .toolbar-content-bottom::-webkit-scrollbar, .toolbar-content-top::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.toolbar-content-full, .toolbar-content-bottom, .toolbar-content-top {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 
 .title-text {
   font-weight: bold;
@@ -56,6 +71,11 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 .input-field{
   float: none !important;
+}
+
+
+.stat-window {
+  background-color: whitesmoke;
 }
 
 

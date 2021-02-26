@@ -3,7 +3,14 @@ import { Collapsible, CollapsibleItem, Table } from 'react-materialize'
 
 function CollapsibleStats(props){
     return (
-        <Collapsible accordion={false}>
+        <Collapsible className="stat-window" accordion={false}>
+            <CollapsibleItem
+                expanded={true}
+                key={0}
+                header={"Districting Summary"}
+            >
+                Summary info goes in here.
+            </CollapsibleItem>
             {props.DistrictingToDisplay.geoJson.features.map((feature,key) => {
                     console.log(Object.keys(feature.properties))
                     return(

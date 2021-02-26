@@ -30,19 +30,13 @@ export default class ToolbarTabsManager extends Component {
             options={TabOptions}
             title={ToolbarUtilities.LABELS.TOOLBAR_STATISTICS_HEADER_LABEL}
         >
-            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.STATS} bottomMode={ToolbarUtilities.MODES.STATS}/>
+            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.STATS}/>
         </Tab>
         <Tab
             options={TabOptions}
             title={ToolbarUtilities.LABELS.TOOLBAR_HISTORY_HEADER_LABEL}
         >
             <ToolbarContentContainer topMode={ToolbarUtilities.MODES.HISTORY} bottomMode={ToolbarUtilities.MODES.TENTATIVE_STATS}/>
-        </Tab>
-        <Tab
-            options={TabOptions}
-            title="Big Yoshi"
-        >
-            <ToolbarContentContainer />
         </Tab>
         </Tabs>
             </div>
