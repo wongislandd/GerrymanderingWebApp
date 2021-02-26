@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import ReactMapGL, { Layer, Source, MapContext } from "react-map-gl"
 import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
-import DistrictGeoData from '../../data/NC/EnactedDistrictingPlan.json'
+import DistrictGeoData from '../../data/NC/EnactedDistrictingPlanColored.json'
+import { connect } from 'react-redux'
+
 
 function MapBoxComponent(props) {
   const [viewport, setViewport] = useState({
@@ -11,10 +13,8 @@ function MapBoxComponent(props) {
     height: "100vh",
     zoom: 6.75
   })
-  
-  /* Default state for display mode, "P" || "D" || "PD" || ""*/
-  const [displaymode, setDisplayMode] = useState("PD")
 
+  console.log(props)
   return (
       <div>
       <ReactMapGL 
@@ -33,19 +33,25 @@ function MapBoxComponent(props) {
           id = {"precinct-fill-layer"}
           type="fill"
           source="PrecinctGeoData"
+          layout={{
+            "visibility": props.DisplayPrecincts && !props.DisplayDistricts ? "visible" : "none"
+          }}
           paint={{
             /* Access the RGB properties of each individual feature */
             "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-            "fill-opacity": displaymode.includes("P") ? .35 : 0
+            "fill-opacity": .35
           }}/>
       <Layer
           id = {"precinct-outline-layer"}
           type="line"
           source="PrecinctGeoData"
+          layout={{
+            "visibility": props.DisplayPrecincts ? "visible" : "none"
+          }}
           paint={{
             "line-color" : "#000000",
             /* Check for the current display mode to see whether or not to display the districtings*/
-            "line-opacity": displaymode.includes("P") ? 1 : 0
+            "line-opacity": 1
           }}/>
       <Source
         id = "DistrictGeoData"
@@ -55,22 +61,35 @@ function MapBoxComponent(props) {
         id = {"district-fill-layer"}
         type="fill"
         source="DistrictGeoData"
+        layout={{
+          "visibility": props.DisplayDistricts ? "visible" : "none"
+        }}
         paint={{
           /* 0 for now until we have more district layer functionality */
-          "fill-opacity": displaymode.includes("P") ? 0 : 0
+          "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
+          "fill-opacity": .5
         }}/>
       <Layer
           id = {"district-outline-layer"}
           type = "line"
           source="DistrictGeoData"
+          layout={{
+            "visibility": props.DisplayDistricts ? "visible" : "none"
+          }}
           paint={{
             "line-color" : "#000000",
             /* Check for the current display mode to see whether or not to display the districtings*/
-            "line-opacity": displaymode.includes("D") ? 1 : 0
+            "line-opacity": 1
           }}/>
       </ReactMapGL>
       </div>
   )
 }
 
-export default MapBoxComponent;
+const mapStateToProps = (state, ownProps) => {
+  return {
+      DisplayPrecincts : state.DisplayPrecincts,
+      DisplayDistricts : state.DisplayDistricts
+  }
+}
+export default connect(mapStateToProps)(MapBoxComponent);

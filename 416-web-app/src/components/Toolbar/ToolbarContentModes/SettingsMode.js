@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 
 class SettingsMode extends Component {
     render() {
-        console.log("SETTINGS MODE PROPS")
-        console.log(this.props)
         return (
             <div className="ToolbarSettingsMode">
                 <Col s={8}>
