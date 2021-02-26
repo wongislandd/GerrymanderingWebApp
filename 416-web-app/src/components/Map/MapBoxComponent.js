@@ -16,69 +16,65 @@ function MapBoxComponent(props) {
   })
   return (
       <div>
-        <ReactMapGL 
-          className = "map-display"
-          {...viewport} 
-          mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
-          onViewportChange={viewport=> {
-            setViewport(viewport)
-          }}
-        >
-        <Source
-          id = "PrecinctGeoData"
-          type="geojson"
-          data = {PrecinctGeoData} />,
-        <Layer
-            id = {"precinct-fill-layer"}
-            type="fill"
-            source="PrecinctGeoData"
-            layout={{
-              "visibility": props.DisplayPrecincts && !props.DisplayDistricts ? "visible" : "none"
-            }}
-            paint={{
-              /* Access the RGB properties of each individual feature */
-              "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-              "fill-opacity": .35
-            }}/>
-        <Layer
-            id = {"precinct-outline-layer"}
-            type="line"
-            source="PrecinctGeoData"
-            layout={{
-              "visibility": props.DisplayPrecincts ? "visible" : "none"
-            }}
-            paint={{
-              /* Check for the current display mode to see whether or not to display the districtings*/
-              "line-opacity": 1
-            }}/>
-        <Source
-          id = "DistrictGeoData"
-          type = "geojson"
-          data = {DistrictGeoData}/>
-        <Layer
-          id = {"district-fill-layer"}
+      <ReactMapGL 
+        className = "map-display"
+        {...viewport} 
+        mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
+        onViewportChange={viewport=> {
+          setViewport(viewport)
+        }}
+      >
+      <Source
+        id = "PrecinctGeoData"
+        type="geojson"
+        data = {PrecinctGeoData} />,
+      <Layer
+          id = {"precinct-fill-layer"}
           type="fill"
+          source="PrecinctGeoData"
+          layout={{
+            "visibility": props.DisplayPrecincts && !props.DisplayDistricts ? "visible" : "none"
+          }}
+          paint={{
+            "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
+            "fill-opacity": .35
+          }}/>
+      <Layer
+          id = {"precinct-outline-layer"}
+          type="line"
+          source="PrecinctGeoData"
+          layout={{
+            "visibility": props.DisplayPrecincts ? "visible" : "none"
+          }}
+          paint={{
+            "line-opacity": 1
+          }}/>
+      <Source
+        id = "DistrictGeoData"
+        type = "geojson"
+        data = {DistrictGeoData}/>
+      <Layer
+        id = {"district-fill-layer"}
+        type="fill"
+        source="DistrictGeoData"
+        layout={{
+          "visibility": props.DisplayDistricts ? "visible" : "none"
+        }}
+        paint={{
+          "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
+          "fill-opacity": .5
+        }}/>
+      <Layer
+          id = {"district-outline-layer"}
+          type = "line"
           source="DistrictGeoData"
           layout={{
             "visibility": props.DisplayDistricts ? "visible" : "none"
           }}
           paint={{
-            /* 0 for now until we have more district layer functionality */
-            "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-            "fill-opacity": .5
+            "line-opacity": 1
           }}/>
-        <Layer
-            id = {"district-outline-layer"}
-            type = "line"
-            source="DistrictGeoData"
-            layout={{
-              "visibility": props.DisplayDistricts ? "visible" : "none"
-            }}
-            paint={{
-              /* Check for the current display mode to see whether or not to display the districtings*/
-              "line-opacity": 1
-            }}/>
-        </ReactMapGL>
+      </ReactMapGL>
       </div>
   )
 }

@@ -8,6 +8,7 @@ class SettingsMode extends Component {
     render() {
         return (
             <div className="ToolbarContent">
+                <h5>Toggles</h5>
                 <Col s={8}>
                 <Row>
                     {ToolbarUtilities.LABELS.TOGGLE_PRECINCT_DISPLAY_LABEL}

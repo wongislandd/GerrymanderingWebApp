@@ -37,7 +37,11 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 .toolbar-content-bottom {
 }
 
+.toolbar-content-full {
+  
+}
+
 
 .ToolbarContent {
-  padding: 20px;
+  padding: 5px 20px 20px 20px
 }

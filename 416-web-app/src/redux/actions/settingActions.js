@@ -13,3 +13,20 @@ export const toggleDistrictSwitch = (bool) => {
         DisplayDistricts : bool
     }
 }
+
+export const setTentativeDistricting = (districting) => {
+    return {
+        type: ActionTypes.SET_TENTATIVE_DISTRICTING,
+        TentativeDistricting : {
+            name : districting.name,
+            geojsonRef : districting.geojsonRef
+        }
+    }
+}
+
+export const setCurrentDistricting = (districting) => {
+    return {
+        type: ActionTypes.SET_CURRENT_DISTRICTING,
+        CurrentDistricting : districting
+    }
+}
