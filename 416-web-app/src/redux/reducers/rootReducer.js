@@ -16,6 +16,14 @@ const initState = {
     DisplayPrecincts : true,
     DisplayDistricts : true,
     CurrentDistricting : placeholderHistory[2],
+    SelectedDistrict : null,
+    SelectedPrecinct : null,
+
+    /* Mouse tracking for feature identification */
+    MouseX : 0,
+    MouseY : 0,
+    MouseEntered : false,
+
 
     /* History */
     DistrictingHistory : placeholderHistory
@@ -53,6 +61,17 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 CurrentDistricting : action.CurrentDistricting,
                 TentativeDistricting : null
+            }
+        case ActionTypes.MOVE_MOUSE:
+            return {
+                ...state,
+                MouseX : action.MouseX,
+                MouseY : action.MouseY
+            }
+        case ActionTypes.SET_MOUSE_ENTERED:
+            return {
+                ...state,
+                MouseEntered : action.MouseEntered
             }
         default:
             return state;

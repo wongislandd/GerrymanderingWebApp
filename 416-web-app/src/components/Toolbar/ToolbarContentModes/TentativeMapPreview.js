@@ -11,36 +11,51 @@ function TentativeMapPreview(props) {
         height: "200px",
         zoom: 4.8
     }
-    return (
-        <div>
-        <h6 className="title-text">Preview</h6>
-        <ReactMapGL 
-                className = "map-display"
-                {...viewport} 
-                mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
-            >
-        <Source
-            id = "DistrictGeoData"
-            type = "geojson"
-            data =  {props.TentativeDistricting.geoJson}/>
-        <Layer
-            id = {"district-fill-layer"}
-            type="fill"
-            source="DistrictGeoData"
-            paint={{
-            "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-            "fill-opacity": .5
-            }}/>
-        <Layer
-            id = {"district-outline-layer"}
-            type = "line"
-            source="DistrictGeoData"
-            paint={{
-                "line-opacity": 1
-            }}/>
-            </ReactMapGL>
-        </div>
-    )
+    if (props.TentativeDistricting == null) {
+        return (
+            <div>
+            <h6 className="title-text">Preview</h6>
+            <ReactMapGL 
+                    className = "map-display"
+                    {...viewport} 
+                    mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
+                >
+                </ReactMapGL>
+            </div>
+        )
+    }
+    else {
+        return (
+            <div>
+            <h6 className="title-text">Preview</h6>
+            <ReactMapGL 
+                    className = "map-display"
+                    {...viewport} 
+                    mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
+                >
+            <Source
+                id = "DistrictGeoData"
+                type = "geojson"
+                data =  {props.TentativeDistricting.geoJson}/>
+            <Layer
+                id = {"district-fill-layer"}
+                type="fill"
+                source="DistrictGeoData"
+                paint={{
+                "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
+                "fill-opacity": .5
+                }}/>
+            <Layer
+                id = {"district-outline-layer"}
+                type = "line"
+                source="DistrictGeoData"
+                paint={{
+                    "line-opacity": 1
+                }}/>
+                </ReactMapGL>
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {

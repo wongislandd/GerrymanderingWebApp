@@ -6,7 +6,6 @@ import TentativeMapPreview from './TentativeMapPreview'
 
 class HistoryMode extends Component {
     render() {
-        console.log(this.props)
         return (
             <div className="ToolbarContent">
                 <h5>Districting History</h5>
@@ -46,7 +45,7 @@ class HistoryMode extends Component {
                         </Select>
                     </Row>
                     <Row>
-                        {this.props.TentativeDistricting != null ? <TentativeMapPreview/> : <div/>}
+                        <TentativeMapPreview/>
                     </Row>
                     <Row>
                         <Button 

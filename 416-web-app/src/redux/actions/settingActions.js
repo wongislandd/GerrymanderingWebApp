@@ -30,3 +30,20 @@ export const setCurrentDistricting = (districting) => {
         CurrentDistricting : districting
     }
 }
+
+export const moveMouse = (event) => {
+    if (event.nativeEvent) {
+        return {
+            type : ActionTypes.MOVE_MOUSE,
+            MouseX : event.nativeEvent.offsetX,
+            MouseY : event.nativeEvent.offsetY,
+        }
+    }
+}
+
+export const setMouseEntered = (bool) => {
+    return {
+        type : ActionTypes.SET_MOUSE_ENTERED,
+        MouseEntered : bool,
+    }
+}

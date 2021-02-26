@@ -6,13 +6,12 @@ function CollapsibleStats(props){
         <Collapsible className="stat-window" accordion={false}>
             <CollapsibleItem
                 expanded={true}
-                key={0}
+                key={-1}
                 header={"Districting Summary"}
             >
                 Summary info goes in here.
             </CollapsibleItem>
             {props.DistrictingToDisplay.geoJson.features.map((feature,key) => {
-                    console.log(Object.keys(feature.properties))
                     return(
                     <CollapsibleItem 
                     expanded={false}
@@ -23,14 +22,14 @@ function CollapsibleStats(props){
                     <thead>
                         <tr>
                             {Object.keys(feature.properties).map((jsonProperty, key) => {
-                                return <th data-field={jsonProperty}>{jsonProperty}</th>
+                                return <th key = {key} data-field={jsonProperty}>{jsonProperty}</th>
                             })}
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             {Object.keys(feature.properties).map((jsonProperty, key) => {
-                                return <td>{feature.properties[jsonProperty]}</td>
+                                return <td key = {key}>{feature.properties[jsonProperty]}</td>
                             })}
                         </tr>
                     </tbody>
