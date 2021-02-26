@@ -6,7 +6,7 @@ const initState = {
     DisplayPrecincts : true,
     DisplayDistricts : true,
     CurrentDistricting : new Districting("Enacted Districting", "NC/EnactedDistrictingPlan"),
-
+    CurrentDistrictingGeoData : require('../../data/NC/EnactedDistrictingPlanColored'),
 
     /* History */
     DistrictingHistory : [
@@ -44,7 +44,8 @@ const rootReducer = (state = initState, action) => {
         case ActionTypes.SET_CURRENT_DISTRICTING:
             return {
                 ...state,
-                CurrentDistricting : action.CurrentDistricting
+                CurrentDistricting : action.CurrentDistricting,
+                CurrentDistrictingGeoData : require('../../data/' + action.CurrentDistricting.geojsonRef)
             }
         default:
             return state;
