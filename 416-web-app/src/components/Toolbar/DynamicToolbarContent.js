@@ -19,7 +19,7 @@ export default class DynamicToolbarContent extends Component {
             case ToolbarUtilities.MODES.HISTORY:
                 return <HistoryMode/>
             default:
-                return <div>default, no mode specified</div>
+                return <div>Default, no mode specified</div>
         } 
 
     }

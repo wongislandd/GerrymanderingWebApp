@@ -1,12 +1,17 @@
-import * as ActionTypes from './ActionTypes'
+import * as ActionTypes from '../actions/ActionTypes'
+
+
 /* Initial State */
 const initState = {
     DisplayPrecincts : true,
     DisplayDistricts : true
 }
 
+
+/* Action Dispatcher
+Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
+*/
 const rootReducer = (state = initState, action) => {
-    console.log(action)
     switch (action.type) {
         case ActionTypes.TOGGLE_PRECINCT_SWITCH:
             return {

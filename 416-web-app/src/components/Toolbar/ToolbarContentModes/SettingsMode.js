@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import { Row, Col, Switch } from 'react-materialize'
 import * as ToolbarUtilities from '../../../utilities/ToolbarUtilities.js'
-import * as ActionTypes from '../../../redux/reducers/ActionTypes'
 import { connect } from 'react-redux'
+import { togglePrecinctSwitch, toggleDistrictSwitch} from '../../../redux/actions/settingActions'
 
 class SettingsMode extends Component {
     render() {
         return (
-            <div className="ToolbarSettingsMode">
+            <div className="ToolbarContent">
                 <Col s={8}>
                 <Row>
-                    Outline Precincts
+                    {ToolbarUtilities.LABELS.TOGGLE_PRECINCT_DISPLAY_LABEL}
                 </Row>
                 <Row>
-                    Outline Districts
+                    {ToolbarUtilities.LABELS.TOGGLE_DISTRICT_DISPLAY_LABEL}
                 </Row>
                 </Col>
                 <Col>
@@ -45,8 +45,8 @@ class SettingsMode extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        togglePrecinctSwitch : (bool) => {dispatch({type: ActionTypes.TOGGLE_PRECINCT_SWITCH, DisplayPrecincts : bool})},
-        toggleDistrictSwitch : (bool) => {dispatch({type: ActionTypes.TOGGLE_DISTRICT_SWITCH, DisplayDistricts : bool})}
+        togglePrecinctSwitch : (bool) => {dispatch(togglePrecinctSwitch(bool))},
+        toggleDistrictSwitch : (bool) => {dispatch(toggleDistrictSwitch(bool))}
     }
 }
 

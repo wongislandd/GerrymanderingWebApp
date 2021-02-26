@@ -7,7 +7,7 @@
 /* Map Settings */
 
 .map-display {
-  
+
 }
 
 /* Toolbar Settings*/
@@ -38,6 +38,6 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 
-.ToolbarSettingsMode {
+.ToolbarContent {
   padding: 20px;
 }
