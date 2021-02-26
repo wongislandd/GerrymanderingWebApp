@@ -25,7 +25,7 @@ function MapBoxComponent(props) {
           setViewport(viewport)
         }}
       >
-      {/* <Source
+      <Source
         id = "PrecinctGeoData"
         type="geojson"
         data = {PrecinctGeoData} />,
@@ -49,7 +49,7 @@ function MapBoxComponent(props) {
           }}
           paint={{
             "line-opacity": 1
-          }}/> */}
+          }}/>
       <Source
         id = "DistrictGeoData"
         type = "geojson"

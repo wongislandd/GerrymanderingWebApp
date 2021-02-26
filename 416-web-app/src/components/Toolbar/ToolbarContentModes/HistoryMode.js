@@ -74,7 +74,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
     return {
         DistrictingHistory : state.DistrictingHistory,
-        TentativeDistricting : state.TentativeDistricting
+        TentativeDistricting : state.TentativeDistricting,
+        CurrentDistricting : state.CurrentDistricting
     }
   }
 

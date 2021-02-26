@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      body{
+        background-color: cadetblue;
+      }
+
+      .loader-container {
+        display: flex;
+        vertical-align: middle;
+        text-align: center;
+        justify-content: center;
+        margin-top: 15%;
+      }
+
+      .loader {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid rosybrown;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        animation: spin 2s linear infinite;
+      }
+      
+      @keyframes spin {
+        0%  { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      </style>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/mapicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,8 +49,28 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
   </head>
   <body>
+    <div class="pre-loader">
+      <div class="sk-fading-circle">
+        <div class="sk-circle1 sk-circle"></div>
+        <div class="sk-circle2 sk-circle"></div>
+        <div class="sk-circle3 sk-circle"></div>
+        <div class="sk-circle4 sk-circle"></div>
+        <div class="sk-circle5 sk-circle"></div>
+        <div class="sk-circle6 sk-circle"></div>
+        <div class="sk-circle7 sk-circle"></div>
+        <div class="sk-circle8 sk-circle"></div>
+        <div class="sk-circle9 sk-circle"></div>
+        <div class="sk-circle10 sk-circle"></div>
+        <div class="sk-circle11 sk-circle"></div>
+        <div class="sk-circle12 sk-circle"></div>
+      </div>
+    </div>
     <noscript>You need to enable JavaScript to run this app.</noscript> 
-    <div id="root"></div>
+    <div id="root">    
+      <div class="loader-container">
+      <div class="loader"></div>
+    </div></div>
+
    
   </body>
 </html>
