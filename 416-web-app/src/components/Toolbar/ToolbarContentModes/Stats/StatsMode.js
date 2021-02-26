@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Row } from 'react-materialize'
-import CollapsibleStats from './CollapsibleStats'
+import CollapsibleStats from '../CollapsibleStats'
 import { connect } from 'react-redux'
 
 class StatsMode extends Component {

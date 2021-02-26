@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Collapsible, CollapsibleItem, Table } from 'react-materialize'
-import CollapsibleStats from './CollapsibleStats'
+import CollapsibleStats from '../CollapsibleStats'
 
 class TentativeStatsMode extends Component {
     render() {

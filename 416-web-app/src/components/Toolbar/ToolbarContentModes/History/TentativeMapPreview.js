@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
 import { connect } from 'react-redux'
-import * as MapUtilities from '../../../utilities/MapUtilities'
+import * as MapUtilities from '../../../../utilities/MapUtilities'
 
 function TentativeMapPreview(props) {
     const viewport = {

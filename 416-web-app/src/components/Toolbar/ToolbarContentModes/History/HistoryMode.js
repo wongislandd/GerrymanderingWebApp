@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Select, Row, Col } from 'react-materialize'
 import { connect } from 'react-redux'
-import { setTentativeDistricting, setCurrentDistricting } from '../../../redux/actions/settingActions'
+import { setTentativeDistricting, setCurrentDistricting } from '../../../../redux/actions/settingActions'
 import TentativeMapPreview from './TentativeMapPreview'
 
 class HistoryMode extends Component {

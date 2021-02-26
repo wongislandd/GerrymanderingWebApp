@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Row, Col, Switch } from 'react-materialize'
-import * as ToolbarUtilities from '../../../utilities/ToolbarUtilities.js'
+import * as ToolbarUtilities from '../../../../utilities/ToolbarUtilities.js'
 import { connect } from 'react-redux'
-import { togglePrecinctSwitch, toggleDistrictSwitch} from '../../../redux/actions/settingActions'
+import { togglePrecinctSwitch, toggleDistrictSwitch} from '../../../../redux/actions/settingActions'
 
 class SettingsMode extends Component {
     render() {
