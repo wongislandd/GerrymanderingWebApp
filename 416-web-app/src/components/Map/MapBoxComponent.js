@@ -30,7 +30,7 @@ function MapBoxComponent(props) {
         type="geojson"
         data = {PrecinctGeoData} />,
       <Layer
-          id = {"precinct-layer"}
+          id = {"precinct-fill-layer"}
           type="fill"
           source="PrecinctGeoData"
           paint={{
@@ -38,16 +38,32 @@ function MapBoxComponent(props) {
             "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
             "fill-opacity": displaymode.includes("P") ? .35 : 0
           }}/>
+      <Layer
+          id = {"precinct-outline-layer"}
+          type="line"
+          source="PrecinctGeoData"
+          paint={{
+            "line-color" : "#000000",
+            /* Check for the current display mode to see whether or not to display the districtings*/
+            "line-opacity": displaymode.includes("P") ? 1 : 0
+          }}/>
       <Source
         id = "DistrictGeoData"
         type = "geojson"
         data = {DistrictGeoData}/>
       <Layer
-          id = {"district-layer"}
+        id = {"district-fill-layer"}
+        type="fill"
+        source="DistrictGeoData"
+        paint={{
+          /* 0 for now until we have more district layer functionality */
+          "fill-opacity": displaymode.includes("P") ? 0 : 0
+        }}/>
+      <Layer
+          id = {"district-outline-layer"}
           type = "line"
           source="DistrictGeoData"
           paint={{
-            /* Access the RGB properties of each individual feature */
             "line-color" : "#000000",
             /* Check for the current display mode to see whether or not to display the districtings*/
             "line-opacity": displaymode.includes("D") ? 1 : 0

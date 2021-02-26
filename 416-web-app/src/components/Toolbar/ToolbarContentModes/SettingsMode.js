@@ -1,36 +1,13 @@
 import React, { Component } from 'react'
 import { Row, Col, Switch } from 'react-materialize'
+import * as ToolbarUtilities from '../../../utilities/ToolbarUtilities.js'
+import * as ActionTypes from '../../../redux/reducers/ActionTypes'
+import { connect } from 'react-redux'
 
-export default class SettingsMode extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            PrecinctSwitched : true,
-            DistrictSwitched : true
-        }
-    }
-
-    PRECINCT_SWITCH_ID = "precinct-switch"
-    DISTRICT_SWITCH_ID = "district-switch"
-
-    
-    handleToggleSwitch(event) {
-        switch(event.target.id) {
-            case this.PRECINCT_SWITCH_ID:
-                this.setState(prevState => ({
-                    PrecinctSwitched : !prevState.PrecinctSwitched
-                }))
-                break
-            case this.DISTRICT_SWITCH_ID:
-                this.setState(prevState => ({
-                    DistrictSwitched : !prevState.DistrictSwitched
-                }))
-                break
-        }
-    }
-
-
+class SettingsMode extends Component {
     render() {
+        console.log("SETTINGS MODE PROPS")
+        console.log(this.props)
         return (
             <div className="ToolbarSettingsMode">
                 <Col s={8}>
@@ -44,20 +21,20 @@ export default class SettingsMode extends Component {
                 <Col>
                     <Row>
                     <Switch
-                        id={this.PRECINCT_SWITCH_ID}
+                        id={ToolbarUtilities.CONSTANTS.PRECINCT_SWITCH_ID}
                         offLabel="Off"
                         onLabel="On"
-                        onChange={(e) => this.handleToggleSwitch(e)}
-                        checked={this.state.PrecinctSwitched}
+                        onChange = {(e)=>this.props.togglePrecinctSwitch(!this.props.DisplayPrecincts)}
+                        checked = {this.props.DisplayPrecincts}
                     />
                     </Row>
                     <Row>
                     <Switch
-                        id={this.DISTRICT_SWITCH_ID}
+                        id={ToolbarUtilities.CONSTANTS.DISTRICT_SWITCH_ID}
                         offLabel="Off"
                         onLabel="On"
-                        onChange={(e) => this.handleToggleSwitch(e)}
-                        checked={this.state.DistrictSwitched}
+                        onChange = {(e)=>this.props.toggleDistrictSwitch(!this.props.DisplayDistricts)}
+                        checked = {this.props.DisplayDistricts}
                     />
                     </Row>
                 </Col>
@@ -65,3 +42,22 @@ export default class SettingsMode extends Component {
         )
     }
 }
+
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        togglePrecinctSwitch : (bool) => {dispatch({type: ActionTypes.TOGGLE_PRECINCT_SWITCH, DisplayPrecincts : bool})},
+        toggleDistrictSwitch : (bool) => {dispatch({type: ActionTypes.TOGGLE_DISTRICT_SWITCH, DisplayDistricts : bool})}
+    }
+}
+
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        DisplayPrecincts : state.DisplayPrecincts,
+        DisplayDistricts : state.DisplayDistricts
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsMode)

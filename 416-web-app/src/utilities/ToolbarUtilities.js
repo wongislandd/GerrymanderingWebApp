@@ -4,3 +4,9 @@ export const MODES = {
     STATS : "stats",
     HISTORY : "history"
 }
+
+
+export const CONSTANTS = {
+    PRECINCT_SWITCH_ID : "precinct-switch",
+    DISTRICT_SWITCH_ID : "district-switch"
+}

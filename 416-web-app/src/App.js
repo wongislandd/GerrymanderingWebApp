@@ -1,7 +1,7 @@
 import './css/App.css';
 import React from "react"
-import Toolbar from './components/Toolbar/MapToolbar';
-import MapBoxComponent from './components/Map/MapBoxComponent';
+import Toolbar from './components/Toolbar/Toolbar';
+import MapBoxComponent from './components/Map/MapBoxComponent'
 
 
 function App() {  
