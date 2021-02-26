@@ -79,3 +79,14 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 
+.tooltip {
+  position: absolute;
+  margin: 8px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 999;
+  pointer-events: none;
+}

@@ -4,8 +4,8 @@ import ReactMapGL, { Layer, Source } from "react-map-gl"
 import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setMouseEntered } from '../../redux/actions/settingActions'
-
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct} from '../../redux/actions/settingActions'
+import TooltipComponent from './TooltipComponent'
 
 class MapBoxComponent extends Component{
   constructor(props) {
@@ -27,14 +27,32 @@ class MapBoxComponent extends Component{
     })
   }
 
-  // function onHover = event => {
-  //   const {
-  //     features,
-  //     srcEvent: {offsetX, offsetY}
-  //   } = event;
-  //   const hoveredFeature = features && features.find(f => f.layer.id === 'data');}
   
+
+  //Hover
+  _onHover = event => {
+    const {
+      features,
+      srcEvent: {offsetX, offsetY}
+    } = event;
+    /* This finds what feature is being hovered over*/
+    if (this.props.DisplayDistricts){
+      const hoveredFeature = features && features.find(f => f.layer.id === 'district-fill-layer')
+      this.props.setFeaturedDistrict(hoveredFeature)
+    } else if(this.props.DisplayPrecincts) {
+      const hoveredFeature = features && features.find(f => f.layer.id === 'precinct-fill-layer')
+      this.props.setFeaturedPrecinct(hoveredFeature)
+    }
+    this._renderTooltip();
+  };
+
+  _renderTooltip() {
+    return (<TooltipComponent/>)
+  }
+
+
   render() {
+    //console.log(this.props)
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}
@@ -48,7 +66,9 @@ class MapBoxComponent extends Component{
             onViewportChange={viewport=> {
               this.setViewport(viewport)
             }}
+            onHover={this._onHover.bind(this)}
           >
+            {this._renderTooltip()}
           <Source
             id = "PrecinctGeoData"
             type="geojson"
@@ -108,7 +128,9 @@ class MapBoxComponent extends Component{
 const mapDispatchToProps = (dispatch) => {
   return {
       moveMouse : (event) => {dispatch(moveMouse(event))},
-      setMouseEntered : (bool) => {dispatch(setMouseEntered(bool))}
+      setMouseEntered : (bool) => {dispatch(setMouseEntered(bool))},
+      setFeaturedDistrict : (district) => {dispatch(setFeaturedDistrict(district))},
+      setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))}
   }
 }
 
@@ -116,7 +138,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
       DisplayPrecincts : state.DisplayPrecincts,
       DisplayDistricts : state.DisplayDistricts,
-      CurrentDistricting : state.CurrentDistricting
+      CurrentDistricting : state.CurrentDistricting,
+      MouseX : state.MouseX,
+      MouseY : state.MouseY
   }
 }
 

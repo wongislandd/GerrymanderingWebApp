@@ -16,8 +16,8 @@ const initState = {
     DisplayPrecincts : true,
     DisplayDistricts : true,
     CurrentDistricting : placeholderHistory[2],
-    SelectedDistrict : null,
-    SelectedPrecinct : null,
+    FeaturedDistrict : null,
+    FeaturedPrecinct : null,
 
     /* Mouse tracking for feature identification */
     MouseX : 0,
@@ -39,7 +39,7 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
-    console.log(action)
+    //console.log(action)
     switch (action.type) {
         case ActionTypes.TOGGLE_PRECINCT_SWITCH:
             return {
@@ -72,6 +72,16 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 MouseEntered : action.MouseEntered
+            }
+        case ActionTypes.SET_FEATURED_DISTRICT:
+            return {
+                ...state,
+                FeaturedDistrict : action.FeaturedDistrict
+            }
+        case ActionTypes.SET_FEATURED_PRECINCT:
+            return {
+                ...state,
+                FeaturedPrecinct : action.FeaturedPrecinct
             }
         default:
             return state;

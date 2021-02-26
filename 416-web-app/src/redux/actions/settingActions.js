@@ -47,3 +47,17 @@ export const setMouseEntered = (bool) => {
         MouseEntered : bool,
     }
 }
+
+export const setFeaturedDistrict = (district) => {
+    return {
+        type : ActionTypes.SET_FEATURED_DISTRICT,
+        FeaturedDistrict : district
+    }
+}
+
+export const setFeaturedPrecinct = (precinct) => {
+    return {
+        type : ActionTypes.SET_FEATURED_PRECINCT,
+        FeaturedPrecinct : precinct
+    }
+}
