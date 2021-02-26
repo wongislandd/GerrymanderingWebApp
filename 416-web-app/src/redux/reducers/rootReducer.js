@@ -23,6 +23,7 @@ const initState = {
 
     /* Usable Map */
     Map : null,
+    Loaded : false,
 
     /* Mouse tracking for feature identification */
     MouseX : 0,
@@ -87,6 +88,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 FeaturedPrecinct : action.FeaturedPrecinct
+            }
+        case ActionTypes.SET_LOADED_STATUS:
+            return {
+                ...state,
+                Loaded : action.Loaded
             }
         default:
             return state;

@@ -4,7 +4,7 @@ import ReactMapGL, { Layer, Source } from "react-map-gl"
 import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 
 class MapBoxComponent extends Component{
@@ -21,26 +21,62 @@ class MapBoxComponent extends Component{
     }
   }
 
+  /* Update viewport on change */
   setViewport(viewport) {
     this.setState({
       viewport : viewport
     })
   }
 
-  
+  removePrevHighlighting = (feature) => {
+    if (feature != null) {
+      const map = this.props.MapRef.current.getMap()
+      let source = this.props.DisplayDistricts ? MapUtilities.IDs.DISTRICT_SOURCE_ID : MapUtilities.IDs.PRECINCT_SOURCE_ID
+      map.setFeatureState({
+        source : source,
+        id : feature.id
+      }, {
+          hover : false
+      })
+    }
+  }
 
-  //Hover
+  highlightFeature = (feature) => {
+    if (feature != null) {
+      const map = this.props.MapRef.current.getMap()
+      let source = this.props.DisplayDistricts ? MapUtilities.IDs.DISTRICT_SOURCE_ID : MapUtilities.IDs.PRECINCT_SOURCE_ID
+      map.setFeatureState({
+          source : source,
+          id : feature.id
+      }, {
+          hover : true
+      })
+    }
+}
+
   _onHover = event => {
     const {
       features,
     } = event;
     /* This finds what feature is being hovered over*/
     if (this.props.DisplayDistricts){
+      // Remove Highlighting from the previously featured district
+      this.removePrevHighlighting(this.props.FeaturedDistrict)
+      // Identify the newly featured district
       const hoveredFeature = features && features.find(f => f.layer.id === 'district-fill-layer')
+      // Update the state
       this.props.setFeaturedDistrict(hoveredFeature)
+      // Add Highlighting to the currently featured district
+      this.highlightFeature(this.props.FeaturedDistrict)
     } else if(this.props.DisplayPrecincts) {
+      // Remove highlighting from the previously featured precinct
+      this.removePrevHighlighting(this.props.FeaturedPrecinct)
+      // Identify the newly featured precinct
       const hoveredFeature = features && features.find(f => f.layer.id === 'precinct-fill-layer')
+      // Update the state
       this.props.setFeaturedPrecinct(hoveredFeature)
+      // Add highlighting to the currently featured district
+      this.highlightFeature(this.props.FeaturedPrecinct)
     }
     this._renderTooltip();
   };
@@ -49,9 +85,12 @@ class MapBoxComponent extends Component{
     return <TooltipComponent/>
   }
 
-  /* Can't use Map reference until AFTER it's mounted, otherwise no guarentee it's set yet. */
+  /* Can't use Map reference until AFTER it's mounted, otherwise no guarentee it's set yet.
+  Abstracted to Loaded property of the state for checking 
+  Access map through this.state.MapRef.current.getMap()*/
   componentDidMount(){
-    console.log(this.props.MapRef.current.getMap())
+    console.log("Map Reference has been set.")
+    this.props.setLoadedStatus(true)
   }
 
   render() {
@@ -74,25 +113,30 @@ class MapBoxComponent extends Component{
           >
             {this._renderTooltip()}
           <Source
-            id = "PrecinctGeoData"
+            id = {MapUtilities.IDs.PRECINCT_SOURCE_ID}
             type="geojson"
             data = {PrecinctGeoData} 
             generateId = {true}/>,
           <Layer
-              id = {"precinct-fill-layer"}
+              id = {MapUtilities.IDs.PRECINCT_FILL_LAYER_ID}
               type="fill"
-              source="PrecinctGeoData"
+              source={MapUtilities.IDs.PRECINCT_SOURCE_ID}
               layout={{
                 "visibility": this.props.DisplayPrecincts && !this.props.DisplayDistricts ? "visible" : "none"
               }}
               paint={{
                 "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-                "fill-opacity": .35
+                "fill-opacity": [
+                  'case',
+                  ['boolean', ['feature-state', 'hover'], false],
+                  1,
+                  .35,
+                ]
               }}/>
           <Layer
-              id = {"precinct-outline-layer"}
+              id = {MapUtilities.IDs.PRECINCT_LINE_LAYER_ID}
               type="line"
-              source="PrecinctGeoData"
+              source={MapUtilities.IDs.PRECINCT_SOURCE_ID}
               layout={{
                 "visibility": this.props.DisplayPrecincts ? "visible" : "none"
               }}
@@ -100,14 +144,14 @@ class MapBoxComponent extends Component{
                 "line-opacity": 1
               }}/>
           <Source
-            id = "DistrictGeoData"
+            id = {MapUtilities.IDs.DISTRICT_SOURCE_ID}
             type = "geojson"
             data = {this.props.CurrentDistricting.geoJson}
             generateId = {true}/>
           <Layer
-            id = {"district-fill-layer"}
+            id = {MapUtilities.IDs.DISTRICT_FILL_LAYER_ID}
             type="fill"
-            source="DistrictGeoData"
+            source={MapUtilities.IDs.DISTRICT_SOURCE_ID}
             layout={{
               "visibility": this.props.DisplayDistricts ? "visible" : "none"
             }}
@@ -121,9 +165,9 @@ class MapBoxComponent extends Component{
               ]
             }}/>
           <Layer
-              id = {"district-outline-layer"}
+              id = {MapUtilities.IDs.DISTRICT_LINE_LAYER_ID}
               type = "line"
-              source="DistrictGeoData"
+              source={MapUtilities.IDs.DISTRICT_SOURCE_ID}
               layout={{
                 "visibility": this.props.DisplayDistricts ? "visible" : "none"
               }}
@@ -142,6 +186,7 @@ const mapDispatchToProps = (dispatch) => {
       setMouseEntered : (bool) => {dispatch(setMouseEntered(bool))},
       setFeaturedDistrict : (district) => {dispatch(setFeaturedDistrict(district))},
       setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))},
+      setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))}
   }
 }
 
@@ -150,9 +195,12 @@ const mapStateToProps = (state, ownProps) => {
       DisplayPrecincts : state.DisplayPrecincts,
       DisplayDistricts : state.DisplayDistricts,
       CurrentDistricting : state.CurrentDistricting,
+      FeaturedDistrict : state.FeaturedDistrict,
+      FeaturedPrecinct : state.FeaturedPrecinct,
       MouseX : state.MouseX,
       MouseY : state.MouseY,
-      MapRef : state.MapRef
+      MapRef : state.MapRef,
+      Loaded : state.Loaded,
   }
 }
 

@@ -61,3 +61,10 @@ export const setFeaturedPrecinct = (precinct) => {
         FeaturedPrecinct : precinct
     }
 }
+
+export const setLoadedStatus = (bool) => {
+    return {
+        type : ActionTypes.SET_LOADED_STATUS,
+        Loaded : bool
+    }
+}

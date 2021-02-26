@@ -34,21 +34,21 @@ function TentativeMapPreview(props) {
                     mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
                 >
             <Source
-                id = "DistrictGeoData"
+                id = {MapUtilities.IDs.DISTRICT_SOURCE_ID}
                 type = "geojson"
                 data =  {props.TentativeDistricting.geoJson}/>
             <Layer
-                id = {"district-fill-layer"}
+                id = {MapUtilities.IDs.DISTRICT_FILL_LAYER_ID}
                 type="fill"
-                source="DistrictGeoData"
+                source={MapUtilities.IDs.DISTRICT_SOURCE_ID}
                 paint={{
                 "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
                 "fill-opacity": .5
                 }}/>
             <Layer
-                id = {"district-outline-layer"}
+                id = {MapUtilities.IDs.DISTRICT_LINE_LAYER_ID}
                 type = "line"
-                source="DistrictGeoData"
+                source={MapUtilities.IDs.DISTRICT_SOURCE_ID}
                 paint={{
                     "line-opacity": 1
                 }}/>

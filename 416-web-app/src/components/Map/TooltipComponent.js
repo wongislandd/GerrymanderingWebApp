@@ -6,7 +6,6 @@ class TooltipComponent extends Component {
     constructor(props) {
         super(props)
     }
-
     render() {
         const locationToFeature = this.props.DisplayDistricts ? this.props.FeaturedDistrict : this.props.DisplayPrecincts ? this.props.FeaturedPrecinct : null
         if (locationToFeature == null) {
@@ -16,6 +15,7 @@ class TooltipComponent extends Component {
                 </div>
             )
         } else {
+            /* There is a feature to display */
             return (
                 /* Placeholder for better design */
                 <div className="tooltip" style={{left: this.props.MouseX, top: this.props.MouseY}}>
@@ -33,7 +33,8 @@ const mapStateToProps = (state, ownProps) => {
         FeaturedDistrict : state.FeaturedDistrict,
         FeaturedPrecinct : state.FeaturedPrecinct,
         MouseX : state.MouseX,
-        MouseY : state.MouseY
+        MouseY : state.MouseY,
+        MapRef : state.MapRef
     }
   }
   
