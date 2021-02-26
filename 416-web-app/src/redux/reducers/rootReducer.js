@@ -1,18 +1,25 @@
 import * as ActionTypes from '../actions/ActionTypes'
 import Districting from '../../utilities/Districting'
 
+import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011.json'
+import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016.json'
+import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019.json'
+
+/* Eventually I think it'll be best to load all these JSON files in through network instead of local storage. */
+const placeholderHistory = [
+        new Districting("Enacted Districting Nov 2011 - Feb 2016", EnactedDistrictingPlan2011),
+        new Districting("Enacted Districting Feb 2016 - Nov 2019", EnactedDistrictingPlan2016), 
+        new Districting("Enacted Districting Nov 2019 - Dec 2021", EnactedDistrictingPlan2019)]
+
 /* Initial State */
 const initState = {
     DisplayPrecincts : true,
     DisplayDistricts : true,
-    CurrentDistricting : new Districting("Enacted Districting", "NC/EnactedDistrictingPlan"),
-    CurrentDistrictingGeoData : require('../../data/NC/EnactedDistrictingPlanColored'),
+    CurrentDistricting : placeholderHistory[2],
 
     /* History */
-    DistrictingHistory : [
-    new Districting("Enacted Districting", "NC/EnactedDistrictingPlan"),
-    new Districting("New Districting 1", "NC/A"), 
-    new Districting("New Districting 2", "NC/B")],
+    DistrictingHistory : placeholderHistory
+    ,
     /* The tentative districting is for when a user 
     selected a districting in the history tab but 
     hasn't yet loaded it*/
@@ -44,8 +51,7 @@ const rootReducer = (state = initState, action) => {
         case ActionTypes.SET_CURRENT_DISTRICTING:
             return {
                 ...state,
-                CurrentDistricting : action.CurrentDistricting,
-                CurrentDistrictingGeoData : require('../../data/' + action.CurrentDistricting.geojsonRef)
+                CurrentDistricting : action.CurrentDistricting
             }
         default:
             return state;

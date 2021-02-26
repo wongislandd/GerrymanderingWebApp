@@ -41,7 +41,18 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   
 }
 
+.title-text {
+  font-weight: bold;
+}
 
 .ToolbarContent {
   padding: 5px 20px 20px 20px
+}
+
+.confirmButton {
+  background-color: darkgreen;
+}
+
+#DistrictSelector {
+  font-size: 40%;
 }

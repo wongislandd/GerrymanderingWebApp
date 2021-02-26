@@ -19,7 +19,7 @@ export const setTentativeDistricting = (districting) => {
         type: ActionTypes.SET_TENTATIVE_DISTRICTING,
         TentativeDistricting : {
             name : districting.name,
-            geojsonRef : districting.geojsonRef
+            geoJson : districting.geoJson
         }
     }
 }

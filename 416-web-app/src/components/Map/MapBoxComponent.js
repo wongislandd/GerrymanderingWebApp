@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import ReactMapGL, { Layer, Source, MapContext } from "react-map-gl"
+import ReactMapGL, { Layer, Source } from "react-map-gl"
+//import PrecinctGeoData from '../../data/NC/ReducedPrecinctGeoData.json'
 import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
@@ -13,8 +14,6 @@ function MapBoxComponent(props) {
     height: "100vh",
     zoom: 6.75
   })
-  
-  console.log(props)
 
   return (
       <div>
@@ -26,7 +25,7 @@ function MapBoxComponent(props) {
           setViewport(viewport)
         }}
       >
-      <Source
+      {/* <Source
         id = "PrecinctGeoData"
         type="geojson"
         data = {PrecinctGeoData} />,
@@ -50,11 +49,11 @@ function MapBoxComponent(props) {
           }}
           paint={{
             "line-opacity": 1
-          }}/>
+          }}/> */}
       <Source
         id = "DistrictGeoData"
         type = "geojson"
-        data = {props.CurrentDistrictingGeoData}/>
+        data = {props.CurrentDistricting.geoJson}/>
       <Layer
         id = {"district-fill-layer"}
         type="fill"
@@ -85,7 +84,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
       DisplayPrecincts : state.DisplayPrecincts,
       DisplayDistricts : state.DisplayDistricts,
-      CurrentDistrictingGeoData : state.CurrentDistrictingGeoData
+      CurrentDistricting : state.CurrentDistricting
   }
 }
 
