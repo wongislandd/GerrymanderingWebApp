@@ -36,7 +36,7 @@ export default class ToolbarTabsManager extends Component {
             options={TabOptions}
             title={ToolbarUtilities.LABELS.TOOLBAR_HISTORY_HEADER_LABEL}
         >
-            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.HISTORY}/>
+            <ToolbarContentContainer topMode={ToolbarUtilities.MODES.HISTORY} bottomMode={ToolbarUtilities.MODES.TENTATIVE_STATS}/>
         </Tab>
         <Tab
             options={TabOptions}

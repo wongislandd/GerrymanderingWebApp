@@ -51,7 +51,8 @@ const rootReducer = (state = initState, action) => {
         case ActionTypes.SET_CURRENT_DISTRICTING:
             return {
                 ...state,
-                CurrentDistricting : action.CurrentDistricting
+                CurrentDistricting : action.CurrentDistricting,
+                TentativeDistricting : null
             }
         default:
             return state;

@@ -17,7 +17,6 @@ class HistoryMode extends Component {
                         onChange={(e) => {
                             this.props.setTentativeDistricting(JSON.parse(e.target.value))}}
                         options={{
-                            classes: '',
                             dropdownOptions: {
                             autoTrigger: true,
                             closeOnClick: true,
@@ -41,6 +40,7 @@ class HistoryMode extends Component {
                             Choose a Districting
                         </option>
                         {this.props.DistrictingHistory.map((districting, key) => {
+
                             return <option key={key} value={JSON.stringify(districting)}>{districting.name}</option>
                         })}
                         </Select>
@@ -55,7 +55,6 @@ class HistoryMode extends Component {
                         onClick={(e)=>this.props.setCurrentDistricting(this.props.TentativeDistricting)}
                         >
                         {this.props.TentativeDistricting != null ? "Load " + this.props.TentativeDistricting.name : "Select a Districting"}
-    
                         </Button>
                     </Row>
             </div>

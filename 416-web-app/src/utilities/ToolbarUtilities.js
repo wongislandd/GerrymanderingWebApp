@@ -2,7 +2,8 @@
 export const MODES = {
     SETTINGS : "settings",
     STATS : "stats",
-    HISTORY : "history"
+    HISTORY : "history",
+    TENTATIVE_STATS : "tentative_stats"
 }
 
 
@@ -17,5 +18,4 @@ export const LABELS = {
     TOOLBAR_HISTORY_HEADER_LABEL : "History",
     TOGGLE_PRECINCT_DISPLAY_LABEL : "Display Precincts",
     TOGGLE_DISTRICT_DISPLAY_LABEL : "Display Districts"
-
 }

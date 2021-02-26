@@ -29,12 +29,13 @@
 or have a way to resize them. 
 Ex. You only want one content box, set size of top to 100%, bottom to 0% or something */
 .toolbar-content-top {
-  height: 400px;
   border: 2px rgba(133, 148, 140, 0.767);
   border-style: none none solid none;
 }
 
 .toolbar-content-bottom {
+  overflow-y: scroll;
+  max-height: 400px;
 }
 
 .toolbar-content-full {
@@ -46,16 +47,15 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .ToolbarContent {
-  padding: 5px 20px 20px 20px
+  padding: 5px 20px 0px 20px
 }
 
 .confirmButton {
   background-color: darkgreen;
 }
 
-#DistrictSelector {
-  font-size: 40%;
+.input-field{
+  float: none !important;
 }
-
 
 
