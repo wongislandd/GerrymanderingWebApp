@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Collapsible, CollapsibleItem, Table } from 'react-materialize'
+import CollapsibleStats from './CollapsibleStats'
 
 class TentativeStatsMode extends Component {
     render() {
@@ -13,39 +14,12 @@ class TentativeStatsMode extends Component {
                 <div className="ToolbarContent">
                     <h5>Stat Breakdown</h5>
                     <Row>
-                        <Collapsible accordion={false}>
-                            {this.props.TentativeDistricting.geoJson.features.map((feature,key) => {
-                                console.log(Object.keys(feature.properties))
-                                return(
-                                <CollapsibleItem 
-                                expanded={false}
-                                key={key}
-                                header={"District " + (key+1)}
-                                >
-                                <Table>
-                                <thead>
-                                    <tr>
-                                        {Object.keys(feature.properties).map((jsonProperty, key) => {
-                                            return <th data-field={jsonProperty}>{jsonProperty}</th>
-                                        })}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        {Object.keys(feature.properties).map((jsonProperty, key) => {
-                                            return <td>{feature.properties[jsonProperty]}</td>
-                                        })}
-                                    </tr>
-                                </tbody>
-                                </Table>
-                                </CollapsibleItem>
-                                )
-                            })}
-                        </Collapsible>
+                        <CollapsibleStats DistrictingToDisplay={this.props.TentativeDistricting}/>
                     </Row>
                 </div>
             )
-        }
+        }/** Probably need a section for like a stat overview here. Also maybe when you hover over the district it highlights it on the map?
+        Should get that working on the main map first  */
     }
 }
 
