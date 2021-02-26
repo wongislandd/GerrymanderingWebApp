@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import ReactMapGL, { Layer, Source } from "react-map-gl"
-//import geoData from '../../data/TestGeoJson.json'
-import geoData from '../../data/SortedNCGeoDataColored.json'
+import ReactMapGL, { Layer, Source, MapContext } from "react-map-gl"
+import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
+import DistrictGeoData from '../../data/NC/EnactedDistrictingPlan.json'
 
-function MapBoxComponent() {
+function MapBoxComponent(props) {
   const [viewport, setViewport] = useState({
     latitude : 35.490477690914446, 
     longitude: -79.41601173255576,
@@ -11,31 +11,49 @@ function MapBoxComponent() {
     height: "100vh",
     zoom: 6.75
   })
-  console.log(geoData)
+  
+  /* Default state for display mode, "P" || "D" || "PD" || ""*/
+  const [displaymode, setDisplayMode] = useState("PD")
 
   return (
+      <div>
       <ReactMapGL 
-      className = "map-display"
-      {...viewport} 
-      mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
-      onViewportChange={viewport=> {
-        setViewport(viewport)
-      }}
+        className = "map-display"
+        {...viewport} 
+        mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
+        onViewportChange={viewport=> {
+          setViewport(viewport)
+        }}
       >
       <Source
-        id = "ncgeodata"
+        id = "PrecinctGeoData"
         type="geojson"
-        data = {geoData} />,
+        data = {PrecinctGeoData} />,
       <Layer
-          id = {"main-layer"}
+          id = {"precinct-layer"}
           type="fill"
-          source="ncgeodata"
+          source="PrecinctGeoData"
           paint={{
             /* Access the RGB properties of each individual feature */
             "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-            "fill-opacity": 0.35
+            "fill-opacity": displaymode.includes("P") ? .35 : 0
+          }}/>
+      <Source
+        id = "DistrictGeoData"
+        type = "geojson"
+        data = {DistrictGeoData}/>
+      <Layer
+          id = {"district-layer"}
+          type = "line"
+          source="DistrictGeoData"
+          paint={{
+            /* Access the RGB properties of each individual feature */
+            "line-color" : "#000000",
+            /* Check for the current display mode to see whether or not to display the districtings*/
+            "line-opacity": displaymode.includes("D") ? 1 : 0
           }}/>
       </ReactMapGL>
+      </div>
   )
 }
 

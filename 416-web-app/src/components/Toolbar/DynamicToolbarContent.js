@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Table} from 'react-materialize'
 import SettingsMode from './ToolbarContentModes/SettingsMode'
 import StatsMode from './ToolbarContentModes/StatsMode'
+import HistoryMode from './ToolbarContentModes/HistoryMode'
 import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
 
 export default class DynamicToolbarContent extends Component {
@@ -15,6 +16,8 @@ export default class DynamicToolbarContent extends Component {
                 return <SettingsMode/>
             case ToolbarUtilities.MODES.STATS:
                 return <StatsMode/>
+            case ToolbarUtilities.MODES.HISTORY:
+                return <HistoryMode/>
             default:
                 return <div>default, no mode specified</div>
         } 
