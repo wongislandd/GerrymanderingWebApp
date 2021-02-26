@@ -4,5 +4,5 @@ export const NC = {
 }
 
 export const MESSAGES = {
-    NoInfoToDisplayMsg : "Toggle on a display to see more info!"
+    NoInfoToDisplayMsg : "Hover over a display to see more info!"
 }

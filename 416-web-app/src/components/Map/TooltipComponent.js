@@ -8,7 +8,6 @@ class TooltipComponent extends Component {
     }
 
     render() {
-        console.log(this.props)
         const locationToFeature = this.props.DisplayDistricts ? this.props.FeaturedDistrict : this.props.DisplayPrecincts ? this.props.FeaturedPrecinct : null
         if (locationToFeature == null) {
             return (
@@ -18,6 +17,7 @@ class TooltipComponent extends Component {
             )
         } else {
             return (
+                /* Placeholder for better design */
                 <div className="tooltip" style={{left: this.props.MouseX, top: this.props.MouseY}}>
                     <div>{JSON.stringify(locationToFeature.properties)}</div>
                 </div>

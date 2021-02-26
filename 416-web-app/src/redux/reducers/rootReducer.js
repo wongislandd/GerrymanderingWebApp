@@ -1,6 +1,6 @@
 import * as ActionTypes from '../actions/ActionTypes'
 import Districting from '../../utilities/Districting'
-
+import React from 'react'
 import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011.json'
 import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016.json'
 import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019.json'
@@ -13,16 +13,22 @@ const placeholderHistory = [
 
 /* Initial State */
 const initState = {
-    DisplayPrecincts : true,
+    DisplayPrecincts : false,
     DisplayDistricts : true,
     CurrentDistricting : placeholderHistory[2],
     FeaturedDistrict : null,
     FeaturedPrecinct : null,
+    /* Map Reference */
+    MapRef : React.createRef(),
+
+    /* Usable Map */
+    Map : null,
 
     /* Mouse tracking for feature identification */
     MouseX : 0,
     MouseY : 0,
     MouseEntered : false,
+    
 
 
     /* History */
@@ -39,7 +45,6 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
-    //console.log(action)
     switch (action.type) {
         case ActionTypes.TOGGLE_PRECINCT_SWITCH:
             return {

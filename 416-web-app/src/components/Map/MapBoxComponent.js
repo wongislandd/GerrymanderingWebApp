@@ -4,7 +4,7 @@ import ReactMapGL, { Layer, Source } from "react-map-gl"
 import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 
 class MapBoxComponent extends Component{
@@ -33,7 +33,6 @@ class MapBoxComponent extends Component{
   _onHover = event => {
     const {
       features,
-      srcEvent: {offsetX, offsetY}
     } = event;
     /* This finds what feature is being hovered over*/
     if (this.props.DisplayDistricts){
@@ -47,12 +46,15 @@ class MapBoxComponent extends Component{
   };
 
   _renderTooltip() {
-    return (<TooltipComponent/>)
+    return <TooltipComponent/>
   }
 
+  /* Can't use Map reference until AFTER it's mounted, otherwise no guarentee it's set yet. */
+  componentDidMount(){
+    console.log(this.props.MapRef.current.getMap())
+  }
 
   render() {
-    //console.log(this.props)
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}
@@ -67,12 +69,15 @@ class MapBoxComponent extends Component{
               this.setViewport(viewport)
             }}
             onHover={this._onHover.bind(this)}
+            // Tie this reference to the one in the state
+            ref = {this.props.MapRef}
           >
             {this._renderTooltip()}
           <Source
             id = "PrecinctGeoData"
             type="geojson"
-            data = {PrecinctGeoData} />,
+            data = {PrecinctGeoData} 
+            generateId = {true}/>,
           <Layer
               id = {"precinct-fill-layer"}
               type="fill"
@@ -97,7 +102,8 @@ class MapBoxComponent extends Component{
           <Source
             id = "DistrictGeoData"
             type = "geojson"
-            data = {this.props.CurrentDistricting.geoJson}/>
+            data = {this.props.CurrentDistricting.geoJson}
+            generateId = {true}/>
           <Layer
             id = {"district-fill-layer"}
             type="fill"
@@ -107,7 +113,12 @@ class MapBoxComponent extends Component{
             }}
             paint={{
               "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
-              "fill-opacity": .5
+              "fill-opacity": [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1.0,
+                .5,
+              ]
             }}/>
           <Layer
               id = {"district-outline-layer"}
@@ -130,7 +141,7 @@ const mapDispatchToProps = (dispatch) => {
       moveMouse : (event) => {dispatch(moveMouse(event))},
       setMouseEntered : (bool) => {dispatch(setMouseEntered(bool))},
       setFeaturedDistrict : (district) => {dispatch(setFeaturedDistrict(district))},
-      setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))}
+      setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))},
   }
 }
 
@@ -140,7 +151,8 @@ const mapStateToProps = (state, ownProps) => {
       DisplayDistricts : state.DisplayDistricts,
       CurrentDistricting : state.CurrentDistricting,
       MouseX : state.MouseX,
-      MouseY : state.MouseY
+      MouseY : state.MouseY,
+      MapRef : state.MapRef
   }
 }
 
