@@ -106,7 +106,7 @@ const rootReducer = (state = initState, action) => {
                 Loaded : action.Loaded
             }
         case ActionTypes.UPDATE_FILTER_SETTINGS:
-            let newSettings = state.FilterSettings
+            const newSettings = [...state.FilterSettings]
             newSettings[action.Key].value = action.NewValue
             return {
                 ...state,

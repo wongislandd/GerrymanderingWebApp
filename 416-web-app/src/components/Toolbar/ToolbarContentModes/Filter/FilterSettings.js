@@ -15,7 +15,7 @@ class FilterSettings extends Component {
                               <h5>{filter.name}</h5>
                               <Slider
                                onChange={(e,newValue)=>this.props.updateFilterSettings(key, newValue)}
-                               defaultValue={filter.value}
+                               value={filter.value}
                                max={filter.maxVal}
                                min={filter.minVal}
                                name={filter.name}

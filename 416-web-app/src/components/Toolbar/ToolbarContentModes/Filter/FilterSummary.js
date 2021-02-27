@@ -7,7 +7,7 @@ class FilterSummary extends Component {
         return (
             <div className="ToolbarContent">
                 <h5>Filter Summary</h5>
-                {/* <Row>
+                <Row>
                 {Object.keys(this.props.FilterSettings).map((key) => {
                       let filter = this.props.FilterSettings[key]
                       return(
@@ -21,9 +21,9 @@ class FilterSummary extends Component {
                           </Row>
                       )
                 })}
-                </Row> */}
+                </Row>
                 <Row>
-                    <Button className="confirmationBtn">Filter Districtings</Button>
+                    <Button className="confirmButton">Filter Districtings With These Settings</Button>
                 </Row>
             </div>
         )
