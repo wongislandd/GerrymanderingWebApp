@@ -7,21 +7,19 @@ class FilterSummary extends Component {
         return (
             <div className="ToolbarContent">
                 <h5>Filter Summary</h5>
-                <Row>
                 {Object.keys(this.props.FilterSettings).map((key) => {
                       let filter = this.props.FilterSettings[key]
                       return(
                           <Row key={key}>
-                              <Col>
+                              <Col s={8}>
                               <h6>{filter.name}</h6>
                               </Col>
-                              <Col>
-                              <h6>{filter.value}</h6>
+                              <Col s={3}>
+                              <h6>{Array.isArray(filter.value) ? filter.value[0] + "-" + filter.value[1] : filter.value}</h6>
                               </Col>
                           </Row>
                       )
                 })}
-                </Row>
                 <Row>
                     <Button className="confirmButton">Filter Districtings With These Settings</Button>
                 </Row>

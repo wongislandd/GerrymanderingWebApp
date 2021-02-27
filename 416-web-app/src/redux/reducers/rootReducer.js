@@ -22,12 +22,14 @@ const initState = {
     /* Map Reference */
     MapRef : React.createRef(),
 
+    
 
     /* Filtering Settings */
     FilterSettings : [
         new Filter("Majority Minority", 5, 0, 10, 1),
-        new Filter("Filter 1", 5, 0, 10, 1),
-        new Filter("Filter 2", 5, 0, 10, 1)
+        new Filter("Compactness", 5, 0, 10, 1),
+        new Filter("Population Equality", 5, 0, 10, 1),
+        new Filter("Objective Function Score Range", [10,12], 0, 20, 1)
     ],
 
 
