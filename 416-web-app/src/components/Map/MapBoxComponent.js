@@ -52,7 +52,7 @@ class MapBoxComponent extends Component{
           hover : true
       })
     }
-}
+  }
 
   _onHover = event => {
     const {
@@ -63,7 +63,7 @@ class MapBoxComponent extends Component{
       // Remove Highlighting from the previously featured district
       this.removePrevHighlighting(this.props.FeaturedDistrict)
       // Identify the newly featured district
-      const hoveredFeature = features && features.find(f => f.layer.id === 'district-fill-layer')
+      const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.DISTRICT_FILL_LAYER_ID)
       // Update the state
       this.props.setFeaturedDistrict(hoveredFeature)
       // Add Highlighting to the currently featured district
@@ -72,7 +72,7 @@ class MapBoxComponent extends Component{
       // Remove highlighting from the previously featured precinct
       this.removePrevHighlighting(this.props.FeaturedPrecinct)
       // Identify the newly featured precinct
-      const hoveredFeature = features && features.find(f => f.layer.id === 'precinct-fill-layer')
+      const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.PRECINCT_FILL_LAYER_ID)
       // Update the state
       this.props.setFeaturedPrecinct(hoveredFeature)
       // Add highlighting to the currently featured district
