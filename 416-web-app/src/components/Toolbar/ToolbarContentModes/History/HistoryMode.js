@@ -3,12 +3,14 @@ import { Button, Select, Row, Col } from 'react-materialize'
 import { connect } from 'react-redux'
 import { setTentativeDistricting, setCurrentDistricting } from '../../../../redux/actions/settingActions'
 import TentativeMapPreview from './TentativeMapPreview'
+import * as ToolbarUtilities from '../../../../utilities/ToolbarUtilities'
+
 
 class HistoryMode extends Component {
     render() {
         return (
             <div className="ToolbarContent">
-                <h5>Districting History</h5>
+                <h5>{ToolbarUtilities.LABELS.DISTRICTING_HISTORY_LABEL}</h5>
                 <Row>
                     <Select
                         id="DistrictSelector"
@@ -36,7 +38,7 @@ class HistoryMode extends Component {
                             disabled
                             value=""
                         >
-                            Choose a Districting
+                            {ToolbarUtilities.LABELS.CHOOSE_A_DISTRICTING_LABEL}
                         </option>
                         {this.props.DistrictingHistory.map((districting, key) => {
 

@@ -76,3 +76,11 @@ export const updateFilterSettings = (key, newValue) => {
         NewValue : newValue
     }
 }
+
+export const updateIncumbentProtection = (key, newValue) => {
+    return {
+        type : ActionTypes.UPDATE_INCUMBENT_PROTECTION,
+        Key : key,
+        NewValue : newValue
+    }
+}

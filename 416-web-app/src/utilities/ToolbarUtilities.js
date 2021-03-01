@@ -20,5 +20,7 @@ export const LABELS = {
     TOOLBAR_HISTORY_HEADER_LABEL : "History",
     TOOLBAR_FILTER_HEADER_LABEL : "Filter",
     TOGGLE_PRECINCT_DISPLAY_LABEL : "Display Precincts",
-    TOGGLE_DISTRICT_DISPLAY_LABEL : "Display Districts"
+    TOGGLE_DISTRICT_DISPLAY_LABEL : "Display Districts",
+    INCUMBENT_PROTECTION_OPTIONS_LABEL : "Incumbent Protection Options",
+    PROTECTED_POLITICANS_LABEL : "Protected Politicans"
 }

@@ -33,9 +33,11 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   border-style: none none solid none;
   max-height: 450px;
   overflow-y: scroll;
+  border-width: 10px;
 }
 
 .toolbar-content-bottom {
+  padding-top: 5px;
   overflow-y: scroll;
   max-height: 400px;
 }
@@ -93,4 +95,24 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 .confirmationButton {
   
+}
+
+.incumbent-protection-collapsible {
+  background-color : whitesmoke;
+}
+
+/* For incumbent labels */
+.collapsible-body > .row > label {
+  color: black !important;
+}
+
+/* For aligning an icon with text, usage: <div className="iconAndLabel"><PersonIcon/><span>{name}</span></div> */
+.iconAndLabel {
+  display : flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.spanNeedsSpace {
+  padding-left: 10px;
 }

@@ -32,7 +32,13 @@ const initState = {
         new Filter("Objective Function Score Range", [10,12], 0, 20, 1)
     ],
 
-
+    /* Gonna need like a function run early on to populate these names based on the
+    provided information for the state
+    All incumbents start off as false (not protected) */
+    IncumbentProtectionInfo : {"Stella Pang" : false,
+                    "Jihu Mun" : false,
+                    "Jim Hyunh" : false,
+                    "Christopher Wong" : true},
 
     /* Usable Map */
     Map : null,
@@ -113,6 +119,14 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 FilterSettings : newSettings
+            }
+        case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
+            console.log(action)
+            return {
+                ...state,
+                IncumbentProtectionInfo: {
+                    ...state.IncumbentProtectionInfo, [action.Key] : action.NewValue
+                }
             }
         default:
             return state;

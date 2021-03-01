@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Range, Row } from 'react-materialize'
+import { Collapsible, Range, Row, CollapsibleItem, Checkbox } from 'react-materialize'
 import { Slider } from '@material-ui/core'
-import { updateFilterSettings } from '../../../../redux/actions/settingActions'
+import { updateFilterSettings, updateIncumbentProtection } from '../../../../redux/actions/settingActions'
+import * as ToolbarUtilities from '../../../../utilities/ToolbarUtilities'
 
 class FilterSettings extends Component {
     render() {
@@ -13,7 +14,7 @@ class FilterSettings extends Component {
                       if(!Array.isArray(filter.value)) {
                         return(
                             <Row key={key}>
-                                <h5>{filter.name}</h5>
+                                <h6>{filter.name}</h6>
                                 <Slider
                                 onChange={(e,newValue)=>this.props.updateFilterSettings(key, newValue)}
                                 value={filter.value}
@@ -28,7 +29,7 @@ class FilterSettings extends Component {
                       } else { // Else it's for a range slider, ex. The objective function 
                       return(
                         <Row key={key}>
-                            <h5>{filter.name}</h5>
+                            <h6>{filter.name}</h6>
                             <Slider
                             onChange={(e,newValue)=>this.props.updateFilterSettings(key, newValue)}
                             value={filter.value}
@@ -43,6 +44,33 @@ class FilterSettings extends Component {
                     )
                       }
                 })}
+                {/* Incumbent protection  */}
+                <Row>
+                    <Collapsible className="incumbent-protection-collapsible">
+                    <CollapsibleItem
+                        expanded={false}
+                        header={ToolbarUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS_LABEL}
+                        node="div"
+                        >
+                        {Object.keys(this.props.IncumbentProtectionInfo).map((key) => {
+                            return(
+                                <Row
+                                    key={key}>
+                                <Checkbox
+                                    id={key + "-protection-checkbox"}
+                                    className="incumbent-protection-option"
+                                    label={key}
+                                    value={key}
+                                    checked={this.props.IncumbentProtectionInfo[key]}
+                                    onChange={(e) => this.props.updateIncumbentProtection(key,e.target.checked)}
+                                />
+                                </Row>
+                            )
+                        })}
+                    </CollapsibleItem>
+                    </Collapsible>
+
+                </Row>
             </div>
         )
     }
@@ -50,13 +78,15 @@ class FilterSettings extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateFilterSettings : (key, newVal) => {dispatch(updateFilterSettings(key, newVal))}
+        updateFilterSettings : (key, newVal) => {dispatch(updateFilterSettings(key, newVal))},
+        updateIncumbentProtection : (key, newVal) => {dispatch(updateIncumbentProtection(key, newVal))}
     }
   }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        FilterSettings : state.FilterSettings
+        FilterSettings : state.FilterSettings,
+        IncumbentProtectionInfo : state.IncumbentProtectionInfo
     }
   }
   
