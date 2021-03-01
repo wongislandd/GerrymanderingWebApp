@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Collapsible, CollapsibleItem, Table } from 'react-materialize'
 import CollapsibleStats from '../CollapsibleStats'
+import * as ToolbarUtilities from '../../../../utilities/ToolbarUtilities'
 
 class TentativeStatsMode extends Component {
     render() {
         if (this.props.TentativeDistricting == null) {
             return(
-                <h5>Your selected districting's stats will be displayed here.</h5>
+                <h5>{ToolbarUtilities.LABELS.NO_TENTATIVE_STATS_TO_DISPLAY_LABEL}</h5>
             )
         } else {
             return (

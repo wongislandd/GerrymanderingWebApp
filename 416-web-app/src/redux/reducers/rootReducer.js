@@ -1,10 +1,10 @@
 import * as ActionTypes from '../actions/ActionTypes'
-import Districting from '../../utilities/Districting'
+import Districting from '../../utilities/classes/Districting'
 import React from 'react'
 import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011.json'
 import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016.json'
 import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019.json'
-import Filter from '../../utilities/Filter'
+import Filter from '../../utilities/classes/Filter'
 
 /* Eventually I think it'll be best to load all these JSON files in through network instead of local storage. */
 const placeholderHistory = [

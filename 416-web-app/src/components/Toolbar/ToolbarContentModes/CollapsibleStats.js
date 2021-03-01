@@ -12,11 +12,11 @@ class CollapsibleStats extends Component{
         return (
             <Collapsible className="stat-window" accordion={false}>
                 <CollapsibleItem
-                    expanded={true}
+                    expanded={false}
                     key={-1}
                     header={"Districting Summary"}
                 >
-                    Summary info goes in here.
+                    Averaged summary information about this districting will go here.
                 </CollapsibleItem>
                 {this.props.DistrictingToDisplay.geoJson.features.map((feature,key) => {
                         return(

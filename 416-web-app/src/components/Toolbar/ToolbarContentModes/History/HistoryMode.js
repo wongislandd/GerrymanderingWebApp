@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Select, Row, Col } from 'react-materialize'
+import { Button, Select, Row } from 'react-materialize'
 import { connect } from 'react-redux'
 import { setTentativeDistricting, setCurrentDistricting } from '../../../../redux/actions/settingActions'
 import TentativeMapPreview from './TentativeMapPreview'

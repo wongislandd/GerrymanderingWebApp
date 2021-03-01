@@ -116,3 +116,16 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 .spanNeedsSpace {
   padding-left: 10px;
 }
+  
+.currentDistrictingNameSidebar {
+  background-color: rgba(35, 55, 75, 0.9);
+  color: #ffffff;
+  padding: 6px 12px;
+  font: 15px/24px monospace;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+  }

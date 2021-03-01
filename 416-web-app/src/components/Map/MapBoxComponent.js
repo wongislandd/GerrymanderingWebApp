@@ -100,6 +100,7 @@ class MapBoxComponent extends Component{
           onMouseEnter={(e) => this.props.setMouseEntered(true)}
           onMouseLeave={(e) => this.props.setMouseEntered(false)}
         >
+          <div className="currentDistrictingNameSidebar">{this.props.CurrentDistricting.name}</div>
           <ReactMapGL 
             className = "map-display"
             {...this.state.viewport} 
