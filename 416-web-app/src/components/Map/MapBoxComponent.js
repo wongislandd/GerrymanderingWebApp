@@ -17,7 +17,7 @@ class MapBoxComponent extends Component{
         longitude: MapUtilities.NC.LONGITUDE,
         width: "75vw",
         height: window.innerHeight,
-        zoom: 6.75
+        zoom: 6.5 
       }
     }
   }
@@ -26,6 +26,18 @@ class MapBoxComponent extends Component{
   setViewport(viewport) {
     this.setState({
       viewport : viewport
+    })
+  }
+
+  recenterMap() {
+    this.setState({
+      viewport : {
+        latitude : MapUtilities.NC.LATTITUDE, 
+        longitude: MapUtilities.NC.LONGITUDE,
+        width: "75vw",
+        height: window.innerHeight,
+        zoom: 6.5
+      }
     })
   }
 
@@ -102,7 +114,7 @@ class MapBoxComponent extends Component{
           onMouseLeave={(e) => this.props.setMouseEntered(false)}
         >
           {/* Tooltip on the top left to show what's currently being viewed. */}
-          <div className="currentDistrictingNameSidebar">
+          <div className="currentDistrictingNameSidebar" onClick={(e)=>this.recenterMap()}>
             <div className="iconAndLabel">
             <MapIcon/>
             <span>
@@ -140,7 +152,7 @@ class MapBoxComponent extends Component{
                   'case',
                   ['boolean', ['feature-state', 'hover'], false],
                   1,
-                  .35,
+                  MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY,
                 ]
               }}/>
           <Layer

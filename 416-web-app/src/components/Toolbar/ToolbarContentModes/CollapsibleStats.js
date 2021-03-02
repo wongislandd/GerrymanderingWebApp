@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Collapsible, CollapsibleItem, Table } from 'react-materialize'
 import { connect } from 'react-redux'
 import {setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
+import * as MapUtilities from '../../../utilities/MapUtilities'
 
 class CollapsibleStats extends Component{
     constructor(props){
@@ -24,6 +25,9 @@ class CollapsibleStats extends Component{
                         expanded={false}
                         key={key}
                         header={"District " + (key+1)}
+                        style={{
+                            backgroundColor: "rgba(" + feature.properties["rgb-R"] + "," + feature.properties["rgb-G"] + "," + feature.properties["rgb-B"] + "," + MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY + ")",
+                        }}
                         >
                         <Table>
                         <thead>

@@ -3,6 +3,10 @@ export const NC = {
     LONGITUDE : -79.41601173255576
 }
 
+export const VALUES = {
+    UNHIGHLIGHTED_DISTRICT_OPACITY : .35
+}
+
 export const MESSAGES = {
     NoInfoToDisplayMsg : "Hover over a display to see more info!"
 }

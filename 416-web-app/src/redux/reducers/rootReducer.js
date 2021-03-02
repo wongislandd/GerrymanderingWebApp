@@ -121,7 +121,6 @@ const rootReducer = (state = initState, action) => {
                 FilterSettings : newSettings
             }
         case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
-            console.log(action)
             return {
                 ...state,
                 IncumbentProtectionInfo: {
