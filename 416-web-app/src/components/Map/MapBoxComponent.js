@@ -6,6 +6,7 @@ import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
 import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
+import MapIcon from '@material-ui/icons/Map';
 
 class MapBoxComponent extends Component{
   constructor(props) {
@@ -100,7 +101,15 @@ class MapBoxComponent extends Component{
           onMouseEnter={(e) => this.props.setMouseEntered(true)}
           onMouseLeave={(e) => this.props.setMouseEntered(false)}
         >
-          <div className="currentDistrictingNameSidebar">{this.props.CurrentDistricting.name}</div>
+          {/* Tooltip on the top left to show what's currently being viewed. */}
+          <div className="currentDistrictingNameSidebar">
+            <div className="iconAndLabel">
+            <MapIcon/>
+            <span>
+            {this.props.CurrentDistricting.name}
+            </span>
+              </div>
+            </div>
           <ReactMapGL 
             className = "map-display"
             {...this.state.viewport} 

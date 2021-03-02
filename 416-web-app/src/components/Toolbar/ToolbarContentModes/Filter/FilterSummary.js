@@ -35,7 +35,7 @@ class FilterSummary extends Component {
                                 return(
                                     <Row
                                         key={name}>
-                                    <div className="iconAndLabel"><PersonIcon/><span className="spanNeedsSpace"> {name}</span></div>
+                                    <div className="iconAndLabel"><PersonIcon/><span> {name}</span></div>
                                     </Row>
                                 )
                             }
