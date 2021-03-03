@@ -16,10 +16,6 @@ class FilterSummary extends Component {
                               <Col s={8}>
                               <h6>{filter.name}</h6>
                               </Col>
-                              <Col s={3}>
-                                {/* Exception for ranges such as the objective function*/}
-                              <h6>{Array.isArray(filter.value) ? filter.value[0] + "-" + filter.value[1] : filter.value}</h6>
-                              </Col>
                           </Row>
                       )
                 })}

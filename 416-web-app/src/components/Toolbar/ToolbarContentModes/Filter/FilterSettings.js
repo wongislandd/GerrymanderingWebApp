@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Collapsible, Range, Row, CollapsibleItem, Checkbox } from 'react-materialize'
+import { Collapsible, Range, Row, CollapsibleItem} from 'react-materialize'
 import { Slider } from '@material-ui/core'
 import { updateFilterSettings, updateIncumbentProtection } from '../../../../redux/actions/settingActions'
 import * as ToolbarUtilities from '../../../../utilities/ToolbarUtilities'
+import { FormControlLabel, Checkbox } from '@material-ui/core'
 
 class FilterSettings extends Component {
     render() {
@@ -26,23 +27,7 @@ class FilterSettings extends Component {
                                 valueLabelDisplay="auto"/>
                             </Row>
                         )
-                      } else { // Else it's for a range slider, ex. The objective function 
-                      return(
-                        <Row key={key}>
-                            <h6>{filter.name}</h6>
-                            <Slider
-                            onChange={(e,newValue)=>this.props.updateFilterSettings(key, newValue)}
-                            value={filter.value}
-                            aria-labelledby="range-slider"
-                            name={filter.name}
-                            marks
-                            max={filter.maxVal}
-                            min={filter.minVal}
-                            step={filter.step}
-                            valueLabelDisplay="auto"/>
-                        </Row>
-                    )
-                      }
+                        }
                 })}
                 {/* Incumbent protection  */}
                 <Row>
@@ -56,14 +41,17 @@ class FilterSettings extends Component {
                             return(
                                 <Row
                                     key={key}>
-                                <Checkbox
-                                    id={key + "-protection-checkbox"}
-                                    className="incumbent-protection-option"
-                                    label={key}
-                                    value={key}
-                                    checked={this.props.IncumbentProtectionInfo[key]}
-                                    onChange={(e) => this.props.updateIncumbentProtection(key,e.target.checked)}
-                                />
+                                <FormControlLabel 
+                                    control =  {
+                                        <Checkbox
+                                            id={key + "-protection-checkbox"}
+                                            className="incumbent-protection-option"
+                                            value={key}
+                                            checked={this.props.IncumbentProtectionInfo[key]}
+                                            onChange={(e) => this.props.updateIncumbentProtection(key,e.target.checked)}
+                                        />
+                                    }
+                                    label = {key}/>
                                 </Row>
                             )
                         })}
