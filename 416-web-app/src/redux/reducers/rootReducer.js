@@ -29,7 +29,6 @@ const initState = {
         new Filter("Majority Minority", 5, 0, 10, 1),
         new Filter("Compactness", 5, 0, 10, 1),
         new Filter("Population Equality", 5, 0, 10, 1),
-        new Filter("Objective Function Score Range", [0,20], 0, 20, 1)
     ],
 
     /* Gonna need like a function run early on to populate these names based on the
