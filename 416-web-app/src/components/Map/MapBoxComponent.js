@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
 //import PrecinctGeoData from '../../data/NC/ReducedPrecinctGeoData.json'
-import PrecinctGeoData from '../../data/NC/PrecinctGeoData.json'
+import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
 import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus} from '../../redux/actions/settingActions'
