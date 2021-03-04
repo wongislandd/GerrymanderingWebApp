@@ -6,30 +6,27 @@ from random import randint
 # Takes the features in TestGeoJson.json and outputs it into output.json
 
 
-inputFile = "./datasets/SortedNCGeoData.json"
-outputFile = "./datasets/SortedNCGeoDataColored.json"
+inputFile = "./datasets/EnactedDistrictingPlan2019.json"
+outputFile = "./datasets/EnactedDistrictingPlan2019.json"
 
 
 def getRandomRGBVal():
-    return randint(0, 255)
+    return randint(0, 180)
 
 
-try:
-    # Open the file
-    with open(inputFile) as f:
-        data = json.load(f)
+# Open the file
+with open(inputFile) as f:
+    data = json.load(f)
 
-    count = 0
-    # Add the property
-    for feature in data['features']:
-        feature['properties']['rgb-R'] = getRandomRGBVal()
-        feature['properties']['rgb-G'] = getRandomRGBVal()
-        feature['properties']['rgb-B'] = getRandomRGBVal()
-        count += 1
+count = 0
+# Add the property
+for feature in data['features']:
+    feature['properties']['rgb-R'] = getRandomRGBVal()
+    feature['properties']['rgb-G'] = getRandomRGBVal()
+    feature['properties']['rgb-B'] = getRandomRGBVal()
+    count += 1
 
-    # Write the file
-    with open(outputFile, 'w+') as json_file:
-        json.dump(data, json_file)
-    print(f"Successfully added RGB to {count} features.")
-except:
-    print("Something went wrong. Check the inputs.")
+# Write the file
+with open(outputFile, 'w+') as json_file:
+    json.dump(data, json_file)
+print(f"Successfully added RGB to {count} features.")
