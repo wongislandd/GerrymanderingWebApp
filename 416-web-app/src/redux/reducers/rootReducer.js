@@ -1,9 +1,9 @@
 import * as ActionTypes from '../actions/ActionTypes'
 import Districting from '../../utilities/classes/Districting'
 import React from 'react'
-import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011.json'
-import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016.json'
-import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019.json'
+import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011WithData.json'
+import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
+import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019WithData.json'
 import Filter from '../../utilities/classes/Filter'
 
 /* Eventually I think it'll be best to load all these JSON files in through network instead of local storage. */
@@ -22,7 +22,9 @@ const initState = {
     /* Map Reference */
     MapRef : React.createRef(),
 
-    
+    InSelectionMenu : true,
+
+
 
     /* Filtering Settings */
     FilterSettings : [
