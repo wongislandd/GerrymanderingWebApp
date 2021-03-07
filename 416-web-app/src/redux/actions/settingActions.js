@@ -120,3 +120,23 @@ export const changeComparisonDistrictingB = (districting) => {
         Districting : districting
     }
 }
+
+
+export const addFeatureToHighlight = (feature) => {
+    return {
+        type : ActionTypes.ADD_FEATURE_TO_HIGHLIGHT,
+        Feature : feature
+    }
+}
+
+export const resetAllHighlighting = () => {
+    return {
+        type : ActionTypes.RESET_ALL_HIGHLIGHTING
+    }
+}
+
+export const clearFeaturesToUnhighlight = () => {
+    return {
+        type : ActionTypes.CLEAR_FEATURES_TO_UNHIGHLIGHT
+    }
+}

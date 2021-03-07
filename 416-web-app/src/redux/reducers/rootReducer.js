@@ -20,11 +20,15 @@ const initState = {
     CurrentDistricting : placeholderDistrictings[2],
     FeaturedDistrict : null,
     FeaturedPrecinct : null,
-    /* Map Reference */
 
+
+    FeaturesToHighlight : [],
+    FeaturesToUnhighlight : [],
+
+    /* Map Reference */
     MapRef : React.createRef(),
 
-    InSelectionMenu : true,
+    InSelectionMenu : false,
 
     SortedBy : {
         value : "Stat 1",
@@ -66,8 +70,8 @@ const initState = {
     TentativeDistricting : null,
 
 
-    ComparisonDistrictingA : placeholderDistrictings[0],
-    ComparisonDistrictingB : placeholderDistrictings[1],
+    ComparisonDistrictingA : null,
+    ComparisonDistrictingB : null,
 }
 
 
@@ -164,6 +168,22 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 ComparisonDistrictB : action.Districting
+            }
+        case ActionTypes.ADD_FEATURE_TO_HIGHLIGHT:
+            return {
+                ...state,
+                FeaturesToHighlight : [...state.FeaturesToHighlight, action.Feature]
+            }
+        case ActionTypes.RESET_ALL_HIGHLIGHTING:
+            return {
+                ...state,
+                FeaturesToUnhighlight : state.FeaturesToHighlight,
+                FeaturesToHighlight : []
+            }
+        case ActionTypes.CLEAR_FEATURES_TO_UNHIGHLIGHT:
+            return {
+                ...state,
+                FeaturesToUnhighlight : []
             }
         default:
             return state;

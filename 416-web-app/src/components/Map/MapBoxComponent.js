@@ -5,7 +5,7 @@ import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus, setInSelectionMenu} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 import MapIcon from '@material-ui/icons/Map';
 
@@ -42,9 +42,9 @@ class MapBoxComponent extends Component{
     })
   }
 
-  removePrevHighlighting = (feature) => {
-    if (feature != null) {
-      const map = this.props.MapRef.current.getMap()
+  unhighlightFeatures = () => {
+    const map = this.props.MapRef.current.getMap()
+    this.props.FeaturesToUnhighlight.forEach(feature => {
       let source = this.props.DisplayDistricts ? MapUtilities.IDs.DISTRICT_SOURCE_ID : MapUtilities.IDs.PRECINCT_SOURCE_ID
       map.setFeatureState({
         source : source,
@@ -52,45 +52,41 @@ class MapBoxComponent extends Component{
       }, {
           hover : false
       })
-    }
+    })
   }
 
-  highlightFeature = (feature) => {
-    if (feature != null) {
-      const map = this.props.MapRef.current.getMap()
+  highlightFeatures = () => {
+    const map = this.props.MapRef.current.getMap()
+    this.props.FeaturesToHighlight.forEach(feature => {
       let source = this.props.DisplayDistricts ? MapUtilities.IDs.DISTRICT_SOURCE_ID : MapUtilities.IDs.PRECINCT_SOURCE_ID
-      map.setFeatureState({
-          source : source,
-          id : feature.id
-      }, {
-          hover : true
-      })
-    }
+        map.setFeatureState({
+            source : source,
+            id : feature.id
+        }, {
+            hover : true
+        })
+    });
   }
+
 
   _onHover = event => {
     const {
       features,
     } = event;
-    /* This finds what feature is being hovered over*/
     if (this.props.DisplayDistricts){
-      // Remove Highlighting from the previously featured district
-      this.removePrevHighlighting(this.props.FeaturedDistrict)
+      this.props.resetAllHighlighting()
       // Identify the newly featured district
       const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.DISTRICT_FILL_LAYER_ID)
-      // Update the state
-      this.props.setFeaturedDistrict(hoveredFeature)
-      // Add Highlighting to the currently featured district
-      this.highlightFeature(this.props.FeaturedDistrict)
+      if (hoveredFeature != undefined) {
+        this.props.addFeatureToHighlight(hoveredFeature)
+      }
     } else if(this.props.DisplayPrecincts) {
-      // Remove highlighting from the previously featured precinct
-      this.removePrevHighlighting(this.props.FeaturedPrecinct)
+      this.props.resetAllHighlighting()
       // Identify the newly featured precinct
       const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.PRECINCT_FILL_LAYER_ID)
-      // Update the state
-      this.props.setFeaturedPrecinct(hoveredFeature)
-      // Add highlighting to the currently featured district
-      this.highlightFeature(this.props.FeaturedPrecinct)
+      if (hoveredFeature != undefined) {
+        this.props.addFeatureToHighlight(hoveredFeature)
+      }
     }
     this._renderTooltip();
   };
@@ -108,6 +104,11 @@ class MapBoxComponent extends Component{
   }
 
   render() {
+    /* If the map reference is loaded, keep track of what to highlight and unhighlight */
+    if (this.props.Loaded) {
+      this.unhighlightFeatures()
+      this.highlightFeatures()
+    }
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}
@@ -244,6 +245,8 @@ const mapDispatchToProps = (dispatch) => {
       setMouseEntered : (bool) => {dispatch(setMouseEntered(bool))},
       setFeaturedDistrict : (district) => {dispatch(setFeaturedDistrict(district))},
       setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))},
+      addFeatureToHighlight : (feature) => {dispatch(addFeatureToHighlight(feature))},
+      resetAllHighlighting : () => {dispatch(resetAllHighlighting())},
       setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))},
       setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))}
   }
@@ -257,6 +260,8 @@ const mapStateToProps = (state, ownProps) => {
       CurrentDistricting : state.CurrentDistricting,
       FeaturedDistrict : state.FeaturedDistrict,
       FeaturedPrecinct : state.FeaturedPrecinct,
+      FeaturesToHighlight : state.FeaturesToHighlight,
+      FeaturesToUnhighlight : state.FeaturesToUnhighlight,
       MouseX : state.MouseX,
       MouseY : state.MouseY,
       MapRef : state.MapRef,
