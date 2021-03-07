@@ -129,6 +129,14 @@ export const addFeatureToHighlight = (feature) => {
     }
 }
 
+
+export const removeFeatureHighlighting = (feature) => {
+    return {
+        type : ActionTypes.REMOVE_FEATURE_HIGHLIGHTING,
+        Feature : feature
+    }
+}
+
 export const resetAllHighlighting = () => {
     return {
         type : ActionTypes.RESET_ALL_HIGHLIGHTING

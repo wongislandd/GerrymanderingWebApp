@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Collapsible, CollapsibleItem, Table } from 'react-materialize'
 import { connect } from 'react-redux'
-import {setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
+import {addFeatureToHighlight, removeFeatureHighlighting, setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
 import * as MapUtilities from '../../../utilities/MapUtilities'
 
 class CollapsibleStats extends Component{
@@ -22,6 +22,17 @@ class CollapsibleStats extends Component{
                 {this.props.DistrictingToDisplay.geoJson.features.map((feature,key) => {
                         return(
                         <CollapsibleItem 
+                        /* The key tells the highlighting engine how to identify the feature 
+                         This will work so long as the key matches the feature's ID in the visual object
+                         that the map renders, which I think it always will since it's in order. */
+                        onMouseEnter={(e) => {
+                            feature.id = key
+                            this.props.addFeatureToHighlight(feature)
+                        }}
+                        onMouseLeave={(e) => {
+                            feature.id = key
+                            this.props.removeFeatureHighlighting(feature)
+                        }}
                         expanded={false}
                         key={key}
                         header={"District " + (key+1)}
@@ -57,6 +68,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setFeaturedDistrict : (district) => {dispatch(setFeaturedDistrict(district))},
         setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))},
+        addFeatureToHighlight : (feature) => {dispatch(addFeatureToHighlight(feature))},
+        removeFeatureHighlighting : (feature) => {dispatch(removeFeatureHighlighting(feature))}
     }
   }
   

@@ -174,6 +174,13 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 FeaturesToHighlight : [...state.FeaturesToHighlight, action.Feature]
             }
+        case ActionTypes.REMOVE_FEATURE_HIGHLIGHTING:
+            const NewFeaturesToHighlight = state.FeaturesToHighlight.filter(feature => feature.id != action.Feature.id);
+            return {
+                ...state,
+                FeaturesToHighlight : NewFeaturesToHighlight,
+                FeaturesToUnhighlight : [...state.FeaturesToUnhighlight, action.Feature]
+            }
         case ActionTypes.RESET_ALL_HIGHLIGHTING:
             return {
                 ...state,

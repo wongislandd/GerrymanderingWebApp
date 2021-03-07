@@ -58,6 +58,7 @@ class MapBoxComponent extends Component{
   highlightFeatures = () => {
     const map = this.props.MapRef.current.getMap()
     this.props.FeaturesToHighlight.forEach(feature => {
+      console.log(feature)
       let source = this.props.DisplayDistricts ? MapUtilities.IDs.DISTRICT_SOURCE_ID : MapUtilities.IDs.PRECINCT_SOURCE_ID
         map.setFeatureState({
             source : source,
@@ -77,6 +78,7 @@ class MapBoxComponent extends Component{
       this.props.resetAllHighlighting()
       // Identify the newly featured district
       const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.DISTRICT_FILL_LAYER_ID)
+      this.props.setFeaturedDistrict(hoveredFeature)
       if (hoveredFeature != undefined) {
         this.props.addFeatureToHighlight(hoveredFeature)
       }
@@ -84,6 +86,7 @@ class MapBoxComponent extends Component{
       this.props.resetAllHighlighting()
       // Identify the newly featured precinct
       const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.PRECINCT_FILL_LAYER_ID)
+      this.props.setFeaturedPrecinct(hoveredFeature)
       if (hoveredFeature != undefined) {
         this.props.addFeatureToHighlight(hoveredFeature)
       }
