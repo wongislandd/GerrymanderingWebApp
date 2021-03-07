@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
 //import PrecinctGeoData from '../../data/NC/ReducedPrecinctGeoData.json'
 import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
+import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
 import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus, setInSelectionMenu} from '../../redux/actions/settingActions'
@@ -170,6 +171,37 @@ class MapBoxComponent extends Component{
                 "line-opacity": 1
               }}/>
           <Source
+            id = {MapUtilities.IDs.COUNTY_SOURCE_ID}
+            type="geojson"
+            data = {CountyGeoData}
+            generateId = {true}/>
+          <Layer
+            id = {MapUtilities.IDs.COUNTY_FILL_LAYER_ID}
+            type="fill"
+            source={MapUtilities.IDs.COUNTY_SOURCE_ID}
+            layout={{
+              "visibility": this.props.DisplayCounties ? "visible" : "none"
+            }}
+            paint={{
+              "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
+              "fill-opacity": [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                .6,
+                .3,
+              ]
+            }}/>
+          <Layer
+              id = {MapUtilities.IDs.COUNTY_LINE_LAYER_ID}
+              type = "line"
+              source={MapUtilities.IDs.COUNTY_SOURCE_ID}
+              layout={{
+                "visibility": this.props.DisplayCounties ? "visible" : "none"
+              }}
+              paint={{
+                "line-opacity": 1
+              }}/>
+          <Source
             id = {MapUtilities.IDs.DISTRICT_SOURCE_ID}
             type = "geojson"
             data = {this.props.CurrentDistricting.geoJson}
@@ -221,6 +253,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
       DisplayPrecincts : state.DisplayPrecincts,
       DisplayDistricts : state.DisplayDistricts,
+      DisplayCounties : state.DisplayCounties,
       CurrentDistricting : state.CurrentDistricting,
       FeaturedDistrict : state.FeaturedDistrict,
       FeaturedPrecinct : state.FeaturedPrecinct,

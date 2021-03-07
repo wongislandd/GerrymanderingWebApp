@@ -14,6 +14,13 @@ export const toggleDistrictSwitch = (bool) => {
     }
 }
 
+export const toggleCountySwitch = (bool) => {
+    return {
+        type: ActionTypes.TOGGLE_COUNTY_SWITCH,
+        DisplayCounties : bool
+    }
+}
+
 export const setTentativeDistricting = (districting) => {
     return {
         type: ActionTypes.SET_TENTATIVE_DISTRICTING,

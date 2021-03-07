@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col, Switch } from 'react-materialize'
 import * as ToolbarUtilities from '../../../../utilities/ToolbarUtilities.js'
 import { connect } from 'react-redux'
-import { togglePrecinctSwitch, toggleDistrictSwitch} from '../../../../redux/actions/settingActions'
+import { togglePrecinctSwitch, toggleDistrictSwitch, toggleCountySwitch} from '../../../../redux/actions/settingActions'
 
 class SettingsMode extends Component {
     render() {
@@ -12,6 +12,9 @@ class SettingsMode extends Component {
                 <Col s={8}>
                 <Row>
                     {ToolbarUtilities.LABELS.TOGGLE_PRECINCT_DISPLAY_LABEL}
+                </Row>
+                <Row>
+                    {ToolbarUtilities.LABELS.TOGGLE_COUNTY_DISPLAY_LABEL}
                 </Row>
                 <Row>
                     {ToolbarUtilities.LABELS.TOGGLE_DISTRICT_DISPLAY_LABEL}
@@ -25,6 +28,15 @@ class SettingsMode extends Component {
                         onLabel="On"
                         onChange = {(e)=>this.props.togglePrecinctSwitch(!this.props.DisplayPrecincts)}
                         checked = {this.props.DisplayPrecincts}
+                    />
+                    </Row>
+                    <Row>
+                    <Switch
+                        id={ToolbarUtilities.CONSTANTS.COUNTY_SWITCH_ID}
+                        offLabel="Off"
+                        onLabel="On"
+                        onChange = {(e)=>this.props.toggleCountySwitch(!this.props.DisplayCounties)}
+                        checked = {this.props.DisplayCounties}
                     />
                     </Row>
                     <Row>
@@ -47,7 +59,8 @@ class SettingsMode extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         togglePrecinctSwitch : (bool) => {dispatch(togglePrecinctSwitch(bool))},
-        toggleDistrictSwitch : (bool) => {dispatch(toggleDistrictSwitch(bool))}
+        toggleCountySwitch : (bool) => {dispatch(toggleCountySwitch(bool))},
+        toggleDistrictSwitch : (bool) => {dispatch(toggleDistrictSwitch(bool))},
     }
 }
 
@@ -55,7 +68,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
     return {
         DisplayPrecincts : state.DisplayPrecincts,
-        DisplayDistricts : state.DisplayDistricts
+        DisplayDistricts : state.DisplayDistricts,
+        DisplayCounties : state.DisplayCounties,
     }
 }
 

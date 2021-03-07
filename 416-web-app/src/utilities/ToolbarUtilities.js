@@ -13,7 +13,8 @@ export const MODES = {
 
 export const CONSTANTS = {
     PRECINCT_SWITCH_ID : "precinct-switch",
-    DISTRICT_SWITCH_ID : "district-switch"
+    DISTRICT_SWITCH_ID : "district-switch",
+    COUNTY_SWITCH_ID : "county-switch"
 }
 
 export const LABELS = {
@@ -23,6 +24,7 @@ export const LABELS = {
     TOOLBAR_FILTER_HEADER_LABEL : "Filter",
     TOGGLE_PRECINCT_DISPLAY_LABEL : "Display Precincts",
     TOGGLE_DISTRICT_DISPLAY_LABEL : "Display Districts",
+    TOGGLE_COUNTY_DISPLAY_LABEL : "Display Counties",
     INCUMBENT_PROTECTION_OPTIONS_LABEL : "Incumbent Protection Options",
     PROTECTED_POLITICANS_LABEL : "Protected Politicans",
     FILTER_SUMMARY_LABEL : "Filter Summary",

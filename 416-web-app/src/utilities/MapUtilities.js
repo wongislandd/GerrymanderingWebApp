@@ -17,6 +17,9 @@ export const IDs = {
     PRECINCT_FILL_LAYER_ID : "precinct-fill-layer",
     DISTRICT_LINE_LAYER_ID : "district-outline-layer",
     DISTRICT_FILL_LAYER_ID : "district-fill-layer",
+    COUNTY_LINE_LAYER_ID : "county-outline-layer",
+    COUNTY_FILL_LAYER_ID : "county-fill-layer",
     PRECINCT_SOURCE_ID : "precinct-source",
-    DISTRICT_SOURCE_ID : "district-source"
+    DISTRICT_SOURCE_ID : "district-source",
+    COUNTY_SOURCE_ID : "county-source"
 }

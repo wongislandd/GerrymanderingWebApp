@@ -15,6 +15,7 @@ const placeholderDistrictings = [
 /* Initial State */
 const initState = {
     DisplayPrecincts : false,
+    DisplayCounties : false,
     DisplayDistricts : true,
     CurrentDistricting : placeholderDistrictings[2],
     FeaturedDistrict : null,
@@ -84,6 +85,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 DisplayDistricts : action.DisplayDistricts
+            }
+        case ActionTypes.TOGGLE_COUNTY_SWITCH:
+            return {
+                ...state,
+                DisplayCounties : action.DisplayCounties
             }
         case ActionTypes.SET_TENTATIVE_DISTRICTING:
             return {
