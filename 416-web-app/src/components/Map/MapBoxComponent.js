@@ -121,7 +121,11 @@ class MapBoxComponent extends Component{
             {this.props.CurrentDistricting.name}
             </span>
               </div>
-            </div>
+          </div>
+          {/* Option to enter the selection menu */}
+          <div className="viewAndFilterDistrictingsOption" onClick={(e)=>{this.props.setInSelectionMenu(true)}}>
+            {MapUtilities.MESSAGES.ViewAndFilterDistrictingsMsg}
+          </div>
           <ReactMapGL 
             className = "map-display"
             {...this.state.viewport} 

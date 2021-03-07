@@ -40,7 +40,7 @@ class HistoryMode extends Component {
                         >
                             {ToolbarUtilities.LABELS.CHOOSE_A_DISTRICTING_LABEL}
                         </option>
-                        {this.props.DistrictingHistory.map((districting, key) => {
+                        {this.props.FilteredDistrictings.map((districting, key) => {
 
                             return <option key={key} value={JSON.stringify(districting)}>{districting.name}</option>
                         })}
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        DistrictingHistory : state.DistrictingHistory,
+        FilteredDistrictings : state.FilteredDistrictings,
         TentativeDistricting : state.TentativeDistricting,
         CurrentDistricting : state.CurrentDistricting
     }

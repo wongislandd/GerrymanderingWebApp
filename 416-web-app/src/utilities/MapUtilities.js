@@ -8,7 +8,8 @@ export const VALUES = {
 }
 
 export const MESSAGES = {
-    NoInfoToDisplayMsg : "Hover over a display to see more info!"
+    NoInfoToDisplayMsg : "Hover over a display to see more info!",
+    ViewAndFilterDistrictingsMsg : "View and Filter Districtings"
 }
 
 export const IDs = {

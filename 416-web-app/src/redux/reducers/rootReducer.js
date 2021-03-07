@@ -7,7 +7,7 @@ import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019
 import Filter from '../../utilities/classes/Filter'
 
 /* Eventually I think it'll be best to load all these JSON files in through network instead of local storage. */
-const placeholderHistory = [
+const placeholderDistrictings = [
         new Districting("Enacted Districting Nov 2011 - Feb 2016", EnactedDistrictingPlan2011),
         new Districting("Enacted Districting Feb 2016 - Nov 2019", EnactedDistrictingPlan2016), 
         new Districting("Enacted Districting Nov 2019 - Dec 2021", EnactedDistrictingPlan2019)]
@@ -16,15 +16,19 @@ const placeholderHistory = [
 const initState = {
     DisplayPrecincts : false,
     DisplayDistricts : true,
-    CurrentDistricting : placeholderHistory[2],
+    CurrentDistricting : placeholderDistrictings[2],
     FeaturedDistrict : null,
     FeaturedPrecinct : null,
     /* Map Reference */
+
     MapRef : React.createRef(),
 
     InSelectionMenu : true,
 
-
+    SortedBy : {
+        value : "Stat 1",
+        descending : true
+    },
 
     /* Filtering Settings */
     FilterSettings : [
@@ -53,12 +57,16 @@ const initState = {
 
 
     /* History */
-    DistrictingHistory : placeholderHistory
+    FilteredDistrictings : placeholderDistrictings
     ,
     /* The tentative districting is for when a user 
     selected a districting in the history tab but 
     hasn't yet loaded it*/
     TentativeDistricting : null,
+
+
+    ComparisonDistrictingA : placeholderDistrictings[0],
+    ComparisonDistrictingB : placeholderDistrictings[1],
 }
 
 
@@ -132,6 +140,24 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 InSelectionMenu : action.In
+            }
+        case ActionTypes.CHANGE_VALUE_SORTED_BY:
+            return {
+                ...state,
+                SortedBy : {
+                    value : action.Value,
+                    descending : action.Descending
+                }
+            }
+        case ActionTypes.CHANGE_COMPARISON_DISTRICTING_A:
+            return {
+                ...state,
+                ComparisonDistrictA : action.Districting
+            }
+        case ActionTypes.CHANGE_COMPARISON_DISTRICTING_B:
+            return {
+                ...state,
+                ComparisonDistrictB : action.Districting
             }
         default:
             return state;

@@ -130,10 +130,23 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   border-radius: 4px;
 }
 
+.viewAndFilterDistrictingsOption {
+  background-color: brown;
+  color: #ffffff;
+  padding: 6px 12px;
+  font: 15px/24px monospace;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 500px;
+  margin: 12px;
+  border-radius: 4px;
+}
+
 
 .SelectionMenuContainer {
   display: grid;
-  grid-template-columns: 300px 1200px 420px;
+  grid-template-columns: 420px 1080px 420px;
 }
 
 .SelectionMenuSection {
@@ -164,8 +177,47 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   
 }
 
+/* Whenever you want to center text */
+.center-title {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+
+.DistrictingResultsHeader {
+  /* Override row property */
+  margin-left: 0 !important;
+}
+
 
 .ReturnToMapBtn {
   height: 100px;
   background-color: brown;
+}
+
+.filterSectionItem {
+  padding: 30px;
+}
+
+.DistrictingResultsHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.DistrictingResultsHeader > h5 {
+  font-weight: bold;
+  padding-left: 10px;
+  margin: 2.1rem 0 0 0 !important
+}
+
+
+.DistrictingHolderBox {
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-weight: bold;
+}
+
+.DistrictingComparisonItem {
+  
 }

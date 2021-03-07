@@ -91,3 +91,25 @@ export const setInSelectionMenu = (bool) => {
         In : bool
     }
 }
+
+export const changeValueSortedBy = (value, descending) => {
+    return {
+        type: ActionTypes.CHANGE_VALUE_SORTED_BY,
+        Value : value,
+        Descending : descending
+    }
+}
+
+export const changeComparisonDistrictingA = (districting) => {
+    return {
+        type: ActionTypes.CHANGE_COMPARISON_DISTRICTING_A,
+        Districting : districting
+    }
+}
+
+export const changeComparisonDistrictingB = (districting) => {
+    return {
+        type: ActionTypes.CHANGE_COMPARISON_DISTRICTING_B,
+        Districting : districting
+    }
+}
