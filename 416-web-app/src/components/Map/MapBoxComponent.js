@@ -4,7 +4,7 @@ import ReactMapGL, { Layer, Source } from "react-map-gl"
 import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus, setInSelectionMenu} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 import MapIcon from '@material-ui/icons/Map';
 
@@ -117,7 +117,7 @@ class MapBoxComponent extends Component{
           <div className="currentDistrictingNameSidebar" onClick={(e)=>this.recenterMap()}>
             <div className="iconAndLabel">
             <MapIcon/>
-            <span>
+            <span onClick={(e) => (e)=>this.props.setInSelectionMenu(true)}>
             {this.props.CurrentDistricting.name}
             </span>
               </div>
@@ -208,7 +208,8 @@ const mapDispatchToProps = (dispatch) => {
       setMouseEntered : (bool) => {dispatch(setMouseEntered(bool))},
       setFeaturedDistrict : (district) => {dispatch(setFeaturedDistrict(district))},
       setFeaturedPrecinct : (precinct) => {dispatch(setFeaturedPrecinct(precinct))},
-      setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))}
+      setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))},
+      setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))}
   }
 }
 

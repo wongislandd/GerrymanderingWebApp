@@ -128,6 +128,11 @@ const rootReducer = (state = initState, action) => {
                     ...state.IncumbentProtectionInfo, [action.Key] : action.NewValue
                 }
             }
+        case ActionTypes.SET_IN_SELECTION_MENU:
+            return {
+                ...state,
+                InSelectionMenu : action.In
+            }
         default:
             return state;
     }

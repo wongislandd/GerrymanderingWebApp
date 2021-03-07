@@ -84,3 +84,10 @@ export const updateIncumbentProtection = (key, newValue) => {
         NewValue : newValue
     }
 }
+
+export const setInSelectionMenu = (bool) => {
+    return {
+        type : ActionTypes.SET_IN_SELECTION_MENU,
+        In : bool
+    }
+}

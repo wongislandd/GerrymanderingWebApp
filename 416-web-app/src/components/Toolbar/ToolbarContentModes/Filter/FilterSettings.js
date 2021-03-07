@@ -57,7 +57,6 @@ class FilterSettings extends Component {
                         })}
                     </CollapsibleItem>
                     </Collapsible>
-
                 </Row>
             </div>
         )

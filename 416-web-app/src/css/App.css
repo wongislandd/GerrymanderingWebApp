@@ -128,4 +128,44 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   left: 0;
   margin: 12px;
   border-radius: 4px;
-  }
+}
+
+
+.SelectionMenuContainer {
+  display: grid;
+  grid-template-columns: 300px 1200px 420px;
+}
+
+.SelectionMenuSection {
+  height: 937px;
+  background: #fff9aa;
+  border-color: #acecd5;
+  flex-grow: 1;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: .5px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.CompareSection {
+  flex-grow: 1;
+}
+
+
+.ListingSection {
+
+
+}
+
+.FilterSection {
+
+  
+}
+
+
+.ReturnToMapBtn {
+  height: 100px;
+  background-color: brown;
+}
