@@ -29,9 +29,40 @@ class CollapsibleStats extends Component{
                 <CollapsibleItem
                     expanded={false}
                     key={-1}
-                    header={"Districting Summary"}
+                    header={"Objective Function Details"}
                 >
-                    Averaged summary information about this districting will go here.
+                    <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Population Equality</TableCell>
+                                <TableCell align="right">Split Counties</TableCell>
+                                <TableCell align="right">Compactness</TableCell>
+                                <TableCell align="right">Deviation from Average</TableCell>
+                                <TableCell align="right">Deviation from Enacted</TableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell scope="row">
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['POPULATION_EQUALITY']}
+                                    </TableCell>
+                                    <TableCell align="right">    
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['SPLIT_COUNTIES']}               
+                                    </TableCell>
+                                    <TableCell align="right">          
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['DEVIATION_FROM_AVG_DISTRICTING']}         
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['DEVIATION_FROM_ENACTED_PLAN']}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['COMPACTNESS']}
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
                 </CollapsibleItem>
                 {this.props.DistrictingToDisplay.geoJson.features.map((feature,key) => {
                         return(

@@ -151,7 +151,6 @@ class MapBoxComponent extends Component{
     if (!this.props.ViewingDistrictDetails && this.props.MinimizedMap) {
       this.maximizeMap()
     }
-    console.log(this.state.minimized)
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}
