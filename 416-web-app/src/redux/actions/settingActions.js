@@ -76,9 +76,17 @@ export const setLoadedStatus = (bool) => {
     }
 }
 
-export const updateFilterSettings = (key, newValue) => {
+export const updateObjectiveFunctionSettings = (key, newValue) => {
     return {
-        type : ActionTypes.UPDATE_FILTER_SETTINGS,
+        type : ActionTypes.UPDATE_OBJECTIVE_FUNCTION_SETTINGS,
+        Key : key,
+        NewValue : newValue
+    }
+}
+
+export const updateConstraintSettings = (key, newValue) => {
+    return {
+        type : ActionTypes.UPDATE_CONSTRAINT_SETTINGS,
         Key : key,
         NewValue : newValue
     }
@@ -146,5 +154,12 @@ export const resetAllHighlighting = () => {
 export const clearFeaturesToUnhighlight = () => {
     return {
         type : ActionTypes.CLEAR_FEATURES_TO_UNHIGHLIGHT
+    }
+}
+
+export const loadInDistrictings = (districtings) => {
+    return {
+        type : ActionTypes.LOAD_IN_DISTRICTINGS,
+        Districtings : districtings
     }
 }

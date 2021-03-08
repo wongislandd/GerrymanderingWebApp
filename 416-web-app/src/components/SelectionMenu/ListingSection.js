@@ -50,6 +50,7 @@ class ListingSection extends Component {
     }
 }
 
+
 const mapStateToProps = (state, ownProps) => {
     return {
         FilteredDistrictings : state.FilteredDistrictings,

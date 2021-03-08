@@ -48,12 +48,12 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 /* Hide scrollbar in Chrome */
-.toolbar-content-full::-webkit-scrollbar, .toolbar-content-bottom::-webkit-scrollbar, .toolbar-content-top::-webkit-scrollbar {
+.toolbar-content-full::-webkit-scrollbar, .toolbar-content-bottom::-webkit-scrollbar, .toolbar-content-top::-webkit-scrollbar, .SelectionMenuSection::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.toolbar-content-full, .toolbar-content-bottom, .toolbar-content-top {
+.toolbar-content-full, .toolbar-content-bottom, .toolbar-content-top, .SelectionMenuSection {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
@@ -151,6 +151,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 .SelectionMenuSection {
   height: 937px;
+  max-height: 1000px;
   background: #fff9aa;
   border-color: #acecd5;
   flex-grow: 1;
@@ -160,6 +161,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   display: flex;
   flex-direction: column;
   padding: 5px;
+  overflow-y: scroll;
 }
 
 .CompareSection {
@@ -220,4 +222,16 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 .DistrictingComparisonItem {
   
+}
+
+.redBrownBtn {
+  background-color: brown;
+}
+
+.centerWithinMe{
+  text-align: center;
+}
+
+.districtingInfoSection {
+  align-content: center;
 }

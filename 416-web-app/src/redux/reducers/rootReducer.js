@@ -1,23 +1,16 @@
 import * as ActionTypes from '../actions/ActionTypes'
 import Districting from '../../utilities/classes/Districting'
 import React from 'react'
-import EnactedDistrictingPlan2011 from '../../data/NC/EnactedDistrictingPlan2011WithData.json'
-import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
-import EnactedDistrictingPlan2019 from '../../data/NC/EnactedDistrictingPlan2019WithData.json'
 import Filter from '../../utilities/classes/Filter'
 
-/* Eventually I think it'll be best to load all these JSON files in through network instead of local storage. */
-const placeholderDistrictings = [
-        new Districting("Enacted Districting Nov 2011 - Feb 2016", EnactedDistrictingPlan2011),
-        new Districting("Enacted Districting Feb 2016 - Nov 2019", EnactedDistrictingPlan2016), 
-        new Districting("Enacted Districting Nov 2019 - Dec 2021", EnactedDistrictingPlan2019)]
+
 
 /* Initial State */
 const initState = {
     DisplayPrecincts : false,
     DisplayCounties : false,
     DisplayDistricts : true,
-    CurrentDistricting : placeholderDistrictings[2],
+    CurrentDistricting : null,
     FeaturedDistrict : null,
     FeaturedPrecinct : null,
 
@@ -35,17 +28,27 @@ const initState = {
         descending : true
     },
 
-    /* Filtering Settings */
-    FilterSettings : [
-        new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1),
-        new Filter("Compactness", .5, 0, 1, .05),
-        new Filter("Population Equality", 5, 0, 10, 1),
+
+    /* Objective Function Weights */
+    ObjectiveFunctionSettings : [
+        new Filter("Population Equality", .5, 0, 1, .05),
+        new Filter("Split Counties", .5, 0, 1, .05),
+        new Filter("Deviation from Average Districting", .5, 0, 1, .05),
+        new Filter("Deviation from Enacted Plan (Area and Population)", .5, 0, 1, .05),
+        new Filter("Compactness (Polsby-Popper)", .5, 0, 1, .05),
     ],
 
+    /* Constraint Settings */
+    ConstraintSettings : [
+        new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1),
+    ],
+
+    
     /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
     All incumbents start off as false (not protected) */
-    IncumbentProtectionInfo : {"Stella Pang" : false,
+    IncumbentProtectionInfo : {
+                    "Stella Pang" : false,
                     "Jihu Mun" : false,
                     "Jim Hyunh" : false,
                     "Christopher Wong" : true},
@@ -62,8 +65,8 @@ const initState = {
 
 
     /* History */
-    FilteredDistrictings : placeholderDistrictings
-    ,
+    FilteredDistrictings : [],
+    
     /* The tentative districting is for when a user 
     selected a districting in the history tab but 
     hasn't yet loaded it*/
@@ -79,6 +82,7 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
+    console.log(action)
     switch (action.type) {
         case ActionTypes.TOGGLE_PRECINCT_SWITCH:
             return {
@@ -132,12 +136,19 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 Loaded : action.Loaded
             }
-        case ActionTypes.UPDATE_FILTER_SETTINGS:
-            const newSettings = [...state.FilterSettings]
+        case ActionTypes.UPDATE_OBJECTIVE_FUNCTION_SETTINGS:
+            var newSettings = [...state.ObjectiveFunctionSettings]
             newSettings[action.Key].value = action.NewValue
             return {
                 ...state,
-                FilterSettings : newSettings
+                ObjectiveFunctionSettings : newSettings
+            }
+        case ActionTypes.UPDATE_CONSTRAINT_SETTINGS:
+            var newSettings = [...state.ConstraintSettings]
+            newSettings[action.Key].value = action.NewValue
+            return {
+                ...state,
+                ConstraintSettings : newSettings
             }
         case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
             return {
@@ -191,6 +202,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 FeaturesToUnhighlight : []
+            }
+        case ActionTypes.LOAD_IN_DISTRICTINGS:
+            return {
+                ...state,
+                FilteredDistrictings : action.Districtings
             }
         default:
             return state;

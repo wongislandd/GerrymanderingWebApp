@@ -109,6 +109,28 @@ class MapBoxComponent extends Component{
     this.props.setLoadedStatus(false)
   }
 
+
+  loadPrecinctLayer(map) {
+
+  }
+
+  loadCountyLayer(map) {
+
+  }
+
+  loadDistrictLayer(map) {
+
+  }
+
+  loadLayers() {
+    const map = this.props.MapRef
+    this.loadPrecinctLayer(map)
+    this.loadCountyLayer(map)
+    this.loadDistrictLayer(map)
+  }
+
+
+
   render() {
     /* If the map reference is loaded, keep track of what to highlight and unhighlight */
     if (this.props.Loaded) {
@@ -142,6 +164,7 @@ class MapBoxComponent extends Component{
               this.setViewport(viewport)
             }}
             onHover={this._onHover.bind(this)}
+            onLoad={()=>this.loadLayers()}
             // Tie this reference to the one in the state
             ref = {this.props.MapRef}
           >

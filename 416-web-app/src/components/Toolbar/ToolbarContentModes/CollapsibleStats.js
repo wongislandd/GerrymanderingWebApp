@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Collapsible, CollapsibleItem, Table } from 'react-materialize'
+import { Collapsible, CollapsibleItem} from 'react-materialize'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@material-ui/core'
 import { connect } from 'react-redux'
 import {addFeatureToHighlight, removeFeatureHighlighting, setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
 import * as MapUtilities from '../../../utilities/MapUtilities'
@@ -11,7 +12,7 @@ class CollapsibleStats extends Component{
 
     render() {
         return (
-            <Collapsible className="stat-window" accordion={false}>
+            <Collapsible className="stat-window" accordion>
                 <CollapsibleItem
                     expanded={false}
                     key={-1}
@@ -40,22 +41,28 @@ class CollapsibleStats extends Component{
                             backgroundColor: "rgba(" + feature.properties["rgb-R"] + "," + feature.properties["rgb-G"] + "," + feature.properties["rgb-B"] + "," + MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY + ")",
                         }}
                         >
-                        <Table>
-                        <thead>
-                            <tr>
-                                {Object.keys(feature.properties).map((jsonProperty, key) => {
-                                    return <th key = {key} data-field={jsonProperty}>{jsonProperty}</th>
-                                })}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {Object.keys(feature.properties).map((jsonProperty, key) => {
-                                    return <td key = {key}>{feature.properties[jsonProperty]}</td>
-                                })}
-                            </tr>
-                        </tbody>
+                         <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell>Population</TableCell>
+                                <TableCell align="right">Pop. Deviation from Ideal</TableCell>
+                                <TableCell align="right">Minority Population</TableCell>
+                                <TableCell align="right">Democratic Voters</TableCell>
+                                <TableCell align="right">Republican Voters</TableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableCell scope="row">
+                                    YES
+                                </TableCell>
+                                <TableCell align="right">a</TableCell>
+                                <TableCell align="right">b</TableCell>
+                                <TableCell align="right">c</TableCell>
+                                <TableCell align="right">d</TableCell>
+                            </TableBody>
                         </Table>
+                        </TableContainer>
                         </CollapsibleItem>
                         )
                 })}
