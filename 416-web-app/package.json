@@ -14,6 +14,7 @@
     "react-dom": "^17.0.1",
     "react-map-gl": "^6.1.8",
     "react-materialize": "^3.9.7",
+    "react-minimal-pie-chart": "^8.1.0",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.2",
     "react-scrollbars-custom": "^4.0.25",

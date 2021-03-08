@@ -110,30 +110,28 @@ class MapBoxComponent extends Component{
   }
 
 
-  loadPrecinctLayer(map) {
+  // loadPrecinctLayer(map) {
 
-  }
+  // }
 
-  loadCountyLayer(map) {
+  // loadCountyLayer(map) {
 
-  }
+  // }
 
-  loadDistrictLayer(map) {
+  // loadDistrictLayer(map) {
 
-  }
+  // }
 
-  loadLayers() {
-    const map = this.props.MapRef
-    this.loadPrecinctLayer(map)
-    this.loadCountyLayer(map)
-    this.loadDistrictLayer(map)
-  }
-
-
+  // loadLayers() {
+  //   const map = this.props.MapRef.current.getMap()
+  //   this.loadPrecinctLayer(map)
+  //   this.loadCountyLayer(map)
+  //   this.loadDistrictLayer(map)
+  // }
 
   render() {
     /* If the map reference is loaded, keep track of what to highlight and unhighlight */
-    if (this.props.Loaded) {
+    if (this.props.Loaded && this.props.MapRef.current.getMap().style._loaded) {
       this.unhighlightFeatures()
       this.highlightFeatures()
     }
@@ -164,7 +162,6 @@ class MapBoxComponent extends Component{
               this.setViewport(viewport)
             }}
             onHover={this._onHover.bind(this)}
-            onLoad={()=>this.loadLayers()}
             // Tie this reference to the one in the state
             ref = {this.props.MapRef}
           >

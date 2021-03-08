@@ -4,6 +4,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { connect } from 'react-redux'
 import {addFeatureToHighlight, removeFeatureHighlighting, setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
 import * as MapUtilities from '../../../utilities/MapUtilities'
+import { PieChart } from 'react-minimal-pie-chart'
+
 
 class CollapsibleStats extends Component{
     constructor(props){
@@ -41,25 +43,57 @@ class CollapsibleStats extends Component{
                             backgroundColor: "rgba(" + feature.properties["rgb-R"] + "," + feature.properties["rgb-G"] + "," + feature.properties["rgb-B"] + "," + MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY + ")",
                         }}
                         >
-                         <TableContainer component={Paper}>
+                        <h5>Voter Demographics</h5>
+                        <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead>
                             <TableRow>
-                                <TableCell>Population</TableCell>
-                                <TableCell align="right">Pop. Deviation from Ideal</TableCell>
-                                <TableCell align="right">Minority Population</TableCell>
-                                <TableCell align="right">Democratic Voters</TableCell>
-                                <TableCell align="right">Republican Voters</TableCell>
+                                <TableCell>Total Voters</TableCell>
+                                <TableCell align="right">Democratic Affiliated</TableCell>
+                                <TableCell align="right">Republican Affiliated</TableCell>
+                                <TableCell align="right">Other Affiliations</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
+                                <TableRow>
                                 <TableCell scope="row">
-                                    YES
+                                {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT]}
                                 </TableCell>
-                                <TableCell align="right">a</TableCell>
-                                <TableCell align="right">b</TableCell>
-                                <TableCell align="right">c</TableCell>
-                                <TableCell align="right">d</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT]}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
+                        <h5>Racial Demographics</h5>
+                        <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell>Total Population</TableCell>
+                                <TableCell align="right">White</TableCell>
+                                <TableCell align="right">Black</TableCell>
+                                <TableCell align="right">Asian</TableCell>
+                                <TableCell align="right">Native American or Alaskan Native</TableCell>
+                                <TableCell align="right">Native Hawaiian or Pacific Islander</TableCell>
+                                <TableCell align="right">Undesignated</TableCell>
+                                <TableCell align="right">Other</TableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                <TableCell scope="row">
+                                {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION]}
+                                </TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.ASIAN_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.NATIVE_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.PACIFIC_ISLANDER_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT]}</TableCell>
+                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT]}</TableCell>
+                                </TableRow>
                             </TableBody>
                         </Table>
                         </TableContainer>
