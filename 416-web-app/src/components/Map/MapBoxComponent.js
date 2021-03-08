@@ -5,7 +5,7 @@ import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMapReference, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 import MapIcon from '@material-ui/icons/Map';
 
@@ -18,7 +18,7 @@ class MapBoxComponent extends Component{
         longitude: MapUtilities.NC.LONGITUDE,
         width: "75vw",
         height: window.innerHeight,
-        zoom: 6.5 
+        zoom: 6.5
       }
     }
   }
@@ -35,12 +35,39 @@ class MapBoxComponent extends Component{
       viewport : {
         latitude : MapUtilities.NC.LATTITUDE, 
         longitude: MapUtilities.NC.LONGITUDE,
+        width: this.props.ViewingDistrictDetails ? "30vw" : "75vw",
+        height: window.innerHeight,
+        zoom: this.props.ViewingDistrictDetails ? 5.3 : 6.5
+      },
+    })
+  }
+
+  minimizeMap() {
+    this.props.setMinimizedMap(true)
+    this.setState({
+      viewport : {
+        latitude : MapUtilities.NC.LATTITUDE, 
+        longitude: MapUtilities.NC.LONGITUDE,
+        width: "30vw",
+        height: window.innerHeight,
+        zoom: 5.3
+      }
+    })
+  }
+
+  maximizeMap() {
+    this.props.setMinimizedMap(false)
+    this.state = {
+      viewport : {
+        latitude : MapUtilities.NC.LATTITUDE, 
+        longitude: MapUtilities.NC.LONGITUDE,
         width: "75vw",
         height: window.innerHeight,
         zoom: 6.5
       }
-    })
+    }
   }
+
 
   unhighlightFeatures = () => {
     const map = this.props.MapRef.current.getMap()
@@ -110,24 +137,6 @@ class MapBoxComponent extends Component{
   }
 
 
-  // loadPrecinctLayer(map) {
-
-  // }
-
-  // loadCountyLayer(map) {
-
-  // }
-
-  // loadDistrictLayer(map) {
-
-  // }
-
-  // loadLayers() {
-  //   const map = this.props.MapRef.current.getMap()
-  //   this.loadPrecinctLayer(map)
-  //   this.loadCountyLayer(map)
-  //   this.loadDistrictLayer(map)
-  // }
 
   render() {
     /* If the map reference is loaded, keep track of what to highlight and unhighlight */
@@ -135,6 +144,14 @@ class MapBoxComponent extends Component{
       this.unhighlightFeatures()
       this.highlightFeatures()
     }
+    /* Use these two for map resizing based on viewing stats (since we need more room to view stats)*/
+    if (this.props.ViewingDistrictDetails && !this.props.MinimizedMap) {
+      this.minimizeMap()
+    }
+    if (!this.props.ViewingDistrictDetails && this.props.MinimizedMap) {
+      this.maximizeMap()
+    }
+    console.log(this.state.minimized)
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}
@@ -274,7 +291,8 @@ const mapDispatchToProps = (dispatch) => {
       addFeatureToHighlight : (feature) => {dispatch(addFeatureToHighlight(feature))},
       resetAllHighlighting : () => {dispatch(resetAllHighlighting())},
       setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))},
-      setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))}
+      setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))},
+      setMinimizedMap : (bool) => {dispatch(setMinimizedMap(bool))}
   }
 }
 
@@ -283,11 +301,13 @@ const mapStateToProps = (state, ownProps) => {
       DisplayPrecincts : state.DisplayPrecincts,
       DisplayDistricts : state.DisplayDistricts,
       DisplayCounties : state.DisplayCounties,
+      ViewingDistrictDetails : state.ViewingDistrictDetails,
       CurrentDistricting : state.CurrentDistricting,
       FeaturedDistrict : state.FeaturedDistrict,
       FeaturedPrecinct : state.FeaturedPrecinct,
       FeaturesToHighlight : state.FeaturesToHighlight,
       FeaturesToUnhighlight : state.FeaturesToUnhighlight,
+      MinimizedMap : state.MinimizedMap,
       MouseX : state.MouseX,
       MouseY : state.MouseY,
       MapRef : state.MapRef,

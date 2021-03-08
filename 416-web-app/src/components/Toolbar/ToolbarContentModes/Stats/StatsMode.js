@@ -2,8 +2,18 @@ import React, { Component } from 'react'
 import { Row } from 'react-materialize'
 import CollapsibleStats from '../CollapsibleStats'
 import { connect } from 'react-redux'
+import { setViewingDistrictDetails } from '../../../../redux/actions/settingActions'
 
 class StatsMode extends Component {
+    
+    componentDidMount() {
+        this.props.setViewingDistrictDetails(true)
+    }
+
+    componentWillUnmount() {
+        this.props.setViewingDistrictDetails(false)
+    }
+
     render() {
         return (
             <div className="ToolbarContent">
@@ -16,6 +26,12 @@ class StatsMode extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setViewingDistrictDetails : (bool) => {dispatch(setViewingDistrictDetails(bool))}
+    }
+}
+
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -23,4 +39,4 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   
-  export default connect(mapStateToProps)(StatsMode);
+  export default connect(mapStateToProps, mapDispatchToProps)(StatsMode);

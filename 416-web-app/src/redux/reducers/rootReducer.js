@@ -1,16 +1,18 @@
 import * as ActionTypes from '../actions/ActionTypes'
 import Districting from '../../utilities/classes/Districting'
+import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
+import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
 import React from 'react'
 import Filter from '../../utilities/classes/Filter'
 
-
+const defaultDistricting = new Districting("Enacted Districting Feb 2016 - Nov 2019", EnactedDistrictingPlan2016)
 
 /* Initial State */
 const initState = {
     DisplayPrecincts : false,
     DisplayCounties : false,
     DisplayDistricts : true,
-    CurrentDistricting : null,
+    CurrentDistricting : defaultDistricting,
     FeaturedDistrict : null,
     FeaturedPrecinct : null,
 
@@ -21,7 +23,8 @@ const initState = {
     /* Map Reference */
     MapRef : React.createRef(),
 
-    InSelectionMenu : true,
+    /* Determines where the user starts, if this is false we need a districting to display by default as well */
+    InSelectionMenu : false,
 
     SortedBy : {
         value : "Stat 1",
@@ -62,6 +65,7 @@ const initState = {
     MouseY : 0,
     MouseEntered : false,
     
+    MinimizedMap : false,
 
 
     /* History */
@@ -72,6 +76,9 @@ const initState = {
     hasn't yet loaded it*/
     TentativeDistricting : null,
 
+    ViewingDistrictDetails : false,
+
+    CurrentTab : ToolbarUtilities.MODES.SETTINGS,
 
     ComparisonDistrictingA : null,
     ComparisonDistrictingB : null,
@@ -82,6 +89,7 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
+    //console.log(action)
     switch (action.type) {
         case ActionTypes.TOGGLE_PRECINCT_SWITCH:
             return {
@@ -206,6 +214,21 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 FilteredDistrictings : action.Districtings
+            }
+        case ActionTypes.SET_VIEWING_DISTRICT_DETAILS:
+            return {
+                ...state,
+                ViewingDistrictDetails : action.Viewing
+            }
+        case ActionTypes.SET_CURRENT_TAB:
+            return {
+                ...state,
+                CurrentTab : action.Tab
+            }
+        case ActionTypes.SET_MINIMIZED_MAP:
+            return {
+                ...state,
+                MinimizedMap : action.Minimized
             }
         default:
             return state;

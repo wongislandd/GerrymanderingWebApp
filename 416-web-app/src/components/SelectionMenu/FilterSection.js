@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import { connect } from 'react-redux'
-import { loadInDistrictings, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
+import { loadInDistrictings, setInSelectionMenu, setViewingDistrictDetails, updateConstraintSettings, updateIncumbentProtection, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
 import { Collapsible, Range, Row, CollapsibleItem} from 'react-materialize'
 import { FormControlLabel, Checkbox, Slider } from '@material-ui/core'
 import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
@@ -29,7 +29,10 @@ class FilterSection extends Component {
             <div className="SelectionMenuSection FilterSection">
                 {/* Button for returning to map */}
                 <Button className="ReturnToMapBtn"
-                    onClick={(e) => this.props.setInSelectionMenu(false)}
+                    onClick={(e) => {
+                        this.props.setViewingDistrictDetails(false)
+                        this.props.setInSelectionMenu(false)
+                    }}
                     disabled={this.props.CurrentDistricting == null}>
                     {SelectionMenuUtilities.LABELS.RETURN_TO_MAP}
                 </Button>
@@ -122,6 +125,7 @@ const mapDispatchToProps = (dispatch) => {
         updateObjectiveFunctionSettings : (key, newVal) => {dispatch(updateObjectiveFunctionSettings(key, newVal))},
         updateConstraintSettings : (key, newVal) => {dispatch(updateConstraintSettings(key, newVal))},
         updateIncumbentProtection : (key, newVal) => {dispatch(updateIncumbentProtection(key, newVal))},
+        setViewingDistrictDetails : (bool) => {dispatch(setViewingDistrictDetails(bool))},
         loadInDistrictings : (districtings) => {dispatch(loadInDistrictings(districtings))},
         setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))}
     }

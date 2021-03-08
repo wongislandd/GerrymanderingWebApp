@@ -2,8 +2,8 @@ import { setCurrentDistricting } from "../redux/actions/settingActions"
 
 /* To be used as a shared enum-like variable for setting/checking what mode goes in the DynamicToolbarContent */
 export const MODES = {
-    SETTINGS : "settings",
-    STATS : "stats",
+    SETTINGS : "SETTINGS",
+    STATS : "STATS",
     HISTORY : "history",
     TENTATIVE_STATS : "tentative_stats",
     FILTER_SETTINGS : "filter_settings",
@@ -18,8 +18,6 @@ export const CONSTANTS = {
 }
 
 export const LABELS = {
-    TOOLBAR_OPTIONS_HEADER_LABEL : "Options",
-    TOOLBAR_STATISTICS_HEADER_LABEL : "Stats",
     TOOLBAR_HISTORY_HEADER_LABEL : "History",
     TOOLBAR_FILTER_HEADER_LABEL : "Filter",
     TOGGLE_PRECINCT_DISPLAY_LABEL : "Display Precincts",

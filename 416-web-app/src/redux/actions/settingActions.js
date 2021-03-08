@@ -163,3 +163,24 @@ export const loadInDistrictings = (districtings) => {
         Districtings : districtings
     }
 }
+
+export const setViewingDistrictDetails = (bool) => {
+    return {
+        type : ActionTypes.SET_VIEWING_DISTRICT_DETAILS,
+        Viewing : bool
+    }
+}
+
+export const setCurrentTab = (tab) => {
+    return {
+        type : ActionTypes.SET_CURRENT_TAB,
+        Tab : tab
+    }
+}
+
+export const setMinimizedMap = (bool) => {
+    return {
+        type : ActionTypes.SET_MINIMIZED_MAP,
+        Minimized : bool
+    }
+}
