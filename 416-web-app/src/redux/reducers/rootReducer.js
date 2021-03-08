@@ -28,7 +28,7 @@ const initState = {
     /* Map Reference */
     MapRef : React.createRef(),
 
-    InSelectionMenu : false,
+    InSelectionMenu : true,
 
     SortedBy : {
         value : "Stat 1",
@@ -37,8 +37,8 @@ const initState = {
 
     /* Filtering Settings */
     FilterSettings : [
-        new Filter("Majority Minority", 5, 0, 10, 1),
-        new Filter("Compactness", 5, 0, 10, 1),
+        new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1),
+        new Filter("Compactness", .5, 0, 1, .05),
         new Filter("Population Equality", 5, 0, 10, 1),
     ],
 

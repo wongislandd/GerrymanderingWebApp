@@ -58,7 +58,6 @@ class MapBoxComponent extends Component{
   highlightFeatures = () => {
     const map = this.props.MapRef.current.getMap()
     this.props.FeaturesToHighlight.forEach(feature => {
-      console.log(feature)
       let source = this.props.DisplayDistricts ? MapUtilities.IDs.DISTRICT_SOURCE_ID : MapUtilities.IDs.PRECINCT_SOURCE_ID
         map.setFeatureState({
             source : source,
@@ -104,6 +103,10 @@ class MapBoxComponent extends Component{
   componentDidMount(){
     console.log("Map Reference has been set.")
     this.props.setLoadedStatus(true)
+  }
+
+  componentWillUnmount(){
+    this.props.setLoadedStatus(false)
   }
 
   render() {

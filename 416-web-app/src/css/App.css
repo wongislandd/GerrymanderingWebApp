@@ -191,12 +191,12 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 
 .ReturnToMapBtn {
-  height: 100px;
+  height: 50px;
   background-color: brown;
 }
 
 .filterSectionItem {
-  padding: 30px;
+  padding: 10px;
 }
 
 .DistrictingResultsHeader {

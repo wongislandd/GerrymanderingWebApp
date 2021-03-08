@@ -20,7 +20,7 @@ class FilterSection extends Component {
                     {SelectionMenuUtilities.LABELS.RETURN_TO_MAP}
                 </Button>
                 <div className="filterSectionItem">
-                <h4 className="center-title">{SelectionMenuUtilities.LABELS.FILTERS_HEADER}</h4>
+                <h4 className="center-title">{SelectionMenuUtilities.LABELS.CONSTRAINTS_HEADER}</h4>
                 {Object.keys(this.props.FilterSettings).map((key) => {
                       let filter = this.props.FilterSettings[key]
                       if(!Array.isArray(filter.value)) {
