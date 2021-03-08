@@ -5,67 +5,45 @@ import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting, setViewport} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 import MapIcon from '@material-ui/icons/Map';
 
 class MapBoxComponent extends Component{
   constructor(props) {
     super(props)
-    this.state = {
-      viewport : {
-        latitude : MapUtilities.NC.LATTITUDE, 
-        longitude: MapUtilities.NC.LONGITUDE,
-        width: "75vw",
-        height: window.innerHeight,
-        zoom: 6.5
-      }
-    }
-  }
-
-  /* Update viewport on change */
-  setViewport(viewport) {
-    this.setState({
-      viewport : viewport
-    })
   }
 
   recenterMap() {
-    this.setState({
-      viewport : {
+    this.props.setViewport({
         latitude : MapUtilities.NC.LATTITUDE, 
         longitude: MapUtilities.NC.LONGITUDE,
         width: this.props.ViewingDistrictDetails ? "40vw" : "75vw",
         height: window.innerHeight,
         zoom: this.props.ViewingDistrictDetails ? 5.5 : 6.5
-      },
     })
   }
 
   minimizeMap() {
-    this.props.setMinimizedMap(true)
-    this.setState({
-      viewport : {
-        latitude : MapUtilities.NC.LATTITUDE, 
-        longitude: MapUtilities.NC.LONGITUDE,
-        width: "40vw",
-        height: window.innerHeight,
-        zoom: 5.5
-      }
+    this.props.setViewport({
+      latitude : MapUtilities.NC.LATTITUDE, 
+      longitude: MapUtilities.NC.LONGITUDE,
+      width: "40vw",
+      height: window.innerHeight,
+      zoom: 5.5
     })
+    this.props.setMinimizedMap(true)
   }
 
   maximizeMap() {
+    this.props.setViewport({
+      latitude : MapUtilities.NC.LATTITUDE, 
+      longitude: MapUtilities.NC.LONGITUDE,
+      width: "75vw",
+      height: window.innerHeight,
+      zoom: 6.5
+    })
     this.props.setMinimizedMap(false)
-    this.state = {
-      viewport : {
-        latitude : MapUtilities.NC.LATTITUDE, 
-        longitude: MapUtilities.NC.LONGITUDE,
-        width: "75vw",
-        height: window.innerHeight,
-        zoom: 6.5
-      }
-    }
   }
 
 
@@ -172,10 +150,10 @@ class MapBoxComponent extends Component{
           </div>
           <ReactMapGL 
             className = "map-display"
-            {...this.state.viewport} 
+            {...this.props.MapViewport} 
             mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
             onViewportChange={viewport=> {
-              this.setViewport(viewport)
+              this.props.setViewport(viewport)
             }}
             onHover={this._onHover.bind(this)}
             // Tie this reference to the one in the state
@@ -291,7 +269,8 @@ const mapDispatchToProps = (dispatch) => {
       resetAllHighlighting : () => {dispatch(resetAllHighlighting())},
       setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))},
       setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))},
-      setMinimizedMap : (bool) => {dispatch(setMinimizedMap(bool))}
+      setMinimizedMap : (bool) => {dispatch(setMinimizedMap(bool))},
+      setViewport : (viewport) => {dispatch(setViewport(viewport))}
   }
 }
 
@@ -310,6 +289,7 @@ const mapStateToProps = (state, ownProps) => {
       MouseX : state.MouseX,
       MouseY : state.MouseY,
       MapRef : state.MapRef,
+      MapViewport : state.MapViewport,
       Loaded : state.Loaded,
   }
 }

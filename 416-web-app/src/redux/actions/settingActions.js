@@ -184,3 +184,10 @@ export const setMinimizedMap = (bool) => {
         Minimized : bool
     }
 }
+
+export const setViewport = (viewport) => {
+    return {
+        type : ActionTypes.SET_VIEWPORT,
+        Viewport : viewport
+    }
+}

@@ -1,6 +1,7 @@
 import * as ActionTypes from '../actions/ActionTypes'
 import Districting from '../../utilities/classes/Districting'
 import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
+import * as MapUtilities from '../../utilities/MapUtilities'
 import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
 import React from 'react'
 import Filter from '../../utilities/classes/Filter'
@@ -22,6 +23,14 @@ const initState = {
 
     /* Map Reference */
     MapRef : React.createRef(),
+
+    MapViewport : {
+        latitude : MapUtilities.NC.LATTITUDE, 
+        longitude: MapUtilities.NC.LONGITUDE,
+        width: "75vw",
+        height: window.innerHeight,
+        zoom: 6.5
+    },
 
     /* Determines where the user starts, if this is false we need a districting to display by default as well */
     InSelectionMenu : false,
@@ -66,6 +75,8 @@ const initState = {
     MouseEntered : false,
     
     MinimizedMap : false,
+
+
 
 
     /* History */
@@ -229,6 +240,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 MinimizedMap : action.Minimized
+            }
+        case ActionTypes.SET_VIEWPORT:
+            return {
+                ...state,
+                MapViewport : action.Viewport
             }
         default:
             return state;
