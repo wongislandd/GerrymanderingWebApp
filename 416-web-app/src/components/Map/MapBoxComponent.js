@@ -35,9 +35,9 @@ class MapBoxComponent extends Component{
       viewport : {
         latitude : MapUtilities.NC.LATTITUDE, 
         longitude: MapUtilities.NC.LONGITUDE,
-        width: this.props.ViewingDistrictDetails ? "30vw" : "75vw",
+        width: this.props.ViewingDistrictDetails ? "40vw" : "75vw",
         height: window.innerHeight,
-        zoom: this.props.ViewingDistrictDetails ? 5.3 : 6.5
+        zoom: this.props.ViewingDistrictDetails ? 5.5 : 6.5
       },
     })
   }
@@ -48,9 +48,9 @@ class MapBoxComponent extends Component{
       viewport : {
         latitude : MapUtilities.NC.LATTITUDE, 
         longitude: MapUtilities.NC.LONGITUDE,
-        width: "30vw",
+        width: "40vw",
         height: window.innerHeight,
-        zoom: 5.3
+        zoom: 5.5
       }
     })
   }
