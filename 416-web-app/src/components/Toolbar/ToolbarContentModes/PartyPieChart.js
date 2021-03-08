@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as MapUtilities from '../../../utilities/MapUtilities'
 import {Chart} from 'react-google-charts'
 
-export default class PartyDemographics extends Component {
+export default class PartyPieChart extends Component {
     constructor(props){
         super(props)
     }

@@ -4,13 +4,11 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { connect } from 'react-redux'
 import {addFeatureToHighlight, removeFeatureHighlighting, setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
 import * as MapUtilities from '../../../utilities/MapUtilities'
-import PartyPieChart from './PartyDemographics'
-import RacePieChart from './RacialDemographics'
-import PartyDemographics from './PartyDemographics'
-import RacialDemographics from './RacialDemographics'
+import PartyPieChart from './PartyPieChart'
+import RacialPieChart from './RacialPieChart'
 
 
-class CollapsibleStats extends Component{
+class DistrictingSummary extends Component{
     constructor(props){
         super(props)
     }
@@ -160,8 +158,8 @@ class CollapsibleStats extends Component{
                         </Table>
                         </TableContainer>
                         <div className="demographicsContainer">
-                                <PartyDemographics feature={feature}/>
-                                <RacialDemographics feature={feature}/>
+                                <PartyPieChart feature={feature}/>
+                                <RacialPieChart feature={feature}/>
                         </div>
                         </CollapsibleItem>
                         )
@@ -189,4 +187,4 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(CollapsibleStats);
+  export default connect(mapStateToProps, mapDispatchToProps)(DistrictingSummary);

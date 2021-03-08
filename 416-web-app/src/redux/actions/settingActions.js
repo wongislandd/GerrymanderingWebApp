@@ -1,5 +1,13 @@
 import * as ActionTypes from './ActionTypes'
 
+
+export const setCurrentState = (state) => {
+    return {
+        type : ActionTypes.SET_CURRENT_STATE,
+        State : state
+    }
+}
+
 export const togglePrecinctSwitch = (bool) => {
     return {
         type: ActionTypes.TOGGLE_PRECINCT_SWITCH, 

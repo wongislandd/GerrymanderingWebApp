@@ -15,35 +15,35 @@ class MapBoxComponent extends Component{
   }
 
   recenterMap() {
-    this.props.setViewport({
-        latitude : MapUtilities.NC.LATTITUDE, 
-        longitude: MapUtilities.NC.LONGITUDE,
-        width: this.props.ViewingDistrictDetails ? "40vw" : "75vw",
-        height: window.innerHeight,
-        zoom: this.props.ViewingDistrictDetails ? 5.5 : 6.5
-    })
+    // this.props.setViewport({
+    //     latitude : MapUtilities.NC.LATTITUDE, 
+    //     longitude: MapUtilities.NC.LONGITUDE,
+    //     width: this.props.ViewingDistrictDetails ? "40vw" : "75vw",
+    //     height: window.innerHeight,
+    //     zoom: this.props.ViewingDistrictDetails ? 5.5 : 6.5
+    // })
   }
 
   minimizeMap() {
-    this.props.setViewport({
-      latitude : MapUtilities.NC.LATTITUDE, 
-      longitude: MapUtilities.NC.LONGITUDE,
-      width: "40vw",
-      height: window.innerHeight,
-      zoom: 5.5
-    })
-    this.props.setMinimizedMap(true)
+    // this.props.setViewport({
+    //   latitude : MapUtilities.NC.LATTITUDE, 
+    //   longitude: MapUtilities.NC.LONGITUDE,
+    //   width: "40vw",
+    //   height: window.innerHeight,
+    //   zoom: 5.5
+    // })
+    // this.props.setMinimizedMap(true)
   }
 
   maximizeMap() {
-    this.props.setViewport({
-      latitude : MapUtilities.NC.LATTITUDE, 
-      longitude: MapUtilities.NC.LONGITUDE,
-      width: "75vw",
-      height: window.innerHeight,
-      zoom: 6.5
-    })
-    this.props.setMinimizedMap(false)
+    // this.props.setViewport({
+    //   latitude : MapUtilities.NC.LATTITUDE, 
+    //   longitude: MapUtilities.NC.LONGITUDE,
+    //   width: "75vw",
+    //   height: window.innerHeight,
+    //   zoom: 6.5
+    // })
+    // this.props.setMinimizedMap(false)
   }
 
 
@@ -122,13 +122,13 @@ class MapBoxComponent extends Component{
       this.unhighlightFeatures()
       this.highlightFeatures()
     }
-    /* Use these two for map resizing based on viewing stats (since we need more room to view stats)*/
-    if (this.props.ViewingDistrictDetails && !this.props.MinimizedMap) {
-      this.minimizeMap()
-    }
-    if (!this.props.ViewingDistrictDetails && this.props.MinimizedMap) {
-      this.maximizeMap()
-    }
+    // /* Use these two for map resizing based on viewing stats (since we need more room to view stats)*/
+    // if (this.props.ViewingDistrictDetails && !this.props.MinimizedMap) {
+    //   this.minimizeMap()
+    // }
+    // if (!this.props.ViewingDistrictDetails && this.props.MinimizedMap) {
+    //   this.maximizeMap()
+    // }
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}

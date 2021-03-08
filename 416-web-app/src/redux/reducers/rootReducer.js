@@ -5,6 +5,7 @@ import * as MapUtilities from '../../utilities/MapUtilities'
 import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
 import React from 'react'
 import Filter from '../../utilities/classes/Filter'
+import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 
 const defaultDistricting = new Districting("Enacted Districting Feb 2016 - Nov 2019", EnactedDistrictingPlan2016)
 
@@ -21,16 +22,12 @@ const initState = {
     FeaturesToHighlight : [],
     FeaturesToUnhighlight : [],
 
+    CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+
     /* Map Reference */
     MapRef : React.createRef(),
 
-    MapViewport : {
-        latitude : MapUtilities.NC.LATTITUDE, 
-        longitude: MapUtilities.NC.LONGITUDE,
-        width: "75vw",
-        height: window.innerHeight,
-        zoom: 6.5
-    },
+    MapViewport : ViewportUtilities.UNSELECTED.Maximized,
 
     /* Determines where the user starts, if this is false we need a districting to display by default as well */
     InSelectionMenu : false,
@@ -102,6 +99,26 @@ Add action type to ./ActionTypes.js and then make use of it here as well as in t
 const rootReducer = (state = initState, action) => {
     //console.log(action)
     switch (action.type) {
+        case ActionTypes.SET_CURRENT_STATE:
+            var newViewport = null;
+            switch (action.State) {
+                case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
+                    newViewport = ViewportUtilities.NC.Maximized
+                    break
+                case ViewportUtilities.STATE_OPTIONS.TEXAS:
+                    newViewport = ViewportUtilities.NC.Maximized
+                    break
+                case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
+                    newViewport = ViewportUtilities.NC.Maximized
+                    break
+                default:
+                    newViewport = ViewportUtilities.UNSELECTED.Maximized
+            }
+            return {
+                ...state,
+                CurrentState : action.State,
+                MapViewport : newViewport
+            }
         case ActionTypes.TOGGLE_PRECINCT_SWITCH:
             return {
                 ...state,

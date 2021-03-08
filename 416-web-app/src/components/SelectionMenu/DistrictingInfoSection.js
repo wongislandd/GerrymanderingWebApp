@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { setCurrentDistricting } from '../../redux/actions/settingActions'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
-import CollapsibleStats from '../Toolbar/ToolbarContentModes/CollapsibleStats'
+import DistrictingSummary from '../Toolbar/ToolbarContentModes/DistrictingSummary'
 
 /* Properties: 
     this.props.districting => the associated districting to display info for
@@ -13,7 +13,7 @@ class DistrictingInfoSection extends Component {
     render() {
         return (
             <div className="districtingInfoSection">
-                <CollapsibleStats DistrictingToDisplay={this.props.districting}/>
+                <DistrictingSummary DistrictingToDisplay={this.props.districting}/>
                 <div className="centerWithinMe">
                 <Button className="redBrownBtn" onClick={(e)=>this.props.setCurrentDistricting(this.props.districting)}>
                     {SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}

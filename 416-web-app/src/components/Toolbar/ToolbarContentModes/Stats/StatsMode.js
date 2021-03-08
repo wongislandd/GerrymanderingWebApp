@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Row } from 'react-materialize'
-import CollapsibleStats from '../CollapsibleStats'
+import DistrictingSummary from '../DistrictingSummary'
 import { connect } from 'react-redux'
 import { setViewingDistrictDetails } from '../../../../redux/actions/settingActions'
 
 class StatsMode extends Component {
     
     componentDidMount() {
+        /* Do the minification of the map here p*/
         this.props.setViewingDistrictDetails(true)
     }
 
@@ -19,7 +20,7 @@ class StatsMode extends Component {
             <div className="ToolbarContent">
                 <h5>Displayed District Stats</h5>
                 <Row>
-                    <CollapsibleStats DistrictingToDisplay={this.props.CurrentDistricting}/>
+                    <DistrictingSummary DistrictingToDisplay={this.props.CurrentDistricting}/>
                 </Row>
             </div>
         )

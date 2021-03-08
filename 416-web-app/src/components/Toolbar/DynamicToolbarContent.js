@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import SettingsMode from './ToolbarContentModes/Options/SettingsMode'
 import StatsMode from './ToolbarContentModes/Stats/StatsMode'
-import HistoryMode from './ToolbarContentModes/History/HistoryMode'
 import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
-import TentativeStatsMode from './ToolbarContentModes/History/TentativeStatsMode'
 import { connect } from 'react-redux'
 
 class DynamicToolbarContent extends Component {
