@@ -4,7 +4,10 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { connect } from 'react-redux'
 import {addFeatureToHighlight, removeFeatureHighlighting, setFeaturedDistrict, setFeaturedPrecinct} from '../../../redux/actions/settingActions'
 import * as MapUtilities from '../../../utilities/MapUtilities'
-import { PieChart } from 'react-minimal-pie-chart'
+import PartyPieChart from './PartyDemographics'
+import RacePieChart from './RacialDemographics'
+import PartyDemographics from './PartyDemographics'
+import RacialDemographics from './RacialDemographics'
 
 
 class CollapsibleStats extends Component{
@@ -75,8 +78,8 @@ class CollapsibleStats extends Component{
                                 <TableCell align="right">White</TableCell>
                                 <TableCell align="right">Black</TableCell>
                                 <TableCell align="right">Asian</TableCell>
-                                <TableCell align="right">Native American or Alaskan Native</TableCell>
-                                <TableCell align="right">Native Hawaiian or Pacific Islander</TableCell>
+                                <TableCell align="right">Native American or Alaskan</TableCell>
+                                <TableCell align="right">Pacific Islander or Hawaiian</TableCell>
                                 <TableCell align="right">Undesignated</TableCell>
                                 <TableCell align="right">Other</TableCell>
                             </TableRow>
@@ -97,6 +100,10 @@ class CollapsibleStats extends Component{
                             </TableBody>
                         </Table>
                         </TableContainer>
+                        <div className="demographicsContainer">
+                                <PartyDemographics feature={feature}/>
+                                <RacialDemographics feature={feature}/>
+                        </div>
                         </CollapsibleItem>
                         )
                 })}
