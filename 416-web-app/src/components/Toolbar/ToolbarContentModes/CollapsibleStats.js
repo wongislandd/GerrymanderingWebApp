@@ -15,6 +15,14 @@ class CollapsibleStats extends Component{
         super(props)
     }
 
+    percentage(partialValue, totalValue) {
+        return (100 * partialValue) / totalValue
+    }    
+
+    formatResult(partialValue, totalValue) {
+        return partialValue + " ("+ (Math.round(this.percentage(partialValue, totalValue) * 10)/10) +"%)"
+    }
+
     render() {
         return (
             <Collapsible className="stat-window" accordion>
@@ -62,9 +70,15 @@ class CollapsibleStats extends Component{
                                 <TableCell scope="row">
                                 {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT]}
                                 </TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT]}</TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
+                                </TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
+                                 </TableCell>
+                                <TableCell align="right">
+                                {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
+                                    </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
@@ -89,13 +103,27 @@ class CollapsibleStats extends Component{
                                 <TableCell scope="row">
                                 {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION]}
                                 </TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.ASIAN_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.NATIVE_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.PACIFIC_ISLANDER_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT]}</TableCell>
-                                <TableCell align="right">{feature.properties[MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT]}</TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    </TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.ASIAN_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                     </TableCell>
+                                <TableCell align="right">
+                                 {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.NATIVE_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                   </TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PACIFIC_ISLANDER_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                     </TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                   </TableCell>
+                                <TableCell align="right">
+                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                     </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
