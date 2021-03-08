@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionTypes'
 
 
+/* Takes in a constant from ViewportUtilities.STATE_OPTIONS */
 export const setCurrentState = (state) => {
     return {
         type : ActionTypes.SET_CURRENT_STATE,
@@ -197,5 +198,17 @@ export const setViewport = (viewport) => {
     return {
         type : ActionTypes.SET_VIEWPORT,
         Viewport : viewport
+    }
+}
+
+export const maximizeMap = () => {
+    return {
+        type : ActionTypes.MAXIMIZE_MAP
+    }
+}
+
+export const minimizeMap = () => {
+    return {
+        type : ActionTypes.MINIMIZE_MAP
     }
 }

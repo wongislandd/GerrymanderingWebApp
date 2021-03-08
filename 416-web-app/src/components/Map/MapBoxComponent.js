@@ -5,9 +5,10 @@ import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting, setViewport} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting, setViewport, setCurrentState} from '../../redux/actions/settingActions'
 import TooltipComponent from './TooltipComponent'
 import MapIcon from '@material-ui/icons/Map';
+import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 
 class MapBoxComponent extends Component{
   constructor(props) {
@@ -15,35 +16,21 @@ class MapBoxComponent extends Component{
   }
 
   recenterMap() {
-    // this.props.setViewport({
-    //     latitude : MapUtilities.NC.LATTITUDE, 
-    //     longitude: MapUtilities.NC.LONGITUDE,
-    //     width: this.props.ViewingDistrictDetails ? "40vw" : "75vw",
-    //     height: window.innerHeight,
-    //     zoom: this.props.ViewingDistrictDetails ? 5.5 : 6.5
-    // })
-  }
-
-  minimizeMap() {
-    // this.props.setViewport({
-    //   latitude : MapUtilities.NC.LATTITUDE, 
-    //   longitude: MapUtilities.NC.LONGITUDE,
-    //   width: "40vw",
-    //   height: window.innerHeight,
-    //   zoom: 5.5
-    // })
-    // this.props.setMinimizedMap(true)
-  }
-
-  maximizeMap() {
-    // this.props.setViewport({
-    //   latitude : MapUtilities.NC.LATTITUDE, 
-    //   longitude: MapUtilities.NC.LONGITUDE,
-    //   width: "75vw",
-    //   height: window.innerHeight,
-    //   zoom: 6.5
-    // })
-    // this.props.setMinimizedMap(false)
+    var newViewport = null;
+    switch (this.props.CurrentState) {
+        case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
+            newViewport = this.props.MinimizedMap ? ViewportUtilities.NORTH_CAROLINA.Minimized : ViewportUtilities.NORTH_CAROLINA.Maximized
+            break
+        case ViewportUtilities.STATE_OPTIONS.TEXAS:
+            newViewport = this.props.MinimizedMap ? ViewportUtilities.TEXAS.Minimized : ViewportUtilities.TEXAS.Maximized
+            break
+        case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
+            newViewport = this.props.MinimizedMap ? ViewportUtilities.CALIFORNIA.Minimized : ViewportUtilities.CALIFORNIA.Maximized
+            break
+        default:
+            newViewport = this.props.MinimizedMap ? ViewportUtilities.UNSELECTED.Minimized : ViewportUtilities.UNSELECTED.Maximized
+    }
+    this.props.setViewport(newViewport)
   }
 
 
@@ -122,13 +109,6 @@ class MapBoxComponent extends Component{
       this.unhighlightFeatures()
       this.highlightFeatures()
     }
-    // /* Use these two for map resizing based on viewing stats (since we need more room to view stats)*/
-    // if (this.props.ViewingDistrictDetails && !this.props.MinimizedMap) {
-    //   this.minimizeMap()
-    // }
-    // if (!this.props.ViewingDistrictDetails && this.props.MinimizedMap) {
-    //   this.maximizeMap()
-    // }
     return (
         <div 
           onMouseMove={(e) => this.props.moveMouse(e)}
@@ -147,6 +127,10 @@ class MapBoxComponent extends Component{
           {/* Option to enter the selection menu */}
           <div className="viewAndFilterDistrictingsOption" onClick={(e)=>{this.props.setInSelectionMenu(true)}}>
             {MapUtilities.MESSAGES.ViewAndFilterDistrictingsMsg}
+          </div>
+          {/* Option to return to state selection */}
+          <div className="returnToStateSelectionOption" onClick={(e)=>{this.props.setCurrentState(ViewportUtilities.STATE_OPTIONS.UNSELECTED)}}>
+            {MapUtilities.MESSAGES.ReturnToStateSelectionMsg}
           </div>
           <ReactMapGL 
             className = "map-display"
@@ -270,7 +254,8 @@ const mapDispatchToProps = (dispatch) => {
       setLoadedStatus : (bool) => {dispatch(setLoadedStatus(bool))},
       setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))},
       setMinimizedMap : (bool) => {dispatch(setMinimizedMap(bool))},
-      setViewport : (viewport) => {dispatch(setViewport(viewport))}
+      setViewport : (viewport) => {dispatch(setViewport(viewport))},
+      setCurrentState : (state) => {dispatch(setCurrentState(state))}
   }
 }
 
@@ -281,6 +266,7 @@ const mapStateToProps = (state, ownProps) => {
       DisplayCounties : state.DisplayCounties,
       ViewingDistrictDetails : state.ViewingDistrictDetails,
       CurrentDistricting : state.CurrentDistricting,
+      CurrentState : state.CurrentState,
       FeaturedDistrict : state.FeaturedDistrict,
       FeaturedPrecinct : state.FeaturedPrecinct,
       FeaturesToHighlight : state.FeaturesToHighlight,

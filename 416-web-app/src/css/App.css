@@ -143,6 +143,18 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   border-radius: 4px;
 }
 
+.returnToStateSelectionOption {
+  background-color: brown;
+  color: #ffffff;
+  padding: 6px 12px;
+  font: 15px/24px monospace;
+  z-index: 1;
+  position: absolute;
+  top: 850px;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+}
 
 .SelectionMenuContainer {
   display: grid;

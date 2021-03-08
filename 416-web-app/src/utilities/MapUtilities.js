@@ -4,7 +4,8 @@ export const VALUES = {
 
 export const MESSAGES = {
     NoInfoToDisplayMsg : "Hover over a display to see more info!",
-    ViewAndFilterDistrictingsMsg : "View and Filter Districtings"
+    ViewAndFilterDistrictingsMsg : "View and Filter Districtings",
+    ReturnToStateSelectionMsg : "Return to State Selection",
 }
 
 export const IDs = {

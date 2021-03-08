@@ -2,16 +2,18 @@ import React, { Component } from 'react'
 import { Row } from 'react-materialize'
 import DistrictingSummary from '../DistrictingSummary'
 import { connect } from 'react-redux'
-import { setViewingDistrictDetails } from '../../../../redux/actions/settingActions'
+import { maximizeMap, minimizeMap, setViewingDistrictDetails } from '../../../../redux/actions/settingActions'
 
 class StatsMode extends Component {
     
     componentDidMount() {
         /* Do the minification of the map here p*/
+        this.props.minimizeMap()
         this.props.setViewingDistrictDetails(true)
     }
 
     componentWillUnmount() {
+        this.props.maximizeMap()
         this.props.setViewingDistrictDetails(false)
     }
 
@@ -29,7 +31,9 @@ class StatsMode extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setViewingDistrictDetails : (bool) => {dispatch(setViewingDistrictDetails(bool))}
+        setViewingDistrictDetails : (bool) => {dispatch(setViewingDistrictDetails(bool))},
+        maximizeMap : () => {dispatch(maximizeMap())},
+        minimizeMap : () => {dispatch(minimizeMap())},
     }
 }
 

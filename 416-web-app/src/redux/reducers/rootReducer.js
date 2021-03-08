@@ -103,13 +103,13 @@ const rootReducer = (state = initState, action) => {
             var newViewport = null;
             switch (action.State) {
                 case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
-                    newViewport = ViewportUtilities.NC.Maximized
+                    newViewport = ViewportUtilities.NORTH_CAROLINA.Maximized
                     break
                 case ViewportUtilities.STATE_OPTIONS.TEXAS:
-                    newViewport = ViewportUtilities.NC.Maximized
+                    newViewport = ViewportUtilities.TEXAS.Maximized
                     break
                 case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
-                    newViewport = ViewportUtilities.NC.Maximized
+                    newViewport = ViewportUtilities.CALIFORNIA.Maximized
                     break
                 default:
                     newViewport = ViewportUtilities.UNSELECTED.Maximized
@@ -253,15 +253,50 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 CurrentTab : action.Tab
             }
-        case ActionTypes.SET_MINIMIZED_MAP:
-            return {
-                ...state,
-                MinimizedMap : action.Minimized
-            }
         case ActionTypes.SET_VIEWPORT:
             return {
                 ...state,
                 MapViewport : action.Viewport
+            }
+        case ActionTypes.MAXIMIZE_MAP:
+            var newViewport = null;
+            switch (state.CurrentState) {
+                case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
+                    newViewport = ViewportUtilities.NORTH_CAROLINA.Maximized
+                    break
+                case ViewportUtilities.STATE_OPTIONS.TEXAS:
+                    newViewport = ViewportUtilities.TEXAS.Maximized
+                    break
+                case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
+                    newViewport = ViewportUtilities.CALIFORNIA.Maximized
+                    break
+                default:
+                    newViewport = ViewportUtilities.UNSELECTED.Maximized
+            }
+            return {
+                ...state,
+                MapViewport : newViewport,
+                MinimizedMap : false
+            }
+        case ActionTypes.MINIMIZE_MAP:
+            var newViewport = null;
+            switch (state.CurrentState) {
+                case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
+                    newViewport = ViewportUtilities.NORTH_CAROLINA.Minimized
+                    break
+                case ViewportUtilities.STATE_OPTIONS.TEXAS:
+                    newViewport = ViewportUtilities.TEXAS.Minimized
+                    break
+                case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
+                    newViewport = ViewportUtilities.CALIFORNIA.Minimized
+                    break
+                default:
+                    newViewport = ViewportUtilities.UNSELECTED.Minimized
+            }
+            return {
+                ...state,
+                MapViewport : newViewport,
+                MinimizedMap : true
             }
         default:
             return state;
