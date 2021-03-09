@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Row, Col } from 'react-materialize'
+import { Button, Row, Col, Icon } from 'react-materialize'
 import { connect } from 'react-redux'
+import { setComparisonDistrictingA, setComparisonDistrictingB } from '../../redux/actions/settingActions'
 
 class CompareSection extends Component {
     constructor(props) {
@@ -8,45 +9,31 @@ class CompareSection extends Component {
     }
 
     render() {
-        if (this.props.ComparisonDistrictingA == null || this.props.ComparisonDistrictingB == null) {
-            return (
-                <div className="SelectionMenuSection CompareSection">
-                <Row><h5>Compare Districtings</h5></Row>
-                <Row>
-                    <Col>
-                        <div className="DistrictingHolderBox">
-                            Districting A
-                        </div>
-                    </Col>
-                    <Col>
-                        <div className="DistrictingHolderBox">
-                            Districting B
-                        </div>
-                    </Col>
-                </Row>
-                </div>
-            )
-        } else {
-            return (
-                <div className="SelectionMenuSection CompareSection">
-                <Row><h5>Compare Districtings</h5></Row>
-                    <Col>
-                        <div className="DistrictingHolderBox">
-                            {this.props.ComparisonDistrictingA.name}
-                        </div>
-                    </Col>
-                    <Col>
-                        <div className="DistrictingHolderBox">
-                            {this.props.ComparisonDistrictingB.name}
-                        </div>
-                    </Col>
-                </div>
-            )
+        return (
+            <div className="SelectionMenuSection CompareSection">
+                <h5>Compare Districtings</h5>
+                    <div className="DistrictingHolderBox labelAndIcon">
+                        Districting A: {this.props.ComparisonDistrictingA == null ? "" : this.props.ComparisonDistrictingA.name} 
+                        <Icon className={this.props.ComparisonDistrictingA == null ? "hideMe" : ""} 
+                        onClick={(e)=>this.props.setComparisonDistrictingA(null)}>cancel</Icon>
+                    </div>
+                    <div className="DistrictingHolderBox labelAndIcon">
+                        Districting B: {this.props.ComparisonDistrictingB == null ? "" : this.props.ComparisonDistrictingB.name}
+                        <Icon className={this.props.ComparisonDistrictingB == null ? "hideMe" : ""} 
+                        onClick={(e)=>this.props.setComparisonDistrictingB(null)}>cancel</Icon>
+                    </div>
+            </div>
+        )
         }
     }
-}
 
-
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setComparisonDistrictingA : (districting) => {dispatch(setComparisonDistrictingA(districting))},
+        setComparisonDistrictingB : (districting) => {dispatch(setComparisonDistrictingB(districting))}
+    }
+  }
+  
 const mapStateToProps = (state, ownProps) => {
     return {
         ComparisonDistrictingA : state.ComparisonDistrictingA,
@@ -54,4 +41,4 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   
-  export default connect(mapStateToProps)(CompareSection);
+  export default connect(mapStateToProps, mapDispatchToProps)(CompareSection);
