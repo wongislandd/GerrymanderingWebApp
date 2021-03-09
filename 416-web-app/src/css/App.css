@@ -305,10 +305,10 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   width: 210px
 }
 
-.redText {
-  color: red;
+.redCompare {
+  color: rgb(201, 80, 80);
 }
 
-.greenText {
-  color: green
+.greenCompare {
+  color: rgb(79, 163, 79)
 }

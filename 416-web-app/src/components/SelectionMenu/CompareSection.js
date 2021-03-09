@@ -26,7 +26,7 @@ class CompareSection extends Component {
 
     render() {
         return (
-            <div className="SelectionMenuSection CompareSection">
+            <div className="SelectionMenuSection CompareSection centerWithinMe">
                 <h5>Compare Districtings</h5>
                     <div className="DistrictingHolderBox labelAndIcon">
                         <span>Districting A: {this.props.ComparisonDistrictingA == null ? "" : this.props.ComparisonDistrictingA.name} </span>

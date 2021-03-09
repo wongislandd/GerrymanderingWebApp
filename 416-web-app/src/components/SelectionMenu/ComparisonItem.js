@@ -15,11 +15,14 @@ export default class ComparisonItem extends Component {
                     <b>{this.props.label}</b>
                 </Row>
                 <Row>
-                <Icon medium>{this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.NONE ? "cloud"
-                : this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.UP ? "arrow_upward" : "arrow_downward"}</Icon>
+                <Icon medium className={this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.NONE ? ""
+                : this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.UP ? "greenCompare" : "redCompare"}>
+                    {this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.NONE ? "cloud"
+                : this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.UP ? "arrow_upward" : "arrow_downward"}
+                </Icon>
                 </Row>
                 <Row className={this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.NONE ? ""
-                : this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.UP ? "greenText" : "redText"}>
+                : this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.UP ? "greenCompare" : "redCompare"}>
                     {this.props.value} ({this.props.pct})
                 </Row>
             </div>
