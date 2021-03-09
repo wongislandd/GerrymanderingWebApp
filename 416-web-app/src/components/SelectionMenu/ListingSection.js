@@ -4,6 +4,7 @@ import {Collapsible, Row, Col, Select} from 'react-materialize'
 import DistrictingItem from './DistrictingItem'
 import { setNewDistrictingSelected } from '../../redux/actions/settingActions'
 
+
 class ListingSection extends Component {
     /* Once this loads, it's at first false until something is chosen*/
     componentDidMount() {

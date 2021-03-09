@@ -22,7 +22,8 @@ const initState = {
     FeaturesToHighlight : [],
     FeaturesToUnhighlight : [],
 
-    CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+    /* Default to UNSELECTED */
+    CurrentState : ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
 
     /* Map Reference */
     MapRef : React.createRef(),
@@ -31,7 +32,8 @@ const initState = {
     MapViewport : ViewportUtilities.UNSELECTED.Maximized,
 
     /* Determines where the user starts, if this is false we need a districting to display by default as well */
-    InSelectionMenu : false,
+    /* Default to False*/
+    InSelectionMenu : true,
 
     SortedBy : {
         value : "Stat 1",
@@ -82,7 +84,6 @@ const initState = {
 
     NewDistrictingSelected : false,
 
-
     /* History */
     FilteredDistrictings : [],
     
@@ -103,7 +104,7 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
-   //console.log(action)
+    console.log(action)
     switch (action.type) {
         case ActionTypes.SET_CURRENT_STATE:
             var newViewport = null;
@@ -220,15 +221,17 @@ const rootReducer = (state = initState, action) => {
                     descending : action.Descending
                 }
             }
-        case ActionTypes.CHANGE_COMPARISON_DISTRICTING_A:
+        case ActionTypes.SET_COMPARISON_DISTRICTING_A:
+            console.log("UPDATING COMPARISON DISTRICT A")
             return {
                 ...state,
-                ComparisonDistrictA : action.Districting
+                ComparisonDistrictingA : action.Districting
             }
-        case ActionTypes.CHANGE_COMPARISON_DISTRICTING_B:
+        case ActionTypes.SET_COMPARISON_DISTRICTING_B:
+            console.log("UPDATING COMPARISON DISTRICT B")
             return {
                 ...state,
-                ComparisonDistrictB : action.Districting
+                ComparisonDistrictingB : action.Districting
             }
         case ActionTypes.ADD_FEATURE_TO_HIGHLIGHT:
             return {
@@ -329,6 +332,8 @@ const rootReducer = (state = initState, action) => {
                 DisplayDistricts : true,
                 FeaturedDistrict : null,
                 FeaturedPrecinct : null,
+                CompareDistrict1 : null,
+                CompareDistrict2 : null,
             }
         case ActionTypes.SET_NEW_DISTRICTING_SELECTED:
             return {

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button, Row, Col } from 'react-materialize'
 import { connect } from 'react-redux'
 
-
 class CompareSection extends Component {
     constructor(props) {
         super(props)

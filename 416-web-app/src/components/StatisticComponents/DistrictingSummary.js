@@ -108,12 +108,16 @@ class DistrictingSummary extends Component{
                          This will work so long as the key matches the feature's ID in the visual object
                          that the map renders, which I think it always will since it's in order. */
                         onMouseEnter={(e) => {
-                            feature.id = key
-                            this.props.addFeatureToHighlight(feature)
+                            if(!this.props.InSelectionMenu) {
+                                feature.id = key
+                                this.props.addFeatureToHighlight(feature)
+                            }
                         }}
                         onMouseLeave={(e) => {
-                            feature.id = key
-                            this.props.removeFeatureHighlighting(feature)
+                            if(!this.props.InSelectionMenu) {
+                                feature.id = key
+                                this.props.removeFeatureHighlighting(feature)
+                            }
                         }}
                         onClick={(e)=> {
                             /* The state refreshing along with the expanded attribute cause some buggy behavior

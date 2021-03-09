@@ -9,13 +9,15 @@ export default class DistrictingItem extends Component {
     }
 
     handleClick(event) {
-
+        
     }
 
     render() {
         return (
             <CollapsibleItem
-                header={"#" + (this.props.index+1) + " " + this.props.districting.name}
+                header={<div className="districtingItem" onClick={(e)=>{e.stopPropagation()}}>
+                            #{this.props.index+1} {this.props.districting.name}
+                        </div>}
                 onSelect={(e)=>this.handleClick(e)}>
                     <DistrictingInfoSection districting={this.props.districting}/>
             </CollapsibleItem>

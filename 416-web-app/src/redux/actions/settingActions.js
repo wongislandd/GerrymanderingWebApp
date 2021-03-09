@@ -131,16 +131,16 @@ export const changeValueSortedBy = (value, descending) => {
     }
 }
 
-export const changeComparisonDistrictingA = (districting) => {
+export const setComparisonDistrictingA = (districting) => {
     return {
-        type: ActionTypes.CHANGE_COMPARISON_DISTRICTING_A,
+        type: ActionTypes.SET_COMPARISON_DISTRICTING_A,
         Districting : districting
     }
 }
 
-export const changeComparisonDistrictingB = (districting) => {
+export const setComparisonDistrictingB = (districting) => {
     return {
-        type: ActionTypes.CHANGE_COMPARISON_DISTRICTING_B,
+        type: ActionTypes.SET_COMPARISON_DISTRICTING_B,
         Districting : districting
     }
 }
