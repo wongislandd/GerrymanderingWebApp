@@ -213,3 +213,16 @@ export const setStatShowcasedDistrictID = (districtID) => {
         DistrictID : districtID
     }
 }
+
+export const restoreDefaultStateForNewDistricting = () => {
+    return {
+        type : ActionTypes.RESTORE_DEFAULT_STATE_FOR_NEW_DISTRICTING
+    }
+}
+
+export const setNewDistrictingSelected = (bool) => {
+    return {
+        type : ActionTypes.SET_NEW_DISTRICTING_SELECTED,
+        Bool : bool
+    }
+}

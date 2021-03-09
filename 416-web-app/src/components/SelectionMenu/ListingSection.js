@@ -2,8 +2,14 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Collapsible, Row, Col, Select} from 'react-materialize'
 import DistrictingItem from './DistrictingItem'
+import { setNewDistrictingSelected } from '../../redux/actions/settingActions'
 
 class ListingSection extends Component {
+    /* Once this loads, it's at first false until something is chosen*/
+    componentDidMount() {
+        this.props.setNewDistrictingSelected(false)
+    }
+
     render() {
         return (
             <div className="SelectionMenuSection ListingSection">
@@ -50,7 +56,12 @@ class ListingSection extends Component {
     }
 }
 
-
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setNewDistrictingSelected : (bool) => {dispatch(setNewDistrictingSelected(bool))}
+    }
+  }
+  
 const mapStateToProps = (state, ownProps) => {
     return {
         FilteredDistrictings : state.FilteredDistrictings,
@@ -58,4 +69,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
   
-export default connect(mapStateToProps)(ListingSection);
+export default connect(mapStateToProps, mapDispatchToProps)(ListingSection);

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import { connect } from 'react-redux'
-import { loadInDistrictings, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
+import { loadInDistrictings, restoreDefaultStateForNewDistricting, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
 import { Collapsible, Range, Row, CollapsibleItem} from 'react-materialize'
 import { FormControlLabel, Checkbox, Slider } from '@material-ui/core'
 
@@ -30,6 +30,9 @@ class FilterSection extends Component {
                 <Button className="ReturnToMapBtn"
                     onClick={(e) => {
                         this.props.setInSelectionMenu(false)
+                        if (this.props.NewDistrictingSelected) {
+                            this.props.restoreDefaultStateForNewDistricting()
+                        }
                     }}
                     disabled={this.props.CurrentDistricting == null}>
                     {SelectionMenuUtilities.LABELS.RETURN_TO_MAP}
@@ -124,7 +127,8 @@ const mapDispatchToProps = (dispatch) => {
         updateConstraintSettings : (key, newVal) => {dispatch(updateConstraintSettings(key, newVal))},
         updateIncumbentProtection : (key, newVal) => {dispatch(updateIncumbentProtection(key, newVal))},
         loadInDistrictings : (districtings) => {dispatch(loadInDistrictings(districtings))},
-        setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))}
+        setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))},
+        restoreDefaultStateForNewDistricting : () => {dispatch(restoreDefaultStateForNewDistricting())}
     }
   }
 
@@ -134,6 +138,7 @@ const mapStateToProps = (state, ownProps) => {
         ConstraintSettings : state.ConstraintSettings,
         IncumbentProtectionInfo : state.IncumbentProtectionInfo,
         CurrentDistricting : state.CurrentDistricting,
+        NewDistrictingSelected : state.NewDistrictingSelected,
     }
 }
   

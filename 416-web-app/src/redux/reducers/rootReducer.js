@@ -27,6 +27,7 @@ const initState = {
     /* Map Reference */
     MapRef : React.createRef(),
 
+    /* Start off the map as the U.S. map (unselected) */
     MapViewport : ViewportUtilities.UNSELECTED.Maximized,
 
     /* Determines where the user starts, if this is false we need a districting to display by default as well */
@@ -73,7 +74,7 @@ const initState = {
     
     MinimizedMap : false,
 
-
+    NewDistrictingSelected : false,
 
 
     /* History */
@@ -299,6 +300,27 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 StatShowcasedDistrictID : action.DistrictID,
                 CurrentTab : ToolbarUtilities.MODES.STATS
+            }
+        /* When a new districting is selected, much of the state should return to default
+        to avoid any overlap*/
+        case ActionTypes.RESTORE_DEFAULT_STATE_FOR_NEW_DISTRICTING:
+            return {
+                ...state,
+                CurrentTab : ToolbarUtilities.MODES.SETTINGS,
+                MinimizedMap : false,
+                StatShowcasedDistrictID : null,
+                FeaturesToHighlight : [],
+                FeaturesToUnhighlight: [],
+                DisplayPrecincts : false,
+                DisplayCounties : false,
+                DisplayDistricts : true,
+                FeaturedDistrict : null,
+                FeaturedPrecinct : null,
+            }
+        case ActionTypes.SET_NEW_DISTRICTING_SELECTED:
+            return {
+                ...state,
+                NewDistrictingSelected : action.Bool
             }
         default:
             return state;

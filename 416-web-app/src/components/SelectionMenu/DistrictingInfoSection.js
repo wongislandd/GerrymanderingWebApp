@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setCurrentDistricting } from '../../redux/actions/settingActions'
+import { setCurrentDistricting, setNewDistrictingSelected } from '../../redux/actions/settingActions'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import DistrictingSummary from '../StatisticComponents/DistrictingSummary'
@@ -15,7 +15,11 @@ class DistrictingInfoSection extends Component {
             <div className="districtingInfoSection">
                 <DistrictingSummary DistrictingToDisplay={this.props.districting}/>
                 <div className="centerWithinMe">
-                <Button className="redBrownBtn" onClick={(e)=>this.props.setCurrentDistricting(this.props.districting)}>
+                <Button className="redBrownBtn" onClick={(e)=> {
+                    this.props.setCurrentDistricting(this.props.districting)
+                    this.props.setNewDistrictingSelected(true)
+                }
+                }>
                     {SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
                 </Button>
                 </div>
@@ -26,7 +30,8 @@ class DistrictingInfoSection extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCurrentDistricting : (districting) => {dispatch(setCurrentDistricting(districting))}
+        setCurrentDistricting : (districting) => {dispatch(setCurrentDistricting(districting))},
+        setNewDistrictingSelected : (bool) => {dispatch(setNewDistrictingSelected(bool))}
     }
   }
   
