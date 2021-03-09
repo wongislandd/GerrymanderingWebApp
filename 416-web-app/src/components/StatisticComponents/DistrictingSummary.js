@@ -33,7 +33,7 @@ class DistrictingSummary extends Component{
 
     render() {
         /* Don't want this behavior for the Selection Listing usage, since it's mostly meant for clicking on the map.*/
-        if (this.props.keepClosingCollapsibles) {
+        if (!this.props.InSelectionMenu) {
             this.closeAllCollapsibles()
         }
         return (
@@ -120,7 +120,7 @@ class DistrictingSummary extends Component{
                             where the collapsible will be open but seen as closed, this is a price we can pay to
                             trade off for clicking on a district to display stats, but on anywhere else this is being
                             used we don't need that behavior. */
-                            if (this.props.keepClosingCollapsibles) {
+                            if (!this.props.InSelectionMenu) {
                                 /* If they close the already open one. */
                                 if (key == this.props.StatShowcasedDistrictID) {
                                     this.props.setStatShowcasedDistrictID(null)
@@ -129,7 +129,7 @@ class DistrictingSummary extends Component{
                                 }
                             }
                         }}
-                        expanded={!this.props.keepClosingCollapsibles ? false : this.props.StatShowcasedDistrictID == null ? false : this.props.StatShowcasedDistrictID == key}
+                        expanded={this.props.InSelectionMenu ? false : this.props.StatShowcasedDistrictID == null ? false : this.props.StatShowcasedDistrictID == key}
                         key={key}
                         header={"District " + feature.properties["District"]}
                         style={{
@@ -270,6 +270,7 @@ const mapDispatchToProps = (dispatch) => {
         DisplayPrecincts : state.DisplayPrecincts,
         DisplayDistricts : state.DisplayDistricts,
         StatShowcasedDistrictID : state.StatShowcasedDistrictID,
+        InSelectionMenu : state.InSelectionMenu,
     }
   }
   
