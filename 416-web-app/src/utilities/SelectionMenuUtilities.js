@@ -4,5 +4,6 @@ export const LABELS = {
     FILTERS_HEADER : "Filters",
     OBJECTIVE_FUNCTION_WEIGHTS_HEADER : "Objective Function Weights",
     CONSTRAINTS_HEADER : "Constraints",
-    LOAD_THIS_DISTRICTING : "Load This Districting"
+    LOAD_THIS_DISTRICTING : "Load This Districting",
+    INCUMBENT_PROTECTION_OPTIONS : "Incumbent Protection Options"
 }

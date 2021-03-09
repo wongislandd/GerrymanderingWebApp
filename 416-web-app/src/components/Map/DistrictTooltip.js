@@ -22,7 +22,7 @@ class DistrictTooltip extends Component {
             <div className="tooltip" style={{left: this.props.MouseX, top: this.props.MouseY}}>
                 <ul>
                     <li><b>District : {locationToFeature.properties.District}</b></li>
-                    <li>Population : {locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION]}</li>
+                    <li>Population : {StatUtilities.addCommas(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
                     <li>Democratic : {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
                     <li>Republican : {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
                     <li>White Population: {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>

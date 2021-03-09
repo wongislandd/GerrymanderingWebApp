@@ -1,3 +1,5 @@
+import commaNumber from 'comma-number'
+
 export const DESCRIPTIONS = {
     POPULATION_EQUALITY : "How close in population the districts are to each other.",
 
@@ -19,10 +21,14 @@ export const DESCRIPTIONS = {
 }
 
 
+export function addCommas(value) {
+    return (commaNumber(value))
+}
+
 function percentage(partialValue, totalValue) {
     return (100 * partialValue) / totalValue
 }    
 
 export function formatResult(partialValue, totalValue) {
-    return partialValue + " ("+ (Math.round(percentage(partialValue, totalValue) * 10)/10) +"%)"
+    return commaNumber(partialValue) + " ("+ (Math.round(percentage(partialValue, totalValue) * 10)/10) +"%)"
 }

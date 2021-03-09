@@ -4,7 +4,7 @@ import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
-import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting, setViewport, setCurrentState} from '../../redux/actions/settingActions'
+import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting, setViewport, setCurrentState, setStatShowcasedDistrictID} from '../../redux/actions/settingActions'
 import DistrictTooltip from './DistrictTooltip'
 import PrecinctTooltip from './PrecinctTooltip'
 import MapIcon from '@material-ui/icons/Map';
@@ -87,7 +87,22 @@ class MapBoxComponent extends Component{
     this._renderTooltip();
   };
 
-  _renderTooltip() {
+  /* Open the corresponding stat window on click*/
+  _onClick = event => {
+    const {
+      features,
+    } = event;
+    if (this.props.DisplayDistricts){
+      this.props.resetAllHighlighting()
+      // Identify the newly featured district
+      const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.DISTRICT_FILL_LAYER_ID)
+      if (hoveredFeature != undefined) {
+        this.props.setStatShowcasedDistrictID(hoveredFeature.id)
+      }
+    } 
+  }
+
+  _renderTooltip() {  
     return this.props.DisplayDistricts ? <DistrictTooltip/> : this.props.DisplayPrecincts ? <PrecinctTooltip/> : <div/>
   }
 
@@ -143,6 +158,7 @@ class MapBoxComponent extends Component{
               this.props.setViewport(viewport)
             }}
             onHover={this._onHover.bind(this)}
+            onClick={(e)=>{this._onClick(e)}}
             // Tie this reference to the one in the state
             ref = {this.props.MapRef}
           >
@@ -191,7 +207,7 @@ class MapBoxComponent extends Component{
               "visibility": this.props.DisplayCounties ? "visible" : "none"
             }}
             paint={{
-              "fill-color" : ["rgb",["get","rgb-R"], ["get","rgb-G"], ["get","rgb-B"]],
+              "fill-color" : "lightblue",
               "fill-opacity": [
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
@@ -258,7 +274,8 @@ const mapDispatchToProps = (dispatch) => {
       setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))},
       setMinimizedMap : (bool) => {dispatch(setMinimizedMap(bool))},
       setViewport : (viewport) => {dispatch(setViewport(viewport))},
-      setCurrentState : (state) => {dispatch(setCurrentState(state))}
+      setCurrentState : (state) => {dispatch(setCurrentState(state))},
+      setStatShowcasedDistrictID : (districtID) => {dispatch(setStatShowcasedDistrictID(districtID))},
   }
 }
 

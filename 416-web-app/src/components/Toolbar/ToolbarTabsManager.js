@@ -24,17 +24,16 @@ class ToolbarTabsManager extends Component {
     {/* Mode label must match innerText, that is, all caps as the tabs make it in order for this check to work */}
     <Tabs onChange={(e) => this.props.setCurrentTab(e.target.innerHTML)}>
         <Tab
-            active
+            active={this.props.CurrentTab == ToolbarUtilities.MODES.SETTINGS}
             options={TabOptions}
             title={ToolbarUtilities.MODES.SETTINGS}
-            //onSelected={(e)=>this.props.setCurrentTab(ToolbarUtilities.MODES.SETTINGS)}
         >
             <ToolbarContentContainer topMode={ToolbarUtilities.MODES.SETTINGS}/>
         </Tab>
         <Tab
+            active={this.props.CurrentTab == ToolbarUtilities.MODES.STATS}
             options={TabOptions}
             title={ToolbarUtilities.MODES.STATS}
-            //onSelected={(e)=>this.props.setCurrentTab(ToolbarUtilities.MODES.STATS)}
         >
             <ToolbarContentContainer topMode={ToolbarUtilities.MODES.STATS}/>
         </Tab>
@@ -52,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
   
   const mapStateToProps = (state, ownProps) => {
     return {
-       
+       CurrentTab : state.CurrentTab
     }
   }
   

@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "canvasjs": "^1.8.3",
+    "comma-number": "^2.0.1",
     "dotenv": "^8.2.0",
     "materialize-css": "^1.0.0",
     "react": "^17.0.1",

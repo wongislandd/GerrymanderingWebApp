@@ -206,3 +206,10 @@ export const minimizeMap = () => {
         type : ActionTypes.MINIMIZE_MAP
     }
 }
+
+export const setStatShowcasedDistrictID = (districtID) => {
+    return {
+        type : ActionTypes.SET_STAT_SHOWCASED_DISTRICT_ID,
+        DistrictID : districtID
+    }
+}

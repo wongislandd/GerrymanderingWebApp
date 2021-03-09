@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { loadInDistrictings, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
 import { Collapsible, Range, Row, CollapsibleItem} from 'react-materialize'
 import { FormControlLabel, Checkbox, Slider } from '@material-ui/core'
-import * as ToolbarUtilities from '../../utilities/ToolbarUtilities'
 
 
 import Districting from '../../utilities/classes/Districting'
@@ -85,7 +84,7 @@ class FilterSection extends Component {
                     <Collapsible className="incumbent-protection-collapsible">
                     <CollapsibleItem
                         expanded={false}
-                        header={ToolbarUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS_LABEL}
+                        header={SelectionMenuUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS}
                         node="div"
                         >
                         {Object.keys(this.props.IncumbentProtectionInfo).map((key) => {

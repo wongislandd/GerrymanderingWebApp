@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as MapUtilities from '../../utilities/MapUtilities'
-import {formatResult} from '../../utilities/StatUtilities'
+import * as StatUtilities from '../../utilities/StatUtilities'
 
 class PrecinctTooltip extends Component {
     constructor(props) {
@@ -23,11 +23,11 @@ class PrecinctTooltip extends Component {
                      <ul>
                         <li><b>Precinct : {locationToFeature.properties[MapUtilities.PROPERTY_LABELS.PRECINCT_NAME]}</b></li>
                         <li>County : {locationToFeature.properties["county_nam"]}</li>
-                        <li>Population : {locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION]}</li>
-                        <li>Democratic : {formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
-                        <li>Republican : {formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
-                        <li>White Population: {formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
-                        <li>Black Population: {formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
+                        <li>Population : {StatUtilities.addCommas(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
+                        <li>Democratic : {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
+                        <li>Republican : {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
+                        <li>White Population: {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
+                        <li>Black Population: {StatUtilities.formatResult(locationToFeature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT],locationToFeature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}</li>
                     </ul>
                 </div>
             )
