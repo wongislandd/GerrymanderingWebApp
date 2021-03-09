@@ -32,7 +32,10 @@ class DistrictingSummary extends Component{
     }
 
     render() {
-        this.closeAllCollapsibles()
+        /* Don't want this behavior for the Selection Listing usage, since it's mostly meant for clicking on the map.*/
+        if (this.props.keepClosingCollapsibles) {
+            this.closeAllCollapsibles()
+        }
         return (
             <Collapsible className="stat-window" id="stat-collapsible" accordion={false}>
                 <CollapsibleItem
@@ -113,20 +116,28 @@ class DistrictingSummary extends Component{
                             this.props.removeFeatureHighlighting(feature)
                         }}
                         onClick={(e)=> {
-                            /* If they close the already open one. */
-                            if (key == this.props.StatShowcasedDistrictID) {
-                                this.props.setStatShowcasedDistrictID(null)
-                            } else {
-                                this.props.setStatShowcasedDistrictID(key)
+                            /* The state refreshing along with the expanded attribute cause some buggy behavior
+                            where the collapsible will be open but seen as closed, this is a price we can pay to
+                            trade off for clicking on a district to display stats, but on anywhere else this is being
+                            used we don't need that behavior. */
+                            if (this.props.keepClosingCollapsibles) {
+                                /* If they close the already open one. */
+                                if (key == this.props.StatShowcasedDistrictID) {
+                                    this.props.setStatShowcasedDistrictID(null)
+                                } else {
+                                    this.props.setStatShowcasedDistrictID(key)
+                                }
                             }
                         }}
-                        expanded={this.props.StatShowcasedDistrictID == null ? false : this.props.StatShowcasedDistrictID == key}
+                        expanded={!this.props.keepClosingCollapsibles ? false : this.props.StatShowcasedDistrictID == null ? false : this.props.StatShowcasedDistrictID == key}
                         key={key}
                         header={"District " + feature.properties["District"]}
                         style={{
                             backgroundColor: "rgba(" + feature.properties["rgb-R"] + "," + feature.properties["rgb-G"] + "," + feature.properties["rgb-B"] + "," + MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY + ")",
                         }}
                         >
+
+
                         <h5>Voter Demographics</h5>
                         <TableContainer component={Paper}>
                         <Table aria-label="simple table">
@@ -156,6 +167,8 @@ class DistrictingSummary extends Component{
                             </TableBody>
                         </Table>
                         </TableContainer>
+
+
                         <h5>Racial Demographics</h5>
                         <TableContainer component={Paper}>
                         <Table aria-label="simple table">
@@ -201,10 +214,39 @@ class DistrictingSummary extends Component{
                             </TableBody>
                         </Table>
                         </TableContainer>
+
+
                         <div className="demographicsContainer">
                                 <PartyPieChart feature={feature}/>
                                 <RacialPieChart feature={feature}/>
                         </div>
+
+
+                        <h5>Objective Function Details</h5>
+                        <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell>Minority Population</TableCell>
+                                <TableCell>Split Counties</TableCell>
+                                <TableCell>Compactness</TableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                <TableCell scope="row">
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.MINORITY_POPULATION],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}    
+                                </TableCell>
+                                <TableCell>
+                                    {feature.properties[MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES]}                            
+                                </TableCell>
+                                <TableCell>
+                                    {feature.properties[MapUtilities.PROPERTY_LABELS.COMPACTNESS]+ "%"}                                    
+                                 </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
                         </CollapsibleItem>
                         )
                 })}

@@ -13,7 +13,7 @@ class DistrictingInfoSection extends Component {
     render() {
         return (
             <div className="districtingInfoSection">
-                <DistrictingSummary DistrictingToDisplay={this.props.districting}/>
+                <DistrictingSummary keepClosingCollapsibles={false} DistrictingToDisplay={this.props.districting}/>
                 <div className="centerWithinMe">
                 <Button className="redBrownBtn" onClick={(e)=> {
                     this.props.setCurrentDistricting(this.props.districting)

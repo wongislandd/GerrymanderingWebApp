@@ -19,7 +19,7 @@ class StatsMode extends Component {
             <div className="ToolbarContent">
                 <h5>Displayed District Stats</h5>
                 <Row>
-                    <DistrictingSummary DistrictingToDisplay={this.props.CurrentDistricting}/>
+                    <DistrictingSummary keepClosingCollapsibles={true} DistrictingToDisplay={this.props.CurrentDistricting}/>
                 </Row>
             </div>
         )
