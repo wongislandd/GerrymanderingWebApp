@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import { connect } from 'react-redux'
-import { loadInDistrictings, restoreDefaultStateForNewDistricting, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
-import { Collapsible, Range, Row, CollapsibleItem} from 'react-materialize'
+import { loadInDistrictings, restoreDefaultStateForNewDistricting, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint, updateObjectiveFunctionSettings } from '../../redux/actions/settingActions'
+import { Collapsible, Row, CollapsibleItem, Select, Icon} from 'react-materialize'
 import { FormControlLabel, Checkbox, Slider } from '@material-ui/core'
 
 
@@ -24,6 +24,7 @@ class FilterSection extends Component {
             new Districting("Enacted Districting Nov 2019 - Dec 2021", EnactedDistrictingPlan2019)]
 
     render() {
+        console.log(this.props.PopulationConstraintInfo)
         return (
             <div className="SelectionMenuSection FilterSection">
                 {/* Button for returning to map */}
@@ -82,9 +83,51 @@ class FilterSection extends Component {
                         )
                         }
                 })}
+                {/* Population Constraint Selection */}
+                <h6>{SelectionMenuUtilities.LABELS.POPULATION_TO_ACCOUNT_FOR}</h6>
+                <Select
+                    icon={<Icon>people</Icon>}
+                    id="Select-9"
+                    multiple={false}
+                    onChange={(e)=> 
+                        this.props.updatePopulationConstraint(e.target.value)
+                    }
+                    options={{
+                        classes: '',
+                        dropdownOptions: {
+                        alignment: 'left',
+                        autoTrigger: true,
+                        closeOnClick: true,
+                        constrainWidth: true,
+                        coverTrigger: true,
+                        hover: false,
+                        inDuration: 150,
+                        onCloseEnd: null,
+                        onCloseStart: null,
+                        onOpenEnd: null,
+                        onOpenStart: null,
+                        outDuration: 250
+                        }
+                    }}
+                    value=""
+                    >
+                    <option
+                        disabled
+                        value=""
+                    >
+                        Choose a Population
+                    </option>
+                    {Object.keys(this.props.PopulationConstraintInfo).map((key) => {
+                       return (
+                           <option key = {key} value={key}>
+                               {key}
+                           </option>
+                       )
+                    })}
+                    </Select>
                 {/* Incumbent protection, part of constraints  */}
                 <Row>
-                    <Collapsible className="incumbent-protection-collapsible">
+                    <Collapsible className="constraint-collapsible">
                     <CollapsibleItem
                         expanded={false}
                         header={SelectionMenuUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS}
@@ -126,6 +169,7 @@ const mapDispatchToProps = (dispatch) => {
         updateObjectiveFunctionSettings : (key, newVal) => {dispatch(updateObjectiveFunctionSettings(key, newVal))},
         updateConstraintSettings : (key, newVal) => {dispatch(updateConstraintSettings(key, newVal))},
         updateIncumbentProtection : (key, newVal) => {dispatch(updateIncumbentProtection(key, newVal))},
+        updatePopulationConstraint : (key, newVal) => {dispatch(updatePopulationConstraint(key, newVal))},
         loadInDistrictings : (districtings) => {dispatch(loadInDistrictings(districtings))},
         setInSelectionMenu : (bool) => {dispatch(setInSelectionMenu(bool))},
         restoreDefaultStateForNewDistricting : () => {dispatch(restoreDefaultStateForNewDistricting())}
@@ -137,6 +181,7 @@ const mapStateToProps = (state, ownProps) => {
         ObjectiveFunctionSettings : state.ObjectiveFunctionSettings,
         ConstraintSettings : state.ConstraintSettings,
         IncumbentProtectionInfo : state.IncumbentProtectionInfo,
+        PopulationConstraintInfo : state.PopulationConstraintInfo,
         CurrentDistricting : state.CurrentDistricting,
         NewDistrictingSelected : state.NewDistrictingSelected,
     }

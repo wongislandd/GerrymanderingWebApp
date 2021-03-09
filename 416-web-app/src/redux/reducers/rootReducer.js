@@ -51,8 +51,14 @@ const initState = {
     /* Constraint Settings */
     ConstraintSettings : [
         new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1),
+        new Filter("Maximum Population Difference (%)", 20, 0, 100, 1)
     ],
 
+    PopulationConstraintInfo : {
+        "Total Population" : false,
+        "Voting Age Population" : false,
+        "Citizen Voting Age Population" : false
+    },
     
     /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
@@ -99,7 +105,7 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
-    console.log(action)
+   //console.log(action)
     switch (action.type) {
         case ActionTypes.SET_CURRENT_STATE:
             var newViewport = null;
@@ -193,6 +199,15 @@ const rootReducer = (state = initState, action) => {
                 IncumbentProtectionInfo: {
                     ...state.IncumbentProtectionInfo, [action.Key] : action.NewValue
                 }
+            }
+        case ActionTypes.UPDATE_POPULATION_CONSTRAINT:
+            /* Set all the keys to false and then set the one you want to true. */
+            var updatedInfo = {}
+            Object.keys(state.PopulationConstraintInfo).forEach(key => updatedInfo[key] = false)
+            updatedInfo[action.Key] = true
+            return {
+                ...state,
+                PopulationConstraintInfo : updatedInfo
             }
         case ActionTypes.SET_IN_SELECTION_MENU:
             return {

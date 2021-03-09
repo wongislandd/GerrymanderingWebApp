@@ -109,6 +109,13 @@ export const updateIncumbentProtection = (key, newValue) => {
     }
 }
 
+export const updatePopulationConstraint = (key) => {
+    return {
+        type : ActionTypes.UPDATE_POPULATION_CONSTRAINT,
+        Key : key,
+    }
+}
+
 export const setInSelectionMenu = (bool) => {
     return {
         type : ActionTypes.SET_IN_SELECTION_MENU,
@@ -226,3 +233,4 @@ export const setNewDistrictingSelected = (bool) => {
         Bool : bool
     }
 }
+
