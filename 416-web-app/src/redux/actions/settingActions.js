@@ -173,12 +173,6 @@ export const loadInDistrictings = (districtings) => {
     }
 }
 
-export const setViewingDistrictDetails = (bool) => {
-    return {
-        type : ActionTypes.SET_VIEWING_DISTRICT_DETAILS,
-        Viewing : bool
-    }
-}
 
 export const setCurrentTab = (tab) => {
     return {

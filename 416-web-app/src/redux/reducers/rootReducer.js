@@ -84,8 +84,6 @@ const initState = {
     hasn't yet loaded it*/
     TentativeDistricting : null,
 
-    ViewingDistrictDetails : false,
-
     CurrentTab : ToolbarUtilities.MODES.SETTINGS,
 
     ComparisonDistrictingA : null,
@@ -242,11 +240,6 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 FilteredDistrictings : action.Districtings
-            }
-        case ActionTypes.SET_VIEWING_DISTRICT_DETAILS:
-            return {
-                ...state,
-                ViewingDistrictDetails : action.Viewing
             }
         case ActionTypes.SET_CURRENT_TAB:
             return {

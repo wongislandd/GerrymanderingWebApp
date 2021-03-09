@@ -1,6 +1,5 @@
 import React, {Component, useState} from 'react'
 import ReactMapGL, { Layer, Source } from "react-map-gl"
-//import PrecinctGeoData from '../../data/NC/ReducedPrecinctGeoData.json'
 import PrecinctGeoData from '../../data/NC/PrecinctGeoDataOutput.json'
 import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
@@ -15,6 +14,7 @@ class MapBoxComponent extends Component{
     super(props)
   }
 
+  /* Recenter the map to the default state's location (minimized or maximized)*/
   recenterMap() {
     var newViewport = null;
     switch (this.props.CurrentState) {
@@ -33,7 +33,7 @@ class MapBoxComponent extends Component{
     this.props.setViewport(newViewport)
   }
 
-
+  /* If there are features to unhighlight, unhighlight them (kind of like a queue)*/
   unhighlightFeatures = () => {
     const map = this.props.MapRef.current.getMap()
     this.props.FeaturesToUnhighlight.forEach(feature => {
@@ -47,6 +47,7 @@ class MapBoxComponent extends Component{
     })
   }
 
+  /* If there are features to highlight, highlight them*/
   highlightFeatures = () => {
     const map = this.props.MapRef.current.getMap()
     this.props.FeaturesToHighlight.forEach(feature => {
@@ -60,7 +61,7 @@ class MapBoxComponent extends Component{
     });
   }
 
-
+  /* OnHover behavior responsible for tooltip and setting the currently featured district or feature */
   _onHover = event => {
     const {
       features,
@@ -97,6 +98,7 @@ class MapBoxComponent extends Component{
     this.props.setLoadedStatus(true)
   }
 
+  /* Set loaded to false when unmounting */
   componentWillUnmount(){
     this.props.setLoadedStatus(false)
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import * as MapUtilities from '../../../utilities/MapUtilities'
+import * as MapUtilities from '../../utilities/MapUtilities'
 import {Chart} from 'react-google-charts'
 
 export default class PartyPieChart extends Component {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { setCurrentDistricting } from '../../redux/actions/settingActions'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
-import DistrictingSummary from '../Toolbar/ToolbarContentModes/DistrictingSummary'
+import DistrictingSummary from '../StatisticComponents/DistrictingSummary'
 
 /* Properties: 
     this.props.districting => the associated districting to display info for

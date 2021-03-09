@@ -18,7 +18,6 @@ class StateSelectionMap extends Component {
         } = event;
         if (this.props.DisplayDistricts){
           this.props.resetAllHighlighting()
-          // Identify the newly featured district
           const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.DISTRICT_FILL_LAYER_ID)
           this.props.setFeaturedDistrict(hoveredFeature)
           if (hoveredFeature != undefined) {
@@ -26,7 +25,6 @@ class StateSelectionMap extends Component {
           }
         } else if(this.props.DisplayPrecincts) {
           this.props.resetAllHighlighting()
-          // Identify the newly featured precinct
           const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.PRECINCT_FILL_LAYER_ID)
           this.props.setFeaturedPrecinct(hoveredFeature)
           if (hoveredFeature != undefined) {
