@@ -4,8 +4,10 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { connect } from 'react-redux'
 import {addFeatureToHighlight, removeFeatureHighlighting, setFeaturedDistrict, setFeaturedPrecinct} from '../../redux/actions/settingActions'
 import * as MapUtilities from '../../utilities/MapUtilities'
+import * as StatUtilities from '../../utilities/StatUtilities'
 import PartyPieChart from './PartyPieChart'
 import RacialPieChart from './RacialPieChart'
+import LabelAndInfoIcon from './LabelAndInfoIcon'
 
 
 class DistrictingSummary extends Component{
@@ -33,29 +35,54 @@ class DistrictingSummary extends Component{
                         <Table aria-label="simple table">
                             <TableHead>
                             <TableRow>
-                                <TableCell align="left">Population Equality</TableCell>
-                                <TableCell align="right">Split Counties</TableCell>
-                                <TableCell align="right">Compactness</TableCell>
-                                <TableCell align="right">Deviation from Average</TableCell>
-                                <TableCell align="right">Deviation from Enacted</TableCell>
+                                <TableCell>
+                                <LabelAndInfoIcon
+                                 label="Population Equality"
+                                 description={StatUtilities.DESCRIPTIONS.POPULATION_EQUALITY}
+                                 />
+                                </TableCell>
+                                <TableCell>
+                                <LabelAndInfoIcon
+                                 label="Split Counties"
+                                 description={StatUtilities.DESCRIPTIONS.SPLIT_COUNTIES}
+                                 />
+                                </TableCell>
+                                <TableCell>
+                                <LabelAndInfoIcon
+                                 label="Deviaton from Average"
+                                 description={StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE}
+                                 />
+                                </TableCell>
+                                <TableCell>
+                                <LabelAndInfoIcon
+                                 label="Deviation from Enacted"
+                                 description={StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED}
+                                 />
+                                </TableCell>
+                                <TableCell>
+                                <LabelAndInfoIcon
+                                 label="Compactness"
+                                 description={StatUtilities.DESCRIPTIONS.COMPACTNESS}
+                                 />
+                                </TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
                                     <TableCell scope="row">
-                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['POPULATION_EQUALITY']}
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc[MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY]}
                                     </TableCell>
-                                    <TableCell align="right">    
-                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['SPLIT_COUNTIES']}               
+                                    <TableCell>    
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc[MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES]}               
                                     </TableCell>
-                                    <TableCell align="right">          
-                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['DEVIATION_FROM_AVG_DISTRICTING']}         
+                                    <TableCell>          
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc[MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_AVG]}         
                                     </TableCell>
-                                    <TableCell align="right">
-                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['DEVIATION_FROM_ENACTED_PLAN']}
+                                    <TableCell>
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc[MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_ENACTED]}
                                     </TableCell>
-                                    <TableCell align="right">
-                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc['COMPACTNESS']}
+                                    <TableCell>
+                                        {this.props.DistrictingToDisplay.geoJson.objectivefunc[MapUtilities.PROPERTY_LABELS.COMPACTNESS]}
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
@@ -89,9 +116,9 @@ class DistrictingSummary extends Component{
                             <TableHead>
                             <TableRow>
                                 <TableCell>Total Voters</TableCell>
-                                <TableCell align="right">Democratic Affiliated</TableCell>
-                                <TableCell align="right">Republican Affiliated</TableCell>
-                                <TableCell align="right">Other Affiliations</TableCell>
+                                <TableCell>Democratic Affiliated</TableCell>
+                                <TableCell>Republican Affiliated</TableCell>
+                                <TableCell>Other Affiliations</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
@@ -99,13 +126,13 @@ class DistrictingSummary extends Component{
                                 <TableCell scope="row">
                                 {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT]}
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell>
                                     {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell>
                                     {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
                                  </TableCell>
-                                <TableCell align="right">
+                                <TableCell>
                                 {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
                                     </TableCell>
                                 </TableRow>
