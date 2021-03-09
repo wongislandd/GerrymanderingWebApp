@@ -20,6 +20,16 @@ export const DESCRIPTIONS = {
     COMPACTNESS : "The ratio of district's circumference to their total areas.",
 }
 
+export const COMPARISON_DIRECTIONS = {
+    NONE : "NONE",
+    UP : "UP",
+    DOWN : "DOWN",
+}
+
+export function getPercentageChange(x,y){
+    var decreaseValue = x - y;
+    return Math.round((decreaseValue / x) * 100);
+}
 
 export function addCommas(value) {
     return (commaNumber(value))
