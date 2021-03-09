@@ -8,6 +8,7 @@ import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, s
 import DistrictTooltip from './DistrictTooltip'
 import PrecinctTooltip from './PrecinctTooltip'
 import MapIcon from '@material-ui/icons/Map';
+import {Icon} from 'react-materialize'
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 
 class MapBoxComponent extends Component{
@@ -144,11 +145,21 @@ class MapBoxComponent extends Component{
           </div>
           {/* Option to enter the selection menu */}
           <div className="viewAndFilterDistrictingsOption" onClick={(e)=>{this.props.setInSelectionMenu(true)}}>
-            {MapUtilities.MESSAGES.ViewAndFilterDistrictingsMsg}
+            <div className="iconAndLabel">
+              <Icon>code</Icon>
+              <span>
+              {MapUtilities.MESSAGES.ViewAndFilterDistrictingsMsg}
+              </span>
+            </div>
           </div>
           {/* Option to return to state selection */}
           <div className="returnToStateSelectionOption" onClick={(e)=>{this.props.setCurrentState(ViewportUtilities.STATE_OPTIONS.UNSELECTED)}}>
-            {MapUtilities.MESSAGES.ReturnToStateSelectionMsg}
+            <div className="iconAndLabel">
+              <Icon>arrow_back</Icon>
+              <span>
+              {MapUtilities.MESSAGES.ReturnToStateSelectionMsg}
+              </span>
+            </div>
           </div>
           <ReactMapGL 
             className = "map-display"

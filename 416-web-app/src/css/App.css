@@ -1,4 +1,11 @@
 
+:root {
+  --primary-color: #fff9aa;
+  --secondary-color: #acecd5;
+  --tertiary-color : whitesmoke;
+  --fourthary-color : brown;
+}
+
 /* Full Page Settings*/
 .full-screen-flex-container {
   display: flex;
@@ -12,8 +19,8 @@
 
 /* Toolbar Settings*/
 .toolbar {
-  background: #fff9aa;
-  border-color: #acecd5;
+  background: var(--primary-color);
+  border-color: var(--secondary-color);
   flex-grow: 1;
   border-style: solid;
   border-width: 7px;
@@ -77,7 +84,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 
 .stat-window {
-  background-color: whitesmoke;
+  background-color: var(--tertiary-color);
 }
 
 
@@ -86,7 +93,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   margin: 8px;
   padding: 4px;
   background: rgba(0, 0, 0, 0.8);
-  color: #fff;
+  color: var(--tertiary-color);
   max-width: 300px;
   font-size: 10px;
   z-index: 999;
@@ -98,7 +105,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .constraint-protection-collapsible {
-  background-color : whitesmoke;
+  background-color : var(--tertiary-color);
 }
 
 /* For incumbent labels */
@@ -130,7 +137,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   
 .currentDistrictingNameSidebar {
   background-color: rgba(35, 55, 75, 0.9);
-  color: #ffffff;
+  color: var(--tertiary-color);
   padding: 6px 12px;
   font: 15px/24px monospace;
   z-index: 1;
@@ -142,8 +149,8 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .viewAndFilterDistrictingsOption {
-  background-color: brown;
-  color: #ffffff;
+  background-color: var(--fourthary-color);
+  color: var(--tertiary-color);
   padding: 6px 12px;
   font: 15px/24px monospace;
   z-index: 1;
@@ -155,8 +162,8 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .returnToStateSelectionOption {
-  background-color: brown;
-  color: #ffffff;
+  background-color: var(--fourthary-color);
+  color: var(--tertiary-color);
   padding: 6px 12px;
   font: 15px/24px monospace;
   z-index: 1;
@@ -175,8 +182,8 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 .SelectionMenuSection {
   height: 937px;
   max-height: 1000px;
-  background: #fff9aa;
-  border-color: #acecd5;
+  background: var(--primary-color);
+  border-color: var(--secondary-color);
   flex-grow: 1;
   border-style: solid;
   border-width: 5px;
@@ -217,7 +224,8 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 .ReturnToMapBtn {
   height: 50px;
-  background-color: brown;
+  background-color: var(--fourthary-color);
+  display: flex;
 }
 
 .filterSectionItem {
@@ -248,7 +256,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .redBrownBtn {
-  background-color: brown;
+  background-color: var(--fourthary-color);
 }
 
 .centerWithinMe{

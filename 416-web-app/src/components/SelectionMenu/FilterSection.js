@@ -36,6 +36,7 @@ class FilterSection extends Component {
                         }
                     }}
                     disabled={this.props.CurrentDistricting == null}>
+                    <Icon left>arrow_back</Icon>
                     {SelectionMenuUtilities.LABELS.RETURN_TO_MAP}
                 </Button>
                 {/* Section for Setting Objective Function Weights */}
