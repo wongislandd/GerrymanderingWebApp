@@ -24,7 +24,6 @@ class FilterSection extends Component {
             new Districting("Enacted Districting Nov 2019 - Dec 2021", EnactedDistrictingPlan2019)]
 
     render() {
-        console.log(this.props.PopulationConstraintInfo)
         return (
             <div className="SelectionMenuSection FilterSection">
                 {/* Button for returning to map */}

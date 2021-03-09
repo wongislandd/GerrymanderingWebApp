@@ -38,7 +38,6 @@ class StateSelectionToolbar extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="toolbar">
                 <Row className="centerWithinMe">

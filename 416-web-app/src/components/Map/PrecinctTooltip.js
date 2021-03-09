@@ -16,7 +16,6 @@ class PrecinctTooltip extends Component {
                 </div>
             )
         } else {
-            console.log(locationToFeature.properties)
             return (    
                 /* Placeholder for better design */
                 <div className="tooltip" style={{left: this.props.MouseX, top: this.props.MouseY}}>
