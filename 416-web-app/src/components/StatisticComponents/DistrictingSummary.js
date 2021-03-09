@@ -122,7 +122,7 @@ class DistrictingSummary extends Component{
                         }}
                         expanded={this.props.StatShowcasedDistrictID == null ? false : this.props.StatShowcasedDistrictID == key}
                         key={key}
-                        header={"District " + (key+1)}
+                        header={"District " + feature.properties["District"]}
                         style={{
                             backgroundColor: "rgba(" + feature.properties["rgb-R"] + "," + feature.properties["rgb-G"] + "," + feature.properties["rgb-B"] + "," + MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY + ")",
                         }}
