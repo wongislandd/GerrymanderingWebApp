@@ -22,11 +22,23 @@ class StateSelectionToolbar extends Component {
         }
     }
     
+    selectTentativeState(state) {
+        const selector = document.getElementById("state-selector")
+        if (selector != null) {
+            for (var i =0; i< selector.options.length; i++) {
+                if (selector.options[i].value == state) {
+                    selector.options[i].selected = true;
+                }
+            }
+        }
+    }
+
     handleClick(e) {
         this.props.setCurrentState(document.getElementById("state-selector").value)
     }
 
     render() {
+        console.log(this.props)
         return (
             <div className="toolbar">
                 <Row className="centerWithinMe">
@@ -38,21 +50,20 @@ class StateSelectionToolbar extends Component {
                             options={{
                                 classes: '',
                                 dropdownOptions: {
-                                alignment: 'left',
-                                autoTrigger: true,
-                                closeOnClick: true,
-                                constrainWidth: true,
-                                coverTrigger: true,
-                                hover: false,
-                                inDuration: 150,
-                                onCloseEnd: null,
-                                onCloseStart: null,
-                                onOpenEnd: null,
-                                onOpenStart: null,
-                                outDuration: 250
+                                    alignment: 'left',
+                                    autoTrigger: true,
+                                    closeOnClick: true,
+                                    constrainWidth: true,
+                                    coverTrigger: true,
+                                    hover: false,
+                                    inDuration: 150,
+                                    onCloseEnd: null,
+                                    onCloseStart: null,
+                                    onOpenEnd: null,
+                                    onOpenStart: null,
+                                    outDuration: 250
                                 }
                             }}
-                            value=""
                             >
                             <option
                                 disabled
@@ -60,18 +71,23 @@ class StateSelectionToolbar extends Component {
                             >
                                 Choose your option
                             </option>
-                            <option value={ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA}>
+                            <option
+                            value={ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA}>
                                 North Carolina
                             </option>
-                            <option value={ViewportUtilities.STATE_OPTIONS.CALIFORNIA}>
+                            <option 
+                            value={ViewportUtilities.STATE_OPTIONS.CALIFORNIA}
+                            >
                                 California
                             </option>
-                            <option value={ViewportUtilities.STATE_OPTIONS.TEXAS}>
+                            <option
+                            value={ViewportUtilities.STATE_OPTIONS.TEXAS}>
                                 Texas
                             </option>
                     </Select>
                     <Button className="redBrownBtn" onClick={(e)=>this.handleClick(e)}>Select this State</Button>
                 </Row>
+                {this.selectTentativeState(this.props.TentativeState)}
             </div>
         )
     }
@@ -87,7 +103,7 @@ const mapDispatchToProps = (dispatch) => {
   
   const mapStateToProps = (state, ownProps) => {
     return {
-       
+       TentativeState : state.TentativeState
     }
   }
   

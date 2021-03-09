@@ -86,10 +86,8 @@ const initState = {
     /* History */
     FilteredDistrictings : [],
     
-    /* The tentative districting is for when a user 
-    selected a districting in the history tab but 
-    hasn't yet loaded it*/
-    TentativeDistricting : null,
+    TentativeState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+
 
     CurrentTab : ToolbarUtilities.MODES.SETTINGS,
     StatShowcasedDistrictID : null,
@@ -336,6 +334,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 NewDistrictingSelected : action.Bool
+            }
+        case ActionTypes.SET_TENTATIVE_STATE:
+            return {
+                ...state,
+                TentativeState : action.State
             }
         default:
             return state;

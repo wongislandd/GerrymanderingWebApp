@@ -162,7 +162,7 @@ class MapBoxComponent extends Component{
             // Tie this reference to the one in the state
             ref = {this.props.MapRef}
           >
-            {this._renderTooltip()}
+            {this._renderTooltip()} 
           <Source
             id = {MapUtilities.IDs.PRECINCT_SOURCE_ID}
             type="geojson"

@@ -234,3 +234,9 @@ export const setNewDistrictingSelected = (bool) => {
     }
 }
 
+export const setTentativeState = (state) => {
+    return {
+        type : ActionTypes.SET_TENTATIVE_STATE,
+        State : state
+    }
+}
