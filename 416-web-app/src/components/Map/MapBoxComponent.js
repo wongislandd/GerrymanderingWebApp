@@ -5,7 +5,8 @@ import CountyGeoData from '../../data/NC/CountiesGeoData.json'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import { connect } from 'react-redux'
 import { moveMouse, setFeaturedDistrict, setMouseEntered, setFeaturedPrecinct, setMinimizedMap, setLoadedStatus, setInSelectionMenu, addFeatureToHighlight, resetAllHighlighting, setViewport, setCurrentState} from '../../redux/actions/settingActions'
-import TooltipComponent from './TooltipComponent'
+import DistrictTooltip from './DistrictTooltip'
+import PrecinctTooltip from './PrecinctTooltip'
 import MapIcon from '@material-ui/icons/Map';
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 
@@ -87,7 +88,7 @@ class MapBoxComponent extends Component{
   };
 
   _renderTooltip() {
-    return <TooltipComponent/>
+    return this.props.DisplayDistricts ? <DistrictTooltip/> : this.props.DisplayPrecincts ? <PrecinctTooltip/> : <div/>
   }
 
   /* Can't use Map reference until AFTER it's mounted, otherwise no guarentee it's set yet.

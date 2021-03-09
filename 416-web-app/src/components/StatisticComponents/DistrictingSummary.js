@@ -15,13 +15,6 @@ class DistrictingSummary extends Component{
         super(props)
     }
 
-    percentage(partialValue, totalValue) {
-        return (100 * partialValue) / totalValue
-    }    
-
-    formatResult(partialValue, totalValue) {
-        return partialValue + " ("+ (Math.round(this.percentage(partialValue, totalValue) * 10)/10) +"%)"
-    }
 
     render() {
         return (
@@ -127,13 +120,13 @@ class DistrictingSummary extends Component{
                                 {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT]}
                                 </TableCell>
                                 <TableCell>
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
                                 </TableCell>
                                 <TableCell>
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
                                  </TableCell>
                                 <TableCell>
-                                {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
+                                {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT],feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT])}                                    
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
@@ -160,25 +153,25 @@ class DistrictingSummary extends Component{
                                 {feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION]}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.WHITE_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                     </TableCell>
                                 <TableCell align="right">
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.BLACK_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.ASIAN_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.ASIAN_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                      </TableCell>
                                 <TableCell align="right">
-                                 {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.NATIVE_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                 {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.NATIVE_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                    </TableCell>
                                 <TableCell align="right">
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PACIFIC_ISLANDER_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.PACIFIC_ISLANDER_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                      </TableCell>
                                 <TableCell align="right">
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                    </TableCell>
                                 <TableCell align="right">
-                                    {this.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
+                                    {StatUtilities.formatResult(feature.properties[MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT], feature.properties[MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION])}
                                      </TableCell>
                                 </TableRow>
                             </TableBody>

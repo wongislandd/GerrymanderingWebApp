@@ -17,3 +17,12 @@ export const DESCRIPTIONS = {
 
     COMPACTNESS : "The ratio of district's circumference to their total areas.",
 }
+
+
+function percentage(partialValue, totalValue) {
+    return (100 * partialValue) / totalValue
+}    
+
+export function formatResult(partialValue, totalValue) {
+    return partialValue + " ("+ (Math.round(percentage(partialValue, totalValue) * 10)/10) +"%)"
+}
