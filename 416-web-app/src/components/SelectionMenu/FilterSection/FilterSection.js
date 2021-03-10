@@ -134,14 +134,14 @@ function FilterSection(props) {
                 <div>
                     {allStepsCompleted() ? (
                     <div>
-                        <Typography className={classes.instructions}>
+                        <Typography component={'span'} className={classes.instructions}>
                         All steps completed - you&apos;re finished
                         </Typography>
                         <Button onClick={handleReset}>Reset</Button>
                     </div>
                     ) : (
                     <div>
-                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                        <Typography component={'span'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                         <div>
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                             Back
@@ -156,7 +156,7 @@ function FilterSection(props) {
                         </Button>
                         {activeStep !== steps.length &&
                             (completed[activeStep] ? (
-                            <Typography variant="caption" className={classes.completed}>
+                            <Typography component={'span'} variant="caption" className={classes.completed}>
                                 Step {activeStep + 1} already completed
                             </Typography>
                             ) : (
