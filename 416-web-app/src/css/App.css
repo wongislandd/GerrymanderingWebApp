@@ -162,6 +162,8 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   border-radius: 4px;
 }
 
+
+
 .returnToStateSelectionOption {
   background-color: var(--fourthary-color);
   color: var(--tertiary-color);
@@ -173,6 +175,10 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   left: 0;
   margin: 12px;
   border-radius: 4px;
+}
+
+.viewAndFilterDistrictingsOption:hover, .returnToStateSelectionOption:hover, .currentDistrictingNameSidebar:hover {
+  cursor: pointer;
 }
 
 .SelectionMenuContainer {
@@ -269,6 +275,22 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 .btn:hover {
   background-color: var(--highlight-color) !important;
 }
+
+button:focus {
+  background: none !important;
+}
+
+
+.constraintAndCheckbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.constraintAndCheckbox > h6 {
+  font-size: 15px;
+}
+
 
 .centerWithinMe{
   text-align: center;

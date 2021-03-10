@@ -47,13 +47,14 @@ const initState = {
         new Filter("Split Counties", .5, 0, 1, .05),
         new Filter("Deviation from Average Districting", .5, 0, 1, .05),
         new Filter("Deviation from Enacted Plan (Area and Population)", .5, 0, 1, .05),
-        new Filter("Compactness (Polsby-Popper)", .5, 0, 1, .05),
+        
     ],
 
     /* Constraint Settings */
     ConstraintSettings : [
+        new Filter("Maximum Population Difference (%)", 20, 0, 100, 1),
         new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1),
-        new Filter("Maximum Population Difference (%)", 20, 0, 100, 1)
+        new Filter("Compactness (Polsby-Popper)", .5, 0, 1, .05)
     ],
 
     PopulationConstraintInfo : {
@@ -99,7 +100,7 @@ const initState = {
     ComparisonDistrictingB : null,
 }
 
-const ACTIONS_TO_IGNORE_FOR_LOGGING = [ActionTypes.MOVE_MOUSE, ActionTypes.SET_VIEWPORT]
+const ACTIONS_TO_IGNORE_FOR_LOGGING = [ActionTypes.MOVE_MOUSE, ActionTypes.SET_VIEWPORT, ActionTypes.RESET_ALL_HIGHLIGHTING, ActionTypes.ADD_FEATURE_TO_HIGHLIGHT, ActionTypes.SET_FEATURED_DISTRICT, ActionTypes.SET_FEATURED_PRECINCT]
 
 /* Action Dispatcher
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.

@@ -31,8 +31,6 @@ class StateSelectionToolbar extends Component {
         if (selector != null) {
             for (var i =0; i< selector.options.length; i++) {
                 if (selector.options[i].value == state) {
-                    console.log("SETTING OPTION TO TRUE")
-                    console.log(selector.options[i])
                     selector.options[i].selected = true;
                 }
             }
@@ -91,7 +89,7 @@ class StateSelectionToolbar extends Component {
                                 Texas
                             </option>
                     </Select>
-                    <Button className="redBrownBtn" disabled={this.props.TentativeState == ViewportUtilities.STATE_OPTIONS.UNSELECTED} onClick={(e)=>this.handleClick(e)}>Select this State</Button>
+                    <Button className="redBrownBtn" onClick={(e)=>this.handleClick(e)}>Select this State</Button>
                 </Row>
             </div>
         )

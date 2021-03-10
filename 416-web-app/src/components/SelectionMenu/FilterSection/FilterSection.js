@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   }));
   
   function getSteps() {
-    return ['Select Constraints', 'Apply Weights', 'View Districtings'];
+    return ['Select Constraints', 'Apply Weights'];
   }
   
   function getStepContent(step) {
@@ -53,10 +53,6 @@ const useStyles = makeStyles((theme) => ({
       case 1:
         return(
             <WeightSelection/>
-        );
-      case 2:
-        return(
-            <div>Show something useful here. Box and Whisker?</div>
         );
       default:
         return(
@@ -71,8 +67,6 @@ const useStyles = makeStyles((theme) => ({
           return "Apply These Constraints"
         case 1:
           return "Update Weights"
-        case 2:
-          return "hi"
         default:
           return "huh"
       }

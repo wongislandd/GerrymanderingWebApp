@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
-import {updateIncumbentProtection, updatePopulationConstraint } from '../../../redux/actions/settingActions'
-import { Row, Select, Icon, Collapsible, CollapsibleItem} from 'react-materialize'
-import { FormControlLabel, Checkbox, Slider } from '@material-ui/core'
+import {updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint } from '../../../redux/actions/settingActions'
+import { Row, Select, Icon, Collapsible, CollapsibleItem, Switch} from 'react-materialize'
+import { FormControlLabel, Slider, Checkbox } from '@material-ui/core'
 import { connect } from 'react-redux'
 
 class ConstraintSelection extends Component {
@@ -53,6 +53,36 @@ class ConstraintSelection extends Component {
                     )
                     })}
                     </Select>
+                {/* Section for Setting Constriants */}
+                <div className="filterSectionItem">
+                    {Object.keys(this.props.ConstraintSettings).map((key) => {
+                        let filter = this.props.ConstraintSettings[key]
+                        if(!Array.isArray(filter.value)) {
+                            return(
+                                <Row key={key}>
+                                    <div className="constraintAndCheckbox"><h6>{filter.name} <b>({this.props.ConstraintSettings[key].value})</b></h6>
+                                    <Switch
+                                        id={"Switch-"+key}
+                                        offLabel="Off"
+                                        onChange={function noRefCheck(){}}
+                                        onLabel="On"
+                                        className="constraintSwitch"
+                                        />
+                                    </div>
+                                    <Slider
+                                    onChange={(e,newValue)=>this.props.updateConstraintSettings(key, newValue)}
+                                    value={filter.value}
+                                    max={filter.maxVal}
+                                    min={filter.minVal}
+                                    name={filter.name}
+                                    step={filter.step}
+                                    marks
+                                    valueLabelDisplay="auto"/>
+                                </Row>
+                            )
+                            }
+                    })}
+                </div>
                 {/* Incumbent protection, part of constraints  */}
                 <Row>
                     <Collapsible className="constraint-collapsible">
@@ -91,13 +121,15 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateIncumbentProtection : (key, newVal) => {dispatch(updateIncumbentProtection(key, newVal))},
         updatePopulationConstraint : (key, newVal) => {dispatch(updatePopulationConstraint(key, newVal))},
+        updateConstraintSettings : (key, newVal) => {dispatch(updateConstraintSettings(key,newVal))},
     }
   }
 
 const mapStateToProps = (state, ownProps) => {
     return {
         IncumbentProtectionInfo : state.IncumbentProtectionInfo,
-        PopulationConstraintInfo : state.PopulationConstraintInfo
+        PopulationConstraintInfo : state.PopulationConstraintInfo,
+        ConstraintSettings : state.ConstraintSettings
     }
 }
 
