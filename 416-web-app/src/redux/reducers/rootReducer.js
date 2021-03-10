@@ -40,6 +40,7 @@ const initState = {
         descending : true
     },
 
+    NumDistrictingsAvailable : 100000,
 
     /* Objective Function Weights */
     ObjectiveFunctionSettings : [
@@ -355,6 +356,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 TentativeState : action.State
+            }
+        case ActionTypes.SET_NUMBER_OF_DISTRICTINGS_AVAILABLE:
+            return {
+                ...state,
+                NumDistrictingsAvailable : action.Number
             }
         default:
             return state;

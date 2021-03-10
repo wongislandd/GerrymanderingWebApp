@@ -248,3 +248,10 @@ export const setEnabledStateOfConstraint = (key, bool) => {
         Bool : bool,
     }
 }
+
+export const setNumberOfDistrictingsAvailable = (number) => {
+    return {
+        type : ActionTypes.SET_NUMBER_OF_DISTRICTINGS_AVAILABLE,
+        Number : number
+    }
+}

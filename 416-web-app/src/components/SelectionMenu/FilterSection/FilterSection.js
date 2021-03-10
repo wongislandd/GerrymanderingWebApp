@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Button } from 'react-materialize'
 import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
 import { connect } from 'react-redux'
-import { loadInDistrictings, restoreDefaultStateForNewDistricting, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint, updateObjectiveFunctionSettings } from '../../../redux/actions/settingActions'
+import { loadInDistrictings, restoreDefaultStateForNewDistricting, setInSelectionMenu, updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint, updateObjectiveFunctionSettings, setNumberOfDistrictingsAvailable } from '../../../redux/actions/settingActions'
 import { Collapsible, Row, CollapsibleItem, Select, Icon} from 'react-materialize'
 import { FormControlLabel, Checkbox, Slider } from '@material-ui/core'
+import * as StatUtilities from '../../../utilities/StatUtilities'
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -114,20 +115,19 @@ function FilterSection(props) {
   
     const handleComplete = () => {
       if(activeStep == 0) {
+        // LOAD DISTRICTINGS, UPDATE COUNT NUMBER
         props.loadInDistrictings(districtingsToLoad)
+        props.setNumberOfDistrictingsAvailable(StatUtilities.rollARandomNumberOfDistrictings())
+      }
+      if(activeStep == 1) {
+        // UPDATE WEIGHTS
       }
       const newCompleted = completed;
       newCompleted[activeStep] = true;
       setCompleted(newCompleted);
-
-      handleNext();
-    };
-  
-    const handleReset = () => {
-      setActiveStep(0);
-      setCompleted({});
     };
 
+      console.log(props)
         return (
         <div className="SelectionMenuSection FilterSection">
            {/* Button for returning to map */}
@@ -143,22 +143,16 @@ function FilterSection(props) {
                     ))}
                 </Stepper>
                 <div>
-                    {allStepsCompleted() ? (
-                    <div>
-                        <Typography component={'span'} className={classes.instructions}>
-                        All steps completed - you&apos;re finished
-                        </Typography>
-                        <Button className={classes.button + " redBrownBtn"} onClick={handleReset}>Reset</Button>
-                    </div>
-                    ) : (
                     <div className="stepperButtons">
                         <Typography component={'span'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                         <div className="padAboveMe">
+                        <div className="districtingCountDiv centerWithinMe"><p>Districting Result Count: {StatUtilities.addCommas(props.NumDistrictingsAvailable)} </p></div>
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button + " redBrownBtn"} >
                             Back
                         </Button>
                         <Button
                             onClick={handleNext}
+                            disabled={activeStep == getSteps().length-1}
                             className= {classes.button + " redBrownBtn"}
                         >
                             Next
@@ -168,7 +162,7 @@ function FilterSection(props) {
                             </Button>   
                         </div>
                       </div>
-                    )}
+
                 </div>
                 </div>
                 </div>
@@ -180,11 +174,13 @@ function FilterSection(props) {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadInDistrictings : (districtings) => {dispatch(loadInDistrictings(districtings))},
+        setNumberOfDistrictingsAvailable : (number) => {dispatch(setNumberOfDistrictingsAvailable(number))},
     }
   }
 
 const mapStateToProps = (state, ownProps) => {
     return {
+      NumDistrictingsAvailable : state.NumDistrictingsAvailable
     }
 }
   

@@ -42,3 +42,11 @@ function percentage(partialValue, totalValue) {
 export function formatResult(partialValue, totalValue) {
     return commaNumber(partialValue) + " ("+ (Math.round(percentage(partialValue, totalValue) * 10)/10) +"%)"
 }
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+export function rollARandomNumberOfDistrictings() {
+    return (getRandomInt(100000))
+}

@@ -355,3 +355,7 @@ button:focus {
 .greenCompare {
   color: rgb(79, 163, 79)
 }
+
+.districtingCountDiv {
+  padding-bottom: 20px;
+}
