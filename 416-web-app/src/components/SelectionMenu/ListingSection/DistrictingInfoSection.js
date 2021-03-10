@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setCurrentDistricting, setNewDistrictingSelected, setComparisonDistrictingA, setComparisonDistrictingB } from '../../redux/actions/settingActions'
+import { setCurrentDistricting, setNewDistrictingSelected, setComparisonDistrictingA, setComparisonDistrictingB } from '../../../redux/actions/settingActions'
 import { Button } from 'react-materialize'
-import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
-import DistrictingSummary from '../StatisticComponents/DistrictingSummary'
+import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
+import DistrictingSummary from '../../StatisticComponents/DistrictingSummary'
 
 /* Properties: 
     this.props.districting => the associated districting to display info for

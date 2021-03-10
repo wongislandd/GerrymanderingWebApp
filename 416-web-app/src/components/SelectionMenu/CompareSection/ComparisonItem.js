@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Icon, Row } from 'react-materialize'
-import * as StatUtilities from '../../utilities/StatUtilities'
+import * as StatUtilities from '../../../utilities/StatUtilities'
 
 
 export default class ComparisonItem extends Component {

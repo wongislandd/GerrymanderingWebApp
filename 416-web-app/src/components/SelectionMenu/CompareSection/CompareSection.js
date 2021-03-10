@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Row, Col, Icon } from 'react-materialize'
 import { connect } from 'react-redux'
-import { setComparisonDistrictingA, setComparisonDistrictingB } from '../../redux/actions/settingActions'
-import * as MapUtilities from '../../utilities/MapUtilities'
-import * as StatUtilities from '../../utilities/StatUtilities'
+import { setComparisonDistrictingA, setComparisonDistrictingB } from '../../../redux/actions/settingActions'
+import * as MapUtilities from '../../../utilities/MapUtilities'
+import * as StatUtilities from '../../../utilities/StatUtilities'
 import ComparisonItem from './ComparisonItem'
 
 class CompareSection extends Component {

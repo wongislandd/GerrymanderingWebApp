@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Collapsible, Row, Col, Select} from 'react-materialize'
 import DistrictingItem from './DistrictingItem'
-import { setNewDistrictingSelected } from '../../redux/actions/settingActions'
+import { setNewDistrictingSelected } from '../../../redux/actions/settingActions'
 
 
 class ListingSection extends Component {
