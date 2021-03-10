@@ -146,7 +146,7 @@ function FilterSection(props) {
                     <div className="stepperButtons">
                         <Typography component={'span'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                         <div className="padAboveMe">
-                        <div className="districtingCountDiv centerWithinMe"><p>Districting Result Count: {StatUtilities.addCommas(props.NumDistrictingsAvailable)} </p></div>
+                        <div className="districtingCountDiv centerWithinMe"><h6>Districting Result Count: {StatUtilities.addCommas(props.NumDistrictingsAvailable)} </h6></div>
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button + " redBrownBtn"} >
                             Back
                         </Button>
