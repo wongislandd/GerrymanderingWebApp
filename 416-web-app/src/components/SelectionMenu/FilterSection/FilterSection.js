@@ -64,6 +64,19 @@ const useStyles = makeStyles((theme) => ({
         );
     }
   }
+
+  function getStepCompleteMsg(step) {
+    switch (step) {
+        case 0:
+          return "Apply These Constraints"
+        case 1:
+          return "Update Weights"
+        case 2:
+          return "hi"
+        default:
+          return "huh"
+      }
+  }
   
 function FilterSection(props) {
     const classes = useStyles();
@@ -106,9 +119,13 @@ function FilterSection(props) {
     };
   
     const handleComplete = () => {
+      if(activeStep == 0) {
+        props.loadInDistrictings(districtingsToLoad)
+      }
       const newCompleted = completed;
       newCompleted[activeStep] = true;
       setCompleted(newCompleted);
+
       handleNext();
     };
   
@@ -122,7 +139,7 @@ function FilterSection(props) {
            {/* Button for returning to map */}
             <ReturnToMapButton/>
             <div className={classes.root}>
-                <Stepper nonLinear activeStep={activeStep}>
+                <Stepper nonLinear activeStep={activeStep} className="stepInStepper">
                     {steps.map((label, index) => (
                     <Step key={label}>
                         <StepButton onClick={handleStep(index)} completed={completed[index]}>
@@ -137,49 +154,30 @@ function FilterSection(props) {
                         <Typography component={'span'} className={classes.instructions}>
                         All steps completed - you&apos;re finished
                         </Typography>
-                        <Button onClick={handleReset}>Reset</Button>
+                        <Button className={classes.button + " redBrownBtn"} onClick={handleReset}>Reset</Button>
                     </div>
                     ) : (
-                    <div>
+                    <div className="stepperButtons">
                         <Typography component={'span'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                        <div>
-                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                        <div className="padAboveMe">
+                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button + " redBrownBtn"} >
                             Back
                         </Button>
                         <Button
-                            variant="contained"
-                            color="primary"
                             onClick={handleNext}
-                            className={classes.button}
+                            className= {classes.button + " redBrownBtn"}
                         >
                             Next
                         </Button>
-                        {activeStep !== steps.length &&
-                            (completed[activeStep] ? (
-                            <Typography component={'span'} variant="caption" className={classes.completed}>
-                                Step {activeStep + 1} already completed
-                            </Typography>
-                            ) : (
-                            <Button variant="contained" color="primary" onClick={handleComplete}>
-                                {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                            </Button>
-                            ))}
+                            <Button className={classes.button + " redBrownBtn"} onClick={handleComplete}>
+                                {getStepCompleteMsg(activeStep)}
+                            </Button>   
                         </div>
-                    </div>
+                      </div>
                     )}
                 </div>
                 </div>
                 </div>
-            // <div className="SelectionMenuSection FilterSection">
-            //     {/* Button for returning to map */}
-            //     <ReturnToMapButton/>
-            //     {/* Section for Setting Objective Function Weights */}
-            //     <WeightSelection/>
-            //     {/* Section for Setting Constriants */}
-            //     <ConstraintSelection/>
-            //     {/* Button to apply the filters */}
-            //     <Button className="redBrownBtn" onClick={(e) => props.loadInDistrictings(this.districtingsToLoad)}>{SelectionMenuUtilities.LABELS.APPLY_JOB}</Button>
-            // </div>
         )
     }
 

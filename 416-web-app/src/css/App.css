@@ -4,6 +4,7 @@
   --secondary-color: #349fa4;
   --tertiary-color : whitesmoke;
   --fourthary-color : #c96135;
+  --highlight-color : #5c2d19;
 }
 
 /* Full Page Settings*/
@@ -234,7 +235,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 
 .filterSectionItem {
-  padding: 10px;
+  padding: 5px;
 }
 
 .DistrictingResultsHeader {
@@ -265,9 +266,24 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   background-color: var(--fourthary-color);
 }
 
+.btn:hover {
+  background-color: var(--highlight-color) !important;
+}
+
 .centerWithinMe{
   text-align: center;
 }
+
+.padBelowMe {
+  padding-bottom: 5px;
+}
+
+.padAboveMe {
+  position: absolute;
+  bottom: 20px;
+  padding-left: 10px;
+}
+
 
 .districtingInfoSection {
   align-content: center;

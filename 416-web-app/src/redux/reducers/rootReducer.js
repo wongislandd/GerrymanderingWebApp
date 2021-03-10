@@ -23,7 +23,7 @@ const initState = {
     FeaturesToUnhighlight : [],
 
     /* Default to UNSELECTED */
-    CurrentState : ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
+    CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
     /* Map Reference */
     MapRef : React.createRef(),
@@ -33,7 +33,7 @@ const initState = {
 
     /* Determines where the user starts, if this is false we need a districting to display by default as well */
     /* Default to False*/
-    InSelectionMenu : true,
+    InSelectionMenu : false,
 
     SortedBy : {
         value : "Stat 1",
@@ -99,12 +99,15 @@ const initState = {
     ComparisonDistrictingB : null,
 }
 
+const ACTIONS_TO_IGNORE_FOR_LOGGING = [ActionTypes.MOVE_MOUSE, ActionTypes.SET_VIEWPORT]
 
 /* Action Dispatcher
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
-    //console.log(action)
+    if (!ACTIONS_TO_IGNORE_FOR_LOGGING.includes(action.type)) {
+        console.log(action)
+    }
     switch (action.type) {
         case ActionTypes.SET_CURRENT_STATE:
             var newViewport = null;

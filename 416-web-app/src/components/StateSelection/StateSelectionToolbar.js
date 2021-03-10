@@ -8,20 +8,20 @@ class StateSelectionToolbar extends Component {
     handleChange(e) {
         switch(e.target.value) {
             case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
-                this.props.setViewport(ViewportUtilities.NORTH_CAROLINA.Maximized)
                 this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA)
+                this.props.setViewport(ViewportUtilities.NORTH_CAROLINA.Maximized)
                 break
             case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
-                this.props.setViewport(ViewportUtilities.LOUISIANA.Maximized)
                 this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.LOUISIANA)
+                this.props.setViewport(ViewportUtilities.LOUISIANA.Maximized)
                 break
             case ViewportUtilities.STATE_OPTIONS.TEXAS:
-                this.props.setViewport(ViewportUtilities.TEXAS.Maximized)
                 this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.TEXAS)
+                this.props.setViewport(ViewportUtilities.TEXAS.Maximized)
                 break
             default:
-                this.props.setViewport(ViewportUtilities.UNSELECTED.Maximized)
                 this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.UNSELECTED)
+                this.props.setViewport(ViewportUtilities.UNSELECTED.Maximized)
                 break
         }
     }
@@ -31,6 +31,8 @@ class StateSelectionToolbar extends Component {
         if (selector != null) {
             for (var i =0; i< selector.options.length; i++) {
                 if (selector.options[i].value == state) {
+                    console.log("SETTING OPTION TO TRUE")
+                    console.log(selector.options[i])
                     selector.options[i].selected = true;
                 }
             }
@@ -42,9 +44,9 @@ class StateSelectionToolbar extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="toolbar">
+                {this.selectTentativeState(this.props.TentativeState)}
                 <Row className="centerWithinMe">
                     <h5> Select a State </h5>
                     <Select
@@ -68,7 +70,6 @@ class StateSelectionToolbar extends Component {
                                     outDuration: 250
                                 }
                             }}
-                            value={this.props.TentativeState}
                             >
                             <option
                                 disabled
@@ -92,7 +93,6 @@ class StateSelectionToolbar extends Component {
                     </Select>
                     <Button className="redBrownBtn" disabled={this.props.TentativeState == ViewportUtilities.STATE_OPTIONS.UNSELECTED} onClick={(e)=>this.handleClick(e)}>Select this State</Button>
                 </Row>
-                {this.selectTentativeState(this.props.TentativeState)}
             </div>
         )
     }
