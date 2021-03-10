@@ -5,7 +5,7 @@ import { setCurrentState, setTentativeState, setViewport } from '../../redux/act
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 import * as MapUtilities from '../../utilities/MapUtilities'
 import NCCountyGeoData from '../../data/NC/CountiesGeoData.json'
-import CACountyGeoData from '../../data/CA/CountiesGeoData.json'
+import LACountyGeoData from '../../data/LA/CountiesGeoData.json'
 import TXCountyGeoData from '../../data/TX/CountiesGeoData.json'
 
 class StateSelectionMap extends Component {
@@ -25,9 +25,9 @@ class StateSelectionMap extends Component {
               this.props.setViewport(ViewportUtilities.NORTH_CAROLINA.Maximized)
               this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA)
               break;
-            case MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "CA":
-              this.props.setViewport(ViewportUtilities.CALIFORNIA.Maximized)
-              this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.CALIFORNIA)
+            case MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "LA":
+              this.props.setViewport(ViewportUtilities.LOUISIANA.Maximized)
+              this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.LOUISIANA)
               break;
             case MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "TX":
               this.props.setViewport(ViewportUtilities.TEXAS.Maximized)
@@ -72,14 +72,14 @@ class StateSelectionMap extends Component {
                             ]
                             }}/>
                         <Source
-                            id = {MapUtilities.IDs.COUNTY_SOURCE_ID + "CA"}
+                            id = {MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
                             type="geojson"
-                            data = {CACountyGeoData}
+                            data = {LACountyGeoData}
                             generateId = {true}/>
                         <Layer
-                            id = {MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "CA"}
+                            id = {MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "LA"}
                             type="fill"
-                            source={MapUtilities.IDs.COUNTY_SOURCE_ID + "CA"}
+                            source={MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
                             paint={{
                             "fill-color" : "#abcdef",
                             "fill-opacity": [

@@ -2,7 +2,7 @@ export const STATE_OPTIONS = {
     UNSELECTED : "UNSELECTED",
     NORTH_CAROLINA : "NORTH_CAROLINA",
     TEXAS : "TEXAS",
-    CALIFORNIA :"CALIFORNIA"
+    LOUISIANA :"LOUISIANA"
 }
 
 /* Global view */
@@ -40,7 +40,7 @@ export const NORTH_CAROLINA = {
     }
 }
 
-export const CALIFORNIA = {
+export const LOUISIANA = {
     Maximized : {
         latitude : 37.079256997566794, 
         longitude: -121.64309376041251,

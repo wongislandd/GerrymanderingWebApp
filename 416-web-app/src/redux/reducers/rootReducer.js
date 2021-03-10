@@ -23,7 +23,7 @@ const initState = {
     FeaturesToUnhighlight : [],
 
     /* Default to UNSELECTED */
-    CurrentState : ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
+    CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
     /* Map Reference */
     MapRef : React.createRef(),
@@ -33,7 +33,7 @@ const initState = {
 
     /* Determines where the user starts, if this is false we need a districting to display by default as well */
     /* Default to False*/
-    InSelectionMenu : true,
+    InSelectionMenu : false,
 
     SortedBy : {
         value : "Stat 1",
@@ -115,8 +115,8 @@ const rootReducer = (state = initState, action) => {
                 case ViewportUtilities.STATE_OPTIONS.TEXAS:
                     newViewport = ViewportUtilities.TEXAS.Maximized
                     break
-                case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
-                    newViewport = ViewportUtilities.CALIFORNIA.Maximized
+                case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
+                    newViewport = ViewportUtilities.LOUISIANA.Maximized
                     break
                 default:
                     newViewport = ViewportUtilities.UNSELECTED.Maximized
@@ -280,8 +280,8 @@ const rootReducer = (state = initState, action) => {
                 case ViewportUtilities.STATE_OPTIONS.TEXAS:
                     newViewport = ViewportUtilities.TEXAS.Maximized
                     break
-                case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
-                    newViewport = ViewportUtilities.CALIFORNIA.Maximized
+                case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
+                    newViewport = ViewportUtilities.LOUISIANA.Maximized
                     break
                 default:
                     newViewport = ViewportUtilities.UNSELECTED.Maximized
@@ -300,8 +300,8 @@ const rootReducer = (state = initState, action) => {
                 case ViewportUtilities.STATE_OPTIONS.TEXAS:
                     newViewport = ViewportUtilities.TEXAS.Minimized
                     break
-                case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
-                    newViewport = ViewportUtilities.CALIFORNIA.Minimized
+                case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
+                    newViewport = ViewportUtilities.LOUISIANA.Minimized
                     break
                 default:
                     newViewport = ViewportUtilities.UNSELECTED.Minimized

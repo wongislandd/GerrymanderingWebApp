@@ -26,8 +26,8 @@ class MapBoxComponent extends Component{
         case ViewportUtilities.STATE_OPTIONS.TEXAS:
             newViewport = this.props.MinimizedMap ? ViewportUtilities.TEXAS.Minimized : ViewportUtilities.TEXAS.Maximized
             break
-        case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
-            newViewport = this.props.MinimizedMap ? ViewportUtilities.CALIFORNIA.Minimized : ViewportUtilities.CALIFORNIA.Maximized
+        case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
+            newViewport = this.props.MinimizedMap ? ViewportUtilities.LOUISIANA.Minimized : ViewportUtilities.LOUISIANA.Maximized
             break
         default:
             newViewport = this.props.MinimizedMap ? ViewportUtilities.UNSELECTED.Minimized : ViewportUtilities.UNSELECTED.Maximized

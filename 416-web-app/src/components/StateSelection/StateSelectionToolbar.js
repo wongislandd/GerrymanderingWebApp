@@ -10,8 +10,8 @@ class StateSelectionToolbar extends Component {
             case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
                 this.props.setViewport(ViewportUtilities.NORTH_CAROLINA.Maximized)
                 break
-            case ViewportUtilities.STATE_OPTIONS.CALIFORNIA:
-                this.props.setViewport(ViewportUtilities.CALIFORNIA.Maximized)
+            case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
+                this.props.setViewport(ViewportUtilities.LOUISIANA.Maximized)
                 break
             case ViewportUtilities.STATE_OPTIONS.TEXAS:
                 this.props.setViewport(ViewportUtilities.TEXAS.Maximized)
@@ -75,7 +75,7 @@ class StateSelectionToolbar extends Component {
                                 North Carolina
                             </option>
                             <option 
-                            value={ViewportUtilities.STATE_OPTIONS.CALIFORNIA}
+                            value={ViewportUtilities.STATE_OPTIONS.LOUISIANA}
                             >
                                 California
                             </option>
