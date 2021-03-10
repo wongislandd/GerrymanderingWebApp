@@ -85,7 +85,6 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 
 
 .stat-window {
-  background-color: var(--tertiary-color);
 }
 
 
@@ -236,7 +235,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .MuiPaper-root {
-  background : none !important;
+
 }
 
 
