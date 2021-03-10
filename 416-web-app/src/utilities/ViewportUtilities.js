@@ -42,18 +42,18 @@ export const NORTH_CAROLINA = {
 
 export const LOUISIANA = {
     Maximized : {
-        latitude : 37.079256997566794, 
-        longitude: -121.64309376041251,
+        latitude : 31.256886064851454, 
+        longitude: -92.1995250410732,
         width: "75vw",
         height: window.innerHeight,
-        zoom: 5 
+        zoom: 6.5 
     },
     Minimized : {
-        latitude : 37.079256997566794, 
-        longitude: -121.64309376041251,
+        latitude : 31.256886064851454, 
+        longitude: -92.1995250410732,
         width: "40vw",
         height: window.innerHeight,
-        zoom: 4.5
+        zoom: 5.5
     }
 }
  

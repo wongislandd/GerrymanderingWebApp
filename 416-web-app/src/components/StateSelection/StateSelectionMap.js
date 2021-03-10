@@ -18,7 +18,7 @@ class StateSelectionMap extends Component {
         const {
           features,
         } = event;
-        const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "NC" || f.layer.id === MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "CA" || f.layer.id === MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "TX")
+        const hoveredFeature = features && features.find(f => f.layer.id === MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "NC" || f.layer.id === MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "LA" || f.layer.id === MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "TX")
         if (hoveredFeature != undefined) {
           switch(hoveredFeature.layer.id) {
             case MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "NC":
@@ -81,7 +81,7 @@ class StateSelectionMap extends Component {
                             type="fill"
                             source={MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
                             paint={{
-                            "fill-color" : "#abcdef",
+                            "fill-color" : "#8effba",
                             "fill-opacity": [
                                 'case',
                                 ['boolean', ['feature-state', 'hover'], false],
@@ -99,7 +99,7 @@ class StateSelectionMap extends Component {
                             type="fill"
                             source={MapUtilities.IDs.COUNTY_SOURCE_ID + "TX"}
                             paint={{
-                            "fill-color" : "#abcdef",
+                            "fill-color" : "#2ea3fa",
                             "fill-opacity": [
                                 'case',
                                 ['boolean', ['feature-state', 'hover'], false],

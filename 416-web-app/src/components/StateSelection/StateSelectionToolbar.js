@@ -77,7 +77,7 @@ class StateSelectionToolbar extends Component {
                             <option 
                             value={ViewportUtilities.STATE_OPTIONS.LOUISIANA}
                             >
-                                California
+                                Louisiana
                             </option>
                             <option
                             value={ViewportUtilities.STATE_OPTIONS.TEXAS}>
