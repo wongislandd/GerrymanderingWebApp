@@ -2,22 +2,26 @@ import React, { Component } from 'react'
 import { Row, Select, Button } from 'react-materialize'
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 import { connect } from 'react-redux'
-import { setCurrentState, setViewport } from '../../redux/actions/settingActions'
+import { setCurrentState, setTentativeState, setViewport } from '../../redux/actions/settingActions'
 
 class StateSelectionToolbar extends Component {
     handleChange(e) {
         switch(e.target.value) {
             case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
                 this.props.setViewport(ViewportUtilities.NORTH_CAROLINA.Maximized)
+                this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA)
                 break
             case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
                 this.props.setViewport(ViewportUtilities.LOUISIANA.Maximized)
+                this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.LOUISIANA)
                 break
             case ViewportUtilities.STATE_OPTIONS.TEXAS:
                 this.props.setViewport(ViewportUtilities.TEXAS.Maximized)
+                this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.TEXAS)
                 break
             default:
                 this.props.setViewport(ViewportUtilities.UNSELECTED.Maximized)
+                this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.UNSELECTED)
                 break
         }
     }
@@ -38,6 +42,7 @@ class StateSelectionToolbar extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div className="toolbar">
                 <Row className="centerWithinMe">
@@ -63,6 +68,7 @@ class StateSelectionToolbar extends Component {
                                     outDuration: 250
                                 }
                             }}
+                            value={this.props.TentativeState}
                             >
                             <option
                                 disabled
@@ -84,7 +90,7 @@ class StateSelectionToolbar extends Component {
                                 Texas
                             </option>
                     </Select>
-                    <Button className="redBrownBtn" onClick={(e)=>this.handleClick(e)}>Select this State</Button>
+                    <Button className="redBrownBtn" disabled={this.props.TentativeState == ViewportUtilities.STATE_OPTIONS.UNSELECTED} onClick={(e)=>this.handleClick(e)}>Select this State</Button>
                 </Row>
                 {this.selectTentativeState(this.props.TentativeState)}
             </div>
@@ -96,7 +102,8 @@ class StateSelectionToolbar extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         setViewport : (viewport) => {dispatch(setViewport(viewport))},
-        setCurrentState : (state) => {dispatch(setCurrentState(state))}
+        setCurrentState : (state) => {dispatch(setCurrentState(state))},
+        setTentativeState : (state) => {dispatch(setTentativeState(state))},
     }
   }
   

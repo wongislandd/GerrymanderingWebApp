@@ -104,7 +104,7 @@ const initState = {
 Add action type to ./ActionTypes.js and then make use of it here as well as in the action.
 */
 const rootReducer = (state = initState, action) => {
-    console.log(action)
+    //console.log(action)
     switch (action.type) {
         case ActionTypes.SET_CURRENT_STATE:
             var newViewport = null;
