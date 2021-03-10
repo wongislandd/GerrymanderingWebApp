@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
-import {updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint } from '../../../redux/actions/settingActions'
+import {setEnabledStateOfConstraint, updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint } from '../../../redux/actions/settingActions'
 import { Row, Select, Icon, Collapsible, CollapsibleItem, Switch} from 'react-materialize'
 import { FormControlLabel, Slider, Checkbox } from '@material-ui/core'
 import { connect } from 'react-redux'
 
 class ConstraintSelection extends Component {
+
+    handleSwitch(e, key) {
+        this.props.setEnabledStateOfConstraint(key, e.target.checked)
+    }
+    
     render() {
         return (
             <div className="filterSectionItem">
@@ -63,13 +68,15 @@ class ConstraintSelection extends Component {
                                     <div className="constraintAndCheckbox"><h6>{filter.name} <b>({this.props.ConstraintSettings[key].value})</b></h6>
                                     <Switch
                                         id={"Switch-"+key}
-                                        offLabel="Off"
-                                        onChange={function noRefCheck(){}}
-                                        onLabel="On"
+                                        offLabel=""
+                                        onChange={(e) => {this.handleSwitch(e, key)}}
+                                        onLabel=""
+                                        checked={filter.enabled}
                                         className="constraintSwitch"
                                         />
                                     </div>
                                     <Slider
+                                    disabled={!filter.enabled}
                                     onChange={(e,newValue)=>this.props.updateConstraintSettings(key, newValue)}
                                     value={filter.value}
                                     max={filter.maxVal}
@@ -122,6 +129,7 @@ const mapDispatchToProps = (dispatch) => {
         updateIncumbentProtection : (key, newVal) => {dispatch(updateIncumbentProtection(key, newVal))},
         updatePopulationConstraint : (key, newVal) => {dispatch(updatePopulationConstraint(key, newVal))},
         updateConstraintSettings : (key, newVal) => {dispatch(updateConstraintSettings(key,newVal))},
+        setEnabledStateOfConstraint : (key, bool) => {dispatch(setEnabledStateOfConstraint(key, bool))},
     }
   }
 

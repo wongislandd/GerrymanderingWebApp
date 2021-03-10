@@ -240,3 +240,11 @@ export const setTentativeState = (state) => {
         State : state
     }
 }
+
+export const setEnabledStateOfConstraint = (key, bool) => {
+    return {
+        type : ActionTypes.SET_ENABLED_STATE_OF_CONSTRAINT,
+        Key : key,
+        Bool : bool,
+    }
+}

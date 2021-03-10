@@ -52,9 +52,9 @@ const initState = {
 
     /* Constraint Settings */
     ConstraintSettings : [
-        new Filter("Maximum Population Difference (%)", 20, 0, 100, 1),
-        new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1),
-        new Filter("Compactness (Polsby-Popper)", .5, 0, 1, .05)
+        new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
+        new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
+        new Filter("Compactness (Polsby-Popper)", .5, 0, 1, .05, true)
     ],
 
     PopulationConstraintInfo : {
@@ -192,6 +192,13 @@ const rootReducer = (state = initState, action) => {
         case ActionTypes.UPDATE_CONSTRAINT_SETTINGS:
             var newSettings = [...state.ConstraintSettings]
             newSettings[action.Key].value = action.NewValue
+            return {
+                ...state,
+                ConstraintSettings : newSettings
+            }
+        case ActionTypes.SET_ENABLED_STATE_OF_CONSTRAINT:
+            var newSettings = [...state.ConstraintSettings]
+            newSettings[action.Key].enabled = action.Bool
             return {
                 ...state,
                 ConstraintSettings : newSettings
