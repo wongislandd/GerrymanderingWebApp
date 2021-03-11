@@ -30,10 +30,11 @@ class StateSelectionToolbar extends Component {
         const selector = document.getElementById("state-selector")
         if (selector != null) {
             for (var i =0; i< selector.options.length; i++) {
-                if (selector.options[i].value == state) {
+                if (selector.options[i].value == state && selector.options[i].selected != true) {
                     selector.options[i].selected = true;
-                }
+                    selector.value = state
             }
+        }
         }
     }
 
@@ -41,10 +42,14 @@ class StateSelectionToolbar extends Component {
         this.props.setCurrentState(document.getElementById("state-selector").value)
     }
 
+    componentDidUpdate(){
+        this.selectTentativeState(this.props.TentativeState)
+    }
+
     render() {
+        console.log(this.props.TentativeState)
         return (
             <div className="toolbar">
-                {this.selectTentativeState(this.props.TentativeState)}
                 <Row className="centerWithinMe">
                     <h5> Select a State </h5>
                     <Select
@@ -67,7 +72,9 @@ class StateSelectionToolbar extends Component {
                                     onOpenStart: null,
                                     outDuration: 250
                                 }
-                            }}
+                            }
+                            }
+                            value={this.props.TentativeState} 
                             >
                             <option
                                 disabled

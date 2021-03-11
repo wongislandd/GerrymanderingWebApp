@@ -36,7 +36,7 @@ const initState = {
     InSelectionMenu : false,
 
     SortedBy : {
-        value : "Stat 1",
+        value : "Objective Function Score",
         descending : true
     },
 

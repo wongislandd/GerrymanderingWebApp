@@ -30,12 +30,12 @@ class CompareSection extends Component {
                 <h5>Compare Districtings</h5>
                     <div className="DistrictingHolderBox labelAndIcon">
                         <span>Districting A: {this.props.ComparisonDistrictingA == null ? "" : this.props.ComparisonDistrictingA.name} </span>
-                        <Icon className={this.props.ComparisonDistrictingA == null ? "hideMe" : ""} 
+                        <Icon className={this.props.ComparisonDistrictingA == null ? "hideMe" : "cancelBtn"} 
                         onClick={(e)=>this.props.setComparisonDistrictingA(null)}>cancel</Icon>
                     </div>
                     <div className="DistrictingHolderBox labelAndIcon">
                         <span>Districting B: {this.props.ComparisonDistrictingB == null ? "" : this.props.ComparisonDistrictingB.name} </span>
-                        <Icon className={this.props.ComparisonDistrictingB == null ? "hideMe" : ""} 
+                        <Icon className={this.props.ComparisonDistrictingB == null ? "hideMe" : "cancelBtn"} 
                         onClick={(e)=>this.props.setComparisonDistrictingB(null)}>cancel</Icon>
                     </div>
                     <div className="comparedStatsDiv centerWithinMe">

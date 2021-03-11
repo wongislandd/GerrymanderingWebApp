@@ -41,7 +41,7 @@ class ListingSection extends Component {
                                 disabled
                                 value=""
                             >
-                                Stat 1 (descending)
+                                Objective Function Score (descending)
                             </option>
                         </Select>
                 </div>
