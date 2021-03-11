@@ -7,5 +7,5 @@ export const LABELS = {
     LOAD_THIS_DISTRICTING : "Load This Districting",
     INCUMBENT_PROTECTION_OPTIONS : "Incumbent Protection Options",
     POPULATION_CONSTRAINT_OPTIONS : "Population Constraint Options",
-    POPULATION_TO_ACCOUNT_FOR : "Population to Account For"
+    POPULATION_TO_ACCOUNT_FOR : "Population to Account For",
 }

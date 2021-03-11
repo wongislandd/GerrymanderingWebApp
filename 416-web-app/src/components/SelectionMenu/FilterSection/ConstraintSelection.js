@@ -4,6 +4,7 @@ import {setEnabledStateOfConstraint, updateConstraintSettings, updateIncumbentPr
 import { Row, Select, Icon, Collapsible, CollapsibleItem, Switch} from 'react-materialize'
 import { FormControlLabel, Slider, Checkbox } from '@material-ui/core'
 import { connect } from 'react-redux'
+import IncumbentModal from './IncumbentModal'
 
 class ConstraintSelection extends Component {
 
@@ -92,7 +93,8 @@ class ConstraintSelection extends Component {
                 </div>
                 {/* Incumbent protection, part of constraints  */}
                 <Row>
-                    <Collapsible className="constraint-collapsible">
+                    <IncumbentModal/>
+                    {/* <Collapsible className="constraint-collapsible">
                     <CollapsibleItem
                         expanded={false}
                         header={SelectionMenuUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS}
@@ -117,7 +119,7 @@ class ConstraintSelection extends Component {
                             )
                         })}
                     </CollapsibleItem>
-                    </Collapsible>
+                    </Collapsible> */}
                 </Row>
                 </div>
         )
