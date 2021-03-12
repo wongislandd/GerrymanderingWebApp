@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
 import { connect } from 'react-redux'
 import {setEnabledStateOfConstraint, updateConstraintSettings, updateIncumbentProtection, updatePopulationConstraint } from '../../../redux/actions/settingActions'
-import { Row, Modal, Button} from 'react-materialize'
+import { Row, Col, Modal, Button} from 'react-materialize'
 import { FormControlLabel, Slider, Checkbox } from '@material-ui/core'
 
 
@@ -34,8 +34,10 @@ class IncumbentModal extends Component {
                 }}
                 trigger={<Button node="button" className="menuButtons">{SelectionMenuUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS}</Button>}
                 >
+                    <Row>
                         {Object.keys(this.props.IncumbentProtectionInfo).map((key) => {
                             return(
+                                <Col s={3}>
                                 <Row
                                     key={key}>
                                 <FormControlLabel 
@@ -50,8 +52,10 @@ class IncumbentModal extends Component {
                                     }
                                     label = {key}/>
                                 </Row>
+                                </Col>
                             )
-                        })}                
+                        })}    
+                    </Row>            
                     </Modal>
             </div>
         )

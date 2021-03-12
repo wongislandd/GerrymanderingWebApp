@@ -275,12 +275,19 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   background-color: var(--fourthary-color);
 }
 
-.menuButtons {
-  background-color: var(--secondary-color);
-}
+
 
 .btn:hover {
   background-color: var(--highlight-color) !important;
+}
+
+.menuButtons {
+  background-color: white;
+  color: black;
+}
+
+.menuButtons:hover {
+  background-color: wheat !important;
 }
 
 button:focus {
