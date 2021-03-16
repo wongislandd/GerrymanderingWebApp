@@ -26,6 +26,8 @@ import PartyPieChart from "./PartyPieChart";
 import RacialPieChart from "./RacialPieChart";
 import LabelAndInfoIcon from "./LabelAndInfoIcon";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
+import BoxPlot from "./BoxPlot";
+
 
 class DistrictingSummary extends Component {
   constructor(props) {
@@ -137,6 +139,10 @@ class DistrictingSummary extends Component {
         ) : (
           <div />
         )}
+        <div>
+          <h6 className="title-text">Box and Whisker</h6>
+          <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay}/>
+        </div>
         <CollapsibleItem
           expanded={false}
           key={-1}
