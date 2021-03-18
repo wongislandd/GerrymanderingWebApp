@@ -3,7 +3,7 @@ import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtiliti
 import { connect } from "react-redux";
 import {
   setEnabledStateOfConstraint,
-  updateConstraintSettings,
+  updateConstraintSliderSettings,
   updateIncumbentProtection,
   updatePopulationConstraint,
 } from "../../../redux/actions/settingActions";
@@ -85,8 +85,8 @@ const mapDispatchToProps = (dispatch) => {
     updatePopulationConstraint: (key, newVal) => {
       dispatch(updatePopulationConstraint(key, newVal));
     },
-    updateConstraintSettings: (key, newVal) => {
-      dispatch(updateConstraintSettings(key, newVal));
+    updateConstraintSliderSettings: (key, newVal) => {
+      dispatch(updateConstraintSliderSettings(key, newVal));
     },
     setEnabledStateOfConstraint: (key, bool) => {
       dispatch(setEnabledStateOfConstraint(key, bool));
@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     IncumbentProtectionInfo: state.IncumbentProtectionInfo,
-    PopulationConstraintInfo: state.PopulationConstraintInfo,
+    PopulationConstraintSelection: state.PopulationConstraintSelection,
     ConstraintSettings: state.ConstraintSettings,
   };
 };

@@ -92,9 +92,9 @@ export const updateObjectiveFunctionSettings = (key, newValue) => {
   };
 };
 
-export const updateConstraintSettings = (key, newValue) => {
+export const updateConstraintSliderSettings = (key, newValue) => {
   return {
-    type: ActionTypes.UPDATE_CONSTRAINT_SETTINGS,
+    type: ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS,
     Key: key,
     NewValue: newValue,
   };
@@ -114,6 +114,14 @@ export const updatePopulationConstraint = (key) => {
     Key: key,
   };
 };
+
+export const updateMinorityConstraint = (key) => {
+  return {
+    type: ActionTypes.UPDATE_MINORITY_CONSTRAINT,
+    Key: key,
+  };
+};
+
 
 export const setInSelectionMenu = (bool) => {
   return {
@@ -251,3 +259,11 @@ export const setNumberOfDistrictingsAvailable = (number) => {
     Number: number,
   };
 };
+
+export const setDistrictingSortMethod = (method, direction) => {
+  return {
+    type : ActionTypes.SET_DISTRICTING_SORT_METHOD,
+    Method : method,
+    Direction : direction
+  }
+}

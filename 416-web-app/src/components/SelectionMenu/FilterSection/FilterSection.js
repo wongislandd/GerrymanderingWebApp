@@ -36,15 +36,15 @@ import ReturnToMapButton from "./ReturnToMapButton";
 
 const districtingsToLoad = [
   new Districting(
-    "Enacted Districting Nov 2011 - Feb 2016",
+    "1",
     EnactedDistrictingPlan2011
   ),
   new Districting(
-    "Enacted Districting Feb 2016 - Nov 2019",
+    "2",
     EnactedDistrictingPlan2016
   ),
   new Districting(
-    "Enacted Districting Nov 2019 - Dec 2021",
+    "3",
     EnactedDistrictingPlan2019
   ),
 ];

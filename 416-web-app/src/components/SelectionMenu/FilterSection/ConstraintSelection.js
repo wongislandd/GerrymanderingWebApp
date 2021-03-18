@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
 import {
   setEnabledStateOfConstraint,
-  updateConstraintSettings,
+  updateConstraintSliderSettings,
   updateIncumbentProtection,
   updatePopulationConstraint,
+  updateMinorityConstraint,
 } from "../../../redux/actions/settingActions";
 import {
   Row,
@@ -14,6 +15,7 @@ import {
   CollapsibleItem,
   Switch,
 } from "react-materialize";
+import LabelAndInfoIcon from '../../StatisticComponents/LabelAndInfoIcon'
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import { connect } from "react-redux";
 import IncumbentModal from "./IncumbentModal";
@@ -31,7 +33,10 @@ class ConstraintSelection extends Component {
         </h4>
 
         {/* Population Constraint Selection */}
-        <h6>{SelectionMenuUtilities.LABELS.POPULATION_TO_ACCOUNT_FOR}</h6>
+        <LabelAndInfoIcon
+                      label={SelectionMenuUtilities.LABELS.VOTING_POPULATION_TO_CONSTRAIN}
+                      description= {SelectionMenuUtilities.DESCRIPTIONS.VOTING_POPULATION_CONSTRAINT}
+          />
         <Select
           icon={<Icon>people</Icon>}
           id="Select-9"
@@ -59,27 +64,27 @@ class ConstraintSelection extends Component {
           value=""
         >
           <option disabled value="">
-            Choose a Population
+            {SelectionMenuUtilities.LABELS.CHOOSE_A_VOTING_POPULATION}
           </option>
-          {Object.keys(this.props.PopulationConstraintInfo).map((key) => {
+          {Object.keys(SelectionMenuUtilities.POPULATIONS).map((key) => {
             return (
               <option key={key} value={key}>
-                {key}
+                {SelectionMenuUtilities.POPULATIONS[key]}
               </option>
             );
           })}
         </Select>
         {/* Section for Setting Constriants */}
         <div className="filterSectionItem">
-          {Object.keys(this.props.ConstraintSettings).map((key) => {
-            let filter = this.props.ConstraintSettings[key];
+          {Object.keys(this.props.ConstraintSliderSettings).map((key) => {
+            let filter = this.props.ConstraintSliderSettings[key];
             if (!Array.isArray(filter.value)) {
               return (
                 <Row key={key}>
                   <div className="constraintAndCheckbox">
                     <h6>
                       {filter.name}{" "}
-                      <b>({this.props.ConstraintSettings[key].value})</b>
+                      <b>({this.props.ConstraintSliderSettings[key].value})</b>
                     </h6>
                     <Switch
                       id={"Switch-" + key}
@@ -95,7 +100,7 @@ class ConstraintSelection extends Component {
                   <Slider
                     disabled={!filter.enabled}
                     onChange={(e, newValue) =>
-                      this.props.updateConstraintSettings(key, newValue)
+                      this.props.updateConstraintSliderSettings(key, newValue)
                     }
                     value={filter.value}
                     max={filter.maxVal}
@@ -113,32 +118,49 @@ class ConstraintSelection extends Component {
         {/* Incumbent protection, part of constraints  */}
         <Row>
           <IncumbentModal />
-          {/* <Collapsible className="constraint-collapsible">
-                    <CollapsibleItem
-                        expanded={false}
-                        header={SelectionMenuUtilities.LABELS.INCUMBENT_PROTECTION_OPTIONS}
-                        node="div"
-                        >
-                        {Object.keys(this.props.IncumbentProtectionInfo).map((key) => {
-                            return(
-                                <Row
-                                    key={key}>
-                                <FormControlLabel 
-                                    control =  {
-                                        <Checkbox
-                                            id={key + "-protection-checkbox"}
-                                            className="incumbent-protection-option"
-                                            value={key}
-                                            checked={this.props.IncumbentProtectionInfo[key]}
-                                            onChange={(e) => this.props.updateIncumbentProtection(key,e.target.checked)}
-                                        />
-                                    }
-                                    label = {key}/>
-                                </Row>
-                            )
-                        })}
-                    </CollapsibleItem>
-                    </Collapsible> */}
+        </Row>
+        <Row>
+        <LabelAndInfoIcon
+                      label={SelectionMenuUtilities.LABELS.MINORITY_POPULATION_TO_CONSTRAIN}
+                      description= {SelectionMenuUtilities.DESCRIPTIONS.MINORITY_POPULATION_CONSTRAINT}
+          />
+        <Select
+          icon={<Icon>people</Icon>}
+          id="Select-9"
+          multiple={false}
+          onChange={(e) =>
+            this.props.updatePopulationConstraint(e.target.value)
+          }
+          options={{
+            classes: "",
+            dropdownOptions: {
+              alignment: "left",
+              autoTrigger: true,
+              closeOnClick: true,
+              constrainWidth: true,
+              coverTrigger: true,
+              hover: false,
+              inDuration: 150,
+              onCloseEnd: null,
+              onCloseStart: null,
+              onOpenEnd: null,
+              onOpenStart: null,
+              outDuration: 250,
+            },
+          }}
+          value=""
+        >
+          <option disabled value="">
+            {SelectionMenuUtilities.LABELS.CHOOSE_A_MINORITY_POPULATION}
+          </option>
+          {Object.keys(SelectionMenuUtilities.MINORITIES).map((key) => {
+            return (
+              <option key={key} value={key}>
+                {SelectionMenuUtilities.MINORITIES[key]}
+              </option>
+            );
+          })}
+        </Select>
         </Row>
       </div>
     );
@@ -150,11 +172,14 @@ const mapDispatchToProps = (dispatch) => {
     updateIncumbentProtection: (key, newVal) => {
       dispatch(updateIncumbentProtection(key, newVal));
     },
-    updatePopulationConstraint: (key, newVal) => {
-      dispatch(updatePopulationConstraint(key, newVal));
+    updatePopulationConstraint: (key) => {
+      dispatch(updatePopulationConstraint(key));
     },
-    updateConstraintSettings: (key, newVal) => {
-      dispatch(updateConstraintSettings(key, newVal));
+    updateMinorityConstraint: (key) => {
+      dispatch(updateMinorityConstraint(key));
+    },
+    updateConstraintSliderSettings: (key, newVal) => {
+      dispatch(updateConstraintSliderSettings(key, newVal));
     },
     setEnabledStateOfConstraint: (key, bool) => {
       dispatch(setEnabledStateOfConstraint(key, bool));
@@ -165,8 +190,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     IncumbentProtectionInfo: state.IncumbentProtectionInfo,
-    PopulationConstraintInfo: state.PopulationConstraintInfo,
-    ConstraintSettings: state.ConstraintSettings,
+    ConstraintSliderSettings: state.ConstraintSliderSettings,
   };
 };
 

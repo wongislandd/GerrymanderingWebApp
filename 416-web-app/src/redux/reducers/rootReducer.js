@@ -1,11 +1,13 @@
 import * as ActionTypes from "../actions/ActionTypes";
 import Districting from "../../utilities/classes/Districting";
+import SortingMethod from "../../utilities/classes/SortingMethod";
 import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
+import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 
 const defaultDistricting = new Districting(
   "Enacted Districting Feb 2016 - Nov 2019",
@@ -59,17 +61,20 @@ const initState = {
   ],
 
   /* Constraint Settings */
-  ConstraintSettings: [
+  ConstraintSliderSettings: [
     new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
     new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
     new Filter("Compactness (Polsby-Popper)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
   ],
 
-  PopulationConstraintInfo: {
-    "Total Population": false,
-    "Voting Age Population": false,
-    "Citizen Voting Age Population": false,
-  },
+  
+
+  PopulationConstraintSelection : null,
+  MinorityConstraintSelection : null,
+  DistrictingSortMethod : new SortingMethod(SelectionMenuUtilities.SORT_METHODS.OBJECTIVE_FUNCTION, SelectionMenuUtilities.SORT_DIRECTIONS.DESCENDING),
+
 
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
@@ -202,19 +207,19 @@ const rootReducer = (state = initState, action) => {
         ...state,
         ObjectiveFunctionSettings: newSettings,
       };
-    case ActionTypes.UPDATE_CONSTRAINT_SETTINGS:
-      var newSettings = [...state.ConstraintSettings];
+    case ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS:
+      var newSettings = [...state.ConstraintSliderSettings];
       newSettings[action.Key].value = action.NewValue;
       return {
         ...state,
-        ConstraintSettings: newSettings,
+        ConstraintSliderSettings: newSettings,
       };
     case ActionTypes.SET_ENABLED_STATE_OF_CONSTRAINT:
-      var newSettings = [...state.ConstraintSettings];
+      var newSettings = [...state.ConstraintSliderSettings];
       newSettings[action.Key].enabled = action.Bool;
       return {
         ...state,
-        ConstraintSettings: newSettings,
+        ConstraintSliderSettings: newSettings,
       };
     case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
       return {
@@ -225,15 +230,14 @@ const rootReducer = (state = initState, action) => {
         },
       };
     case ActionTypes.UPDATE_POPULATION_CONSTRAINT:
-      /* Set all the keys to false and then set the one you want to true. */
-      var updatedInfo = {};
-      Object.keys(state.PopulationConstraintInfo).forEach(
-        (key) => (updatedInfo[key] = false)
-      );
-      updatedInfo[action.Key] = true;
       return {
         ...state,
-        PopulationConstraintInfo: updatedInfo,
+        PopulationConstraintSelection: action.Key,
+      };
+    case ActionTypes.UPDATE_MINORITY_CONSTRAINT:
+      return {
+        ...state,
+        MinorityConstraintSelection: action.Key,
       };
     case ActionTypes.SET_IN_SELECTION_MENU:
       return {
@@ -379,6 +383,11 @@ const rootReducer = (state = initState, action) => {
         ...state,
         NumDistrictingsAvailable: action.Number,
       };
+    case ActionTypes.SET_DISTRICTING_SORT_METHOD:
+      return {
+        ...state,
+        DistrictingSortMethod : new SortingMethod(action.Method, action.Direction),
+      }
     default:
       return state;
   }

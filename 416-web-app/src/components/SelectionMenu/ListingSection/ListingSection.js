@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Collapsible, Row, Col, Select } from "react-materialize";
+import { Collapsible, CollapsibleItem, Row, Col, Select } from "react-materialize";
 import DistrictingItem from "./DistrictingItem";
 import { setNewDistrictingSelected } from "../../../redux/actions/settingActions";
+import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
+import SortingCollapsible from "./SortingCollapsible";
 
 class ListingSection extends Component {
   /* Once this loads, it's at first false until something is chosen*/
@@ -13,35 +15,15 @@ class ListingSection extends Component {
   render() {
     return (
       <div className="SelectionMenuSection ListingSection">
+        <Row>
         <div className="DistrictingResultsHeader">
-          <h5>Districting Results</h5>
-          <Select
-            id="DistrictingSorter"
-            multiple={false}
-            label="Sort Districtings By"
-            options={{
-              dropdownOptions: {
-                autoTrigger: true,
-                closeOnClick: true,
-                constrainWidth: true,
-                coverTrigger: true,
-                hover: false,
-                inDuration: 150,
-                onCloseEnd: null,
-                onCloseStart: null,
-                onOpenEnd: null,
-                onOpenStart: null,
-                outDuration: 250,
-              },
-            }}
-            value=""
-          >
-            <option disabled value="">
-              Objective Function Score (descending)
-            </option>
-          </Select>
+          <h5>{SelectionMenuUtilities.LABELS.DISTRICTING_RESULTS}</h5>
         </div>
+        </Row>
         <Collapsible accordion>
+
+          <SortingCollapsible/>
+          
           {this.props.FilteredDistrictings.map((districting, key) => {
             return (
               <DistrictingItem

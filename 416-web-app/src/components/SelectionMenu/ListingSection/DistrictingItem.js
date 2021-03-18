@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { CollapsibleItem } from "react-materialize";
+import { CollapsibleItem, Row, Col } from "react-materialize";
 import DistrictingInfoSection from "./DistrictingInfoSection";
+import * as MapUtilities from '../../../utilities/MapUtilities'
+import * as StatUtilities from '../../../utilities/StatUtilities'
+import * as SelectionMenuUtilities from '../../../utilities/SelectionMenuUtilities'
 
 export default class DistrictingItem extends Component {
   /* Pass this component a districting and it'll do the rest. */
@@ -13,20 +16,32 @@ export default class DistrictingItem extends Component {
   render() {
     return (
       <CollapsibleItem
-        className={"districtSummaryCollapsible centerWithinMe"}
+        className={"districtSummaryCollapsible"}
         header={
-          <div
-            className="districtingItem"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            #{this.props.index + 1} {this.props.districting.name}
-          </div>
+          // Line up with the Sorting Collapsible
+                <Row className="ListingColumnsContainer" onClick={(e) => {e.stopPropagation()}}>
+                    <Col s={2}>
+                    {this.props.districting.name}
+                    </Col>
+                    <Col s={2}>
+                      {StatUtilities.getRandomInt(10)}
+                    </Col>
+                    <Col s={3}>
+                    {this.props.districting.geoJson.objectivefunc[
+                        MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY]}
+                    </Col>
+                    <Col s={3}>
+                      {StatUtilities.getRandomInt(3)}
+                    </Col>
+                    <Col s={2}>
+                    {this.props.districting.geoJson.objectivefunc[
+                        MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES]}
+                    </Col>
+                    </Row>
         }
         onSelect={(e) => this.handleClick(e)}
       >
-        <h5 className="padBelowMe">Districting Breakdown</h5>
+        <h5 className="padBelowMe">{SelectionMenuUtilities.LABELS.DISTRICTING_BREAKDOWN}</h5>
         <DistrictingInfoSection districting={this.props.districting} />
       </CollapsibleItem>
     );

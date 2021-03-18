@@ -227,6 +227,11 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   margin-left: 0 !important;
 }
 
+.ListingColumnsContainer {
+  position: relative;
+  width: 100%;
+}
+
 
 .ReturnToMapBtn {
   height: 35x;
@@ -333,6 +338,10 @@ button:focus {
   opacity: .7;
 }
 
+.swapSortOrderIcon :hover {
+  color: orange;
+}
+
 
 .compareOptionsDiv {
   padding: 10px;
@@ -370,4 +379,18 @@ button:focus {
 
 .districtingCountDiv {
   padding-bottom: 20px;
+}
+
+.sortingCollapsible {
+  pointer-events: none;
+}
+
+
+/* Hide the body of the sorting collapsible*/
+.sortingCollapsible > .collapsible-body {
+  display: none !important;
+}
+
+.swapSortOrderIcon {
+  pointer-events: all
 }
