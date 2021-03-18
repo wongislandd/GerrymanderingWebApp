@@ -41,8 +41,10 @@ export default class DistrictingItem extends Component {
         }
         onSelect={(e) => this.handleClick(e)}
       >
+        <div className="centerWithinMe">
         <h5 className="padBelowMe">{SelectionMenuUtilities.LABELS.DISTRICTING_BREAKDOWN}</h5>
         <DistrictingInfoSection districting={this.props.districting} />
+        </div>
       </CollapsibleItem>
     );
   }
