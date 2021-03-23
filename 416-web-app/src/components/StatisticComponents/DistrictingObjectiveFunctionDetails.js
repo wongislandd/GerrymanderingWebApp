@@ -28,7 +28,7 @@ export default class DistrictingObjectiveFunctionDetails extends Component {
                 <TableRow>
                   <TableCell>
                     <LabelAndInfoIcon
-                      label="Population Equality"
+                      label="Average Population Equality"
                       description={
                         StatUtilities.DESCRIPTIONS.POPULATION_EQUALITY
                       }
@@ -36,13 +36,13 @@ export default class DistrictingObjectiveFunctionDetails extends Component {
                   </TableCell>
                   <TableCell>
                     <LabelAndInfoIcon
-                      label="Split Counties"
-                      description={StatUtilities.DESCRIPTIONS.SPLIT_COUNTIES}
+                      label="Split County Score"
+                      description={StatUtilities.DESCRIPTIONS.SPLIT_COUNTY_SCORE}
                     />
                   </TableCell>
                   <TableCell>
                     <LabelAndInfoIcon
-                      label="Deviaton from Average"
+                      label="Average Deviaton from Average"
                       description={
                         StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
                       }
@@ -50,7 +50,7 @@ export default class DistrictingObjectiveFunctionDetails extends Component {
                   </TableCell>
                   <TableCell>
                     <LabelAndInfoIcon
-                      label="Deviation from Enacted"
+                      label="Average Deviation from Enacted"
                       description={
                         StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
                       }
@@ -58,8 +58,20 @@ export default class DistrictingObjectiveFunctionDetails extends Component {
                   </TableCell>
                   <TableCell>
                     <LabelAndInfoIcon
-                      label="Compactness"
+                      label="Average Compactness"
                       description={StatUtilities.DESCRIPTIONS.COMPACTNESS}
+                    />
+                  </TableCell>
+                  <TableCell>
+                  <LabelAndInfoIcon
+                      label="Average Political Fairness"
+                      description={StatUtilities.DESCRIPTIONS.POLITICAL_FAIRNESS}
+                    />
+                  </TableCell>
+                  <TableCell>
+                  <LabelAndInfoIcon
+                      label="Majority Minority Districts"
+                      description={StatUtilities.DESCRIPTIONS.MAJORITY_MINORITY_DISTRICT}
                     />
                   </TableCell>
                 </TableRow>
@@ -69,35 +81,49 @@ export default class DistrictingObjectiveFunctionDetails extends Component {
                   <TableCell scope="row">
                     {
                       this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY
+                        MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY
                       ]
                     }
                   </TableCell>
                   <TableCell>
                     {
                       this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES
+                        MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE
                       ]
                     }
                   </TableCell>
                   <TableCell>
                     {
                       this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_AVG
+                        MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_AVG_DISTRICTING
                       ]
                     }
                   </TableCell>
                   <TableCell>
                     {
                       this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_ENACTED
+                        MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_ENACTED_DISTRICTING
                       ]
                     }
                   </TableCell>
                   <TableCell>
                     {
                       this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.COMPACTNESS
+                        MapUtilities.PROPERTY_LABELS.AVG_COMPACTNESS
+                      ]
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                        MapUtilities.PROPERTY_LABELS.AVG_POLITICAL_FAIRNESS
+                      ]
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                        MapUtilities.PROPERTY_LABELS.TOTAL_MAJORITY_MINORITY_DISTRICTS
                       ]
                     }
                   </TableCell>

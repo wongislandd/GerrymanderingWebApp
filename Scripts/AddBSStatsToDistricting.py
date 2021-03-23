@@ -14,19 +14,22 @@ def randPercentage():
 
 def addObjectiveFunctionData(data):
     data['objectivefunc'] = {
-        'POPULATION_EQUALITY' : round(randPercentage(),2),
-        'SPLIT_COUNTIES' : round(randPercentage(),2),
-        'DEVIATION_FROM_AVG_DISTRICTING' : round(randPercentage(),2),
-        'DEVIATION_FROM_ENACTED_PLAN' : round(randPercentage(),2),
-        'COMPACTNESS' : round(randPercentage(),2),
+        'AVG_POPULATION_EQUALITY' : round(randPercentage(),2),
+        'AVG_POLITICAL_FAIRNESS' : round(randPercentage(),2),
+        'SPLIT_COUNTY_SCORE' : round(randPercentage(),2),
+        'TOTAL_MAJORITY_MINORITY_DISTRICTS' : randint(0,3),
+        'AVG_DEVIATION_FROM_AVG_DISTRICTING' : round(randPercentage(),2),
+        'AVG_DEVIATION_FROM_ENACTED_DISTRICTING' : round(randPercentage(),2),
+        'AVG_COMPACTNESS' : round(randPercentage(),2),
     }
     return data
+
 
 def getRandomAmountOfSplitCounties():
     return randint(0,3)
 
-def getPopulationEquality(white_population, total_population):
-    return round(total_population - white_population / total_population, 2)
+def getMinorityPopulation(white_population, total_population):
+    return total_population - white_population
 
 
 def getParties(total_pop):
@@ -79,6 +82,12 @@ def getRaces(total_pop):
     })
 
 
+def getRandomTrueOrFalseAtRate(rate):
+    if randPercentage() < rate:
+        return True
+    else:
+        return False
+
 def addBSData(inputFile, outputFile):
     # Open the file
     with open(inputFile) as f:
@@ -104,9 +113,16 @@ def addBSData(inputFile, outputFile):
         feature['properties']['RACE_PACIFIC_ISLANDER_COUNT'] = RaceDict['P']
         feature['properties']['RACE_UNDESIGNATED_COUNT'] = RaceDict['U']
         feature['properties']['RACE_OTHER_COUNT'] = RaceDict['O']
+
+        # Individual district contribution towards the objective function
+        feature['properties']['POPULATION_EQUALITY'] = randPercentage()
+        feature['properties']['POLITICAL_FAIRNESS'] = randPercentage()
         feature['properties']['SPLIT_COUNTIES'] = getRandomAmountOfSplitCounties()
-        feature['properties']['POPULATION_EQUALITY'] = getPopulationEquality(total_pop-RaceDict['W'],total_pop)
+        feature['properties']['MAJORITY_MINORITY_DISTRICT'] = str(getRandomTrueOrFalseAtRate(.35))
+        feature['properties']['DEVIATION_FROM_AVG_DISTRICTING'] = randPercentage()
+        feature['properties']['DEVIATION_FROM_ENACTED_DISTRICTING'] = randPercentage()
         feature['properties']['COMPACTNESS'] = randPercentage()
+        feature['properties']['MINORITY_POPULATION'] = getMinorityPopulation(total_pop - RaceDict['W'], total_pop)
         count += 1
 
     # Write the file
@@ -117,11 +133,11 @@ def addBSData(inputFile, outputFile):
 
 
 inputFile1 = "./input/EnactedDistrictingPlan2011.json"
-outputFile1 = "./output/EnactedDistrictingPlan2011WithData.json"
+outputFile1 = "../416-web-app/src/data/NC/EnactedDistrictingPlan2011WithData.json"
 inputFile2 = "./input/EnactedDistrictingPlan2016.json"
-outputFile2 = "./output/EnactedDistrictingPlan2016WithData.json"
+outputFile2 = "../416-web-app/src/data/NC/EnactedDistrictingPlan2016WithData.json"
 inputFile3 = "./input/EnactedDistrictingPlan2019.json"
-outputFile3 = "./output/EnactedDistrictingPlan2019WithData.json"
+outputFile3 = "../416-web-app/src/data/NC/EnactedDistrictingPlan2019WithData.json"
 
 
 addBSData(inputFile1, outputFile1)

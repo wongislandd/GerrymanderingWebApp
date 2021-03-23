@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
-import PrecinctGeoData from "../../data/NC/PrecinctGeoDataOutput.json";
-//import PrecinctGeoData from '../../data/NC/MinifiedPrecinctData.json'
+//import PrecinctGeoData from "../../data/NC/PrecinctGeoDataOutput.json";
+import PrecinctGeoData from '../../data/NC/MinifiedPrecinctData.json'
 import CountyGeoData from "../../data/NC/CountiesGeoData.json";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import { connect } from "react-redux";

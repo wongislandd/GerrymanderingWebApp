@@ -4,7 +4,7 @@ export const DESCRIPTIONS = {
   POPULATION_EQUALITY:
     "How close in population the districts are to each other.",
 
-  SPLIT_COUNTIES:
+  SPLIT_COUNTY_SCORE:
     "Counties that are part of two or more districts are considered split counties.",
 
   DEVIATION_FROM_AVERAGE:
@@ -14,6 +14,11 @@ export const DESCRIPTIONS = {
     "How different a given districting is from the enacted districting.",
 
   COMPACTNESS: "The ratio of district's circumference to their total areas.",
+
+  POLITICAL_FAIRNESS : "How fair the politics be.",
+
+  MAJORITY_MINORITY_DISTRICT : "A district is considered a majority minority district if the majority of the population is a minority."
+
 };
 
 export const COMPARISON_DIRECTIONS = {

@@ -371,6 +371,7 @@ class DistrictingSummary extends Component {
                         <TableCell>Minority Population</TableCell>
                         <TableCell>Split Counties</TableCell>
                         <TableCell>Compactness</TableCell>
+                        <TableCell>Majority Minority District?</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -396,6 +397,12 @@ class DistrictingSummary extends Component {
                           {feature.properties[
                             MapUtilities.PROPERTY_LABELS.COMPACTNESS
                           ] + "%"}
+                        </TableCell>
+                        <TableCell>
+                          {console.log(feature.properties)}
+                          {feature.properties[
+                            MapUtilities.PROPERTY_LABELS.MAJORITY_MINORITY_DISTRICT
+                          ]}
                         </TableCell>
                       </TableRow>
                     </TableBody>
