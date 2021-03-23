@@ -27,6 +27,7 @@ import RacialPieChart from "./RacialPieChart";
 import LabelAndInfoIcon from "./LabelAndInfoIcon";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
 import BoxPlot from "./BoxPlot";
+import DistrictingObjectiveFunctionDetails from "./DistrictingObjectiveFunctionDetails";
 
 
 class DistrictingSummary extends Component {
@@ -84,7 +85,6 @@ class DistrictingSummary extends Component {
   }
 
   render() {
-    console.log(this.props.InSelectionMenu);
     /* Don't want this behavior for the Selection Listing usage, since it's mostly meant for clicking on the map.*/
     if (!this.props.InSelectionMenu) {
       this.closeAllCollapsibles();
@@ -140,98 +140,10 @@ class DistrictingSummary extends Component {
           <div />
         )}
         <div>
-          <h6 className="title-text">Box and Whisker</h6>
+          <h6 className="title-text centerWithinMe">Box and Whisker</h6>
           <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay}/>
         </div>
-        <CollapsibleItem
-          expanded={false}
-          key={-1}
-          header={"Objective Function Details"}
-        >
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <LabelAndInfoIcon
-                      label="Population Equality"
-                      description={
-                        StatUtilities.DESCRIPTIONS.POPULATION_EQUALITY
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <LabelAndInfoIcon
-                      label="Split Counties"
-                      description={StatUtilities.DESCRIPTIONS.SPLIT_COUNTIES}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <LabelAndInfoIcon
-                      label="Deviaton from Average"
-                      description={
-                        StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <LabelAndInfoIcon
-                      label="Deviation from Enacted"
-                      description={
-                        StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <LabelAndInfoIcon
-                      label="Compactness"
-                      description={StatUtilities.DESCRIPTIONS.COMPACTNESS}
-                    />
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell scope="row">
-                    {
-                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY
-                      ]
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {
-                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES
-                      ]
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {
-                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_AVG
-                      ]
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {
-                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_ENACTED
-                      ]
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {
-                      this.props.DistrictingToDisplay.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.COMPACTNESS
-                      ]
-                    }
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CollapsibleItem>
+        <DistrictingObjectiveFunctionDetails DistrictingToDisplay={this.props.DistrictingToDisplay}/>
         {this.props.DistrictingToDisplay.geoJson.features.map(
           (feature, key) => {
             return (

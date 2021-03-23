@@ -36,7 +36,7 @@ export default class BoxPlot extends Component {
     const traces = boxes.concat(points)
 
     return (
-      <div>
+      <div className="centerWithinMe">
         <Plot
           data={traces}
           layout={{ width: 900, height: 400, title: "Enacted Districting Evaluation", showlegend : false }}
