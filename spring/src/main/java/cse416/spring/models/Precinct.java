@@ -1,17 +1,17 @@
-package cse416.spring.databaseclasses;
+package cse416.spring.models;
 
 import cse416.spring.helperclasses.GeometryJSON;
 import cse416.spring.infowrappers.Demographics;
 
 public class Precinct {
-    int Id;
+    int id;
     String name;
     GeometryJSON geometry;
     County county;
     Demographics demographics;
 
     public Precinct(int id, String name, GeometryJSON geometry, County county, Demographics demographics) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.geometry = geometry;
         this.county = county;
@@ -19,11 +19,11 @@ public class Precinct {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        id = id;
     }
 
     public String getName() {

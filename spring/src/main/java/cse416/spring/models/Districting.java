@@ -1,4 +1,4 @@
-package cse416.spring.databaseclasses;
+package cse416.spring.models;
 
 import cse416.spring.helperclasses.GeometryJSON;
 import cse416.spring.infowrappers.DistrictingMeasures;

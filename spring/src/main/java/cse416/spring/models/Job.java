@@ -1,4 +1,4 @@
-package cse416.spring.databaseclasses;
+package cse416.spring.models;
 
 import java.util.Collection;
 

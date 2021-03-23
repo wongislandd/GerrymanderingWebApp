@@ -1,6 +1,6 @@
 package cse416.spring.helperclasses;
 
-import cse416.spring.databaseclasses.Districting;
+import cse416.spring.models.Districting;
 
 import java.util.Collection;
 
