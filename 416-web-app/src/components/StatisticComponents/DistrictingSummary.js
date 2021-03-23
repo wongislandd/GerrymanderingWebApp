@@ -27,7 +27,9 @@ import RacialPieChart from "./RacialPieChart";
 import LabelAndInfoIcon from "./LabelAndInfoIcon";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
 import BoxPlot from "./BoxPlot";
-import DistrictingObjectiveFunctionDetails from "./DistrictingObjectiveFunctionDetails";
+import ObjectiveFunctionTable from "./ObjectiveFunctionTable";
+import VoterDemographicsTable from "./VoterDemographicsTable";
+import RacialDemographicsTable from "./RacialDemographicsTable";
 
 
 class DistrictingSummary extends Component {
@@ -143,7 +145,18 @@ class DistrictingSummary extends Component {
           <h6 className="title-text centerWithinMe">Box and Whisker</h6>
           <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay}/>
         </div>
-        <DistrictingObjectiveFunctionDetails DistrictingToDisplay={this.props.DistrictingToDisplay}/>
+
+
+        <CollapsibleItem
+          expanded={false}
+          key={-1}
+          header={"Objective Function Details"}
+          onSelect={()=>{}}
+        >
+        <ObjectiveFunctionTable DistrictingToDisplay={this.props.DistrictingToDisplay}/>
+        </CollapsibleItem>
+
+
         {this.props.DistrictingToDisplay.geoJson.features.map(
           (feature, key) => {
             return (
@@ -200,214 +213,22 @@ class DistrictingSummary extends Component {
                 }}
               >
                 <h5>Voter Demographics</h5>
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Total Voters</TableCell>
-                        <TableCell>Democratic Affiliated</TableCell>
-                        <TableCell>Republican Affiliated</TableCell>
-                        <TableCell>Other Affiliations</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell scope="row">
-                          {StatUtilities.addCommas(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.PARTY_OTHER_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_VOTER_COUNT
-                            ]
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                
+                <VoterDemographicsTable DistrictToDisplay={feature}/>
 
                 <h5>Racial Demographics</h5>
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Total Population</TableCell>
-                        <TableCell align="right">White</TableCell>
-                        <TableCell align="right">Black</TableCell>
-                        <TableCell align="right">Asian</TableCell>
-                        <TableCell align="right">
-                          Native American or Alaskan
-                        </TableCell>
-                        <TableCell align="right">
-                          Pacific Islander or Hawaiian
-                        </TableCell>
-                        <TableCell align="right">Undesignated</TableCell>
-                        <TableCell align="right">Other</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell scope="row">
-                          {StatUtilities.addCommas(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.WHITE_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.BLACK_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.ASIAN_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.NATIVE_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS
-                                .PACIFIC_ISLANDER_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell align="right">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                
+                <RacialDemographicsTable DistrictToDisplay={feature}/>
 
                 <div className="demographicsContainer">
                   <PartyPieChart feature={feature} />
                   <RacialPieChart feature={feature} />
                 </div>
+                
 
                 <h5>Objective Function Details</h5>
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Minority Population</TableCell>
-                        <TableCell>Split Counties</TableCell>
-                        <TableCell>Compactness</TableCell>
-                        <TableCell>Majority Minority District?</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell scope="row">
-                          {StatUtilities.formatResult(
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.MINORITY_POPULATION
-                            ],
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                            ]
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {
-                            feature.properties[
-                              MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES
-                            ]
-                          }
-                        </TableCell>
-                        <TableCell>
-                          {feature.properties[
-                            MapUtilities.PROPERTY_LABELS.COMPACTNESS
-                          ] + "%"}
-                        </TableCell>
-                        <TableCell>
-                          {console.log(feature.properties)}
-                          {feature.properties[
-                            MapUtilities.PROPERTY_LABELS.MAJORITY_MINORITY_DISTRICT
-                          ]}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                <ObjectiveFunctionTable DistrictToDisplay={feature}/>
+               
               </CollapsibleItem>
             );
           }
