@@ -28,14 +28,14 @@ export default class DistrictingItem extends Component {
                     </Col>
                     <Col s={3}>
                     {this.props.districting.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY]}
+                        MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY]}
                     </Col>
                     <Col s={3}>
                       {StatUtilities.getRandomInt(3)}
                     </Col>
                     <Col s={2}>
                     {this.props.districting.geoJson.objectivefunc[
-                        MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES]}
+                        MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE]}
                     </Col>
                     </Row>
         }

@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import * as StatUtilities from "../../utilities/StatUtilities";
-import LabelAndInfoIcon from "./LabelAndInfoIcon";
 
 export default class VoterDemographicsTable extends Component {
     render() {
