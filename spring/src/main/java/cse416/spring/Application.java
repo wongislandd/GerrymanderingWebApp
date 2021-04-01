@@ -1,4 +1,4 @@
-package cse416.spring.app;
+package cse416.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -16,7 +16,7 @@ export async function loadDistrictings(state) {
       // Construct HTTP request; change the URL later to something more fitting..
       const response = await fetch(baseURL + "/districting/load", {
         method: "POST",
-        mode: "no-cors", // Web security policies..
+        mode: "cors", // Web security policies..
         cache: "no-cache",
         credentials: "same-origin", // .. If they cause issues, try commenting out
         headers: {

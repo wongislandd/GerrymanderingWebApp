@@ -5,6 +5,8 @@ import cse416.spring.mapping.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+//@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/districting")
 public class Controller {
@@ -23,7 +25,7 @@ public class Controller {
     // Obtain the list of districtings that fit the constraints. For now, it will just
     // return the constraints and a default districting.
     @PostMapping("/load")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8080")
     public String loadDistrictings() {
         return "Hello!...";
     }

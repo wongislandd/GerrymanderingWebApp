@@ -1,9 +1,11 @@
 package cse416.spring.helperclasses;
 
 import cse416.spring.models.Districting;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+@Component
 public class ConstrainedDistrictings {
     Collection<Districting> districtings;
     double[][] boxAndWhiskerData;
