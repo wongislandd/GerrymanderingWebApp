@@ -34,6 +34,8 @@ import EnactedDistrictingPlan2019 from "../../../data/NC/EnactedDistrictingPlan2
 import WeightSelection from "./WeightSelection";
 import ReturnToMapButton from "./ReturnToMapButton";
 
+// Spring Boot imports, may not be needed
+
 const districtingsToLoad = [
   new Districting(
     "1",
@@ -131,8 +133,11 @@ function FilterSection(props) {
     setActiveStep(step);
   };
 
+  /* This will be where a POST request is sent to the server; the client will send
+   * constraints to spring.
+   */
   const handleComplete = () => {
-    if (activeStep == 0) {
+    if (activeStep == 0) { // activeStep represents where in the constraints the user is.
       // LOAD DISTRICTINGS, UPDATE COUNT NUMBER
       props.loadInDistrictings(districtingsToLoad);
       props.setNumberOfDistrictingsAvailable(

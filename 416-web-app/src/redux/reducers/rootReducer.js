@@ -28,7 +28,7 @@ const initState = {
   FeaturesToUnhighlight: [],
 
   /* Default to UNSELECTED */
-  CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+  CurrentState: ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
 
   /* Map Reference */
   MapRef: React.createRef(),
@@ -38,7 +38,7 @@ const initState = {
 
   /* Determines where the user starts, if this is false we need a districting to display by default as well */
   /* Default to False*/
-  InSelectionMenu: false,
+  InSelectionMenu: true,
 
   SortedBy: {
     value: "Objective Function Score",
@@ -289,7 +289,7 @@ const rootReducer = (state = initState, action) => {
         FeaturesToUnhighlight: [],
       };
     case ActionTypes.LOAD_IN_DISTRICTINGS:
-      NetworkingUtilities.test(state)
+      NetworkingUtilities.loadDistrictings(state);
       return {
         ...state,
         FilteredDistrictings : action.Districtings,
