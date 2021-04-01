@@ -8,6 +8,7 @@ import React from "react";
 import Filter from "../../utilities/classes/Filter";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
+import * as NetworkingUtilities from '../../network/NetworkingUtilities'
 
 const defaultDistricting = new Districting(
   "Enacted Districting Feb 2016 - Nov 2019",
@@ -68,8 +69,6 @@ const initState = {
     new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
     new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
   ],
-
-  
 
   PopulationConstraintSelection : null,
   MinorityConstraintSelection : null,
@@ -290,9 +289,10 @@ const rootReducer = (state = initState, action) => {
         FeaturesToUnhighlight: [],
       };
     case ActionTypes.LOAD_IN_DISTRICTINGS:
+      NetworkingUtilities.test(state)
       return {
         ...state,
-        FilteredDistrictings: action.Districtings,
+        FilteredDistrictings : action.Districtings,
       };
     case ActionTypes.SET_CURRENT_TAB:
       return {

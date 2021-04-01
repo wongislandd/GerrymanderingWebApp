@@ -181,7 +181,7 @@ export const clearFeaturesToUnhighlight = () => {
 export const loadInDistrictings = (districtings) => {
   return {
     type: ActionTypes.LOAD_IN_DISTRICTINGS,
-    Districtings: districtings,
+    Districtings : districtings,
   };
 };
 
