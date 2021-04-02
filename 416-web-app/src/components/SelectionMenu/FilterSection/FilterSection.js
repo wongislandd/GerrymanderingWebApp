@@ -3,7 +3,7 @@ import { Button } from "react-materialize";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
 import { connect } from "react-redux";
 import {
-  loadInDistrictings,
+  loadInDistricting,
   restoreDefaultStateForNewDistricting,
   setInSelectionMenu,
   updateConstraintSettings,
@@ -28,28 +28,11 @@ import StepButton from "@material-ui/core/StepButton";
 import Typography from "@material-ui/core/Typography";
 import ConstraintSelection from "./ConstraintSelection";
 import Districting from "../../../utilities/classes/Districting";
-import EnactedDistrictingPlan2011 from "../../../data/NC/EnactedDistrictingPlan2011WithData.json";
-import EnactedDistrictingPlan2016 from "../../../data/NC/EnactedDistrictingPlan2016WithData.json";
-import EnactedDistrictingPlan2019 from "../../../data/NC/EnactedDistrictingPlan2019WithData.json";
 import WeightSelection from "./WeightSelection";
 import ReturnToMapButton from "./ReturnToMapButton";
+import * as NetworkingUtilities from '../../../network/NetworkingUtilities'
 
 // Spring Boot imports, may not be needed
-
-const districtingsToLoad = [
-  new Districting(
-    "1",
-    EnactedDistrictingPlan2011
-  ),
-  new Districting(
-    "2",
-    EnactedDistrictingPlan2016
-  ),
-  new Districting(
-    "3",
-    EnactedDistrictingPlan2019
-  ),
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -136,10 +119,13 @@ function FilterSection(props) {
   /* This will be where a POST request is sent to the server; the client will send
    * constraints to spring.
    */
-  const handleComplete = () => {
+
+  const handleComplete = async () => {
     if (activeStep == 0) { // activeStep represents where in the constraints the user is.
       // LOAD DISTRICTINGS, UPDATE COUNT NUMBER
-      props.loadInDistrictings(districtingsToLoad);
+      let districtingJSON = await NetworkingUtilities.loadDistricting(1)
+      let newDistricting = new Districting(1, districtingJSON)
+      props.loadInDistricting(newDistricting);
       props.setNumberOfDistrictingsAvailable(
         StatUtilities.rollARandomNumberOfDistrictings()
       );
@@ -152,7 +138,6 @@ function FilterSection(props) {
     setCompleted(newCompleted);
   };
 
-  console.log(props);
   return (
     <div className="SelectionMenuSection FilterSection">
       {/* Button for returning to map */}
@@ -212,8 +197,8 @@ function FilterSection(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadInDistrictings: (districtings) => {
-      dispatch(loadInDistrictings(districtings));
+    loadInDistricting: (districting) => {
+      dispatch(loadInDistricting(districting));
     },
     setNumberOfDistrictingsAvailable: (number) => {
       dispatch(setNumberOfDistrictingsAvailable(number));

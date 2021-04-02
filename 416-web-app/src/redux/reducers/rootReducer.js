@@ -289,10 +289,9 @@ const rootReducer = (state = initState, action) => {
         FeaturesToUnhighlight: [],
       };
     case ActionTypes.LOAD_IN_DISTRICTINGS:
-      NetworkingUtilities.loadDistrictings(state);
       return {
         ...state,
-        FilteredDistrictings : action.Districtings,
+        FilteredDistrictings : [...state.FilteredDistrictings, action.Districting]
       };
     case ActionTypes.SET_CURRENT_TAB:
       return {

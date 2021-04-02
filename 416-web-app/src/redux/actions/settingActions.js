@@ -178,10 +178,10 @@ export const clearFeaturesToUnhighlight = () => {
   };
 };
 
-export const loadInDistrictings = (districtings) => {
+export const loadInDistricting = (districting) => {
   return {
     type: ActionTypes.LOAD_IN_DISTRICTINGS,
-    Districtings : districtings,
+    Districting : districting
   };
 };
 
