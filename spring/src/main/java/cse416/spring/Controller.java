@@ -1,6 +1,8 @@
 package cse416.spring;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
 import cse416.spring.mapping.Mapper;
 import org.apache.coyote.Response;
@@ -34,15 +36,16 @@ public class Controller {
         this.currentConstraintedDistrictings = currentConstraintedDistrictings;
     }
 
-    // Obtain the list of districtings that fit the constraints. For now, it will just
-    // return the constraints and a default districting.
-    @RequestMapping(
-            value = "/load",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    /* Load a particular districting based on ID */
+    @PostMapping("/load")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadDistricting() {
+    public ResponseEntity<String> loadDistricting(@RequestBody String body) {
         try {
+            /* Access the body as JSON */
+            JsonNode object = mapper.getObjectMapper().readTree(body);
+            int requestedID = object.get("id").asInt();
+
+            /* Interpret, load, and return */
             File file = ResourceUtils.getFile("src/main/resources/static/json/EnactedDistrictingPlan2011WithData.json");
             String content = new String(Files.readAllBytes(file.toPath()));
             return new ResponseEntity<>(content, HttpStatus.OK);
@@ -52,6 +55,10 @@ public class Controller {
             return new ResponseEntity<>("{\"message\":\""+ex.getMessage()+"\"}", HttpStatus.CONFLICT);
         }
     }
+
+
+
+
 
 
 

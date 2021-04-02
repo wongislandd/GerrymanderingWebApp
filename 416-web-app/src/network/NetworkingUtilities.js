@@ -26,26 +26,18 @@ const buildRequest = (method, body) => {
 
 
 
-// Loads in a set of districtings based on the constraints set by the user.
+/* Load an individual districting based on ID */
 export async function loadDistricting(id) {
-    console.log("Load Districting called.")
-    const state = store.getState();
-    console.log(state)
-    // The constraints, formatted into an array with only values
+    // The constraints, formatted into an array with only values, to become the JSON payload
     const input = {
-        maxPopulationDifference : state.ConstraintSliderSettings[0].value,
-        minMajorityMinorityDistricts: state.ConstraintSliderSettings[1].value,
-        compactnessPP: state.ConstraintSliderSettings[2].value,
-        compactnessGC: state.ConstraintSliderSettings[3].value,
-        compactnessPF: state.ConstraintSliderSettings[4].value
-      };
+        id : id
+    };
 
-      let payload = JSON.stringify(input)
+    let payload = JSON.stringify(input)
 
-      // Construct HTTP request; change the URL later to something more fitting..
-      const response = await fetch(baseURL + "/districting/load", buildRequest(HTTPMETHODS.POST, payload));
+    // Construct HTTP request; change the URL later to something more fitting..
+    const response = await fetch(baseURL + "/districting/load", buildRequest(HTTPMETHODS.POST, payload));
 
-      let body = await response.json();
-      console.log(body)
-      return body;
+    let body = await response.json();
+    return body;
 }
