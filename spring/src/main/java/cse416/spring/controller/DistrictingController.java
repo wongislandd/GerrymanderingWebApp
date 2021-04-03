@@ -1,28 +1,22 @@
-package cse416.spring;
+package cse416.spring.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import cse416.spring.helperclasses.Server;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
 import cse416.spring.mapping.Mapper;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.io.FileReader;
 import java.nio.file.Files;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/districting")
-public class Controller {
+public class DistrictingController {
     Server server;
     Mapper mapper;
 
@@ -30,21 +24,18 @@ public class Controller {
     ConstrainedDistrictings currentConstraintedDistrictings;
 
 
-    public Controller(Server server, Mapper mapper, ConstrainedDistrictings currentConstraintedDistrictings) {
+    public DistrictingController(Server server, Mapper mapper, ConstrainedDistrictings currentConstraintedDistrictings) {
         this.server = server;
         this.mapper = mapper;
         this.currentConstraintedDistrictings = currentConstraintedDistrictings;
     }
 
     /* Load a particular districting based on ID */
-    @PostMapping("/load")
+    @GetMapping("/load")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadDistricting(@RequestBody String body) {
+    public ResponseEntity<String> loadDistricting(@RequestParam String id) {
         try {
-            /* Access the body as JSON */
-            JsonNode object = mapper.getObjectMapper().readTree(body);
-            int requestedID = object.get("id").asInt();
-
+            System.out.println(id);
             /* Interpret, load, and return */
             File file = ResourceUtils.getFile("src/main/resources/static/json/EnactedDistrictingPlan2011WithData.json");
             String content = new String(Files.readAllBytes(file.toPath()));
@@ -55,6 +46,25 @@ public class Controller {
             return new ResponseEntity<>("{\"message\":\""+ex.getMessage()+"\"}", HttpStatus.CONFLICT);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

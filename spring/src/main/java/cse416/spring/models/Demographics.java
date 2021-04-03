@@ -1,4 +1,4 @@
-package cse416.spring.infowrappers;
+package cse416.spring.models;
 
 public class Demographics {
     int Democrats;

@@ -1,4 +1,4 @@
-package cse416.spring.infowrappers;
+package cse416.spring.models;
 
 import cse416.spring.enums.VotingPopulation;
 import cse416.spring.enums.MinorityPopulation;

@@ -1,4 +1,4 @@
-package cse416.spring;
+package cse416.spring.helperclasses;
 
 import org.springframework.stereotype.Component;
 

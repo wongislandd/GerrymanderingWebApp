@@ -1,7 +1,6 @@
 package cse416.spring.models;
 
 import cse416.spring.helperclasses.GeometryJSON;
-import cse416.spring.infowrappers.Demographics;
 
 public class Precinct {
     int id;
