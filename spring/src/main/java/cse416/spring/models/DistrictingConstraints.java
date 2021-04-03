@@ -3,15 +3,38 @@ package cse416.spring.models;
 import cse416.spring.enums.VotingPopulation;
 import cse416.spring.enums.MinorityPopulation;
 
+import javax.persistence.*;
 import java.util.Collection;
 
+
+@Entity
 public class DistrictingConstraints {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    public int id;
+
+    @Enumerated(EnumType.STRING)
     MinorityPopulation minorityPopulation;
+
+    @Enumerated(EnumType.STRING)
     VotingPopulation votingPopulation;
+
+    @Column
     double maxPopulationDifference;
+
+    @Column
     double minMinorityDistricts;
+
+    @OneToOne
     Compactness compactness;
+
+    @ElementCollection
     Collection<String> incumbentOptions;
+
+    public DistrictingConstraints() {
+
+    }
 
     public MinorityPopulation getMinorityPopulation() {
         return minorityPopulation;

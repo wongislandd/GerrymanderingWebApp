@@ -1,11 +1,30 @@
 package cse416.spring.models;
 
+import javax.persistence.*;
+
+@Entity
 public class DistrictMeasures {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    public int id;
+
+    @Column
     double populationEquality;
+
+    @Column
     boolean isMajorityMinorityDistrict;
+
+    @OneToOne
     Compactness compactness;
+
+    @Column
     double politicalFairness;
+
+    @Column
     int splitCounties;
+
+    @Column
     double deviationFromEnacted;
 
     public DistrictMeasures(double populationEquality, boolean isMajorityMinorityDistrict, Compactness compactness, double politicalFairness, int splitCounties, double deviationFromEnacted, double deviationFromAverage) {
@@ -16,6 +35,10 @@ public class DistrictMeasures {
         this.splitCounties = splitCounties;
         this.deviationFromEnacted = deviationFromEnacted;
         this.deviationFromAverage = deviationFromAverage;
+    }
+
+    public DistrictMeasures() {
+
     }
 
     public double getPopulationEquality() {

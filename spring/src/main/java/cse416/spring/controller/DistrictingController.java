@@ -1,6 +1,5 @@
 package cse416.spring.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import cse416.spring.helperclasses.Server;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
 import cse416.spring.mapping.Mapper;

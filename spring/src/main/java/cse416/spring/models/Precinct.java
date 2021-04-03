@@ -2,12 +2,29 @@ package cse416.spring.models;
 
 import cse416.spring.helperclasses.GeometryJSON;
 
+import javax.persistence.*;
+
+@Entity
 public class Precinct {
-    int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    public int id;
+
+    @Column
     String name;
+
+    @OneToOne
     GeometryJSON geometry;
+
+    @ManyToOne
     County county;
+
+    @OneToOne
     Demographics demographics;
+
+    @ManyToOne
+    District district;
 
     public Precinct(int id, String name, GeometryJSON geometry, County county, Demographics demographics) {
         this.id = id;

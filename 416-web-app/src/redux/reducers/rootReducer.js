@@ -66,8 +66,8 @@ const initState = {
     new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
     new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
     new Filter("Compactness (Polsby-Popper)", 0.5, 0, 1, 0.05, true),
-    new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
     new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
   ],
 
   PopulationConstraintSelection : null,

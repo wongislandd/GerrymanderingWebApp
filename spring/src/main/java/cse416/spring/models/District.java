@@ -2,13 +2,32 @@ package cse416.spring.models;
 
 import cse416.spring.helperclasses.GeometryJSON;
 
+import javax.persistence.*;
 import java.util.Collection;
 
+@Entity
 public class District {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     public int id;
+
+    @OneToOne
     GeometryJSON geometry;
+
+    @OneToMany
     Collection<Precinct> precincts;
+
+    @OneToOne
     DistrictMeasures measures;
+
+    @ManyToOne
+    Districting districting;
+
+    public District() {
+
+    }
+
 
     public int getId() {
         return id;

@@ -2,17 +2,27 @@ package cse416.spring.models;
 
 import cse416.spring.helperclasses.GeometryJSON;
 
+import javax.persistence.*;
 import java.util.Collection;
 
+@Entity
 public class Districting {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     int id;
 
+    @OneToMany(mappedBy = "districting")
     Collection<District> districts;
 
+    @OneToOne
     DistrictingMeasures measures;
 
+    @Column
     double ObjectiveFunctionScore;
 
+    @OneToOne
     GeometryJSON geometry;
 
     public int getId() {
@@ -52,14 +62,6 @@ public class Districting {
     }
 
     public void setGeometry(GeometryJSON geometry) {
-        this.geometry = geometry;
-    }
-
-    public Districting(int id, Collection<District> districts, DistrictingMeasures measures, double objectiveFunctionScore, GeometryJSON geometry) {
-        this.id = id;
-        this.districts = districts;
-        this.measures = measures;
-        ObjectiveFunctionScore = objectiveFunctionScore;
         this.geometry = geometry;
     }
 }

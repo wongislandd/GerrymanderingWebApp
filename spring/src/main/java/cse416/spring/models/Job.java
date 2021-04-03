@@ -1,9 +1,22 @@
 package cse416.spring.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 
+
+@Entity
 public class Job {
+    @Column
     String name;
+    @Id
+    private Long id;
+
+    public Job() {
+
+    }
 
     public String getName() {
         return name;
@@ -26,5 +39,14 @@ public class Job {
         this.districtings = districtings;
     }
 
+    @OneToMany
     Collection<Districting> districtings;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

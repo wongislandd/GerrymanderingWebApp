@@ -1,6 +1,21 @@
 package cse416.spring.models;
 
+import javax.persistence.*;
+
+@Entity
 public class DistrictingMeasures {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    public int id;
+
+    @OneToOne
+    District district;
+
+    public DistrictingMeasures() {
+
+    }
+
     public double getPopulationEqualityAvg() {
         return populationEqualityAvg;
     }
@@ -67,11 +82,24 @@ public class DistrictingMeasures {
         this.deviationFromAverageAvg = deviationFromAverageAvg;
     }
 
+    @Column
     double populationEqualityAvg;
+
+    @Column
     int majorityMinorityDistrictsAvg;
+
+    @OneToOne
     Compactness compactnessAvg;
+
+    @Column
     double politicalFairnessAvg;
+
+    @Column
     double splitCountiesScore;
+
+    @Column
     double deviationFromEnactedAvg;
+
+    @Column
     double deviationFromAverageAvg;
 }

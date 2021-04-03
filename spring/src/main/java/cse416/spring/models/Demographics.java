@@ -1,15 +1,44 @@
 package cse416.spring.models;
 
+import javax.persistence.*;
+
+@Entity
 public class Demographics {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    public int id;
+
+    @Column
     int Democrats;
+
+    @Column
     int Republicans;
+
+    @Column
     int OtherParty;
+
+    @Column
     int Asian;
+
+    @Column
     int Black;
+
+    @Column
     int Native;
+
+    @Column
     int White;
+
+    @Column
     int OtherRace;
+
+    @Column
     int TotalPopulation;
+
+    public Demographics() {
+
+    }
 
     public int getDemocrats() {
         return Democrats;
