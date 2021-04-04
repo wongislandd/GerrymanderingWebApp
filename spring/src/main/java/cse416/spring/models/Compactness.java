@@ -1,8 +1,6 @@
 package cse416.spring.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Compactness {
@@ -14,8 +12,11 @@ public class Compactness {
 
     @Column
     double graphCompactness;
+
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    public int id;
 
     public Compactness(double polsbyPopper, double populationFatness, double graphCompactness) {
         this.polsbyPopper = polsbyPopper;
@@ -49,13 +50,5 @@ public class Compactness {
 
     public void setGraphCompactness(double graphCompactness) {
         this.graphCompactness = graphCompactness;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 }

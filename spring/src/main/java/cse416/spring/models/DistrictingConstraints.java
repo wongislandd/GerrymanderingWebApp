@@ -24,7 +24,7 @@ public class DistrictingConstraints {
     double maxPopulationDifference;
 
     @Column
-    double minMinorityDistricts;
+    int minMinorityDistricts;
 
     @OneToOne
     Compactness compactness;
@@ -64,7 +64,7 @@ public class DistrictingConstraints {
         return minMinorityDistricts;
     }
 
-    public void setMinMinorityDistricts(double minMinorityDistricts) {
+    public void setMinMinorityDistricts(int minMinorityDistricts) {
         this.minMinorityDistricts = minMinorityDistricts;
     }
 
@@ -84,7 +84,7 @@ public class DistrictingConstraints {
         this.incumbentOptions = incumbentOptions;
     }
 
-    public DistrictingConstraints(MinorityPopulation minorityPopulation, VotingPopulation votingPopulation, double maxPopulationDifference, double minMinorityDistricts, Compactness compactness, Collection<String> incumbentOptions) {
+    public DistrictingConstraints(MinorityPopulation minorityPopulation, VotingPopulation votingPopulation, double maxPopulationDifference, int minMinorityDistricts, Compactness compactness, Collection<String> incumbentOptions) {
         this.minorityPopulation = minorityPopulation;
         this.votingPopulation = votingPopulation;
         this.maxPopulationDifference = maxPopulationDifference;

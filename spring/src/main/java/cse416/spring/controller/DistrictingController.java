@@ -3,6 +3,8 @@ package cse416.spring.controller;
 import cse416.spring.helperclasses.Server;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
 import cse416.spring.mapping.Mapper;
+import cse416.spring.models.Districting;
+import cse416.spring.models.DistrictingConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,15 @@ public class DistrictingController {
             /* Interpret, load, and return */
             File file = ResourceUtils.getFile("src/main/resources/static/json/EnactedDistrictingPlan2011WithData.json");
             String content = new String(Files.readAllBytes(file.toPath()));
+
+
+
+            // Build a districting object from the id and then return it
+
+
+
             return new ResponseEntity<>(content, HttpStatus.OK);
+
         }
         catch (Exception ex) {
             System.out.println(ex);
@@ -46,7 +56,23 @@ public class DistrictingController {
         }
     }
 
+    @PostMapping("/constrain")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> constrain(@RequestBody DistrictingConstraints constraints) {
+        try {
+            // Use constraints to filter within the db
 
+            // Construct a set of IDs which match said constraints
+
+            // Return the set of IDs
+
+            return new ResponseEntity<>("{\"message\":\""+"YUH"+"\"}", HttpStatus.CONFLICT);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+            return new ResponseEntity<>("{\"message\":\""+ex.getMessage()+"\"}", HttpStatus.CONFLICT);
+        }
+    }
 
 
 
