@@ -30,30 +30,30 @@ class SortingCollapsible extends Component {
                     </Col>
                     <Col s={2}>
                     <Row>OF Score</Row>
-                    <Row>
+                    {this.props.showSortOption ? <Row>
                     <SwapVertIcon 
                     style={{ fontSize: 40 }} className="swapSortOrderIcon" 
                     onClick={() => this.handleSortClick(SelectionMenuUtilities.SORT_METHODS.OBJECTIVE_FUNCTION)}
                     />
-                        </Row>
+                        </Row> : ""}
                     </Col>
                     <Col s={3}>
                         <Row>
                     Population Equality
                     </Row>
-                    <Row><SwapVertIcon style={{ fontSize: 40 }} className="swapSortOrderIcon" onClick={() => this.handleSortClick(SelectionMenuUtilities.SORT_METHODS.POPULATION_EQUALITY)}/></Row>
+                    {this.props.showSortOption ? <Row><SwapVertIcon style={{ fontSize: 40 }} className="swapSortOrderIcon" onClick={() => this.handleSortClick(SelectionMenuUtilities.SORT_METHODS.POPULATION_EQUALITY)}/></Row> : ""} 
                     </Col>
                     <Col s={3}>
                     <Row>Majority Minority Districts</Row>
-                    <Row><SwapVertIcon style={{ fontSize: 40 }} className="swapSortOrderIcon" onClick={() => this.handleSortClick(SelectionMenuUtilities.SORT_METHODS.MAJORITY_MINORITY_DISTRICTS)}/></Row>
+                    {this.props.showSortOption ? <Row><SwapVertIcon style={{ fontSize: 40 }} className="swapSortOrderIcon" onClick={() => this.handleSortClick(SelectionMenuUtilities.SORT_METHODS.MAJORITY_MINORITY_DISTRICTS)}/></Row> : ""}
                     </Col>
                     <Col s={2}>
                         <Row>
                     Split Counties
                     </Row>
-                    <Row>
+                    {this.props.showSortOption ? <Row>
                     <SwapVertIcon style={{ fontSize: 40 }} className="swapSortOrderIcon" onClick={() => this.handleSortClick(SelectionMenuUtilities.SORT_METHODS.SPLIT_COUNTIES)}/>
-                        </Row>
+                        </Row> : ""}
                     </Col>
                     </Row>
             }

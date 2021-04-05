@@ -47,3 +47,20 @@ export const POPULATIONS = {
   "VAP" : "Voting Age Population",
   "CVAP" : "Citizen Voting Age Population",
 }
+
+
+export const ANALYSIS_CATEGORIES = {
+  TOP_SCORING : "TopScoring",
+  HIGH_SCORING_SIMILAR_ENACTED : "HighScoringSimilarEnacted",
+  HIGH_SCORING_MAJORITY_MINORITY : "HighScoringMajorityMinority",
+  TOP_DIFFERENT_AREA_PAIR_DEVIATIONS : "TopDifferentAreaPairDeviations",
+}
+
+// Maps this ^ to something more user friendly, any change to the values above have to be changed
+// to the key below. Unfortunatly
+export const ANALYSIS_CATEGORIES_USER_FRIENDLY = {
+  "TopScoring" : "Top Districtings According to Objective Function",
+  "HighScoringSimilarEnacted" : "Highest Scoring Districtings Similar to Enacted",
+  "HighScoringMajorityMinority" : "Highest Scoring Districtings with Desired Majority Minority",
+  "TopDifferentAreaPairDeviations" : "Districtings with the Greatest Area Pair-Deviations",
+}

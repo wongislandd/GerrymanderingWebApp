@@ -9,6 +9,8 @@ import Filter from "../../utilities/classes/Filter";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import * as NetworkingUtilities from '../../network/NetworkingUtilities'
+import ExampleGeoJson from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
+
 
 const defaultDistricting = new Districting(
   "Enacted Districting Feb 2016 - Nov 2019",
@@ -28,17 +30,17 @@ const initState = {
   FeaturesToUnhighlight: [],
 
   /* Default to UNSELECTED */
-  CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+  CurrentState: ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
 
   /* Map Reference */
   MapRef: React.createRef(),
 
   /* Start off the map as the U.S. map (unselected) */
-  MapViewport: ViewportUtilities.UNSELECTED.Maximized,
+  MapViewport: ViewportUtilities.NORTH_CAROLINA.Maximized,
 
   /* Determines where the user starts, if this is false we need a districting to display by default as well */
   /* Default to False*/
-  InSelectionMenu: false,
+  InSelectionMenu: true,
 
   SortedBy: {
     value: "Objective Function Score",
@@ -109,11 +111,22 @@ const initState = {
 
   TentativeState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
+  ShowFullListing : true,
+
   CurrentTab: ToolbarUtilities.MODES.SETTINGS,
   StatShowcasedDistrictID: null,
 
   ComparisonDistrictingA: null,
   ComparisonDistrictingB: null,
+
+  /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
+  AnalysisDistrictings : {
+    "TopScoring" : [],
+    "HighScoringSimilarEnacted" : [],
+    "HighScoringMajorityMinority" : [],
+    "TopDifferentAreaPairDeviations" : [],
+  },
+
 };
 
 const ACTIONS_TO_IGNORE_FOR_LOGGING = [
@@ -123,6 +136,7 @@ const ACTIONS_TO_IGNORE_FOR_LOGGING = [
   ActionTypes.ADD_FEATURE_TO_HIGHLIGHT,
   ActionTypes.SET_FEATURED_DISTRICT,
   ActionTypes.SET_FEATURED_PRECINCT,
+  ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS
 ];
 
 /* Action Dispatcher
@@ -130,7 +144,7 @@ Add action type to ./ActionTypes.js and then make use of it here as well as in t
 */
 const rootReducer = (state = initState, action) => {
   if (!ACTIONS_TO_IGNORE_FOR_LOGGING.includes(action.type)) {
-    console.log(action);
+    //console.log(action);
   }
   switch (action.type) {
     case ActionTypes.SET_CURRENT_STATE:
@@ -392,6 +406,16 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         DistrictingSortMethod : new SortingMethod(action.Method, action.Direction),
+      }
+    case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS: 
+      return {
+        ...state,
+        AnalysisDistrictings : action.Dictionary
+      }
+    case ActionTypes.SET_SHOW_FULL_LISTING:
+      return {
+        ...state,
+        ShowFullListing : action.Bool
       }
     default:
       return state;

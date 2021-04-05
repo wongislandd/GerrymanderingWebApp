@@ -391,6 +391,22 @@ button:focus {
   display: none !important;
 }
 
+.collapsible-header {
+  /* padding: 20px 0px 0px 0px !important; */
+}
+
 .swapSortOrderIcon {
   pointer-events: all
+}
+
+.collapsibleSection {
+  font-size: larger;
+}
+
+.listingOptions {
+  padding-top: 10px;
+}
+
+.listingOptions > .switch > label {
+  color : var(--fourthary-color)
 }
