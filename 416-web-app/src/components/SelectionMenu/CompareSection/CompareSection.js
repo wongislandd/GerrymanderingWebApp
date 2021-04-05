@@ -16,12 +16,12 @@ class CompareSection extends Component {
 
   /* Dictionary where key is the label to display and value is the value to look up */
   statsToCompare = {
-    "Population Equality": MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY,
-    "Split Counties": MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES,
-    "Deviation from Average": MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_AVG,
+    "Population Equality": MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY,
+    "Split Counties": MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE,
+    "Deviation from Average": MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_AVG_DISTRICTING,
     "Deviation from Enacted":
-      MapUtilities.PROPERTY_LABELS.DEVIATION_FROM_ENACTED,
-    Compactness: MapUtilities.PROPERTY_LABELS.COMPACTNESS,
+      MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_ENACTED_DISTRICTING,
+    Compactness: MapUtilities.PROPERTY_LABELS.AVG_COMPACTNESS,
   };
 
   readyToCompare() {

@@ -40,12 +40,7 @@ public class DistrictingController {
             /* Interpret, load, and return */
             File file = ResourceUtils.getFile("src/main/resources/static/json/EnactedDistrictingPlan2011WithData.json");
             String content = new String(Files.readAllBytes(file.toPath()));
-
-
-
             // Build a districting object from the id and then return it
-
-
 
             return new ResponseEntity<>(content, HttpStatus.OK);
 
@@ -61,7 +56,6 @@ public class DistrictingController {
     public ResponseEntity<String> constrain(@RequestBody DistrictingConstraints constraints) {
         try {
             // Use constraints to filter within the db
-
             // Construct a set of IDs which match said constraints
 
             // Return the set of IDs

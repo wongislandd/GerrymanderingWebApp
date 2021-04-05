@@ -28,7 +28,7 @@ const initState = {
   FeaturesToUnhighlight: [],
 
   /* Default to UNSELECTED */
-  CurrentState: ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
+  CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
   /* Map Reference */
   MapRef: React.createRef(),
@@ -38,7 +38,7 @@ const initState = {
 
   /* Determines where the user starts, if this is false we need a districting to display by default as well */
   /* Default to False*/
-  InSelectionMenu: true,
+  InSelectionMenu: false,
 
   SortedBy: {
     value: "Objective Function Score",
@@ -57,8 +57,14 @@ const initState = {
       0.5,
       0,
       1,
-      0.05
+      0.05,
+      true
     ),
+    new Filter("Compactness (Polsby-Popper)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
+    new Filter("Political Fairness", 0.5, 0, 1, .05, true)
+
   ],
 
   /* Constraint Settings */

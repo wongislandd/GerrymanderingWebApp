@@ -84,6 +84,7 @@ public class DistrictingConstraints {
         this.incumbentOptions = incumbentOptions;
     }
 
+
     public DistrictingConstraints(MinorityPopulation minorityPopulation, VotingPopulation votingPopulation, double maxPopulationDifference, int minMinorityDistricts, Compactness compactness, Collection<String> incumbentOptions) {
         this.minorityPopulation = minorityPopulation;
         this.votingPopulation = votingPopulation;

@@ -25,7 +25,7 @@ export default class ComparisonItem extends Component {
             }
           >
             {this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.NONE
-              ? "cloud"
+              ? "drag_handle"
               : this.props.direction == StatUtilities.COMPARISON_DIRECTIONS.UP
               ? "arrow_upward"
               : "arrow_downward"}
