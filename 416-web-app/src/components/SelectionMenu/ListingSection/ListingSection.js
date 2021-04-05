@@ -1,21 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  Collapsible,
-  CollapsibleItem,
   Row,
-  Col,
-  Select,
   Switch,
 } from "react-materialize";
-import DistrictingItem from "./DistrictingItem";
 import {
   setNewDistrictingSelected,
   setShowFullListing,
 } from "../../../redux/actions/settingActions";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
-import SortingCollapsible from "./SortingCollapsible";
-import CollapsibleSection from "./CollapsibleSection";
 import FullListing from "./FullListing";
 import SummaryListing from "./SummaryListing";
 
