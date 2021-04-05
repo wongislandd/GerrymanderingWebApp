@@ -122,7 +122,6 @@ export const updateMinorityConstraint = (key) => {
   };
 };
 
-
 export const setInSelectionMenu = (bool) => {
   return {
     type: ActionTypes.SET_IN_SELECTION_MENU,
@@ -181,7 +180,7 @@ export const clearFeaturesToUnhighlight = () => {
 export const loadInDistricting = (districting) => {
   return {
     type: ActionTypes.LOAD_IN_DISTRICTINGS,
-    Districting : districting
+    Districting: districting,
   };
 };
 
@@ -262,22 +261,22 @@ export const setNumberOfDistrictingsAvailable = (number) => {
 
 export const setDistrictingSortMethod = (method, direction) => {
   return {
-    type : ActionTypes.SET_DISTRICTING_SORT_METHOD,
-    Method : method,
-    Direction : direction
-  }
-}
+    type: ActionTypes.SET_DISTRICTING_SORT_METHOD,
+    Method: method,
+    Direction: direction,
+  };
+};
 
 export const updateAnalysisDistrictings = (dict) => {
   return {
-    type : ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS,
-    Dictionary : dict,
-  }
-}
+    type: ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS,
+    Dictionary: dict,
+  };
+};
 
 export const setShowFullListing = (bool) => {
   return {
-    type : ActionTypes.SET_SHOW_FULL_LISTING,
-    Bool : bool
-  }
-}
+    type: ActionTypes.SET_SHOW_FULL_LISTING,
+    Bool: bool,
+  };
+};

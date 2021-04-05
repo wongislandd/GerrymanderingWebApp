@@ -15,10 +15,10 @@ export const DESCRIPTIONS = {
 
   COMPACTNESS: "The ratio of district's circumference to their total areas.",
 
-  POLITICAL_FAIRNESS : "How fair the politics be.",
+  POLITICAL_FAIRNESS: "How fair the politics be.",
 
-  MAJORITY_MINORITY_DISTRICT : "A district is considered a majority minority district if the majority of the population is a minority."
-
+  MAJORITY_MINORITY_DISTRICT:
+    "A district is considered a majority minority district if the majority of the population is a minority.",
 };
 
 export const COMPARISON_DIRECTIONS = {

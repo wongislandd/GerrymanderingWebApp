@@ -30,7 +30,7 @@ import ConstraintSelection from "./ConstraintSelection";
 import Districting from "../../../utilities/classes/Districting";
 import WeightSelection from "./WeightSelection";
 import ReturnToMapButton from "./ReturnToMapButton";
-import * as NetworkingUtilities from '../../../network/NetworkingUtilities'
+import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 
 // Spring Boot imports, may not be needed
 
@@ -121,10 +121,11 @@ function FilterSection(props) {
    */
 
   const handleComplete = async () => {
-    if (activeStep == 0) { // activeStep represents where in the constraints the user is.
+    if (activeStep == 0) {
+      // activeStep represents where in the constraints the user is.
       // LOAD DISTRICTINGS, UPDATE COUNT NUMBER
-      let districtingJSON = await NetworkingUtilities.loadDistricting(1)
-      let newDistricting = new Districting(1, districtingJSON)
+      let districtingJSON = await NetworkingUtilities.loadDistricting(1);
+      let newDistricting = new Districting(1, districtingJSON);
       props.loadInDistricting(newDistricting);
       props.setNumberOfDistrictingsAvailable(
         StatUtilities.rollARandomNumberOfDistrictings()

@@ -7,10 +7,9 @@ import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
-import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
-import * as NetworkingUtilities from '../../network/NetworkingUtilities'
-import ExampleGeoJson from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
-
+import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
+import * as NetworkingUtilities from "../../network/NetworkingUtilities";
+import ExampleGeoJson from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
 
 const defaultDistricting = new Districting(
   "Enacted Districting Feb 2016 - Nov 2019",
@@ -65,8 +64,7 @@ const initState = {
     new Filter("Compactness (Polsby-Popper)", 0.5, 0, 1, 0.05, true),
     new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
     new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
-    new Filter("Political Fairness", 0.5, 0, 1, .05, true)
-
+    new Filter("Political Fairness", 0.5, 0, 1, 0.05, true),
   ],
 
   /* Constraint Settings */
@@ -78,10 +76,12 @@ const initState = {
     new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
   ],
 
-  PopulationConstraintSelection : null,
-  MinorityConstraintSelection : null,
-  DistrictingSortMethod : new SortingMethod(SelectionMenuUtilities.SORT_METHODS.OBJECTIVE_FUNCTION, SelectionMenuUtilities.SORT_DIRECTIONS.DESCENDING),
-
+  PopulationConstraintSelection: null,
+  MinorityConstraintSelection: null,
+  DistrictingSortMethod: new SortingMethod(
+    SelectionMenuUtilities.SORT_METHODS.OBJECTIVE_FUNCTION,
+    SelectionMenuUtilities.SORT_DIRECTIONS.DESCENDING
+  ),
 
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
@@ -111,7 +111,7 @@ const initState = {
 
   TentativeState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
-  ShowFullListing : true,
+  ShowFullListing: true,
 
   CurrentTab: ToolbarUtilities.MODES.SETTINGS,
   StatShowcasedDistrictID: null,
@@ -120,13 +120,12 @@ const initState = {
   ComparisonDistrictingB: null,
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
-  AnalysisDistrictings : {
-    "TopScoring" : [],
-    "HighScoringSimilarEnacted" : [],
-    "HighScoringMajorityMinority" : [],
-    "TopDifferentAreaPairDeviations" : [],
+  AnalysisDistrictings: {
+    TopScoring: [],
+    HighScoringSimilarEnacted: [],
+    HighScoringMajorityMinority: [],
+    TopDifferentAreaPairDeviations: [],
   },
-
 };
 
 const ACTIONS_TO_IGNORE_FOR_LOGGING = [
@@ -136,7 +135,7 @@ const ACTIONS_TO_IGNORE_FOR_LOGGING = [
   ActionTypes.ADD_FEATURE_TO_HIGHLIGHT,
   ActionTypes.SET_FEATURED_DISTRICT,
   ActionTypes.SET_FEATURED_PRECINCT,
-  ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS
+  ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS,
 ];
 
 /* Action Dispatcher
@@ -311,7 +310,10 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.LOAD_IN_DISTRICTINGS:
       return {
         ...state,
-        FilteredDistrictings : [...state.FilteredDistrictings, action.Districting]
+        FilteredDistrictings: [
+          ...state.FilteredDistrictings,
+          action.Districting,
+        ],
       };
     case ActionTypes.SET_CURRENT_TAB:
       return {
@@ -405,18 +407,21 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.SET_DISTRICTING_SORT_METHOD:
       return {
         ...state,
-        DistrictingSortMethod : new SortingMethod(action.Method, action.Direction),
-      }
-    case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS: 
+        DistrictingSortMethod: new SortingMethod(
+          action.Method,
+          action.Direction
+        ),
+      };
+    case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS:
       return {
         ...state,
-        AnalysisDistrictings : action.Dictionary
-      }
+        AnalysisDistrictings: action.Dictionary,
+      };
     case ActionTypes.SET_SHOW_FULL_LISTING:
       return {
         ...state,
-        ShowFullListing : action.Bool
-      }
+        ShowFullListing: action.Bool,
+      };
     default:
       return state;
   }

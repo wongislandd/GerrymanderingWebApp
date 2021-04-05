@@ -1,3 +1,1 @@
-class DistrictingConstraints {
-    
-}
+class DistrictingConstraints {}

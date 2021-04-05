@@ -31,7 +31,6 @@ import ObjectiveFunctionTable from "./ObjectiveFunctionTable";
 import VoterDemographicsTable from "./VoterDemographicsTable";
 import RacialDemographicsTable from "./RacialDemographicsTable";
 
-
 class DistrictingSummary extends Component {
   constructor(props) {
     super(props);
@@ -143,19 +142,19 @@ class DistrictingSummary extends Component {
         )}
         <div>
           <h6 className="title-text centerWithinMe">Box and Whisker</h6>
-          <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay}/>
+          <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay} />
         </div>
-
 
         <CollapsibleItem
           expanded={false}
           key={-1}
           header={"Objective Function Details"}
-          onSelect={()=>{}}
+          onSelect={() => {}}
         >
-        <ObjectiveFunctionTable DistrictingToDisplay={this.props.DistrictingToDisplay}/>
+          <ObjectiveFunctionTable
+            DistrictingToDisplay={this.props.DistrictingToDisplay}
+          />
         </CollapsibleItem>
-
 
         {this.props.DistrictingToDisplay.geoJson.features.map(
           (feature, key) => {
@@ -213,22 +212,20 @@ class DistrictingSummary extends Component {
                 }}
               >
                 <h5>Voter Demographics</h5>
-                
-                <VoterDemographicsTable DistrictToDisplay={feature}/>
+
+                <VoterDemographicsTable DistrictToDisplay={feature} />
 
                 <h5>Racial Demographics</h5>
-                
-                <RacialDemographicsTable DistrictToDisplay={feature}/>
+
+                <RacialDemographicsTable DistrictToDisplay={feature} />
 
                 <div className="demographicsContainer">
                   <PartyPieChart feature={feature} />
                   <RacialPieChart feature={feature} />
                 </div>
-                
 
                 <h5>Objective Function Details</h5>
-                <ObjectiveFunctionTable DistrictToDisplay={feature}/>
-               
+                <ObjectiveFunctionTable DistrictToDisplay={feature} />
               </CollapsibleItem>
             );
           }

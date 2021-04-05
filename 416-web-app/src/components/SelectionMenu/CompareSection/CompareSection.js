@@ -18,7 +18,8 @@ class CompareSection extends Component {
   statsToCompare = {
     "Population Equality": MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY,
     "Split Counties": MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE,
-    "Deviation from Average": MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_AVG_DISTRICTING,
+    "Deviation from Average":
+      MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_AVG_DISTRICTING,
     "Deviation from Enacted":
       MapUtilities.PROPERTY_LABELS.AVG_DEVIATION_FROM_ENACTED_DISTRICTING,
     Compactness: MapUtilities.PROPERTY_LABELS.AVG_COMPACTNESS,

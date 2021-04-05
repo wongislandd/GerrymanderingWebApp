@@ -15,7 +15,7 @@ import {
   CollapsibleItem,
   Switch,
 } from "react-materialize";
-import LabelAndInfoIcon from '../../StatisticComponents/LabelAndInfoIcon'
+import LabelAndInfoIcon from "../../StatisticComponents/LabelAndInfoIcon";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import { connect } from "react-redux";
 import IncumbentModal from "./IncumbentModal";
@@ -34,9 +34,11 @@ class ConstraintSelection extends Component {
 
         {/* Population Constraint Selection */}
         <LabelAndInfoIcon
-                      label={SelectionMenuUtilities.LABELS.VOTING_POPULATION_TO_CONSTRAIN}
-                      description= {SelectionMenuUtilities.DESCRIPTIONS.VOTING_POPULATION_CONSTRAINT}
-          />
+          label={SelectionMenuUtilities.LABELS.VOTING_POPULATION_TO_CONSTRAIN}
+          description={
+            SelectionMenuUtilities.DESCRIPTIONS.VOTING_POPULATION_CONSTRAINT
+          }
+        />
         <Select
           icon={<Icon>people</Icon>}
           id="Select-9"
@@ -120,47 +122,51 @@ class ConstraintSelection extends Component {
           <IncumbentModal />
         </Row>
         <Row>
-        <LabelAndInfoIcon
-                      label={SelectionMenuUtilities.LABELS.MINORITY_POPULATION_TO_CONSTRAIN}
-                      description= {SelectionMenuUtilities.DESCRIPTIONS.MINORITY_POPULATION_CONSTRAINT}
+          <LabelAndInfoIcon
+            label={
+              SelectionMenuUtilities.LABELS.MINORITY_POPULATION_TO_CONSTRAIN
+            }
+            description={
+              SelectionMenuUtilities.DESCRIPTIONS.MINORITY_POPULATION_CONSTRAINT
+            }
           />
-        <Select
-          icon={<Icon>people</Icon>}
-          id="Select-9"
-          multiple={false}
-          onChange={(e) =>
-            this.props.updatePopulationConstraint(e.target.value)
-          }
-          options={{
-            classes: "",
-            dropdownOptions: {
-              alignment: "left",
-              autoTrigger: true,
-              closeOnClick: true,
-              constrainWidth: true,
-              coverTrigger: true,
-              hover: false,
-              inDuration: 150,
-              onCloseEnd: null,
-              onCloseStart: null,
-              onOpenEnd: null,
-              onOpenStart: null,
-              outDuration: 250,
-            },
-          }}
-          value=""
-        >
-          <option disabled value="">
-            {SelectionMenuUtilities.LABELS.CHOOSE_A_MINORITY_POPULATION}
-          </option>
-          {Object.keys(SelectionMenuUtilities.MINORITIES).map((key) => {
-            return (
-              <option key={key} value={key}>
-                {SelectionMenuUtilities.MINORITIES[key]}
-              </option>
-            );
-          })}
-        </Select>
+          <Select
+            icon={<Icon>people</Icon>}
+            id="Select-9"
+            multiple={false}
+            onChange={(e) =>
+              this.props.updatePopulationConstraint(e.target.value)
+            }
+            options={{
+              classes: "",
+              dropdownOptions: {
+                alignment: "left",
+                autoTrigger: true,
+                closeOnClick: true,
+                constrainWidth: true,
+                coverTrigger: true,
+                hover: false,
+                inDuration: 150,
+                onCloseEnd: null,
+                onCloseStart: null,
+                onOpenEnd: null,
+                onOpenStart: null,
+                outDuration: 250,
+              },
+            }}
+            value=""
+          >
+            <option disabled value="">
+              {SelectionMenuUtilities.LABELS.CHOOSE_A_MINORITY_POPULATION}
+            </option>
+            {Object.keys(SelectionMenuUtilities.MINORITIES).map((key) => {
+              return (
+                <option key={key} value={key}>
+                  {SelectionMenuUtilities.MINORITIES[key]}
+                </option>
+              );
+            })}
+          </Select>
         </Row>
       </div>
     );
