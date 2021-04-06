@@ -36,7 +36,6 @@ public class DistrictingController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> loadDistricting(@RequestParam String id) {
         try {
-            System.out.println(id);
             /* Interpret, load, and return */
             File file = ResourceUtils.getFile("src/main/resources/static/json/EnactedDistrictingPlan2011WithData.json");
             String content = new String(Files.readAllBytes(file.toPath()));

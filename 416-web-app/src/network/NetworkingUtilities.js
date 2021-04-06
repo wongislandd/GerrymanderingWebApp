@@ -1,4 +1,4 @@
-import state from "../redux/store";
+import state from "../redux/store"; 
 
 const baseURL = "http://localhost:8080";
 
@@ -23,6 +23,26 @@ export async function loadDistricting(id) {
   let body = await response.json();
   return body;
 }
+
+
+export async function loadAllStateCounties() {
+  let fullUrl = baseURL + "/state/allCounties";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
+
+  /* Keys must line up with Viewport Utilities State Options*/
+  let result = {
+    "NORTH_CAROLINA" : JSON.parse(body.NC),
+    "LOUISIANA" : JSON.parse(body.LA),
+    "TEXAS" : JSON.parse(body.TX),
+  }
+  return result
+}
+
+
+
+
+
 
 export async function applyConstraints() {
   // const params = {

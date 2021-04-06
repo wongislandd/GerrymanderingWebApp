@@ -5,16 +5,21 @@ import {
   setCurrentState,
   setTentativeState,
   setViewport,
+  updateStateCounties,
 } from "../../redux/actions/settingActions";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
-import NCCountyGeoData from "../../data/NC/CountiesGeoData.json";
-import LACountyGeoData from "../../data/LA/CountiesGeoData.json";
-import TXCountyGeoData from "../../data/TX/CountiesGeoData.json";
+import * as NetworkingUtilities from '../../network/NetworkingUtilities'
+
 
 class StateSelectionMap extends Component {
   componentDidMount() {
     this.props.setCurrentState(ViewportUtilities.STATE_OPTIONS.UNSELECTED);
+    this.populateStateCounties()
+  }
+
+  async populateStateCounties() {
+    NetworkingUtilities.loadAllStateCounties().then(results => this.props.updateStateCounties(results))
   }
 
   _onClick = (event) => {
@@ -55,6 +60,26 @@ class StateSelectionMap extends Component {
   };
 
   render() {
+    if (this.props.StateCounties == null) {
+      return(
+        <div>
+          <ReactMapGL
+          className="map-display"
+          {...this.props.MapViewport}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          onViewportChange={(viewport) => {
+            this.props.setViewport(viewport);
+          }}
+            onClick={(e)=>{}}
+          />
+      </div>
+      )
+    }
+    /* Only load these if it's not empty*/
+    else {
+      const NCCountyGeoData = this.props.StateCounties[ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA]
+      const LACountyGeoData = this.props.StateCounties[ViewportUtilities.STATE_OPTIONS.LOUISIANA]
+      const TXCountyGeoData = this.props.StateCounties[ViewportUtilities.STATE_OPTIONS.TEXAS]
     return (
       <div>
         <ReactMapGL
@@ -128,7 +153,9 @@ class StateSelectionMap extends Component {
           />
         </ReactMapGL>
       </div>
-    );
+
+    )
+  };
   }
 }
 
@@ -143,12 +170,16 @@ const mapDispatchToProps = (dispatch) => {
     setTentativeState: (state) => {
       dispatch(setTentativeState(state));
     },
+    updateStateCounties : (dict) => {
+      dispatch(updateStateCounties(dict));
+    }
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     MapViewport: state.MapViewport,
+    StateCounties : state.StateCounties
   };
 };
 

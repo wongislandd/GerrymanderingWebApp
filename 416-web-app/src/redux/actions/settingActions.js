@@ -280,3 +280,10 @@ export const setShowFullListing = (bool) => {
     Bool: bool,
   };
 };
+
+export const updateStateCounties = (dict) => {
+  return {
+    type : ActionTypes.UPDATE_STATE_COUNTIES,
+    Counties : dict
+  }
+}

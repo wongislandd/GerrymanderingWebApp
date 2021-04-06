@@ -29,17 +29,17 @@ const initState = {
   FeaturesToUnhighlight: [],
 
   /* Default to UNSELECTED */
-  CurrentState: ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA,
+  CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
   /* Map Reference */
   MapRef: React.createRef(),
 
   /* Start off the map as the U.S. map (unselected) */
-  MapViewport: ViewportUtilities.NORTH_CAROLINA.Maximized,
+  MapViewport: ViewportUtilities.UNSELECTED.Maximized,
 
   /* Determines where the user starts, if this is false we need a districting to display by default as well */
   /* Default to False*/
-  InSelectionMenu: true,
+  InSelectionMenu: false,
 
   SortedBy: {
     value: "Objective Function Score",
@@ -126,6 +126,11 @@ const initState = {
     HighScoringMajorityMinority: [],
     TopDifferentAreaPairDeviations: [],
   },
+
+
+  /* STATE VARIABLES TO BE LOADED IN THROUGH THE NETWORK? IS THIS THE BEST APPROACH? */
+
+  StateCounties : null,
 };
 
 const ACTIONS_TO_IGNORE_FOR_LOGGING = [
@@ -422,6 +427,11 @@ const rootReducer = (state = initState, action) => {
         ...state,
         ShowFullListing: action.Bool,
       };
+    case ActionTypes.UPDATE_STATE_COUNTIES:
+      return {
+        ...state,
+        StateCounties : action.Counties
+      }
     default:
       return state;
   }
