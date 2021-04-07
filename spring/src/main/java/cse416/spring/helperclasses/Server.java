@@ -13,9 +13,9 @@ public class Server {
     public Map<String, String> getAllStatesCountyGeometry() {
         Map<String, String> countiesByState = new HashMap<String, String>();
         try {
-            File NC = ResourceUtils.getFile("src/main/resources/static/json/NC/CountiesGeoData.json");
-            File LA = ResourceUtils.getFile("src/main/resources/static/json/LA/CountiesGeoData.json");
-            File TX = ResourceUtils.getFile("src/main/resources/static/json/TX/CountiesGeoData.json");
+            File NC = ResourceUtils.getFile("src/main/resources/static/json/NC/NCBoundary.json");
+            File LA = ResourceUtils.getFile("src/main/resources/static/json/LA/LABoundary.json");
+            File TX = ResourceUtils.getFile("src/main/resources/static/json/TX/TXBoundary.json");
             countiesByState.put("NC", new String(Files.readAllBytes(NC.toPath())).replaceAll("\\n",""));
             countiesByState.put("LA", new String(Files.readAllBytes(LA.toPath())).replaceAll("\\n",""));
             countiesByState.put("TX", new String(Files.readAllBytes(TX.toPath())).replaceAll("\\n",""));

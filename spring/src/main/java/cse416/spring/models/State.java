@@ -17,6 +17,7 @@ public class State {
 
     @OneToMany
     Collection<County> counties;
+
     @Id
     private Long id;
 

@@ -34,7 +34,6 @@ public class StateController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> getAllCounties() {
         try {
-            System.out.println("CALLED");
             String body = assembleCountyJSONByState(server.getAllStatesCountyGeometry()).toString();
             return new ResponseEntity<>(body, HttpStatus.OK);
         }

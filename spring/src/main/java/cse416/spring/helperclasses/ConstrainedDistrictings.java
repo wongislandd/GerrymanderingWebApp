@@ -10,7 +10,11 @@ public class ConstrainedDistrictings {
     Collection<Districting> districtings;
     double[][] boxAndWhiskerData;
 
-    public ConstrainedDistrictings(Collection<Districting> districtings, double[][] boxAndWhiskerData) {
+    public ConstrainedDistrictings(Collection<Districting> districtings) {
+        // Construct box and whisker data
+
+
+
         this.districtings = districtings;
         this.boxAndWhiskerData = boxAndWhiskerData;
     }
