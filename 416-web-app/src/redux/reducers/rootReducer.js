@@ -104,32 +104,28 @@ const initState = {
   ComparisonDistrictingA: null,
   ComparisonDistrictingB: null,
 
-  ExpandedSummaries : [],
-
-
-
-
-
-
+  ExpandedSummaries: [],
 
   /* State variables to be filled in by network communication*/
 
   /* Starts at -1, should be populated when a job is loaded to be the full size of the job */
   NumDistrictingsAvailable: -1,
 
+  DistrictingsAreConstrained: false,
+
+  ConstrainedDistrictings : [],
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
   AnalysisDistrictings: {
-    TopScoring: [new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson)],
-    HighScoringSimilarEnacted: [new Districting("B", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson)],
+    TopScoring: [new Districting("A", ExampleGeoJson)],
+    HighScoringSimilarEnacted: [new Districting("B", ExampleGeoJson)],
     HighScoringMajorityMinority: [new Districting("C", ExampleGeoJson)],
-    TopDifferentAreaPairDeviations: [new Districting("test", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson)],
+    TopDifferentAreaPairDeviations: [new Districting("D", ExampleGeoJson)],
   },
-
 
   /* STATE VARIABLES TO BE LOADED IN THROUGH THE NETWORK? IS THIS THE BEST APPROACH? */
 
-  StateCounties : null,
+  StateCounties: null,
 };
 
 const ACTIONS_TO_IGNORE_FOR_LOGGING = [
@@ -314,8 +310,8 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.LOAD_IN_DISTRICTINGS:
       return {
         ...state,
-        FilteredDistrictings: [
-          ...state.FilteredDistrictings,
+        ConstrainedDistrictings: [
+          ...state.ConstrainedDistrictings,
           action.Districting,
         ],
       };
@@ -392,7 +388,8 @@ const rootReducer = (state = initState, action) => {
         FeaturedPrecinct: null,
         CompareDistrict1: null,
         CompareDistrict2: null,
-        ExpandedSummaries : []
+        ExpandedSummaries: [],
+        DistrictingsAreConstrained : false,
       };
     case ActionTypes.SET_NEW_DISTRICTING_SELECTED:
       return {
@@ -417,26 +414,29 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.UPDATE_STATE_COUNTIES:
       return {
         ...state,
-        StateCounties : action.Counties
-      }
+        StateCounties: action.Counties,
+      };
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       var newExpandedSet = [...state.ExpandedSummaries];
       if (!newExpandedSet.includes(action.Name)) {
-        newExpandedSet.push(action.Name)
+        newExpandedSet.push(action.Name);
       } else {
-        newExpandedSet = newExpandedSet.filter(
-          (name) => name != action.Name
-        );
+        newExpandedSet = newExpandedSet.filter((name) => name != action.Name);
       }
       return {
         ...state,
-        ExpandedSummaries : newExpandedSet
-      }
+        ExpandedSummaries: newExpandedSet,
+      };
     case ActionTypes.RESET_EXPANDED_SUMMARIES:
       return {
         ...state,
-        ExpandedSummaries : []
-      }
+        ExpandedSummaries: [],
+      };
+    case ActionTypes.SET_DISTRICTINGS_ARE_CONSTRAINED:
+      return {
+        ...state,
+        DistrictingsAreConstrained: action.Bool,
+      };
     default:
       return state;
   }

@@ -285,3 +285,10 @@ export const resetExpandedSummaries = () => {
     type : ActionTypes.RESET_EXPANDED_SUMMARIES
   }
 }
+
+export const setDistrictingsAreConstrained = (bool) => {
+  return {
+    type : ActionTypes.SET_DISTRICTINGS_ARE_CONSTRAINED,
+    Bool : bool
+  }
+}

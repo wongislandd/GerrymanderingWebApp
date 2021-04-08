@@ -70,7 +70,7 @@ class CompareSection extends Component {
         </div>
         <div className="comparedStatsDiv centerWithinMe">
           <div className="DistrictingAStats">
-            <h5>District A</h5>
+            <h5>Districting A</h5>
             {!this.readyToCompare()
               ? ""
               : Object.keys(this.statsToCompare).map((key) => {
@@ -100,7 +100,7 @@ class CompareSection extends Component {
                 })}
           </div>
           <div className="DistrictingBStats">
-            <h5>District B</h5>
+            <h5>Districting B</h5>
             {!this.readyToCompare()
               ? ""
               : Object.keys(this.statsToCompare).map((key) => {

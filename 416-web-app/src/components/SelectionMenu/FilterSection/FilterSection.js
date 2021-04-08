@@ -4,14 +4,14 @@ import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtiliti
 import { connect } from "react-redux";
 import {
   loadInDistricting,
-  restoreDefaultStateForNewDistricting,
   setInSelectionMenu,
   updateConstraintSettings,
   updateIncumbentProtection,
   updatePopulationConstraint,
   updateObjectiveFunctionSettings,
   setNumberOfDistrictingsAvailable,
-  resetExpandedSummaries
+  resetExpandedSummaries,
+  setDistrictingsAreConstrained
 } from "../../../redux/actions/settingActions";
 import {
   Collapsible,
@@ -33,7 +33,11 @@ import WeightSelection from "./WeightSelection";
 import ReturnToMapButton from "./ReturnToMapButton";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 
-// Spring Boot imports, may not be needed
+
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -124,13 +128,14 @@ function FilterSection(props) {
   const handleComplete = async () => {
     if (activeStep == 0) {
       // activeStep represents where in the constraints the user is.
-      // LOAD DISTRICTINGS, UPDATE COUNT NUMBER
+      // CONSTRAIN DISTRICTINGS
       let districtingJSON = await NetworkingUtilities.loadDistricting(1);
       let newDistricting = new Districting(1, districtingJSON);
       props.loadInDistricting(newDistricting);
       props.setNumberOfDistrictingsAvailable(
         StatUtilities.rollARandomNumberOfDistrictings()
       );
+      props.setDistrictingsAreConstrained(true)
     }
     if (activeStep == 1) {
       // UPDATE WEIGHTS
@@ -181,7 +186,7 @@ function FilterSection(props) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={activeStep == getSteps().length - 1}
+                disabled={activeStep == getSteps().length - 1 ^ !props.DistrictingsAreConstrained}
                 className={classes.button + " redBrownBtn"}
               >
                 Next
@@ -210,6 +215,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetExpandedSummaries : () => {
       dispatch(resetExpandedSummaries())
+    },
+    setDistrictingsAreConstrained : (bool) => {
+      dispatch(setDistrictingsAreConstrained(bool))
     }
   };
 };
@@ -217,6 +225,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     NumDistrictingsAvailable: state.NumDistrictingsAvailable,
+    DistrictingsAreConstrained : state.DistrictingsAreConstrained
   };
 };
 

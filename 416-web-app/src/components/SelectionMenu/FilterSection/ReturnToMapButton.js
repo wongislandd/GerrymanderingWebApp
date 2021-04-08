@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     restoreDefaultStateForNewDistricting: () => {
       dispatch(restoreDefaultStateForNewDistricting());
-    },
+    }
   };
 };
 

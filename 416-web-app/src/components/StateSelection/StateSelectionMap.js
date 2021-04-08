@@ -6,6 +6,8 @@ import {
   setTentativeState,
   setViewport,
   updateStateCounties,
+  restoreDefaultStateForNewDistricting,
+  setDistrictingsAreConstrained
 } from "../../redux/actions/settingActions";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
@@ -14,6 +16,8 @@ import * as NetworkingUtilities from '../../network/NetworkingUtilities'
 
 class StateSelectionMap extends Component {
   componentDidMount() {
+    // Fresh start
+    this.props.restoreDefaultStateForNewDistricting()
     this.props.setCurrentState(ViewportUtilities.STATE_OPTIONS.UNSELECTED);
     this.populateStateCounties()
   }
@@ -172,9 +176,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateStateCounties : (dict) => {
       dispatch(updateStateCounties(dict));
-    }
-  };
-};
+    },
+    setDistrictingsAreConstrained : (bool) => {
+      dispatch(setDistrictingsAreConstrained(bool))
+    },
+    restoreDefaultStateForNewDistricting : () => {
+      dispatch(restoreDefaultStateForNewDistricting())
+    },
+}};
 
 const mapStateToProps = (state, ownProps) => {
   return {

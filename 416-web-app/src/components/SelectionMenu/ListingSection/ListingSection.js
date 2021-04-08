@@ -5,6 +5,7 @@ import {
   Switch,
 } from "react-materialize";
 import {
+  resetExpandedSummaries,
   setNewDistrictingSelected,
   setShowFullListing,
 } from "../../../redux/actions/settingActions";
@@ -15,6 +16,10 @@ class ListingSection extends Component {
   /* Once this loads, it's at first false until something is chosen*/
   componentDidMount() {
     this.props.setNewDistrictingSelected(false);
+  }
+
+  componentWillUnmount() {
+    this.props.resetExpandedSummaries();
   }
 
   render() {
@@ -36,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
     setNewDistrictingSelected: (bool) => {
       dispatch(setNewDistrictingSelected(bool));
     },
+    resetExpandedSummaries : () => {
+      dispatch(resetExpandedSummaries())
+    }
   };
 };
 
