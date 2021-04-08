@@ -272,3 +272,16 @@ export const updateStateCounties = (dict) => {
     Counties : dict
   }
 }
+
+export const toggleExpandedSummary = (name) => {
+  return {
+    type : ActionTypes.TOGGLE_EXPANDED_SUMMARY,
+    Name : name
+  }
+}
+
+export const resetExpandedSummaries = () => {
+  return {
+    type : ActionTypes.RESET_EXPANDED_SUMMARIES
+  }
+}

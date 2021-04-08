@@ -4,26 +4,33 @@ import DistrictingInfoSection from "./DistrictingInfoSection";
 import * as MapUtilities from "../../../utilities/MapUtilities";
 import * as StatUtilities from "../../../utilities/StatUtilities";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
+import { connect } from 'react-redux'
+import { toggleExpandedSummary } from "../../../redux/actions/settingActions";
 
-export default class DistrictingItem extends Component {
+class DistrictingItem extends Component {
   /* Pass this component a districting and it'll do the rest. */
   constructor(props) {
     super(props);
   }
 
-  handleClick(event) {}
+  isDisplayed() {
+    return (this.props.ExpandedSummaries.includes(this.props.districting.name))
+  }
+
+  handleSelect(event) {
+    this.props.toggleExpandedSummary(this.props.districting.name)
+  }
 
   render() {
     return (
       <CollapsibleItem
+        expanded={this.isDisplayed()}
         className={"districtSummaryCollapsible"}
         header={
           // Line up with the Sorting Collapsible
           <Row
             className="ListingColumnsContainer"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+            onClick={(e)=>{}}
           >
             <Col s={2}>{this.props.districting.name}</Col>
             <Col s={2}>{StatUtilities.getRandomInt(10)}</Col>
@@ -44,15 +51,34 @@ export default class DistrictingItem extends Component {
             </Col>
           </Row>
         }
-        onSelect={(e) => this.handleClick(e)}
+        onSelect={() => this.handleSelect()}
       >
-        <div className="centerWithinMe">
+        {this.isDisplayed() ? <div className="centerWithinMe">
           <h5 className="padBelowMe">
             {SelectionMenuUtilities.LABELS.DISTRICTING_BREAKDOWN}
           </h5>
           <DistrictingInfoSection districting={this.props.districting} />
-        </div>
+        </div> : ""
+      }
       </CollapsibleItem>
     );
   }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleExpandedSummary : (name) => {
+      dispatch(toggleExpandedSummary(name))
+    },
+  };
+};
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ExpandedSummaries : state.ExpandedSummaries,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DistrictingItem);

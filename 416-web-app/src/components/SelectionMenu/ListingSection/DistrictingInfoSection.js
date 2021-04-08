@@ -32,8 +32,8 @@ class DistrictingInfoSection extends Component {
             }
           >
             {this.props.ComparisonDistrictingA == this.props.districting
-              ? "Chosen as District A"
-              : "Set as District A for Compare"}
+              ? "Chosen as Districting A"
+              : "Set as Districting A for Compare"}
           </Button>
           <Button
             className="compareOptionsButton"
@@ -46,8 +46,8 @@ class DistrictingInfoSection extends Component {
             }
           >
             {this.props.ComparisonDistrictingB == this.props.districting
-              ? "Chosen as District B"
-              : "Set as District B for Compare"}
+              ? "Chosen as Districting B"
+              : "Set as Districting B for Compare"}
           </Button>
         </div>
         <div className="centerWithinMe">

@@ -104,7 +104,7 @@ const initState = {
   ComparisonDistrictingA: null,
   ComparisonDistrictingB: null,
 
-
+  ExpandedSummaries : [],
 
 
 
@@ -120,10 +120,10 @@ const initState = {
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
   AnalysisDistrictings: {
-    TopScoring: [],
-    HighScoringSimilarEnacted: [],
-    HighScoringMajorityMinority: [],
-    TopDifferentAreaPairDeviations: [],
+    TopScoring: [new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson)],
+    HighScoringSimilarEnacted: [new Districting("B", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson)],
+    HighScoringMajorityMinority: [new Districting("C", ExampleGeoJson)],
+    TopDifferentAreaPairDeviations: [new Districting("test", ExampleGeoJson), new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson),new Districting("A", ExampleGeoJson), new Districting("A", ExampleGeoJson)],
   },
 
 
@@ -392,6 +392,7 @@ const rootReducer = (state = initState, action) => {
         FeaturedPrecinct: null,
         CompareDistrict1: null,
         CompareDistrict2: null,
+        ExpandedSummaries : []
       };
     case ActionTypes.SET_NEW_DISTRICTING_SELECTED:
       return {
@@ -417,6 +418,24 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         StateCounties : action.Counties
+      }
+    case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
+      var newExpandedSet = [...state.ExpandedSummaries];
+      if (!newExpandedSet.includes(action.Name)) {
+        newExpandedSet.push(action.Name)
+      } else {
+        newExpandedSet = newExpandedSet.filter(
+          (name) => name != action.Name
+        );
+      }
+      return {
+        ...state,
+        ExpandedSummaries : newExpandedSet
+      }
+    case ActionTypes.RESET_EXPANDED_SUMMARIES:
+      return {
+        ...state,
+        ExpandedSummaries : []
       }
     default:
       return state;

@@ -11,6 +11,7 @@ import {
   updatePopulationConstraint,
   updateObjectiveFunctionSettings,
   setNumberOfDistrictingsAvailable,
+  resetExpandedSummaries
 } from "../../../redux/actions/settingActions";
 import {
   Collapsible,
@@ -133,6 +134,9 @@ function FilterSection(props) {
     }
     if (activeStep == 1) {
       // UPDATE WEIGHTS
+      // RESET CURRENTLY DISPLAYED DISTRICTINGS
+      props.resetExpandedSummaries()
+      // QUERY SERVER FOR NEW SUMMARY
     }
     const newCompleted = completed;
     newCompleted[activeStep] = true;
@@ -204,6 +208,9 @@ const mapDispatchToProps = (dispatch) => {
     setNumberOfDistrictingsAvailable: (number) => {
       dispatch(setNumberOfDistrictingsAvailable(number));
     },
+    resetExpandedSummaries : () => {
+      dispatch(resetExpandedSummaries())
+    }
   };
 };
 
