@@ -9,7 +9,6 @@ import {
   setShowFullListing,
 } from "../../../redux/actions/settingActions";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
-import FullListing from "./FullListing";
 import SummaryListing from "./SummaryListing";
 
 class ListingSection extends Component {
@@ -23,26 +22,10 @@ class ListingSection extends Component {
       <div className="SelectionMenuSection ListingSection">
         <Row>
           <div className="DistrictingResultsHeader">
-            <h5>{SelectionMenuUtilities.LABELS.DISTRICTING_RESULTS}</h5>
-          </div>
-          <div className="centerWithinMe listingOptions">
-            <Switch
-              id="listingOptionSwitch"
-              offLabel="Summary"
-              onChange={(e) => this.props.setShowFullListing(e.target.checked)}
-              onLabel="Full Listing"
-              checked={this.props.ShowFullListing}
-              className="switched"
-            />
+            <h5>{SelectionMenuUtilities.LABELS.CONSTRAINED_DISTRICTING_RESULTS}</h5>
           </div>
         </Row>
-        {this.props.ShowFullListing ? (
-          /* If yes, show full listing */
-          <FullListing />
-        ) : (
-          /* Otherwise show summary info */
           <SummaryListing />
-        )}
       </div>
     );
   }
@@ -53,15 +36,12 @@ const mapDispatchToProps = (dispatch) => {
     setNewDistrictingSelected: (bool) => {
       dispatch(setNewDistrictingSelected(bool));
     },
-    setShowFullListing: (bool) => {
-      dispatch(setShowFullListing(bool));
-    },
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    ShowFullListing: state.ShowFullListing,
+    
   };
 };
 

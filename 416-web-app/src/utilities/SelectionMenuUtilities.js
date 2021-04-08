@@ -11,7 +11,7 @@ export const LABELS = {
   MINORITY_POPULATION_TO_CONSTRAIN: "Minority Population to Constrain",
   CHOOSE_A_MINORITY_POPULATION: "Choose a Minority Population",
   CHOOSE_A_VOTING_POPULATION: "Choose a Voting Population",
-  DISTRICTING_RESULTS: "Districting Results",
+  CONSTRAINED_DISTRICTING_RESULTS: "Constrained Districting Results",
   DISTRICTING_BREAKDOWN: "Districting Breakdown",
 };
 

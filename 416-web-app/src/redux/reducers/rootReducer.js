@@ -1,6 +1,5 @@
 import * as ActionTypes from "../actions/ActionTypes";
 import Districting from "../../utilities/classes/Districting";
-import SortingMethod from "../../utilities/classes/SortingMethod";
 import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
@@ -41,13 +40,6 @@ const initState = {
   /* Default to False*/
   InSelectionMenu: false,
 
-  SortedBy: {
-    value: "Objective Function Score",
-    descending: true,
-  },
-
-  NumDistrictingsAvailable: 100000,
-
   /* Objective Function Weights */
   ObjectiveFunctionSettings: [
     new Filter("Population Equality", 0.5, 0, 1, 0.05),
@@ -78,10 +70,6 @@ const initState = {
 
   PopulationConstraintSelection: null,
   MinorityConstraintSelection: null,
-  DistrictingSortMethod: new SortingMethod(
-    SelectionMenuUtilities.SORT_METHODS.OBJECTIVE_FUNCTION,
-    SelectionMenuUtilities.SORT_DIRECTIONS.DESCENDING
-  ),
 
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
@@ -106,9 +94,6 @@ const initState = {
 
   NewDistrictingSelected: false,
 
-  /* History */
-  FilteredDistrictings: [],
-
   TentativeState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
   ShowFullListing: true,
@@ -118,6 +103,20 @@ const initState = {
 
   ComparisonDistrictingA: null,
   ComparisonDistrictingB: null,
+
+
+
+
+
+
+
+
+
+  /* State variables to be filled in by network communication*/
+
+  /* Starts at -1, should be populated when a job is loaded to be the full size of the job */
+  NumDistrictingsAvailable: -1,
+
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
   AnalysisDistrictings: {
@@ -409,23 +408,10 @@ const rootReducer = (state = initState, action) => {
         ...state,
         NumDistrictingsAvailable: action.Number,
       };
-    case ActionTypes.SET_DISTRICTING_SORT_METHOD:
-      return {
-        ...state,
-        DistrictingSortMethod: new SortingMethod(
-          action.Method,
-          action.Direction
-        ),
-      };
     case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS:
       return {
         ...state,
         AnalysisDistrictings: action.Dictionary,
-      };
-    case ActionTypes.SET_SHOW_FULL_LISTING:
-      return {
-        ...state,
-        ShowFullListing: action.Bool,
       };
     case ActionTypes.UPDATE_STATE_COUNTIES:
       return {

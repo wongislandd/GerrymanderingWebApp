@@ -259,25 +259,10 @@ export const setNumberOfDistrictingsAvailable = (number) => {
   };
 };
 
-export const setDistrictingSortMethod = (method, direction) => {
-  return {
-    type: ActionTypes.SET_DISTRICTING_SORT_METHOD,
-    Method: method,
-    Direction: direction,
-  };
-};
-
 export const updateAnalysisDistrictings = (dict) => {
   return {
     type: ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS,
     Dictionary: dict,
-  };
-};
-
-export const setShowFullListing = (bool) => {
-  return {
-    type: ActionTypes.SET_SHOW_FULL_LISTING,
-    Bool: bool,
   };
 };
 
