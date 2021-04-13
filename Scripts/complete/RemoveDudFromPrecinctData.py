@@ -1,7 +1,7 @@
 import json
 
-inputFile = "./input/RawPrecinctGeoData.json"
-outputFile ="./input/PrecinctGeoDataCleaned.json"
+inputFile = "../input/RawPrecinctGeoData.json"
+outputFile ="../input/PrecinctGeoDataCleaned.json"
 
 
 with open(inputFile) as f:

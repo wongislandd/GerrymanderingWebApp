@@ -410,3 +410,38 @@ button:focus {
 .listingOptions > .switch > label {
   color : var(--fourthary-color)
 }
+
+.centered { 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.job-selection-screen {
+  width: 1000px;
+  height: 700px;
+  border: 8px solid var(--fourthary-color);
+  background-color: var(--primary-color);
+  align-content: center;
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.returnToStateSelectionBtn {
+  float: left;
+  margin-top: 10px;
+}
+
+.job-selection-screen-display {
+  background-color: white);
+}
+
+
+.centerMe {
+
+}

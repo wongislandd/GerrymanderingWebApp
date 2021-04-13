@@ -10,7 +10,6 @@ inputFile = "./input/RawPrecinctGeoData.json"
 outputFile = "./output/SortedPrecinctGeoData.json"
 
 
-propertyToSortBy = 'prec_id'
 
 # Open the file
 with open(inputFile) as f:

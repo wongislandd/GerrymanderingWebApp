@@ -5,6 +5,7 @@ import SelectionMenuContainer from "./SelectionMenu/SelectionMenuContainer";
 import { connect } from "react-redux";
 import StateSelection from "./StateSelection/StateSelection";
 import * as ViewportUtilities from "../utilities/ViewportUtilities";
+import JobSelection from "./JobSelection/JobSelection";
 
 class AppController extends Component {
   constructor(props) {
@@ -12,16 +13,24 @@ class AppController extends Component {
   }
 
   render() {
+    // State Selection
     if (this.props.CurrentState == ViewportUtilities.STATE_OPTIONS.UNSELECTED) {
       return <StateSelection />;
     }
-    if (this.props.InSelectionMenu) {
-      return (
-        <div className="full-screen-flex-container">
-          <SelectionMenuContainer />
-        </div>
-      );
-    } else {
+    // Job Selection
+    else if(this.props.CurrentJob == null) {
+      return <JobSelection/>
+    }
+    // Primary Selection Menu
+    else if (this.props.InSelectionMenu) {
+        return (
+          <div className="full-screen-flex-container">
+            <SelectionMenuContainer />
+          </div>
+        );
+    }
+    // Map View
+    else {
       return (
         <div className="full-screen-flex-container">
           <MapBoxComponent />
@@ -35,6 +44,7 @@ class AppController extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     CurrentState: state.CurrentState,
+    CurrentJob : state.CurrentJob,
     InSelectionMenu: state.InSelectionMenu,
   };
 };

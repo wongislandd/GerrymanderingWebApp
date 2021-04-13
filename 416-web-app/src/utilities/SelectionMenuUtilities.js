@@ -1,5 +1,6 @@
 export const LABELS = {
   RETURN_TO_MAP: "Return to Map",
+  BACK_TO_STATE_SELECTION : "Back to State Selection",
   APPLY_JOB: "Apply Job",
   FILTERS_HEADER: "Filters",
   OBJECTIVE_FUNCTION_WEIGHTS_HEADER: "Objective Function Weights",
@@ -13,6 +14,9 @@ export const LABELS = {
   CHOOSE_A_VOTING_POPULATION: "Choose a Voting Population",
   CONSTRAINED_DISTRICTING_RESULTS: "Constrained Districting Results",
   DISTRICTING_BREAKDOWN: "Districting Breakdown",
+  SELECT_A_JOB : "Select a Job",
+  CONTINUE_WITH_THIS_JOB : "Continue with this Job"
+
 };
 
 export const DESCRIPTIONS = {

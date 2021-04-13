@@ -5,6 +5,7 @@ import * as MapUtilities from "../../utilities/MapUtilities";
 import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
+import Job from "../../utilities/classes/models/Job";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as NetworkingUtilities from "../../network/NetworkingUtilities";
@@ -29,6 +30,8 @@ const initState = {
 
   /* Default to UNSELECTED */
   CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+
+  CurrentJob : null,
 
   /* Map Reference */
   MapRef: React.createRef(),
@@ -80,6 +83,11 @@ const initState = {
     "Jim Hyunh": false,
     "Christopher Wong": true,
   },
+
+
+  Jobs : [],
+
+
 
   /* Usable Map */
   Map: null,
@@ -388,6 +396,7 @@ const rootReducer = (state = initState, action) => {
         FeaturedPrecinct: null,
         CompareDistrict1: null,
         CompareDistrict2: null,
+        CurrentJob : null,
         ExpandedSummaries: [],
         DistrictingsAreConstrained : false,
       };
@@ -437,6 +446,16 @@ const rootReducer = (state = initState, action) => {
         ...state,
         DistrictingsAreConstrained: action.Bool,
       };
+    case ActionTypes.LOAD_IN_JOBS:
+      return {
+        ...state,
+        Jobs : action.Jobs
+      }
+    case ActionTypes.SET_CURRENT_JOB:
+      return {
+        ...state,
+        CurrentJob : action.Job
+      }
     default:
       return state;
   }

@@ -29,7 +29,6 @@ write = True
 CustomPrecinctEnrDescMappings = {
     "G2C-2" : (26, "CROSS CREEK G2C-2"),
     "01" : (32, "BROGDEN MIDDLE SCHOOL"),
-
 }
 
 

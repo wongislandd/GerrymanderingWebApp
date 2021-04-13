@@ -292,3 +292,18 @@ export const setDistrictingsAreConstrained = (bool) => {
     Bool : bool
   }
 }
+
+
+export const loadInJobs = (jobs) => {
+  return {
+    type : ActionTypes.LOAD_IN_JOBS,
+    Jobs: jobs
+  }
+}
+
+export const setCurrentJob = (job) => {
+  return {
+    type : ActionTypes.SET_CURRENT_JOB,
+    Job : job
+  }
+}
