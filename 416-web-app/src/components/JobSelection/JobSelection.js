@@ -56,10 +56,15 @@ class JobSelection extends Component {
                         <Row>
                             <h5>MGGG Parameters</h5>
                         </Row>
-                        {Object.keys(job.mgggParams).map((key) => {
+                        {Object.keys(job.params).map((key) => {
+                            if (key == "id") {
+                                return(
+                                    <div></div>
+                                )
+                            }
                             return(
                             <Row key={key}>
-                                    <b>{key}</b> : {job.mgggParams[key]}
+                                    <b>{key}</b> : {job.params[key]}
                             </Row>
                             )
                         })}

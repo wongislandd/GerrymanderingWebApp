@@ -43,18 +43,10 @@ export async function loadAllStateCounties() {
 
 
 export async function getJobs(state) {
-  // let fullUrl = baseURL + "/state/allCounties";
-  // const response = await fetch(fullUrl);
-  // let body = await response.json();
-
-  // /* Keys must line up with Viewport Utilities State Options*/
-  // // Parse results into dict which will be loaded into state
-  // let result = {
-  //   "NORTH_CAROLINA" : JSON.parse(body.NC),
-  //   "LOUISIANA" : JSON.parse(body.LA),
-  //   "TEXAS" : JSON.parse(body.TX),
-  // }
-  var jobs = ParsingUtilities.parseJobJSONToObjects("")
+  let fullUrl = baseURL + "/state/current/jobs";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
+  var jobs = ParsingUtilities.parseJobJSONToObjects(body)
   return jobs
 }
 
