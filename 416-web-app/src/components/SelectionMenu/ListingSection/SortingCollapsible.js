@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { CollapsibleItem, Row, Col } from "react-materialize";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
 import { connect } from "react-redux";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
 
@@ -35,19 +34,5 @@ class SortingCollapsible extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setDistrictingSortMethod: (method, direction) => {
-      dispatch(setDistrictingSortMethod(method, direction));
-    },
-  };
-};
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    DistrictingSortMethod: state.DistrictingSortMethod,
-  };
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortingCollapsible);
