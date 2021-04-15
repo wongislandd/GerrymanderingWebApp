@@ -16,6 +16,11 @@ public class Districting {
     @OneToMany(mappedBy = "districting")
     Collection<District> districts;
 
+    public Districting(Collection<District> districts, DistrictingMeasures measures) {
+        this.districts = districts;
+        this.measures = measures;
+    }
+
     @OneToOne
     DistrictingMeasures measures;
 

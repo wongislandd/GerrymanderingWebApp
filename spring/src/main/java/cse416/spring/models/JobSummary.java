@@ -27,9 +27,6 @@ public class JobSummary {
     @OneToOne
     MGGGParams params;
 
-    @OneToOne
-    Job j;
-
     public JobSummary() {
 
     }

@@ -266,10 +266,10 @@ export const updateAnalysisDistrictings = (dict) => {
   };
 };
 
-export const updateStateCounties = (dict) => {
+export const loadStateOutlines = (dict) => {
   return {
-    type : ActionTypes.UPDATE_STATE_COUNTIES,
-    Counties : dict
+    type : ActionTypes.LOAD_STATE_OUTLINES,
+    Outlines : dict
   }
 }
 

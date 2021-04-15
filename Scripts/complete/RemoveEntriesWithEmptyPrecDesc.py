@@ -1,4 +1,5 @@
 import pandas
+import math
 
 inputFile = "../output/PrecinctVoterDataDirty.csv"
 outputFile = "../output/PrecinctVoterData.csv"
@@ -7,9 +8,6 @@ outputFile = "../output/PrecinctVoterData.csv"
 propertyToSortBy = 'prec_id'
 
 
-df = pandas.read_csv(inputFile)
+df = pandas.read_csv(inputFile).dropna()
 
-# Open the file
-for entry in df["PREC_NAME"]:
-    if entry:
-        print(entry)
+df.to_csv(outputFile)

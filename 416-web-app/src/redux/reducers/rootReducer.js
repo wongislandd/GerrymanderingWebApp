@@ -420,10 +420,10 @@ const rootReducer = (state = initState, action) => {
         ...state,
         AnalysisDistrictings: action.Dictionary,
       };
-    case ActionTypes.UPDATE_STATE_COUNTIES:
+    case ActionTypes.LOAD_STATE_OUTLINES:
       return {
         ...state,
-        StateCounties: action.Counties,
+        StateCounties: action.Outlines,
       };
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       var newExpandedSet = [...state.ExpandedSummaries];

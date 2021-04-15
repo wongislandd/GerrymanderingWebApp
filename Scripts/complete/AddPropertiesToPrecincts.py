@@ -7,11 +7,11 @@ from difflib import SequenceMatcher
 def similar(a,b):
     return SequenceMatcher(None, a, b).ratio()
 
-PrecinctPropertiesCSV = "./output/NC-Processed-Large.csv"
+PrecinctPropertiesCSV = "../output/PrecinctVoterData.csv"
 
-PrecinctGeoData = "./output/SortedPrecinctGeoData.json"
+PrecinctGeoData = "../output/SortedPrecinctGeoData.json"
 
-OutputFile = "./output/PrecinctGeoDataOutput.json"
+OutputFile = "../output/PrecinctGeoDataOutput.json"
 
 propertyToCheck = "prec_id"
 
@@ -88,14 +88,14 @@ def custom_binary_search(arr, prec_id, enr_desc, county_id):
         return -1
     # Dig for a full match, if it's the only one with the ID, skip the following check
     if isOnlyOneWithID(arr, idIndex):
-        print(f"{arr[idIndex]['properties']['enr_desc']} is the only one with this the ID {prec_id}")
+        #print(f"{arr[idIndex]['properties']['enr_desc']} is the only one with this the ID {prec_id}")
         return idIndex
     # Change the enr_desc if it's a custom one
     if prec_id in CustomPrecinctEnrDescMappings.keys():
         if (CustomPrecinctEnrDescMappings[prec_id][0] == county_id):
             enr_desc = CustomPrecinctEnrDescMappings[prec_id][1]
-    print("-----------------------------------------------------------------------------")
-    print(f"Searching for a match for {county_id} {prec_id} {enr_desc}. . .")
+   # print("-----------------------------------------------------------------------------")
+    #print(f"Searching for a match for {county_id} {prec_id} {enr_desc}. . .")
     enr_desc = cleanEnrDesc(enr_desc)
     for i in range(idIndex-rangeToCheck, idIndex+rangeToCheck):
         if i < 0 or i > len(arr) - 1:
@@ -107,7 +107,7 @@ def custom_binary_search(arr, prec_id, enr_desc, county_id):
             # Some (~100) entries in the data file list the prec_id as the enr_desc when there's actually a name for it that the
             # GeoJson file is expecting
             if featureEnrDesc == enr_desc or countsAsSimilar(featureEnrDesc, enr_desc) or featureProperties["prec_id"] == enr_desc:
-                print(f"{featureEnrDesc} matches with {enr_desc} (Similarity: {similar(featureEnrDesc, enr_desc)})")
+                #print(f"{featureEnrDesc} matches with {enr_desc} (Similarity: {similar(featureEnrDesc, enr_desc)})")
                 return i
             else:
                 print(f"{featureEnrDesc} does not match with {enr_desc} (Similarity: {similar(featureEnrDesc, enr_desc)})")

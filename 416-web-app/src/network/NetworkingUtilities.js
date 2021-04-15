@@ -26,8 +26,8 @@ export async function loadDistricting(id) {
 }
 
 
-export async function loadAllStateCounties() {
-  let fullUrl = baseURL + "/state/allCounties";
+export async function loadStateOutlines() {
+  let fullUrl = baseURL + "/states/getOutlines";
   const response = await fetch(fullUrl);
   let body = await response.json();
 
@@ -43,7 +43,7 @@ export async function loadAllStateCounties() {
 
 
 export async function getJobs(state) {
-  let fullUrl = baseURL + "/state/current/jobs";
+  let fullUrl = baseURL + "/states/current/jobs";
   const response = await fetch(fullUrl);
   let body = await response.json();
   var jobs = ParsingUtilities.parseJobJSONToObjects(body)

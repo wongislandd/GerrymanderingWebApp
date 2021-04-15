@@ -5,6 +5,7 @@ import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.helperclasses.Server;
 import cse416.spring.models.Districting;
+import cse416.spring.models.DistrictingConstraints;
 import cse416.spring.models.Job;
 import cse416.spring.models.JobSummary;
 import org.json.JSONObject;
@@ -12,17 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/state")
+@RequestMapping("/states")
 public class StateController {
     Server server;
 
@@ -35,7 +34,7 @@ public class StateController {
     }
 
 
-    @GetMapping(value = "allCounties", produces = "application/json")
+    @GetMapping(value = "getOutlines", produces = "application/json")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> getAllCounties() {
         try {
@@ -58,5 +57,18 @@ public class StateController {
         return new ResponseEntity<>(combined, HttpStatus.OK);
     }
 
+    @PostMapping("/test")
+    @CrossOrigin
+    public ResponseEntity<String> postTest(HttpServletRequest request) {
+        request.getSession().setAttribute("entry", "poop");
+        return new ResponseEntity<>("Test", HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    @CrossOrigin
+    public ResponseEntity<String> getTest(HttpServletRequest request) {
+        System.out.println(request.getSession().getAttribute("entry"));
+        return new ResponseEntity<>("Test", HttpStatus.OK);
+    }
 
 }

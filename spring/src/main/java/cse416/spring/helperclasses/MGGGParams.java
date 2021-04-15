@@ -16,9 +16,6 @@ public class MGGGParams {
     @Column
     double maxPopulationDiff;
 
-    @OneToOne
-    JobSummary js;
-
     public MGGGParams(int coolingPeriod, double maxPopulationDiff) {
         this.coolingPeriod = coolingPeriod;
         this.maxPopulationDiff = maxPopulationDiff;

@@ -5,7 +5,7 @@ import {
   setCurrentState,
   setTentativeState,
   setViewport,
-  updateStateCounties,
+  loadStateOutlines,
   restoreDefaultStateForNewDistricting,
   setDistrictingsAreConstrained
 } from "../../redux/actions/settingActions";
@@ -23,7 +23,7 @@ class StateSelectionMap extends Component {
   }
 
   async populateStateCounties() {
-    NetworkingUtilities.loadAllStateCounties().then(results => this.props.updateStateCounties(results))
+    NetworkingUtilities.loadStateOutlines().then(results => this.props.loadStateOutlines(results))
   }
 
   _onClick = (event) => {
@@ -174,8 +174,8 @@ const mapDispatchToProps = (dispatch) => {
     setTentativeState: (state) => {
       dispatch(setTentativeState(state));
     },
-    updateStateCounties : (dict) => {
-      dispatch(updateStateCounties(dict));
+    loadStateOutlines : (dict) => {
+      dispatch(loadStateOutlines(dict));
     },
     setDistrictingsAreConstrained : (bool) => {
       dispatch(setDistrictingsAreConstrained(bool))

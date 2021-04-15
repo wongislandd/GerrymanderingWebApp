@@ -1,7 +1,19 @@
 import json
 
 
-PrecinctGeoData = "./output/PrecinctGeoDataOutput.json"
+
+
+
+PrecinctGeoData = "../output/PrecinctGeoDataOutput.json"
+
+
+
+
+# SOME HAVE TO BE MANUALLY EDITED
+# PrecinctData -> PrecinctGeoData
+# 3.0 -> 03
+# 12.0 -> 12
+
 
 count = 0
 total_count = 0
@@ -12,6 +24,7 @@ with open(PrecinctGeoData) as f:
     data = json.load(f)
     features = data["features"]
     for feature in features:
+        # Use DEM to see if properties were added
         if "DEM" not in feature["properties"].keys():
             missed.add((feature["properties"]["prec_id"], feature["properties"]["enr_desc"], feature["properties"]["county_id"]))
             count += 1

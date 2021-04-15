@@ -4,6 +4,9 @@ inputFile = "../input/RawPrecinctGeoData.json"
 outputFile ="../input/PrecinctGeoDataCleaned.json"
 
 
+# SOMETHING TO DO WITH #35, IT'S IN THE DATA FOR PRECINCTS,
+# BUT ISN'T MAPPING PROPERLY.
+
 with open(inputFile) as f:
     data = json.load(f)
     features = data["features"]

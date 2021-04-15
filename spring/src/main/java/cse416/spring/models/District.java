@@ -61,9 +61,7 @@ public class District {
         this.measures = measures;
     }
 
-    public District(int id, GeometryJSON geometry, Collection<Precinct> precincts, DistrictMeasures measures) {
-        this.id = id;
-        this.geometry = geometry;
+    public District(Collection<Precinct> precincts, DistrictMeasures measures) {
         this.precincts = precincts;
         this.measures = measures;
     }
