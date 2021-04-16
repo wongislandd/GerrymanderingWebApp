@@ -35,4 +35,12 @@ class SortingCollapsible extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+const mapStateToProps = (state, ownProps) => {
+  return;
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(SortingCollapsible);

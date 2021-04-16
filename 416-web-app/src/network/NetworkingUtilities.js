@@ -20,7 +20,7 @@ export async function loadDistricting(id) {
     id: id,
   };
   let fullUrl = getFullRequestURLWithParams("/districting/load", params);
-  const response = await fetch(fullUrl);
+  const response = await fetch(fullUrl); 
   let body = await response.json();
   return body;
 }
@@ -50,7 +50,16 @@ export async function getJobs(state) {
   return jobs
 }
 
+export async function loadIncumbents(state) {
+  // "statename" is a placeholder
+  let fullUrl = baseURL + "/statename/loadIncumbents";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
 
+  let incumbents = body;
+
+  return incumbents;
+}
 
 
 export async function applyConstraints() {

@@ -80,7 +80,7 @@ const initState = {
   IncumbentProtectionInfo: {
     "Stella Pang": false,
     "Jihu Mun": false,
-    "Jim Hyunh": false,
+    "Jim Huynh": false,
     "Christopher Wong": true,
   },
 
