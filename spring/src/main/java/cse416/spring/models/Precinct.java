@@ -6,27 +6,14 @@ import javax.persistence.*;
 
 @Entity
 public class Precinct {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    public int id;
-
-    @Column
     String name;
-
-    @OneToOne
     GeometryJSON geometry;
-
-    @ManyToOne
     County county;
-
-    @OneToOne
     Demographics demographics;
-
-    @ManyToOne
     District district;
+    private Long id;
 
-    public Precinct(int id, String name, GeometryJSON geometry, County county, Demographics demographics) {
+    public Precinct(String name, GeometryJSON geometry, County county, Demographics demographics) {
         this.id = id;
         this.name = name;
         this.geometry = geometry;
@@ -34,14 +21,20 @@ public class Precinct {
         this.demographics = demographics;
     }
 
-    public int getId() {
-        return id;
+    public Precinct() {
+
     }
 
-    public void setId(int id) {
-        id = id;
+    @ManyToOne
+    public District getDistrict() {
+        return district;
     }
 
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    @Column
     public String getName() {
         return name;
     }
@@ -50,6 +43,7 @@ public class Precinct {
         this.name = name;
     }
 
+    @OneToOne
     public GeometryJSON getGeometry() {
         return geometry;
     }
@@ -58,6 +52,7 @@ public class Precinct {
         this.geometry = geometry;
     }
 
+    @ManyToOne
     public County getCounty() {
         return county;
     }
@@ -66,11 +61,22 @@ public class Precinct {
         this.county = county;
     }
 
+    @OneToOne
     public Demographics getDemographics() {
         return demographics;
     }
 
     public void setDemographics(Demographics demographics) {
         this.demographics = demographics;
+    }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

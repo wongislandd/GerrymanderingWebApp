@@ -6,31 +6,25 @@ import javax.persistence.*;
 
 @Entity
 public class JobSummary {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    int id;
 
-    public JobSummary(int id, String description, int size, MGGGParams params) {
+    String description;
+    int size;
+    MGGGParams params;
+    private Long id;
+
+
+    public JobSummary(String description, int size, MGGGParams params) {
         this.id = id;
         this.description = description;
         this.size = size;
         this.params = params;
     }
 
-    @Column
-    String description;
-
-    @Column
-    int size;
-
-    @OneToOne
-    MGGGParams params;
-
     public JobSummary() {
 
     }
 
+    @Column
     public String getDescription() {
         return description;
     }
@@ -39,6 +33,7 @@ public class JobSummary {
         this.description = description;
     }
 
+    @Column
     public int getSize() {
         return size;
     }
@@ -47,6 +42,7 @@ public class JobSummary {
         this.size = size;
     }
 
+    @OneToOne
     public MGGGParams getParams() {
         return params;
     }
@@ -55,11 +51,13 @@ public class JobSummary {
         this.params = params;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
     }
 
-    public int getId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

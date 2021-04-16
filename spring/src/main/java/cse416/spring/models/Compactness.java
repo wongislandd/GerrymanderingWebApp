@@ -4,19 +4,13 @@ import javax.persistence.*;
 
 @Entity
 public class Compactness {
-    @Column
     double polsbyPopper;
 
-    @Column
     double populationFatness;
 
-    @Column
     double graphCompactness;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    public int id;
+    private Long id;
 
     public Compactness(double polsbyPopper, double populationFatness, double graphCompactness) {
         this.polsbyPopper = polsbyPopper;
@@ -28,6 +22,7 @@ public class Compactness {
 
     }
 
+    @Column
     public double getPolsbyPopper() {
         return polsbyPopper;
     }
@@ -36,6 +31,7 @@ public class Compactness {
         this.polsbyPopper = polsbyPopper;
     }
 
+    @Column
     public double getPopulationFatness() {
         return populationFatness;
     }
@@ -44,6 +40,7 @@ public class Compactness {
         this.populationFatness = populationFatness;
     }
 
+    @Column
     public double getGraphCompactness() {
         return graphCompactness;
     }
@@ -51,4 +48,16 @@ public class Compactness {
     public void setGraphCompactness(double graphCompactness) {
         this.graphCompactness = graphCompactness;
     }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 }

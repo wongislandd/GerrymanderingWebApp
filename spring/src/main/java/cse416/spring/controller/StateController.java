@@ -49,8 +49,8 @@ public class StateController {
     @GetMapping("/current/jobs")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashSet> getJobs() {
-        Job j2 = new Job(StateName.NORTH_CAROLINA, 1, new JobSummary(1, "Fake job", 100000, new MGGGParams(50, .05)), new ArrayList<Districting>());
-        Job j = new Job(StateName.NORTH_CAROLINA, 2, new JobSummary(2, "Fake job 2", 50000, new MGGGParams(90, .10)), new ArrayList<Districting>());
+        Job j2 = new Job(StateName.NORTH_CAROLINA, new JobSummary("Fake job", 100000, new MGGGParams(50, .05)), new ArrayList<Districting>());
+        Job j = new Job(StateName.NORTH_CAROLINA, new JobSummary( "Fake job 2", 50000, new MGGGParams(90, .10)), new ArrayList<Districting>());
         HashSet combined = new HashSet<>();
         combined.add(j);
         combined.add(j2);

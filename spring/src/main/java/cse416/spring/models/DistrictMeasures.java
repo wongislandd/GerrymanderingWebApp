@@ -4,27 +4,20 @@ import javax.persistence.*;
 
 @Entity
 public class DistrictMeasures {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    public int id;
+    private long id;
 
-    @Column
     double populationEquality;
 
-    @Column
     boolean isMajorityMinorityDistrict;
 
-    @OneToOne
     Compactness compactness;
 
-    @Column
     double politicalFairness;
 
-    @Column
     int splitCounties;
 
-    @Column
+    double deviationFromAverage;
+
     double deviationFromEnacted;
 
     public DistrictMeasures(double populationEquality, boolean isMajorityMinorityDistrict, Compactness compactness, double politicalFairness, int splitCounties, double deviationFromEnacted, double deviationFromAverage) {
@@ -57,6 +50,7 @@ public class DistrictMeasures {
         isMajorityMinorityDistrict = majorityMinorityDistrict;
     }
 
+    @OneToOne
     public Compactness getCompactness() {
         return compactness;
     }
@@ -65,6 +59,7 @@ public class DistrictMeasures {
         this.compactness = compactness;
     }
 
+    @Column
     public double getPoliticalFairness() {
         return politicalFairness;
     }
@@ -73,6 +68,7 @@ public class DistrictMeasures {
         this.politicalFairness = politicalFairness;
     }
 
+    @Column
     public int getSplitCounties() {
         return splitCounties;
     }
@@ -81,6 +77,7 @@ public class DistrictMeasures {
         this.splitCounties = splitCounties;
     }
 
+    @Column
     public double getDeviationFromEnacted() {
         return deviationFromEnacted;
     }
@@ -89,6 +86,7 @@ public class DistrictMeasures {
         this.deviationFromEnacted = deviationFromEnacted;
     }
 
+    @Column
     public double getDeviationFromAverage() {
         return deviationFromAverage;
     }
@@ -97,5 +95,13 @@ public class DistrictMeasures {
         this.deviationFromAverage = deviationFromAverage;
     }
 
-    double deviationFromAverage;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
 }

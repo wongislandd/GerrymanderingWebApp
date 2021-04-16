@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class StateService {
 //    public Demographics generateRandomDemographics() {
-//        Demographics d = new Demographics();
+//        Demographics d = new Demographics()
 //    }
 //
 //    public Precinct generateRandomPrecinct() {
@@ -27,9 +27,9 @@ public class StateService {
 //        Districting d = new Districting();
 //        return d;
 //    }
-//
-//    public HashSet<Districting> generateRandomDistrictings() {
-//        HashSet<Districting> districtings = new HashSet<Districting>();
-//        return districtings;
-//    }
+
+    public HashSet<Districting> generateRandomDistrictings() {
+        HashSet<Districting> districtings = new HashSet<Districting>();
+        return districtings;
+    }
 }

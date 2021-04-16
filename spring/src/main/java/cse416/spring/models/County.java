@@ -8,25 +8,16 @@ import java.util.Collection;
 
 @Entity
 public class County {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    public int id;
-
-    @Column
+    long id;
     String name;
-
-    @OneToOne
     GeometryJSON geometry;
-
-    @OneToMany
     Collection<Precinct> precincts;
 
     public County() {
 
     }
 
-
+    @Column
     public String getName() {
         return name;
     }
@@ -34,7 +25,7 @@ public class County {
     public void setName(String name) {
         this.name = name;
     }
-
+    @OneToOne
     public GeometryJSON getGeometry() {
         return geometry;
     }
@@ -43,6 +34,7 @@ public class County {
         this.geometry = geometry;
     }
 
+    @OneToMany
     public Collection<Precinct> getPrecincts() {
         return precincts;
     }
@@ -51,11 +43,21 @@ public class County {
         this.precincts = precincts;
     }
 
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public County(String name, GeometryJSON geometry, Collection<Precinct> precincts) {
         this.name = name;
         this.geometry = geometry;
         this.precincts = precincts;
     }
+
+
 }

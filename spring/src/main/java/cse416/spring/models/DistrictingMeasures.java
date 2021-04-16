@@ -4,72 +4,18 @@ import javax.persistence.*;
 
 @Entity
 public class DistrictingMeasures {
+    double populationEqualityAvg;
+    int majorityMinorityDistrictsAvg;
+    Compactness compactnessAvg;
+    double politicalFairnessAvg;
+    double splitCountiesScore;
+    double deviationFromEnactedAvg;
+    double deviationFromAverageAvg;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    public int id;
-
-    @OneToOne
-    District district;
+    private long id;
 
     public DistrictingMeasures() {
 
-    }
-
-    public double getPopulationEqualityAvg() {
-        return populationEqualityAvg;
-    }
-
-    public void setPopulationEqualityAvg(double populationEqualityAvg) {
-        this.populationEqualityAvg = populationEqualityAvg;
-    }
-
-    public int getMajorityMinorityDistrictsAvg() {
-        return majorityMinorityDistrictsAvg;
-    }
-
-    public void setMajorityMinorityDistrictsAvg(int majorityMinorityDistrictsAvg) {
-        this.majorityMinorityDistrictsAvg = majorityMinorityDistrictsAvg;
-    }
-
-    public Compactness getCompactnessAvg() {
-        return compactnessAvg;
-    }
-
-    public void setCompactnessAvg(Compactness compactnessAvg) {
-        this.compactnessAvg = compactnessAvg;
-    }
-
-    public double getPoliticalFairnessAvg() {
-        return politicalFairnessAvg;
-    }
-
-    public void setPoliticalFairnessAvg(double politicalFairnessAvg) {
-        this.politicalFairnessAvg = politicalFairnessAvg;
-    }
-
-    public double getSplitCountiesScore() {
-        return splitCountiesScore;
-    }
-
-    public void setSplitCountiesScore(double splitCountiesScore) {
-        this.splitCountiesScore = splitCountiesScore;
-    }
-
-    public double getDeviationFromEnactedAvg() {
-        return deviationFromEnactedAvg;
-    }
-
-    public void setDeviationFromEnactedAvg(double deviationFromEnactedAvg) {
-        this.deviationFromEnactedAvg = deviationFromEnactedAvg;
-    }
-
-    public double getDeviationFromAverageAvg() {
-        return deviationFromAverageAvg;
-    }
-
-    public void setDeviationFromAverageAvg(double deviationFromAverageAvg) {
-        this.deviationFromAverageAvg = deviationFromAverageAvg;
     }
 
     public DistrictingMeasures(double populationEqualityAvg, int majorityMinorityDistrictsAvg, Compactness compactnessAvg, double politicalFairnessAvg, double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
@@ -83,23 +29,70 @@ public class DistrictingMeasures {
     }
 
     @Column
-    double populationEqualityAvg;
+    public double getPopulationEqualityAvg() {
+        return populationEqualityAvg;
+    }
 
+    public void setPopulationEqualityAvg(double populationEqualityAvg) {
+        this.populationEqualityAvg = populationEqualityAvg;
+    }
     @Column
-    int majorityMinorityDistrictsAvg;
+    public int getMajorityMinorityDistrictsAvg() {
+        return majorityMinorityDistrictsAvg;
+    }
+
+    public void setMajorityMinorityDistrictsAvg(int majorityMinorityDistrictsAvg) {
+        this.majorityMinorityDistrictsAvg = majorityMinorityDistrictsAvg;
+    }
 
     @OneToOne
-    Compactness compactnessAvg;
+    public Compactness getCompactnessAvg() {
+        return compactnessAvg;
+    }
 
+    public void setCompactnessAvg(Compactness compactnessAvg) {
+        this.compactnessAvg = compactnessAvg;
+    }
     @Column
-    double politicalFairnessAvg;
+    public double getPoliticalFairnessAvg() {
+        return politicalFairnessAvg;
+    }
 
+    public void setPoliticalFairnessAvg(double politicalFairnessAvg) {
+        this.politicalFairnessAvg = politicalFairnessAvg;
+    }
     @Column
-    double splitCountiesScore;
+    public double getSplitCountiesScore() {
+        return splitCountiesScore;
+    }
 
+    public void setSplitCountiesScore(double splitCountiesScore) {
+        this.splitCountiesScore = splitCountiesScore;
+    }
     @Column
-    double deviationFromEnactedAvg;
+    public double getDeviationFromEnactedAvg() {
+        return deviationFromEnactedAvg;
+    }
 
+    public void setDeviationFromEnactedAvg(double deviationFromEnactedAvg) {
+        this.deviationFromEnactedAvg = deviationFromEnactedAvg;
+    }
     @Column
-    double deviationFromAverageAvg;
+    public double getDeviationFromAverageAvg() {
+        return deviationFromAverageAvg;
+    }
+
+    public void setDeviationFromAverageAvg(double deviationFromAverageAvg) {
+        this.deviationFromAverageAvg = deviationFromAverageAvg;
+    }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

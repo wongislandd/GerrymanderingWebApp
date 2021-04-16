@@ -2,7 +2,6 @@ package cse416.spring.controller;
 
 import cse416.spring.helperclasses.Server;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
-import cse416.spring.mapping.Mapper;
 import cse416.spring.models.Districting;
 import cse416.spring.models.DistrictingConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,13 @@ import java.nio.file.Files;
 @RequestMapping("/districting")
 public class DistrictingController {
     Server server;
-    Mapper mapper;
 
     @Autowired
     ConstrainedDistrictings currentConstraintedDistrictings;
 
 
-    public DistrictingController(Server server, Mapper mapper, ConstrainedDistrictings currentConstraintedDistrictings) {
+    public DistrictingController(Server server, ConstrainedDistrictings currentConstraintedDistrictings) {
         this.server = server;
-        this.mapper = mapper;
         this.currentConstraintedDistrictings = currentConstraintedDistrictings;
     }
 
@@ -67,43 +64,12 @@ public class DistrictingController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public Server getServer() {
         return server;
     }
 
     public void setServer(Server server) {
         this.server = server;
-    }
-
-    public Mapper getMapper() {
-        return mapper;
-    }
-
-    public void setMapper(Mapper mapper) {
-        this.mapper = mapper;
     }
 
     public ConstrainedDistrictings getCurrentConstraintedDistrictings() {
