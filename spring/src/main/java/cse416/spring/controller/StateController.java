@@ -46,6 +46,19 @@ public class StateController {
         }
     }
 
+    @GetMapping("/statename/loadIncumbents")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> loadIncumbents() {
+        try {
+            // Currently just returns a hardcoded list of incumbents
+            String body = "{\"Jimothy\": \"false\", \"Jim Jam\": \"false\", \"James\": \"false\", \"Gym\": \"false\"}";
+            return new ResponseEntity<>(body, HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>("", HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
     @GetMapping("/current/jobs")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashSet> getJobs() {

@@ -38,7 +38,7 @@ export async function loadStateOutlines() {
     "LOUISIANA" : JSON.parse(body.LA),
     "TEXAS" : JSON.parse(body.TX),
   }
-  return result
+  return result;
 }
 
 
@@ -47,7 +47,7 @@ export async function getJobs(state) {
   const response = await fetch(fullUrl);
   let body = await response.json();
   var jobs = ParsingUtilities.parseJobJSONToObjects(body)
-  return jobs
+  return jobs;
 }
 
 export async function loadIncumbents(state) {

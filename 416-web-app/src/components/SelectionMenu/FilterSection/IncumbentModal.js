@@ -9,8 +9,19 @@ import {
 } from "../../../redux/actions/settingActions";
 import { Row, Col, Modal, Button } from "react-materialize";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
+import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 
 class IncumbentModal extends Component {
+
+  // Fetch the incumbents for the chosen state
+  componentDidMount() {
+    this.loadIncumbents();
+  }
+
+  async loadIncumbents() {
+    NetworkingUtilities.loadIncumbents().then(results => this.props.IncumbentProtectionInfo = results);
+  }
+
   render() {
     return (
       <div>

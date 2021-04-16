@@ -19,7 +19,7 @@ class StateSelectionMap extends Component {
     // Fresh start
     this.props.restoreDefaultStateForNewDistricting()
     this.props.setCurrentState(ViewportUtilities.STATE_OPTIONS.UNSELECTED);
-    this.populateStateCounties()
+    this.populateStateCounties();
   }
 
   async populateStateCounties() {
