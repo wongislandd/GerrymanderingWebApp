@@ -7,36 +7,29 @@ import java.util.Collection;
 
 @Entity
 public class District {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    public int id;
+    private long id;
 
-    @OneToOne
     GeometryJSON geometry;
 
-    @OneToMany
     Collection<Precinct> precincts;
 
-    @OneToOne
     DistrictMeasures measures;
-
-    @ManyToOne
-    Districting districting;
 
     public District() {
 
     }
 
-
-    public int getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    @OneToOne
     public GeometryJSON getGeometry() {
         return geometry;
     }
@@ -45,6 +38,7 @@ public class District {
         this.geometry = geometry;
     }
 
+    @OneToMany
     public Collection<Precinct> getPrecincts() {
         return precincts;
     }
@@ -53,6 +47,7 @@ public class District {
         this.precincts = precincts;
     }
 
+    @OneToOne
     public DistrictMeasures getMeasures() {
         return measures;
     }
@@ -65,4 +60,7 @@ public class District {
         this.precincts = precincts;
         this.measures = measures;
     }
+
+
+
 }

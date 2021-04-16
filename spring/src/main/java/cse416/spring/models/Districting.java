@@ -7,37 +7,21 @@ import java.util.Collection;
 
 @Entity
 public class Districting {
+    private long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    int id;
-
-    @OneToMany(mappedBy = "districting")
     Collection<District> districts;
 
-    public Districting(Collection<District> districts, DistrictingMeasures measures) {
-        this.districts = districts;
-        this.measures = measures;
-    }
-
-    @OneToOne
     DistrictingMeasures measures;
 
-    @Column
     double ObjectiveFunctionScore;
 
-    @OneToOne
     GeometryJSON geometry;
 
-    public int getId() {
-        return id;
+    public Districting() {
+
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    @OneToMany
     public Collection<District> getDistricts() {
         return districts;
     }
@@ -46,6 +30,7 @@ public class Districting {
         this.districts = districts;
     }
 
+    @OneToOne
     public DistrictingMeasures getMeasures() {
         return measures;
     }
@@ -54,6 +39,7 @@ public class Districting {
         this.measures = measures;
     }
 
+    @Column
     public double getObjectiveFunctionScore() {
         return ObjectiveFunctionScore;
     }
@@ -62,11 +48,27 @@ public class Districting {
         ObjectiveFunctionScore = objectiveFunctionScore;
     }
 
+    @OneToOne
     public GeometryJSON getGeometry() {
         return geometry;
     }
 
     public void setGeometry(GeometryJSON geometry) {
         this.geometry = geometry;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public Districting(Collection<District> districts, DistrictingMeasures measures) {
+        this.districts = districts;
+        this.measures = measures;
     }
 }
