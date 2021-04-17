@@ -11,7 +11,6 @@ public class DistrictingMeasures {
     double splitCountiesScore;
     double deviationFromEnactedAvg;
     double deviationFromAverageAvg;
-    @Id
     private long id;
 
     public DistrictingMeasures() {

@@ -9,11 +9,15 @@ import java.util.Collection;
 public class District {
     private long id;
 
+    Demographics demographics;
+
     GeometryJSON geometry;
 
     Collection<Precinct> precincts;
 
     DistrictMeasures measures;
+
+    double objectiveFunctionScore;
 
     public District() {
 
@@ -56,9 +60,30 @@ public class District {
         this.measures = measures;
     }
 
-    public District(Collection<Precinct> precincts, DistrictMeasures measures) {
+    @OneToOne
+    public Demographics getDemographics() {
+        return this.demographics;
+    }
+
+    public void setDemographics(Demographics demographics) {
+        this.demographics = demographics;
+    }
+
+    @Column
+    public double getObjectiveFunctionScore() {
+        return this.objectiveFunctionScore;
+    }
+
+    public void setObjectiveFunctionScore(double objectiveFunctionScore) {
+        this.objectiveFunctionScore = objectiveFunctionScore;
+    }
+
+    public District(Demographics demographics, GeometryJSON geometry, Collection<Precinct> precincts, DistrictMeasures measures, double objectiveFunctionScore) {
+        this.demographics = demographics;
+        this.geometry = geometry;
         this.precincts = precincts;
         this.measures = measures;
+        this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
 

@@ -7,11 +7,7 @@ import javax.persistence.*;
 @Entity
 public class MGGGParams {
     private Long id;
-
-    @Column
     int coolingPeriod;
-
-    @Column
     double maxPopulationDiff;
 
     public MGGGParams(int coolingPeriod, double maxPopulationDiff) {
@@ -23,6 +19,7 @@ public class MGGGParams {
 
     }
 
+    @Column
     public int getCoolingPeriod() {
         return coolingPeriod;
     }
@@ -31,6 +28,7 @@ public class MGGGParams {
         this.coolingPeriod = coolingPeriod;
     }
 
+    @Column
     public double getMaxPopulationDiff() {
         return maxPopulationDiff;
     }

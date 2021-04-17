@@ -8,14 +8,12 @@ import java.util.Collection;
 @Entity
 public class Districting {
     private long id;
-
     Collection<District> districts;
-
     DistrictingMeasures measures;
-
     double ObjectiveFunctionScore;
-
     GeometryJSON geometry;
+    Collection<County> splitCounties;
+    State state;
 
     public Districting() {
 
@@ -57,6 +55,24 @@ public class Districting {
         this.geometry = geometry;
     }
 
+    @OneToMany
+    public Collection<County> getSplitCounties() {
+        return this.splitCounties;
+    }
+
+    public void setSplitCounties(Collection<County> splitCounties) {
+        this.splitCounties = splitCounties;
+    }
+
+    @OneToOne
+    public State getState() {
+        return this.state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -67,8 +83,12 @@ public class Districting {
         return id;
     }
 
-    public Districting(Collection<District> districts, DistrictingMeasures measures) {
+    public Districting(Collection<District> districts, DistrictingMeasures measures, double ObjectiveFunctionScore, GeometryJSON geometry, Collection<County> splitCounties, State state) {
         this.districts = districts;
         this.measures = measures;
+        this.ObjectiveFunctionScore = ObjectiveFunctionScore;
+        this.geometry = geometry;
+        this.splitCounties = splitCounties;
+        this.state = state;
     }
 }

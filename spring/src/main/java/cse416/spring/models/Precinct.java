@@ -14,7 +14,6 @@ public class Precinct {
     private Long id;
 
     public Precinct(String name, GeometryJSON geometry, County county, Demographics demographics) {
-        this.id = id;
         this.name = name;
         this.geometry = geometry;
         this.county = county;

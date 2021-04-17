@@ -14,7 +14,6 @@ public class JobSummary {
 
 
     public JobSummary(String description, int size, MGGGParams params) {
-        this.id = id;
         this.description = description;
         this.size = size;
         this.params = params;
