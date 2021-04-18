@@ -9,8 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class StateService {
+//    public int rng(int min, int max) {
+//        return (int)Math.floor(Math.random()*(max-min+1)+min);
+//    }
+//
 //    public Demographics generateRandomDemographics() {
-//        Demographics d = new Demographics()
+//        Demographics d = new Demographics();
 //    }
 //
 //    public Precinct generateRandomPrecinct() {
@@ -27,9 +31,9 @@ public class StateService {
 //        Districting d = new Districting();
 //        return d;
 //    }
-
-    public HashSet<Districting> generateRandomDistrictings() {
-        HashSet<Districting> districtings = new HashSet<Districting>();
-        return districtings;
-    }
+//
+//    public HashSet<Districting> generateRandomDistrictings() {
+//        HashSet<Districting> districtings = new HashSet<Districting>();
+//        return districtings;
+//    }
 }

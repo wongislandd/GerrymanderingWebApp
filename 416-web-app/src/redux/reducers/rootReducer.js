@@ -2,7 +2,8 @@ import * as ActionTypes from "../actions/ActionTypes";
 import Districting from "../../utilities/classes/Districting";
 import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
-import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
+import TestGeneratedPlan from "../../data/NC/testGeneratedPlan.json";
+import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
 import Job from "../../utilities/classes/models/Job";
