@@ -1,6 +1,6 @@
 package cse416.spring.models;
 
-import cse416.spring.helperclasses.GeometryJSON;
+import cse416.spring.helperclasses.FeatureCollectionJSON;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,8 +10,9 @@ import java.util.Collection;
 public class County {
     long id;
     String name;
-    GeometryJSON geometry;
+    FeatureCollectionJSON geometry;
     Collection<Precinct> precincts;
+
 
     public County() {
 
@@ -25,16 +26,16 @@ public class County {
     public void setName(String name) {
         this.name = name;
     }
-    @OneToOne
-    public GeometryJSON getGeometry() {
+    @OneToOne(cascade = CascadeType.ALL)
+    public FeatureCollectionJSON getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(GeometryJSON geometry) {
+    public void setGeometry(FeatureCollectionJSON geometry) {
         this.geometry = geometry;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<Precinct> getPrecincts() {
         return precincts;
     }
@@ -44,8 +45,7 @@ public class County {
     }
 
     @Id
-    @GeneratedValue
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -53,7 +53,7 @@ public class County {
         this.id = id;
     }
 
-    public County(String name, GeometryJSON geometry, Collection<Precinct> precincts) {
+    public County(String name, FeatureCollectionJSON geometry, Collection<Precinct> precincts) {
         this.name = name;
         this.geometry = geometry;
         this.precincts = precincts;

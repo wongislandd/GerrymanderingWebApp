@@ -1,7 +1,7 @@
 package cse416.spring.models;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.GeometryJSON;
+import cse416.spring.helperclasses.FeatureCollectionJSON;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -12,17 +12,17 @@ public class State {
     StateName name;
     Collection<Job> jobs;
     Job currentJob;
-    GeometryJSON outline;
+    FeatureCollectionJSON outline;
     Collection<County> counties;
     Districting enactedDistricting;
     Collection<Incumbent> incumbents;
-    private Long id;
+    private long id;
 
     public State() {
 
     }
 
-    public State(StateName name, Collection<Job> jobs, Job currentJob, GeometryJSON outline, Collection<County> counties, Districting enactedDistricting, Collection<Incumbent> incumbents) {
+    public State(StateName name, Collection<Job> jobs, Job currentJob, FeatureCollectionJSON outline, Collection<County> counties, Districting enactedDistricting, Collection<Incumbent> incumbents) {
         this.name = name;
         this.jobs = jobs;
         this.currentJob = currentJob;
@@ -41,7 +41,7 @@ public class State {
         this.name = name;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<Job> getJobs() {
         return jobs;
     }
@@ -50,7 +50,7 @@ public class State {
         this.jobs = jobs;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<County> getCounties() {
         return counties;
     }
@@ -59,7 +59,7 @@ public class State {
         this.counties = counties;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Job getCurrentJob() {
         return this.currentJob;
     }
@@ -68,16 +68,16 @@ public class State {
         this.currentJob = currentJob;
     }
 
-    @OneToOne
-    public GeometryJSON getOutline() {
+    @OneToOne(cascade = CascadeType.ALL)
+    public FeatureCollectionJSON getOutline() {
         return this.outline;
     }
 
-    public void setOutline(GeometryJSON outline) {
+    public void setOutline(FeatureCollectionJSON outline) {
         this.outline = outline;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Districting getEnactedDistricting() {
         return this.enactedDistricting;
     }
@@ -86,7 +86,7 @@ public class State {
         this.enactedDistricting = enactedDistricting;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<Incumbent> getIncumbents() {
         return this.incumbents;
     }

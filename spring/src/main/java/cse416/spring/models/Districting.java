@@ -1,6 +1,6 @@
 package cse416.spring.models;
 
-import cse416.spring.helperclasses.GeometryJSON;
+import cse416.spring.helperclasses.FeatureCollectionJSON;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,7 +11,7 @@ public class Districting {
     Collection<District> districts;
     DistrictingMeasures measures;
     double ObjectiveFunctionScore;
-    GeometryJSON geometry;
+    FeatureCollectionJSON geometry;
     Collection<County> splitCounties;
     State state;
 
@@ -19,7 +19,7 @@ public class Districting {
 
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<District> getDistricts() {
         return districts;
     }
@@ -28,7 +28,7 @@ public class Districting {
         this.districts = districts;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DistrictingMeasures getMeasures() {
         return measures;
     }
@@ -46,16 +46,16 @@ public class Districting {
         ObjectiveFunctionScore = objectiveFunctionScore;
     }
 
-    @OneToOne
-    public GeometryJSON getGeometry() {
+    @OneToOne(cascade = CascadeType.ALL)
+    public FeatureCollectionJSON getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(GeometryJSON geometry) {
+    public void setGeometry(FeatureCollectionJSON geometry) {
         this.geometry = geometry;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<County> getSplitCounties() {
         return this.splitCounties;
     }
@@ -64,7 +64,7 @@ public class Districting {
         this.splitCounties = splitCounties;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public State getState() {
         return this.state;
     }
@@ -83,7 +83,7 @@ public class Districting {
         return id;
     }
 
-    public Districting(Collection<District> districts, DistrictingMeasures measures, double ObjectiveFunctionScore, GeometryJSON geometry, Collection<County> splitCounties, State state) {
+    public Districting(Collection<District> districts, DistrictingMeasures measures, double ObjectiveFunctionScore, FeatureCollectionJSON geometry, Collection<County> splitCounties, State state) {
         this.districts = districts;
         this.measures = measures;
         this.ObjectiveFunctionScore = ObjectiveFunctionScore;

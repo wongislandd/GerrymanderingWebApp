@@ -44,7 +44,7 @@ public class DistrictingMeasures {
         this.majorityMinorityDistrictsAvg = majorityMinorityDistrictsAvg;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Compactness getCompactnessAvg() {
         return compactnessAvg;
     }

@@ -10,7 +10,7 @@ public class Compactness {
 
     double graphCompactness;
 
-    private Long id;
+    private long id;
 
     public Compactness(double polsbyPopper, double populationFatness, double graphCompactness) {
         this.polsbyPopper = polsbyPopper;

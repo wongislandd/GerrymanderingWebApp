@@ -50,7 +50,7 @@ public class DistrictMeasures {
         isMajorityMinorityDistrict = majorityMinorityDistrict;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Compactness getCompactness() {
         return compactness;
     }

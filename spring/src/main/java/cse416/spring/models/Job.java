@@ -15,7 +15,6 @@ public class Job {
 
     public Job(StateName state, JobSummary summary, Collection<Districting> districtings) {
         this.state = state;
-        this.id = id;
         this.summary = summary;
         this.districtings = districtings;
     }
@@ -39,11 +38,11 @@ public class Job {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public JobSummary getSummary() {
         return summary;
     }
@@ -51,7 +50,8 @@ public class Job {
     public void setSummary(JobSummary summary) {
         this.summary = summary;
     }
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<Districting> getDistrictings() {
         return districtings;
     }

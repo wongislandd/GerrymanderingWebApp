@@ -1,6 +1,6 @@
 package cse416.spring.models;
 
-import cse416.spring.helperclasses.GeometryJSON;
+import cse416.spring.helperclasses.FeatureCollectionJSON;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,7 +11,7 @@ public class District {
 
     Demographics demographics;
 
-    GeometryJSON geometry;
+    FeatureCollectionJSON geometry;
 
     Collection<Precinct> precincts;
 
@@ -33,16 +33,16 @@ public class District {
         this.id = id;
     }
 
-    @OneToOne
-    public GeometryJSON getGeometry() {
+    @OneToOne(cascade = CascadeType.ALL)
+    public FeatureCollectionJSON getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(GeometryJSON geometry) {
+    public void setGeometry(FeatureCollectionJSON geometry) {
         this.geometry = geometry;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<Precinct> getPrecincts() {
         return precincts;
     }
@@ -51,7 +51,7 @@ public class District {
         this.precincts = precincts;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DistrictMeasures getMeasures() {
         return measures;
     }
@@ -60,7 +60,7 @@ public class District {
         this.measures = measures;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Demographics getDemographics() {
         return this.demographics;
     }
@@ -78,7 +78,7 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    public District(Demographics demographics, GeometryJSON geometry, Collection<Precinct> precincts, DistrictMeasures measures, double objectiveFunctionScore) {
+    public District(Demographics demographics, FeatureCollectionJSON geometry, Collection<Precinct> precincts, DistrictMeasures measures, double objectiveFunctionScore) {
         this.demographics = demographics;
         this.geometry = geometry;
         this.precincts = precincts;

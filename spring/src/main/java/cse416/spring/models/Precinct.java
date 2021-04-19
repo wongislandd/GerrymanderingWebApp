@@ -1,36 +1,28 @@
 package cse416.spring.models;
 
-import cse416.spring.helperclasses.GeometryJSON;
+import cse416.spring.helperclasses.JSONObjectConverter;
+import org.json.JSONObject;
 
 import javax.persistence.*;
+
 
 @Entity
 public class Precinct {
     String name;
-    GeometryJSON geometry;
-    County county;
+    JSONObject geoJson;
     Demographics demographics;
-    District district;
-    private Long id;
+    private int id;
 
-    public Precinct(String name, GeometryJSON geometry, County county, Demographics demographics) {
+    public Precinct(int id, String name, JSONObject geoJson, Demographics demographics) {
         this.name = name;
-        this.geometry = geometry;
-        this.county = county;
+        this.geoJson = geoJson;
         this.demographics = demographics;
+        this.id = id;
     }
+
 
     public Precinct() {
 
-    }
-
-    @ManyToOne
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
     }
 
     @Column
@@ -42,25 +34,17 @@ public class Precinct {
         this.name = name;
     }
 
-    @OneToOne
-    public GeometryJSON getGeometry() {
-        return geometry;
+    @Column(columnDefinition = "TEXT")
+    @Convert(converter = JSONObjectConverter.class)
+    public JSONObject getGeoJson() {
+        return geoJson;
     }
 
-    public void setGeometry(GeometryJSON geometry) {
-        this.geometry = geometry;
+    public void setGeoJson(JSONObject geometry) {
+        this.geoJson = geometry;
     }
 
-    @ManyToOne
-    public County getCounty() {
-        return county;
-    }
-
-    public void setCounty(County county) {
-        this.county = county;
-    }
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Demographics getDemographics() {
         return demographics;
     }
@@ -70,12 +54,11 @@ public class Precinct {
     }
 
     @Id
-    @GeneratedValue
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

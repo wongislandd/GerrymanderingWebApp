@@ -17,10 +17,10 @@ class AppController extends Component {
     if (this.props.CurrentState == ViewportUtilities.STATE_OPTIONS.UNSELECTED) {
       return <StateSelection />;
     }
-    // Job Selection
-    else if(this.props.CurrentJob == null) {
-      return <JobSelection/>
-    }
+    // // Job Selection
+    // else if(this.props.CurrentJob == null) {
+    //   return <JobSelection/>
+    // }
     // Primary Selection Menu
     else if (this.props.InSelectionMenu) {
         return (

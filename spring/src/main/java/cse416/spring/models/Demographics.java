@@ -4,23 +4,40 @@ import javax.persistence.*;
 
 @Entity
 public class Demographics {
-    private Long id;
+    private long id;
     int democrats;
     int republicans;
     int otherParty;
     int asian;
     int black;
     int natives;
+    int pacific;
     int whiteHispanic;
     int whiteNonHispanic;
     int otherRace;
-    int TVP;
+    int TP;
     int VAP;
     int CVAP;
 
+    public Demographics(int democrats, int republicans, int otherParty, int asian, int black, int natives, int pacific, int whiteHispanic, int whiteNonHispanic, int otherRace, int TP, int VAP, int CVAP) {
+        this.democrats = democrats;
+        this.republicans = republicans;
+        this.otherParty = otherParty;
+        this.asian = asian;
+        this.black = black;
+        this.natives = natives;
+        this.pacific = pacific;
+        this.whiteHispanic = whiteHispanic;
+        this.whiteNonHispanic = whiteNonHispanic;
+        this.otherRace = otherRace;
+        this.TP = TP;
+        this.VAP = VAP;
+        this.CVAP = CVAP;
+    }
+
     @Id
     @GeneratedValue
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -30,6 +47,15 @@ public class Demographics {
 
     public Demographics() {
 
+    }
+
+    @Column
+    public int getPacific() {
+        return pacific;
+    }
+
+    public void setPacific(int pacific) {
+        this.pacific = pacific;
     }
 
     @Column
@@ -108,12 +134,12 @@ public class Demographics {
         this.otherRace = otherRace;
     }
     @Column
-    public int getTVP() {
-        return TVP;
+    public int getTP() {
+        return TP;
     }
 
-    public void setTVP(int TVP) {
-        this.TVP = TVP;
+    public void setTP(int TVP) {
+        this.TP = TVP;
     }
 
     @Column

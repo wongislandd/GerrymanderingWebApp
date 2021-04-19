@@ -10,7 +10,7 @@ public class JobSummary {
     String description;
     int size;
     MGGGParams params;
-    private Long id;
+    private long id;
 
 
     public JobSummary(String description, int size, MGGGParams params) {
@@ -41,7 +41,7 @@ public class JobSummary {
         this.size = size;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public MGGGParams getParams() {
         return params;
     }

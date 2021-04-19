@@ -16,7 +16,7 @@ public class DistrictingConstraints {
     int minMinorityDistricts;
     Compactness compactness;
     Collection<String> incumbentOptions;
-    private Long id;
+    private long id;
 
     public DistrictingConstraints() {
 
@@ -67,7 +67,7 @@ public class DistrictingConstraints {
         this.minMinorityDistricts = minMinorityDistricts;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Compactness getCompactness() {
         return compactness;
     }
