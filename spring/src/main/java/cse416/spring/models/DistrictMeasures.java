@@ -33,7 +33,7 @@ public class DistrictMeasures {
     public DistrictMeasures() {
 
     }
-
+    @Column
     public double getPopulationEquality() {
         return populationEquality;
     }
@@ -42,6 +42,7 @@ public class DistrictMeasures {
         this.populationEquality = populationEquality;
     }
 
+    @Column
     public boolean isMajorityMinorityDistrict() {
         return isMajorityMinorityDistrict;
     }
@@ -95,13 +96,13 @@ public class DistrictMeasures {
         this.deviationFromAverage = deviationFromAverage;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     @Id
     @GeneratedValue
-    public Long getId() {
+    public long getId() {
         return id;
     }
 }

@@ -79,7 +79,7 @@ public class Districting {
 
     @Id
     @GeneratedValue
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
