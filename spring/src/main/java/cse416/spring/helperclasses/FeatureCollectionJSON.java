@@ -35,7 +35,7 @@ public class FeatureCollectionJSON {
         this.id = id;
     }
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     @Convert(converter = JSONObjectConverter.class)
     public JSONObject getJson() {
         return json;

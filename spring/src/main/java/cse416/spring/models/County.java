@@ -8,11 +8,14 @@ import java.util.Collection;
 
 @Entity
 public class County {
-    long id;
+    int id;
     String name;
-    FeatureCollectionJSON geometry;
-    Collection<Precinct> precincts;
 
+    FeatureCollectionJSON geometry;
+
+    // Have county store an array of precinct IDs? Shouldn't store whole object,
+    // or should it?
+    Collection<Precinct> precincts;
 
     public County() {
 
@@ -45,17 +48,17 @@ public class County {
     }
 
     @Id
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public County(String name, FeatureCollectionJSON geometry, Collection<Precinct> precincts) {
+    public County(int id, String name, Collection<Precinct> precincts) {
+        this.id = id;
         this.name = name;
-        this.geometry = geometry;
         this.precincts = precincts;
     }
 
