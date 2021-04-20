@@ -41,7 +41,7 @@ public class Demographics {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -109,7 +109,7 @@ public class Demographics {
 
     @Column
     public int getWhiteNonHispanic() {
-        return whiteHispanic;
+        return whiteNonHispanic;
     }
 
     public void setWhiteNonHispanic(int whiteNonHispanic) {
