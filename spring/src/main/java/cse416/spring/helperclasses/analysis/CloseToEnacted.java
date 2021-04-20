@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-@Component
 public class CloseToEnacted implements AnalysisCategoryContainer{
     ArrayList<Districting> entries;
 

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-@Component
 public class TopScoring implements AnalysisCategoryContainer{
     ArrayList<Districting> entries;
 

@@ -191,9 +191,6 @@ public class DatabaseWritingService {
         return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian,total_black,total_natives,total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
     }
 
-
-
-
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
         ArrayList<Integer> queryKeys = new ArrayList<>();
         /* Access the pre-existing precinct objects and associate them */
@@ -205,9 +202,5 @@ public class DatabaseWritingService {
         ArrayList<Precinct> resultList = new ArrayList<Precinct>(query.getResultList());
         return resultList;
     }
-
-
-
-
 
 }
