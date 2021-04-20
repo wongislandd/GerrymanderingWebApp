@@ -1,5 +1,6 @@
 package cse416.spring.models.county;
 
+import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONObject;
@@ -12,7 +13,7 @@ import java.util.Collection;
 public class County {
     int id;
     String name;
-
+    StateName state;
     JSONObject geometry;
 
     // Have county store an array of precinct IDs? Shouldn't store whole object,
@@ -60,8 +61,9 @@ public class County {
         this.id = id;
     }
 
-    public County(int id, String name, Collection<Precinct> precincts, JSONObject geometry) {
+    public County(int id, StateName state, String name, Collection<Precinct> precincts, JSONObject geometry) {
         this.id = id;
+        this.state = state;
         this.name = name;
         this.precincts = precincts;
         this.geometry = geometry;

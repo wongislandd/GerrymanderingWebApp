@@ -2,6 +2,7 @@ package cse416.spring.service;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.ConcaveHullBuilder;
 import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.helperclasses.SinglePolygonGeoJSON;
@@ -59,7 +60,7 @@ public class DatabaseWritingService {
             int id = properties.getInt("id");
             Demographics d = new Demographics(democrats, republicans, otherParty, asian, black, natives,
                     pacific, whiteHispanic, whiteNonHispanic, otherRace, TP, VAP, CVAP);
-            Precinct p = new Precinct(id, precinctName, feature, d);
+            Precinct p = new Precinct(id, StateName.NORTH_CAROLINA, precinctName, feature, d);
             em.persist(p);
         }
 
@@ -85,7 +86,7 @@ public class DatabaseWritingService {
             ArrayList<Precinct> precincts = getPrecinctObjectsFromKeys(precinctKeys, em);
             Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
             JSONObject hullGeoJson = new SinglePolygonGeoJSON(hull.getCoordinates()).getJSON();
-            County c = new County(Integer.parseInt(key), name, precincts, hullGeoJson);
+            County c = new County(Integer.parseInt(key),StateName.NORTH_CAROLINA, name, precincts, hullGeoJson);
             em.persist(c);
         }
         /* Commit and close */
