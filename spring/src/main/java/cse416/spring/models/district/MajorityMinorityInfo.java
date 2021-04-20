@@ -46,6 +46,8 @@ public class MajorityMinorityInfo {
     boolean blackMajority;
     boolean hispanicMajority;
     boolean asianMajority;
+    boolean nativeMajority;
+    private Long id;
 
     public MajorityMinorityInfo(boolean blackMajority, boolean hispanicMajority, boolean asianMajority, boolean nativeMajority) {
         this.blackMajority = blackMajority;
@@ -53,9 +55,6 @@ public class MajorityMinorityInfo {
         this.asianMajority = asianMajority;
         this.nativeMajority = nativeMajority;
     }
-
-    boolean nativeMajority;
-    private Long id;
 
     public MajorityMinorityInfo() {
 

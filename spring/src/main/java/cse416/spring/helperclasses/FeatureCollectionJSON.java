@@ -21,7 +21,7 @@ public class FeatureCollectionJSON {
 //        "type": "Polygon",
 //        "coordinates": [...],
 //        "properties": {...}
-    public void put(String featureJSON) {
+    public void put(JSONObject featureJSON) {
         json.append("features", featureJSON);
     }
 

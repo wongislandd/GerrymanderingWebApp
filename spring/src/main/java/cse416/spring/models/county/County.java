@@ -1,8 +1,10 @@
 package cse416.spring.models.county;
 
+import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.precinct.Precinct;
+import org.hibernate.annotations.Type;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -13,8 +15,7 @@ import java.util.Collection;
 public class County {
     int id;
     String name;
-    StateName state;
-    JSONObject geometry;
+    Geometry geometry;
 
     // Have county store an array of precinct IDs? Shouldn't store whole object,
     // or should it?
@@ -33,13 +34,12 @@ public class County {
         this.name = name;
     }
 
-    @Column(columnDefinition = "TEXT")
-    @Convert(converter = JSONObjectConverter.class)
-    public JSONObject getGeometry() {
+    @Lob
+    public Geometry getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(JSONObject geometry) {
+    public void setGeometry(Geometry geometry) {
         this.geometry = geometry;
     }
 
@@ -61,9 +61,8 @@ public class County {
         this.id = id;
     }
 
-    public County(int id, StateName state, String name, Collection<Precinct> precincts, JSONObject geometry) {
+    public County(int id, String name, Collection<Precinct> precincts, Geometry geometry) {
         this.id = id;
-        this.state = state;
         this.name = name;
         this.precincts = precincts;
         this.geometry = geometry;

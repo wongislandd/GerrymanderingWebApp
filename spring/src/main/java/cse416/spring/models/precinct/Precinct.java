@@ -11,14 +11,12 @@ import javax.persistence.*;
 @Entity
 public class Precinct {
     String name;
-    StateName state;
     JSONObject geoJson;
     Demographics demographics;
     private int id;
 
-    public Precinct(int id, StateName state, String name, JSONObject geoJson, Demographics demographics) {
+    public Precinct(int id, String name, JSONObject geoJson, Demographics demographics) {
         this.name = name;
-        this.state = state;
         this.geoJson = geoJson;
         this.demographics = demographics;
         this.id = id;

@@ -3,6 +3,8 @@ package cse416.spring.models.district;
 import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
+import org.hibernate.annotations.Type;
+import org.hibernate.spatial.JTSGeometryType;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,7 +15,6 @@ public class District {
 
     Demographics demographics;
 
-    // Geometry calculated at runtime upon request
     Geometry geometry;
 
     Collection<Precinct> precincts;
@@ -48,7 +49,8 @@ public class District {
         this.id = id;
     }
 
-    @Transient
+
+    @Lob
     public Geometry getGeometry() {
         return geometry;
     }
@@ -93,11 +95,11 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    public District(Demographics demographics, Collection<Precinct> precincts, DistrictMeasures measures, double objectiveFunctionScore) {
+    public District(Demographics demographics, Geometry hull, Collection<Precinct> precincts, DistrictMeasures measures) {
         this.demographics = demographics;
+        this.geometry = hull;
         this.precincts = precincts;
         this.measures = measures;
-        this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
 

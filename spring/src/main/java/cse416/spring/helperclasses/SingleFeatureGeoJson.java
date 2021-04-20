@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.Collection;
 
-public class SinglePolygonGeoJSON {
+public class SingleFeatureGeoJson {
     /* We put strings in of this JSON format */
     //        "type": "Feature",
     //        "geometry": {
@@ -16,7 +16,7 @@ public class SinglePolygonGeoJSON {
 
 
     JSONObject json;
-    public SinglePolygonGeoJSON(Coordinate[] coordinates) {
+    public SingleFeatureGeoJson(Coordinate[] coordinates) {
         /* Root */
         this.json = new JSONObject();
         this.json.put("type", "Feature");

@@ -1,4 +1,4 @@
-package cse416.spring.helperclasses;
+package cse416.spring.helperclasses.builders;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -75,7 +75,7 @@ public class ConcaveHullBuilder {
 
     public static Geometry getConcaveHull(GeometryCollection gc) {
         /* The threshhold may need to be dynamic? */
-        ConcaveHull ch = new ConcaveHull(gc, .12);
+        ConcaveHull ch = new ConcaveHull(gc, .2);
         Geometry hull = ch.getConcaveHull();
         return hull;
     }
