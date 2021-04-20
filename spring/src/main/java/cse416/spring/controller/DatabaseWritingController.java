@@ -4,8 +4,6 @@ import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.models.*;
 import cse416.spring.service.DatabaseWritingService;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -43,4 +41,12 @@ public class DatabaseWritingController {
         service.persistCounties();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
+
+    @PostMapping("/test")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> test() throws IOException {
+        service.test();
+        return new ResponseEntity<>("Written.", HttpStatus.OK);
+    }
+
 }

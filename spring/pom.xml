@@ -60,6 +60,17 @@
 			<artifactId>json</artifactId>
 			<version>20180130</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.locationtech.jts/jts-core -->
+		<dependency>
+			<groupId>org.locationtech.jts</groupId>
+			<artifactId>jts-core</artifactId>
+			<version>1.18.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+			<version>1.13</version>
+		</dependency>
 	</dependencies>
 
 	<build>

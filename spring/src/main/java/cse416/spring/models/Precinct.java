@@ -1,6 +1,7 @@
 package cse416.spring.models;
 
 import cse416.spring.helperclasses.JSONObjectConverter;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -42,6 +43,10 @@ public class Precinct {
 
     public void setGeoJson(JSONObject geometry) {
         this.geoJson = geometry;
+    }
+
+    public JSONArray retrieveCoordinates() {
+        return geoJson.getJSONObject("geometry").getJSONArray("coordinates").getJSONArray(0);
     }
 
     @OneToOne(cascade = CascadeType.ALL)
