@@ -5,5 +5,4 @@ public enum MinorityPopulation {
     HISPANIC,
     ASIAN,
     NATIVE_AMERICAN,
-    NATIVE_HAWAIIAN
 }

@@ -1,5 +1,6 @@
 package cse416.spring.models;
 
+import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
 
 import javax.persistence.*;
@@ -11,7 +12,8 @@ public class District {
 
     Demographics demographics;
 
-    FeatureCollectionJSON geometry;
+    // Geometry calculated at runtime upon request
+    Geometry geometry;
 
     Collection<Precinct> precincts;
 
@@ -23,6 +25,20 @@ public class District {
 
     }
 
+
+    /**
+     * Calculate the difference between this district and another district
+     * Used for deviation from enacted and deviation from average, just pass their demographics in here.
+     * @param other
+     * @return
+     */
+    public double calculateDeviationFrom(District other) {
+        return 1;
+    }
+
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
@@ -33,12 +49,12 @@ public class District {
         this.id = id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public FeatureCollectionJSON getGeometry() {
+    @Transient
+    public Geometry getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(FeatureCollectionJSON geometry) {
+    public void setGeometry(Geometry geometry) {
         this.geometry = geometry;
     }
 
@@ -69,7 +85,7 @@ public class District {
         this.demographics = demographics;
     }
 
-    @Column
+    @Transient
     public double getObjectiveFunctionScore() {
         return this.objectiveFunctionScore;
     }
@@ -78,9 +94,8 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    public District(Demographics demographics, FeatureCollectionJSON geometry, Collection<Precinct> precincts, DistrictMeasures measures, double objectiveFunctionScore) {
+    public District(Demographics demographics, Collection<Precinct> precincts, DistrictMeasures measures, double objectiveFunctionScore) {
         this.demographics = demographics;
-        this.geometry = geometry;
         this.precincts = precincts;
         this.measures = measures;
         this.objectiveFunctionScore = objectiveFunctionScore;

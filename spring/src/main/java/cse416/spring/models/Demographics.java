@@ -1,5 +1,7 @@
 package cse416.spring.models;
 
+import cse416.spring.enums.MinorityPopulation;
+
 import javax.persistence.*;
 
 @Entity
@@ -34,6 +36,24 @@ public class Demographics {
         this.VAP = VAP;
         this.CVAP = CVAP;
     }
+
+
+    public boolean isMajorityMinorityDistrict(MinorityPopulation p) {
+        switch (p) {
+            case BLACK:
+                return (black / VAP) > .5;
+            case ASIAN:
+                return (asian / VAP) > .5;
+            case HISPANIC:
+                return (whiteHispanic / VAP) > .5;
+            case NATIVE_AMERICAN:
+                return (natives / VAP) > .5;
+            default:
+                return false;
+        }
+    }
+
+
 
     @Id
     @GeneratedValue

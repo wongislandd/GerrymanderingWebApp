@@ -33,6 +33,7 @@ public class DistrictMeasures {
     public DistrictMeasures() {
 
     }
+
     @Column
     public double getPopulationEquality() {
         return populationEquality;

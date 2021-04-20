@@ -11,6 +11,7 @@ import cse416.spring.models.Demographics;
 import cse416.spring.models.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.locationtech.jts.geom.Coordinates;
 import org.opensphere.geometry.algorithm.ConcaveHull;
 import org.springframework.util.ResourceUtils;
 
@@ -83,31 +84,58 @@ public class DatabaseWritingService {
             String key = keys.next();
             JSONObject county = jo.getJSONObject(key);
             String name = county.getString("name");
-
             JSONArray precinctKeys = county.getJSONArray("precincts");
-            ArrayList<Precinct> precincts = new ArrayList<>();
-            /* Access the pre-existing precinct objects and associate them */
-            for (int i = 0; i < precinctKeys.length(); i++) {
-                int precinctKey = precinctKeys.getInt(i);
-                Precinct p = em.find(Precinct.class, precinctKey);
-                precincts.add(p);
-            }
+            ArrayList<Precinct> precincts = getPrecinctObjectsFromKeys(precinctKeys, em);
             JSONObject geometry = getConcaveGeometryOfPrecincts(precincts, gf, em);
             County c = new County(Integer.parseInt(key), name, precincts, geometry);
             em.persist(c);
         }
-
         /* Commit and close */
         em.getTransaction().commit();
     }
+
+    public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
+        ArrayList<Precinct> precincts = new ArrayList<>();
+        /* Access the pre-existing precinct objects and associate them */
+        for (int i = 0; i < precinctKeys.length(); i++) {
+            int precinctKey = precinctKeys.getInt(i);
+            Precinct p = em.find(Precinct.class, precinctKey);
+            precincts.add(p);
+        }
+        return precincts;
+    }
+
 
     public static boolean isMultiPolygon(JSONArray coordinates) {
         return coordinates.length() == 1;
     }
 
     /***
+     * Returns an array of coordinate objects
+     * @param coordinates
+     * @return A coordinate array from the entries in coordinates
+     */
+    public static Coordinate[] getCoordsFromJSONArray(JSONArray coordinates) {
+        Coordinate[] coords = new Coordinate[coordinates.length()];
+        /* For each coordinate that comprises the precinct*/
+        for (int j = 0; j < coordinates.length(); j++) {
+            JSONArray currentCoords = coordinates.getJSONArray(j);
+            coords[j] = new Coordinate(currentCoords.getDouble(0), currentCoords.getDouble(1));
+        }
+        return coords;
+    }
+
+
+    public static Geometry getConcaveHull(GeometryCollection gc) {
+        /* The threshhold may need to be dynamic? */
+        ConcaveHull ch = new ConcaveHull(gc, .12);
+        Geometry hull = ch.getConcaveHull();
+        return hull;
+    }
+
+    /***
      * Used to take a collection of precincts and find the "rubber-band" geometry
-     * of the set of precinct geometries. 
+     * of the set of precinct geometries.
      *
      * @param precincts An array of precinct objects that belong to a county
      * @param gf The geometry factory to create geometry with
@@ -119,41 +147,23 @@ public class DatabaseWritingService {
         ArrayList<Geometry> geometries = new ArrayList<>();
         /* For each precinct in the county */
         for (int i = 0; i < precincts.size(); i++) {
-            String precName = precincts.get(i).getName();
             JSONArray coordinates = precincts.get(i).retrieveCoordinates();
             if (isMultiPolygon(coordinates)) {
-                System.out.println("MULTI POLYGON FOUND");
                 /* Each entry in coordinates in a separate polygon, the separate polygon's will be treated as normal ones */
                 for (int k = 0; k < coordinates.length(); k++) {
                     JSONArray currentPolygonCoords = coordinates.getJSONArray(k);
-                    Coordinate[] coords = new Coordinate[currentPolygonCoords.length()];
-                    /* For each coordinate that comprises the precinct*/
-                    for (int j = 0; j < currentPolygonCoords.length(); j++) {
-                        JSONArray currentCoords = currentPolygonCoords.getJSONArray(j);
-                        coords[j] = new Coordinate(currentCoords.getDouble(0), currentCoords.getDouble(1));
-                    }
-                    geometries.add(gf.createPolygon(coords));
+                    geometries.add(gf.createPolygon(getCoordsFromJSONArray(currentPolygonCoords)));
                 }
             } else {
-                Coordinate[] coords = new Coordinate[coordinates.length()];
-                /* For each coordinate that comprises the precinct*/
-                for (int j = 0; j < coordinates.length(); j++) {
-                    JSONArray currentCoords = coordinates.getJSONArray(j);
-                    coords[j] = new Coordinate(currentCoords.getDouble(0), currentCoords.getDouble(1));
-                }
-                geometries.add(gf.createPolygon(coords));
+                geometries.add(gf.createPolygon(getCoordsFromJSONArray(coordinates)));
             }
         }
-        ;
         /* Create an array version to be funneled into a geometry collection */
         Geometry[] geometryArr = new Geometry[geometries.size()];
         geometryArr = geometries.toArray(geometryArr);
         /* Using the geometry collection, construct the concave hull */
         GeometryCollection gc = gf.createGeometryCollection(geometryArr);
-        /* Need to be at least .11 threshhold */
-        ConcaveHull ch = new ConcaveHull(gc, .12);
-
-        Geometry hull = ch.getConcaveHull();
+        Geometry hull = getConcaveHull(gc);
         SinglePolygonGeoJSON geojson = new SinglePolygonGeoJSON(hull.getCoordinates());
 
         return geojson.getJSON();
