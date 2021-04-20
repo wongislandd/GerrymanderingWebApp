@@ -5,24 +5,20 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import cse416.spring.helperclasses.EntityManagerSingleton;
+import cse416.spring.helperclasses.SinglePolygonGeoJSON;
 import cse416.spring.models.County;
 import cse416.spring.models.Demographics;
 import cse416.spring.models.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.locationtech.jts.geom.util.GeometryCombiner;
 import org.opensphere.geometry.algorithm.ConcaveHull;
 import org.springframework.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 public class DatabaseWritingService {
@@ -33,13 +29,19 @@ public class DatabaseWritingService {
         return content;
     }
 
+    public static void persistPrecinctsAndCounties() throws IOException {
+        persistPrecincts();
+        persistCounties();
+        EntityManagerSingleton.getInstance().shutdown();
+    }
+
     public static void persistPrecincts() throws IOException {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
-        em.getTransaction( ).begin( );
+        em.getTransaction().begin();
         String content = readFile("/json/NC/PrecinctGeoDataSimplified.json");
         JSONObject j = new JSONObject(content);
         JSONArray features = j.getJSONArray("features");
-        for (int i=0;i<features.length();i++) {
+        for (int i = 0; i < features.length(); i++) {
             JSONObject feature = features.getJSONObject(i);
             JSONObject properties = feature.getJSONObject("properties");
             String precinctName = properties.getString("PREC_NAME");
@@ -57,51 +59,17 @@ public class DatabaseWritingService {
             int VAP = democrats + republicans + otherParty;
             int CVAP = -1;
             int id = properties.getInt("id");
-            Demographics d = new Demographics(democrats, republicans, otherParty,asian,black, natives,
+            Demographics d = new Demographics(democrats, republicans, otherParty, asian, black, natives,
                     pacific, whiteHispanic, whiteNonHispanic, otherRace, TP, VAP, CVAP);
             Precinct p = new Precinct(id, precinctName, feature, d);
             em.persist(p);
         }
 
         /* Commit and close */
-        em.getTransaction( ).commit( );
-        EntityManagerSingleton.getInstance().shutdown();
+        em.getTransaction().commit();
     }
 
     public static void persistCounties() throws IOException {
-        /* Get entity manager */
-        EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
-        em.getTransaction().begin();
-
-        String mapping = readFile("/json/NC/CountiesPrecinctsMapping.json");
-        JSONObject j = new JSONObject(mapping);
-        Iterator<String> keys = j.keys();
-        while(keys.hasNext()) {
-            // Key is the county ID
-            String key = keys.next();
-            JSONObject county = j.getJSONObject(key);
-            // County name
-            String name = county.getString("name");
-            JSONArray precinctKeys = county.getJSONArray("precincts");
-            ArrayList<Precinct> precincts = new ArrayList<>();
-
-            /* Access the pre-existing precinct objects and associate them */
-            for (int i=0;i<precinctKeys.length();i++) {
-                int precinctKey = precinctKeys.getInt(i);
-                Precinct p = em.find(Precinct.class, precinctKey);
-                precincts.add(p);
-            }
-            County c = new County(Integer.parseInt(key), name, precincts);
-            em.persist(c);
-        }
-
-
-        /* Commit and close */
-        em.getTransaction( ).commit( );
-        EntityManagerSingleton.getInstance().shutdown();
-    }
-
-    public static void test() throws IOException {
         /* Get entity manager */
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
@@ -110,43 +78,85 @@ public class DatabaseWritingService {
         JSONObject jo = new JSONObject(mapping);
         Iterator<String> keys = jo.keys();
         /* For each county */
-        while(keys.hasNext()) {
+        while (keys.hasNext()) {
             // Key is the county ID
             String key = keys.next();
             JSONObject county = jo.getJSONObject(key);
-            // County name
             String name = county.getString("name");
+
             JSONArray precinctKeys = county.getJSONArray("precincts");
             ArrayList<Precinct> precincts = new ArrayList<>();
-
             /* Access the pre-existing precinct objects and associate them */
-            for (int i=0;i<precinctKeys.length();i++) {
+            for (int i = 0; i < precinctKeys.length(); i++) {
                 int precinctKey = precinctKeys.getInt(i);
                 Precinct p = em.find(Precinct.class, precinctKey);
                 precincts.add(p);
             }
-            /* Build a geometry collection in order to construct a concave hull object */
-            Geometry[] geometries = new Geometry[precincts.size()];
-            /* For each precinct in the county */
-            for (int i=0;i<precincts.size();i++) {
-                System.out.println(precincts.get(i).getName());
-               JSONArray coordinates = precincts.get(i).retrieveCoordinates();
-               Coordinate[] coords = new Coordinate[coordinates.length()];
-               /* For each coordinate that comprises the precinct*/
-               for (int j=0;j<coordinates.length();j++) {
-                    JSONArray currentCoords = coordinates.getJSONArray(j);
-                    coords[j] = new Coordinate(currentCoords.getDouble(0), currentCoords.getDouble(1));
-               }
-               geometries[i] = gf.createPolygon(coords);
-            };
-            /* Using the geometry collection, construct the concave hull */
-            GeometryCollection gc = gf.createGeometryCollection(geometries);
-            ConcaveHull ch = new ConcaveHull(gc, .5);
-            Geometry hull = ch.getConcaveHull();
+            JSONObject geometry = getConcaveGeometryOfPrecincts(precincts, gf, em);
+            County c = new County(Integer.parseInt(key), name, precincts, geometry);
+            em.persist(c);
         }
 
         /* Commit and close */
-        em.getTransaction( ).commit( );
-        EntityManagerSingleton.getInstance().shutdown();
+        em.getTransaction().commit();
     }
+
+    public static boolean isMultiPolygon(JSONArray coordinates) {
+        return coordinates.length() == 1;
+    }
+
+    /***
+     * Used to take a collection of precincts and find the "rubber-band" geometry
+     * of the set of precinct geometries. 
+     *
+     * @param precincts An array of precinct objects that belong to a county
+     * @param gf The geometry factory to create geometry with
+     * @param em The entity manager for access to the database
+     * @return A JSONObject which of a "feature" containing a single polygon geometry
+     */
+    public static JSONObject getConcaveGeometryOfPrecincts(ArrayList<Precinct> precincts, GeometryFactory gf, EntityManager em) {
+        /* Build a geometry collection in order to construct a concave hull object */
+        ArrayList<Geometry> geometries = new ArrayList<>();
+        /* For each precinct in the county */
+        for (int i = 0; i < precincts.size(); i++) {
+            String precName = precincts.get(i).getName();
+            JSONArray coordinates = precincts.get(i).retrieveCoordinates();
+            if (isMultiPolygon(coordinates)) {
+                System.out.println("MULTI POLYGON FOUND");
+                /* Each entry in coordinates in a separate polygon, the separate polygon's will be treated as normal ones */
+                for (int k = 0; k < coordinates.length(); k++) {
+                    JSONArray currentPolygonCoords = coordinates.getJSONArray(k);
+                    Coordinate[] coords = new Coordinate[currentPolygonCoords.length()];
+                    /* For each coordinate that comprises the precinct*/
+                    for (int j = 0; j < currentPolygonCoords.length(); j++) {
+                        JSONArray currentCoords = currentPolygonCoords.getJSONArray(j);
+                        coords[j] = new Coordinate(currentCoords.getDouble(0), currentCoords.getDouble(1));
+                    }
+                    geometries.add(gf.createPolygon(coords));
+                }
+            } else {
+                Coordinate[] coords = new Coordinate[coordinates.length()];
+                /* For each coordinate that comprises the precinct*/
+                for (int j = 0; j < coordinates.length(); j++) {
+                    JSONArray currentCoords = coordinates.getJSONArray(j);
+                    coords[j] = new Coordinate(currentCoords.getDouble(0), currentCoords.getDouble(1));
+                }
+                geometries.add(gf.createPolygon(coords));
+            }
+        }
+        ;
+        /* Create an array version to be funneled into a geometry collection */
+        Geometry[] geometryArr = new Geometry[geometries.size()];
+        geometryArr = geometries.toArray(geometryArr);
+        /* Using the geometry collection, construct the concave hull */
+        GeometryCollection gc = gf.createGeometryCollection(geometryArr);
+        /* Need to be at least .11 threshhold */
+        ConcaveHull ch = new ConcaveHull(gc, .12);
+
+        Geometry hull = ch.getConcaveHull();
+        SinglePolygonGeoJSON geojson = new SinglePolygonGeoJSON(hull.getCoordinates());
+
+        return geojson.getJSON();
+    }
+
 }

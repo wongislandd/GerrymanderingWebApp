@@ -42,10 +42,10 @@ public class DatabaseWritingController {
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
-    @PostMapping("/test")
+    @PostMapping("/persistAll")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> test() throws IOException {
-        service.test();
+        service.persistPrecinctsAndCounties();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
