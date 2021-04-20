@@ -1,4 +1,4 @@
-package cse416.spring.helperclasses;
+package cse416.spring.helperclasses.analysis;
 
 import cse416.spring.models.Districting;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class CloseToEnacted {
+public class CloseToEnacted implements AnalysisCategoryContainer{
     ArrayList<Districting> entries;
 
     public CloseToEnacted(ArrayList<Districting> entries) {
@@ -20,4 +20,21 @@ public class CloseToEnacted {
     public void setEntries(ArrayList<Districting> entries) {
         this.entries = entries;
     }
+
+    @Override
+    public boolean shouldInsert(Districting districting) {
+        return false;
+    }
+
+    @Override
+    public void sortEntries() {
+
+    }
+
+
+    @Override
+    public void insert(Districting districting) {
+
+    }
+
 }

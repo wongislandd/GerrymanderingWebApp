@@ -1,10 +1,12 @@
 package cse416.spring.helperclasses;
 
-import cse416.spring.models.Districting;
+import cse416.spring.helperclasses.analysis.CloseToEnacted;
+import cse416.spring.helperclasses.analysis.HighScoringMajorityMinority;
+import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
+import cse416.spring.helperclasses.analysis.TopScoring;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 
 @Component
 public class InterestingDistrictingAnalysis {

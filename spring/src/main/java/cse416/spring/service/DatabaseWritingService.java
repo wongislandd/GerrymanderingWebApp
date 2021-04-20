@@ -96,6 +96,8 @@ public class DatabaseWritingService {
         em.getTransaction().commit();
     }
 
+
+    
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
         ArrayList<Precinct> precincts = new ArrayList<>();
         /* Access the pre-existing precinct objects and associate them */

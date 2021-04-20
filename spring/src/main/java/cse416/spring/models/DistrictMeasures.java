@@ -8,7 +8,7 @@ public class DistrictMeasures {
 
     double populationEquality;
 
-    boolean isMajorityMinorityDistrict;
+    MajorityMinorityInfo majorityMinorityInfo;
 
     Compactness compactness;
 
@@ -20,9 +20,9 @@ public class DistrictMeasures {
 
     double deviationFromEnacted;
 
-    public DistrictMeasures(double populationEquality, boolean isMajorityMinorityDistrict, Compactness compactness, double politicalFairness, int splitCounties, double deviationFromEnacted, double deviationFromAverage) {
+    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness, double politicalFairness, int splitCounties, double deviationFromEnacted, double deviationFromAverage) {
         this.populationEquality = populationEquality;
-        this.isMajorityMinorityDistrict = isMajorityMinorityDistrict;
+        this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
         this.politicalFairness = politicalFairness;
         this.splitCounties = splitCounties;
@@ -43,13 +43,14 @@ public class DistrictMeasures {
         this.populationEquality = populationEquality;
     }
 
-    @Column
-    public boolean isMajorityMinorityDistrict() {
-        return isMajorityMinorityDistrict;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public MajorityMinorityInfo getMajorityMinorityInfo() {
+        return majorityMinorityInfo;
     }
 
-    public void setMajorityMinorityDistrict(boolean majorityMinorityDistrict) {
-        isMajorityMinorityDistrict = majorityMinorityDistrict;
+    public void setMajorityMinorityInfo(MajorityMinorityInfo majorityMinorityInfo) {
+        this.majorityMinorityInfo = majorityMinorityInfo;
     }
 
     @OneToOne(cascade = CascadeType.ALL)

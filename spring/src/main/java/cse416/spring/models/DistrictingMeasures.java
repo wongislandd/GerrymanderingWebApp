@@ -4,27 +4,37 @@ import javax.persistence.*;
 
 @Entity
 public class DistrictingMeasures {
-    double populationEqualityAvg;
-    int majorityMinorityDistrictsAvg;
+    MajorityMinorityDistrictsCount minorityDistrictsCount;
     Compactness compactnessAvg;
+    double populationEqualityAvg;
     double politicalFairnessAvg;
     double splitCountiesScore;
     double deviationFromEnactedAvg;
     double deviationFromAverageAvg;
+
     private long id;
 
     public DistrictingMeasures() {
 
     }
 
-    public DistrictingMeasures(double populationEqualityAvg, int majorityMinorityDistrictsAvg, Compactness compactnessAvg, double politicalFairnessAvg, double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
+    public DistrictingMeasures(double populationEqualityAvg, MajorityMinorityDistrictsCount minorityDistrictsCount, Compactness compactnessAvg, double politicalFairnessAvg, double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
         this.populationEqualityAvg = populationEqualityAvg;
-        this.majorityMinorityDistrictsAvg = majorityMinorityDistrictsAvg;
+        this.minorityDistrictsCount = minorityDistrictsCount;
         this.compactnessAvg = compactnessAvg;
         this.politicalFairnessAvg = politicalFairnessAvg;
         this.splitCountiesScore = splitCountiesScore;
         this.deviationFromEnactedAvg = deviationFromEnactedAvg;
         this.deviationFromAverageAvg = deviationFromAverageAvg;
+    }
+
+    @OneToOne
+    public MajorityMinorityDistrictsCount getMinorityDistrictsCount() {
+        return minorityDistrictsCount;
+    }
+
+    public void setMinorityDistrictsCount(MajorityMinorityDistrictsCount minorityDistrictsCount) {
+        this.minorityDistrictsCount = minorityDistrictsCount;
     }
 
     @Column
@@ -34,14 +44,6 @@ public class DistrictingMeasures {
 
     public void setPopulationEqualityAvg(double populationEqualityAvg) {
         this.populationEqualityAvg = populationEqualityAvg;
-    }
-    @Column
-    public int getMajorityMinorityDistrictsAvg() {
-        return majorityMinorityDistrictsAvg;
-    }
-
-    public void setMajorityMinorityDistrictsAvg(int majorityMinorityDistrictsAvg) {
-        this.majorityMinorityDistrictsAvg = majorityMinorityDistrictsAvg;
     }
 
     @OneToOne(cascade = CascadeType.ALL)

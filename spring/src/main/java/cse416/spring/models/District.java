@@ -37,8 +37,6 @@ public class District {
     }
 
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
