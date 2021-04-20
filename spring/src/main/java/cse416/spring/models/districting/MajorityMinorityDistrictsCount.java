@@ -1,4 +1,4 @@
-package cse416.spring.models;
+package cse416.spring.models.districting;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

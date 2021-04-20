@@ -1,7 +1,5 @@
 package cse416.spring.helperclasses;
 
-import cse416.spring.models.JobSummary;
-
 import javax.persistence.*;
 
 @Entity

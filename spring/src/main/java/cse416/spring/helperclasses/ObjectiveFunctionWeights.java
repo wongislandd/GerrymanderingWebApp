@@ -1,7 +1,6 @@
 package cse416.spring.helperclasses;
 
-import cse416.spring.models.Compactness;
-import org.springframework.stereotype.Component;
+import cse416.spring.models.district.Compactness;
 
 import javax.persistence.*;
 

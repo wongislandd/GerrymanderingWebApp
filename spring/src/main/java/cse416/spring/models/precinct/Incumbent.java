@@ -1,4 +1,4 @@
-package cse416.spring.models;
+package cse416.spring.models.precinct;
 
 import javax.persistence.*;
 

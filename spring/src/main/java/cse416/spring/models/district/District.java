@@ -1,7 +1,8 @@
-package cse416.spring.models;
+package cse416.spring.models.district;
 
 import com.vividsolutions.jts.geom.Geometry;
-import cse416.spring.helperclasses.FeatureCollectionJSON;
+import cse416.spring.models.precinct.Demographics;
+import cse416.spring.models.precinct.Precinct;
 
 import javax.persistence.*;
 import java.util.Collection;

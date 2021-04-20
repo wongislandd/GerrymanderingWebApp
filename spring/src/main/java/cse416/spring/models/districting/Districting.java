@@ -1,6 +1,9 @@
-package cse416.spring.models;
+package cse416.spring.models.districting;
 
 import cse416.spring.helperclasses.FeatureCollectionJSON;
+import cse416.spring.models.county.County;
+import cse416.spring.models.state.State;
+import cse416.spring.models.district.District;
 
 import javax.persistence.*;
 import java.util.Collection;

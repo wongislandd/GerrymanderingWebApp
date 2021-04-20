@@ -1,4 +1,6 @@
-package cse416.spring.models;
+package cse416.spring.models.districting;
+
+import cse416.spring.models.district.Compactness;
 
 import javax.persistence.*;
 

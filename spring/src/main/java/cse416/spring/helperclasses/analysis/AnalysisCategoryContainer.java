@@ -1,6 +1,6 @@
 package cse416.spring.helperclasses.analysis;
 
-import cse416.spring.models.Districting;
+import cse416.spring.models.districting.Districting;
 
 public interface AnalysisCategoryContainer {
 

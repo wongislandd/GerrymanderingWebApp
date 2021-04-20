@@ -1,7 +1,7 @@
-package cse416.spring.models;
+package cse416.spring.models.county;
 
-import cse416.spring.helperclasses.FeatureCollectionJSON;
 import cse416.spring.helperclasses.JSONObjectConverter;
+import cse416.spring.models.precinct.Precinct;
 import org.json.JSONObject;
 
 import javax.persistence.*;

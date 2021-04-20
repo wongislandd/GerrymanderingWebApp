@@ -1,7 +1,11 @@
-package cse416.spring.models;
+package cse416.spring.models.state;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
+import cse416.spring.models.county.County;
+import cse416.spring.models.districting.Districting;
+import cse416.spring.models.job.Job;
+import cse416.spring.models.precinct.Incumbent;
 
 import javax.persistence.*;
 import java.util.Collection;

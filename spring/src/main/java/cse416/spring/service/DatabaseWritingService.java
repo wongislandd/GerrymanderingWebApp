@@ -1,19 +1,15 @@
 package cse416.spring.service;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import cse416.spring.helperclasses.ConcaveHullBuilder;
 import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.helperclasses.SinglePolygonGeoJSON;
-import cse416.spring.models.County;
-import cse416.spring.models.Demographics;
-import cse416.spring.models.Precinct;
+import cse416.spring.models.county.County;
+import cse416.spring.models.precinct.Demographics;
+import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.locationtech.jts.geom.Coordinates;
-import org.opensphere.geometry.algorithm.ConcaveHull;
 import org.springframework.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
@@ -97,7 +93,7 @@ public class DatabaseWritingService {
     }
 
 
-    
+
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
         ArrayList<Precinct> precincts = new ArrayList<>();
         /* Access the pre-existing precinct objects and associate them */

@@ -4,9 +4,8 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import cse416.spring.models.Precinct;
+import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.opensphere.geometry.algorithm.ConcaveHull;
 
 import java.util.ArrayList;

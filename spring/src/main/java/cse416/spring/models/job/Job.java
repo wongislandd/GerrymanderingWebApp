@@ -1,6 +1,7 @@
-package cse416.spring.models;
+package cse416.spring.models.job;
 
 import cse416.spring.enums.StateName;
+import cse416.spring.models.districting.Districting;
 
 import javax.persistence.*;
 import java.util.Collection;

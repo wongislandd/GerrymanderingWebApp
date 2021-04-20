@@ -1,7 +1,7 @@
 package cse416.spring.helperclasses;
 
-import cse416.spring.models.Districting;
-import cse416.spring.models.DistrictingConstraints;
+import cse416.spring.models.districting.Districting;
+import cse416.spring.models.districting.DistrictingConstraints;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;

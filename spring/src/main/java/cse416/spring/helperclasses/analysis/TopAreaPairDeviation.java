@@ -1,10 +1,8 @@
 package cse416.spring.helperclasses.analysis;
 
-import cse416.spring.models.Districting;
+import cse416.spring.models.districting.Districting;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 
 @Component

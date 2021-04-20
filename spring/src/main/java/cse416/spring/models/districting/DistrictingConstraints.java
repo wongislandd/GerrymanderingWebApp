@@ -1,7 +1,8 @@
-package cse416.spring.models;
+package cse416.spring.models.districting;
 
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.VotingPopulation;
+import cse416.spring.models.district.Compactness;
 
 import javax.persistence.*;
 import java.util.Collection;
