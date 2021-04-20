@@ -20,7 +20,8 @@ public class DistrictingMeasures {
 
     }
 
-    public DistrictingMeasures(double populationEqualityAvg, MajorityMinorityDistrictsCount minorityDistrictsCount, Compactness compactnessAvg, double politicalFairnessAvg, double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
+    /* Calculate districting measures from the collection of district measures */
+    public DistrictingMeasures(MajorityMinorityDistrictsCount minorityDistrictsCount, Compactness compactnessAvg, double populationEqualityAvg, double politicalFairnessAvg, double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
         this.populationEqualityAvg = populationEqualityAvg;
         this.minorityDistrictsCount = minorityDistrictsCount;
         this.compactnessAvg = compactnessAvg;
@@ -30,7 +31,7 @@ public class DistrictingMeasures {
         this.deviationFromAverageAvg = deviationFromAverageAvg;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public MajorityMinorityDistrictsCount getMinorityDistrictsCount() {
         return minorityDistrictsCount;
     }

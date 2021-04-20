@@ -40,7 +40,7 @@ public class District {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     public long getId() {
         return id;
     }
@@ -59,7 +59,7 @@ public class District {
         this.geometry = geometry;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     public Collection<Precinct> getPrecincts() {
         return precincts;
     }

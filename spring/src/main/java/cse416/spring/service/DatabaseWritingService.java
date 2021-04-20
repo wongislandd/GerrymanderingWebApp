@@ -12,6 +12,7 @@ import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictMeasures;
 import cse416.spring.models.district.MajorityMinorityInfo;
+import cse416.spring.models.districting.Districting;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
@@ -19,11 +20,13 @@ import org.json.JSONObject;
 import org.springframework.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class DatabaseWritingService {
 
@@ -33,11 +36,6 @@ public class DatabaseWritingService {
         return new JSONObject(content);
     }
 
-    public static void persistPrecinctsAndCounties() throws IOException {
-        persistPrecincts();
-        persistCounties();
-        EntityManagerSingleton.getInstance().shutdown();
-    }
 
     public static void persistPrecincts() throws IOException {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
@@ -97,7 +95,6 @@ public class DatabaseWritingService {
     public static void persistDistrictings() throws IOException {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
-
         JSONObject jo = readFile("/json/NC/districtingExample.json");
         JSONArray districtings = jo.getJSONArray("districtings");
         /* For each districting */
@@ -112,31 +109,13 @@ public class DatabaseWritingService {
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
                 /* For each precinct ID in the district */
                 ArrayList<Precinct> precincts = getPrecinctObjectsFromKeys(precinctKeysInDistrict, em);
-                Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
-                // collectionJSON.put(new SingleFeatureGeoJson(hull.getCoordinates()).getJSON());
-                Demographics demographics = compileDemographics(precincts);
-
-                /* Calculate some stats to be attached to the district */
-                MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
-                        demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
-                        demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
-                        demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
-                        demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
-                Compactness compactness = new Compactness(.5,.6,.7);
-
-                int splitCounties = calculateSplitCounties(precincts);
-                double populationEquality = calculatePopulationEquality(demographics);
-                double politicalFairness = calculatePoliticalFairness(demographics);
-                double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
-                double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
-                DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties, deviationFromEnacted, deviationFromAverage);
-                /* Create the newDistrict */
-                districtsInDistricting.add(new District(demographics, hull, precincts, dm));
+                districtsInDistricting.add(constructDistrictFromPrecincts(precincts));
             }
-
+            Districting newDistricting = new Districting(districtsInDistricting);
+            em.persist(newDistricting);
         }
-
         em.getTransaction().commit();
+        System.out.println("YOO");
     }
 
     public static int calculateSplitCounties(ArrayList<Precinct> precincts) {
@@ -155,6 +134,28 @@ public class DatabaseWritingService {
 
     public static int calculateDeviationFromAverage(Geometry hull, Demographics d) {
         return 5;
+    }
+
+    public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
+        Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
+        // collectionJSON.put(new SingleFeatureGeoJson(hull.getCoordinates()).getJSON());
+        Demographics demographics = compileDemographics(precincts);
+        /* Calculate some stats to be attached to the district */
+        MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
+        Compactness compactness = new Compactness(.5,.6,.7);
+
+        int splitCounties = calculateSplitCounties(precincts);
+        double populationEquality = calculatePopulationEquality(demographics);
+        double politicalFairness = calculatePoliticalFairness(demographics);
+        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
+        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
+        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties, deviationFromEnacted, deviationFromAverage);
+        /* Create the newDistrict */
+        return new District(demographics, hull, precincts, dm);
     }
 
     public static Demographics compileDemographics(ArrayList<Precinct> precincts) {
@@ -194,14 +195,15 @@ public class DatabaseWritingService {
 
 
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
-        ArrayList<Precinct> precincts = new ArrayList<>();
+        ArrayList<Integer> queryKeys = new ArrayList<>();
         /* Access the pre-existing precinct objects and associate them */
         for (int i = 0; i < precinctKeys.length(); i++) {
-            int precinctKey = precinctKeys.getInt(i);
-            Precinct p = em.find(Precinct.class, precinctKey);
-            precincts.add(p);
+            queryKeys.add(precinctKeys.getInt(i));
         }
-        return precincts;
+        Query query = em.createQuery("SELECT p FROM Precinct p WHERE p.id in :ids");
+        query.setParameter("ids", queryKeys);
+        ArrayList<Precinct> resultList = new ArrayList<Precinct>(query.getResultList());
+        return resultList;
     }
 
 

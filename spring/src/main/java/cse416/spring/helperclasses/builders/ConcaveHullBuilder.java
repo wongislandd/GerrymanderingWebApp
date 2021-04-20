@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class ConcaveHullBuilder {
     ArrayList<Precinct> precincts;
 
+
     public ConcaveHullBuilder(ArrayList<Precinct> precincts){
         this.precincts = precincts;
     }

@@ -1,5 +1,6 @@
 package cse416.spring.controller;
 
+import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.service.DatabaseWritingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class DatabaseWritingController {
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
-    @PostMapping("/persistDistrictings")
+    @PostMapping("/writeDistrictings")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> persistDistrictings() throws IOException {
         service.persistDistrictings();
@@ -40,7 +41,10 @@ public class DatabaseWritingController {
     @PostMapping("/persistAll")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> test() throws IOException {
-        service.persistPrecinctsAndCounties();
+        service.persistPrecincts();
+        service.persistCounties();
+        service.persistDistrictings();
+        EntityManagerSingleton.getInstance().shutdown();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 

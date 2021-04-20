@@ -7,13 +7,13 @@ import javax.persistence.Id;
 
 @Entity
 public class MajorityMinorityDistrictsCount {
-    double blackDistricts;
-    double hispanicDistricts;
-    double asianDistricts;
-    double nativeDistricts;
+    int blackDistricts;
+    int hispanicDistricts;
+    int asianDistricts;
+    int nativeDistricts;
     private Long id;
 
-    public MajorityMinorityDistrictsCount(double blackDistricts, double hispanicDistricts, double asianDistricts, double nativeDistricts) {
+    public MajorityMinorityDistrictsCount(int blackDistricts, int hispanicDistricts, int asianDistricts, int nativeDistricts) {
         this.blackDistricts = blackDistricts;
         this.hispanicDistricts = hispanicDistricts;
         this.asianDistricts = asianDistricts;
@@ -25,38 +25,38 @@ public class MajorityMinorityDistrictsCount {
     }
 
     @Column
-    public double getBlackDistricts() {
+    public int getBlackDistricts() {
         return blackDistricts;
     }
 
-    public void setBlackDistricts(double blackDistricts) {
+    public void setBlackDistricts(int blackDistricts) {
         this.blackDistricts = blackDistricts;
     }
 
     @Column
-    public double getHispanicDistricts() {
+    public int getHispanicDistricts() {
         return hispanicDistricts;
     }
 
-    public void setHispanicDistricts(double hispanicDistricts) {
+    public void setHispanicDistricts(int hispanicDistricts) {
         this.hispanicDistricts = hispanicDistricts;
     }
 
     @Column
-    public double getAsianDistricts() {
+    public int getAsianDistricts() {
         return asianDistricts;
     }
 
-    public void setAsianDistricts(double asianDistricts) {
+    public void setAsianDistricts(int asianDistricts) {
         this.asianDistricts = asianDistricts;
     }
 
     @Column
-    public double getNativeDistricts() {
+    public int getNativeDistricts() {
         return nativeDistricts;
     }
 
-    public void setNativeDistricts(double nativeDistricts) {
+    public void setNativeDistricts(int nativeDistricts) {
         this.nativeDistricts = nativeDistricts;
     }
 
