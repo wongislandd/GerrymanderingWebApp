@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -97,6 +98,14 @@ public class DatabaseWritingService {
         em.getTransaction().begin();
         JSONObject jo = readFile("/json/NC/districtingExample.json");
         JSONArray districtings = jo.getJSONArray("districtings");
+        Query query = em.createQuery("SELECT p FROM Precinct p");
+        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
+        HashMap<Integer, Precinct> precinctHash = new HashMap<>();
+        /* Initialize the precinct hash map, containing all precincts before the loop*/
+        for (int i=0;i<allPrecincts.size();i++) {
+            precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
+        }
+
         /* For each districting */
         for (int i = 0; i < districtings.length(); i++) {
             // FeatureCollectionJSON collectionJSON = new FeatureCollectionJSON();
@@ -108,14 +117,14 @@ public class DatabaseWritingService {
                 String districtID = keys.next();
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
                 /* For each precinct ID in the district */
-                ArrayList<Precinct> precincts = getPrecinctObjectsFromKeys(precinctKeysInDistrict, em);
-                districtsInDistricting.add(constructDistrictFromPrecincts(precincts));
+                ArrayList<Precinct> precinctsInDistrict = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
+                districtsInDistricting.add(constructDistrictFromPrecincts(precinctsInDistrict));
             }
             Districting newDistricting = new Districting(districtsInDistricting);
+            System.out.println("Persisting districting " + i);
             em.persist(newDistricting);
         }
         em.getTransaction().commit();
-        System.out.println("YOO");
     }
 
     public static int calculateSplitCounties(ArrayList<Precinct> precincts) {
@@ -138,7 +147,8 @@ public class DatabaseWritingService {
 
     public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
         Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
-        // collectionJSON.put(new SingleFeatureGeoJson(hull.getCoordinates()).getJSON());
+        // lets try it
+
         Demographics demographics = compileDemographics(precincts);
         /* Calculate some stats to be attached to the district */
         MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
@@ -148,6 +158,7 @@ public class DatabaseWritingService {
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
         Compactness compactness = new Compactness(.5,.6,.7);
 
+        // Theres gonna be even more work once we actually put the formulas here -vv
         int splitCounties = calculateSplitCounties(precincts);
         double populationEquality = calculatePopulationEquality(demographics);
         double politicalFairness = calculatePoliticalFairness(demographics);
@@ -191,14 +202,21 @@ public class DatabaseWritingService {
         return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian,total_black,total_natives,total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
     }
 
+    public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys, HashMap<Integer, Precinct> precinctHash) {
+        ArrayList<Precinct> results = new ArrayList<>();
+        for (int i = 0; i < precinctKeys.length(); i++) {
+            results.add(precinctHash.get(precinctKeys.getInt(i)));
+        }
+        return results;
+    }
+
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
         ArrayList<Integer> queryKeys = new ArrayList<>();
         /* Access the pre-existing precinct objects and associate them */
         for (int i = 0; i < precinctKeys.length(); i++) {
             queryKeys.add(precinctKeys.getInt(i));
         }
-        Query query = em.createQuery("SELECT p FROM Precinct p WHERE p.id in :ids");
-        query.setParameter("ids", queryKeys);
+        Query query = em.createQuery("SELECT p FROM Precinct p");
         ArrayList<Precinct> resultList = new ArrayList<Precinct>(query.getResultList());
         return resultList;
     }

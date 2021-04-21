@@ -74,6 +74,8 @@ public class Districting {
         double totalPoliticalFairness = 0;
         double totalDeviationFromEnacted = 0;
         double totalDeviationFromAverage = 0;
+
+
         for (int i=0;i<districts.size();i++) {
             DistrictMeasures districtMeasures = districts.get(i).getMeasures();
             if (districtMeasures.getMajorityMinorityInfo().isBlackMajority()) {
