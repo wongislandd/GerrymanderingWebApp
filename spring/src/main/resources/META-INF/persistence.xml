@@ -13,9 +13,9 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql4.cs.stonybrook.edu:3306/orioles" />
             <property name="javax.persistence.jdbc.user" value="orioles" />
             <property name="javax.persistence.jdbc.password" value="changeit" />
-            <property name="hibernate.show_sql" value="false" />
+            <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
-
+    
     </persistence-unit>
 </persistence>

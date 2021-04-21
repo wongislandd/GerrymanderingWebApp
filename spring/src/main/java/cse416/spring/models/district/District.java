@@ -21,6 +21,10 @@ public class District {
 
     DistrictMeasures measures;
 
+    // cuz we use the precincts once to get the measures, geometry, etc. and never really need it again as far as i know
+    // wejhres jihu i feel like he will know this
+
+
     double objectiveFunctionScore;
 
     public District() {
@@ -59,10 +63,9 @@ public class District {
         this.geometry = geometry;
     }
 
-    // this means that if u call persist on a district then it'll also persist the
-    // precincts, i think it doesn't do it if the precinct already exists but MAYBE not
-    // maybe it does do it
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    /* It does it for every precinct once though which is weird I guess this is 2658 no matter how many districtings u do though
+    * so maybe its not that bad */
+    @ManyToMany(cascade = CascadeType.ALL)
     public Collection<Precinct> getPrecincts() {
         return precincts;
     }

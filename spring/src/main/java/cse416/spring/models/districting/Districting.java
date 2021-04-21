@@ -18,7 +18,6 @@ public class Districting {
     public Districting() {
 
     }
-
     public Districting(ArrayList<District> districts) {
         this.districts = districts;
         this.measures = compileDistrictingMeasures(districts);

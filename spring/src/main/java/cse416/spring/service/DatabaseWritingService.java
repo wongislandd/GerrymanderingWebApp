@@ -96,7 +96,7 @@ public class DatabaseWritingService {
     public static void persistDistrictings() throws IOException {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
-        JSONObject jo = readFile("/json/NC/districtingsMinified.json");
+        JSONObject jo = readFile("/json/NC/districtingsExample.json");
         JSONArray districtings = jo.getJSONArray("districtings");
         Query query = em.createQuery("SELECT p FROM Precinct p");
         ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
@@ -112,7 +112,7 @@ public class DatabaseWritingService {
         // which is a lot of times
 
         /* For each districting */
-        for (int i = 0; i < districtings.length(); i++) {
+        for (int i = 0; i < 50; i++) {
             // FeatureCollectionJSON collectionJSON = new FeatureCollectionJSON();
             final long startTime = System.currentTimeMillis();
             JSONObject districting = districtings.getJSONObject(i);
@@ -129,14 +129,14 @@ public class DatabaseWritingService {
             Districting newDistricting = new Districting(districtsInDistricting);
             em.persist(newDistricting);
             final long endTime = System.currentTimeMillis();
-            System.out.println("Created a districting in: " + (endTime - startTime) + "ms");
+            System.out.println("Created Districting " +(i+1) + " in: " + (endTime - startTime) + "ms");
         }
         final long startTime = System.currentTimeMillis();
         em.getTransaction().commit();
         final long endTime = System.currentTimeMillis();
         System.out.println("Committed in : " + (endTime - startTime) + "ms");
         // IF U WANNA LOOK AND SEE HOW U CAN SPEED THIS UP TOO IDK
-        // YA ILL PUSH AGAIN 1 SEC
+        // true lets see what it does
     }
 
     public static int calculateSplitCounties(ArrayList<Precinct> precincts) {
