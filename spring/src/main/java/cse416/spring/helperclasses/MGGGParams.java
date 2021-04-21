@@ -1,17 +1,11 @@
 package cse416.spring.helperclasses;
 
-import cse416.spring.models.JobSummary;
-
 import javax.persistence.*;
 
 @Entity
 public class MGGGParams {
-    private Long id;
-
-    @Column
+    private long id;
     int coolingPeriod;
-
-    @Column
     double maxPopulationDiff;
 
     public MGGGParams(int coolingPeriod, double maxPopulationDiff) {
@@ -23,6 +17,7 @@ public class MGGGParams {
 
     }
 
+    @Column(name="cooling_period")
     public int getCoolingPeriod() {
         return coolingPeriod;
     }
@@ -31,6 +26,7 @@ public class MGGGParams {
         this.coolingPeriod = coolingPeriod;
     }
 
+    @Column(name="max_population_diff")
     public double getMaxPopulationDiff() {
         return maxPopulationDiff;
     }
@@ -41,11 +37,11 @@ public class MGGGParams {
 
     @Id
     @GeneratedValue
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

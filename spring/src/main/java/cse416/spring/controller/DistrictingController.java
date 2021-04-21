@@ -2,8 +2,7 @@ package cse416.spring.controller;
 
 import cse416.spring.helperclasses.Server;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
-import cse416.spring.models.Districting;
-import cse416.spring.models.DistrictingConstraints;
+import cse416.spring.models.districting.DistrictingConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

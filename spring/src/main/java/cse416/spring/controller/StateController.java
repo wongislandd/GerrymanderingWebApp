@@ -1,22 +1,17 @@
 package cse416.spring.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.helperclasses.Server;
-import cse416.spring.models.Districting;
-import cse416.spring.models.DistrictingConstraints;
-import cse416.spring.models.Job;
-import cse416.spring.models.JobSummary;
+import cse416.spring.models.districting.Districting;
+import cse416.spring.models.job.Job;
+import cse416.spring.models.job.JobSummary;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
