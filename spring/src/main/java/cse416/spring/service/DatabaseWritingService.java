@@ -102,21 +102,37 @@ public class DatabaseWritingService {
         /* Create threads to do work */
         ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
         AtomicBoolean availableRef = new AtomicBoolean(true);
-        int numThreads = 2;
-        int workForEachThread = 3;
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManager em = emf.createEntityManager();
+        HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
+
+        int numThreads = 4;
+        int workForEachThread = 50;
         for (int i=1; i<numThreads+1;i++) {
-            DatabaseWriterThread newThread = new DatabaseWriterThread("T" +i, districtings, (i-1)*workForEachThread, workForEachThread*i, availableRef);
+            DatabaseWriterThread newThread = new DatabaseWriterThread("T" +i, precinctHash, districtings, (i-1)*workForEachThread, workForEachThread*i, availableRef);
             threads.add(newThread);
         }
         /* Start Multithreading */
         for (int i=0;i<threads.size();i++) {
             threads.get(i).start();
         }
+        em.close();
+        emf.close();
     }
 
 // Have a districting store it's JSON but not a reference to a collection of districts
 // Districts
-
+    public static HashMap<Integer, Precinct> getPrecinctHash(EntityManager em) {
+        Query query = em.createQuery("SELECT p FROM Precinct p");
+        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
+        HashMap<Integer, Precinct> precinctHash = new HashMap<>();
+        /* Initialize the precinct hash map, containing all precincts before the loop*/
+        for (int i = 0; i < allPrecincts.size(); i++) {
+            precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
+        }
+        return precinctHash;
+    }
 
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
         ArrayList<Integer> queryKeys = new ArrayList<>();

@@ -31,15 +31,14 @@ public class DatabaseWriterThread extends Thread {
     int rangeEndExclusive;
     AtomicBoolean availableRef;
 
-    public DatabaseWriterThread(String name, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
+    public DatabaseWriterThread(String name, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
         this.name = name;
         /* Create the entity manager */
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         this.em = emf.createEntityManager();
         /* Create the precinct hash, each thread must have their own version
         * or else Hibernate will consider the precinct objects within them to be detached*/
-        precinctHash = getPrecinctHash(em);
-        System.out.println("Creating Precinct Hash");
+        this.precinctHash = precinctHash;
         this.districtings = districtings;
         this.rangeStart = rangeStart;
         this.rangeEndExclusive = rangeEndExclusive;
@@ -80,8 +79,7 @@ public class DatabaseWriterThread extends Thread {
 
         boolean first = true;
         while (true) {
-            if (availableRef.get()) {
-                availableRef.set(false);
+            if (availableRef.compareAndSet(true, false)) {
                 System.out.println("[THREAD " + name + "] Starting commit");
                 final long startTime = System.currentTimeMillis();
                 em.getTransaction().commit();
@@ -181,15 +179,6 @@ public class DatabaseWriterThread extends Thread {
         return new District(districtNumber, demographics, dm, precinctKeysInDistrict);
     }
 
-    public HashMap<Integer, Precinct> getPrecinctHash(EntityManager em) {
-        Query query = em.createQuery("SELECT p FROM Precinct p");
-        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
-        precinctHash = new HashMap<>();
-        /* Initialize the precinct hash map, containing all precincts before the loop*/
-        for (int i = 0; i < allPrecincts.size(); i++) {
-            precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
-        }
-        return precinctHash;
-    }
+
 
 }
