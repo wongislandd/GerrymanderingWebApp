@@ -52,11 +52,15 @@ export async function getJobs(state) {
 
 export async function loadIncumbents(state) {
   // "statename" is a placeholder
-  let fullUrl = baseURL + "/statename/loadIncumbents";
+  let fullUrl = baseURL + "/states/statename/loadIncumbents";
   const response = await fetch(fullUrl);
   let body = await response.json();
 
   let incumbents = body;
+
+  console.log("Type: " + typeof(incumbents));
+  console.log("Result:");
+  console.log(incumbents);
 
   return incumbents;
 }

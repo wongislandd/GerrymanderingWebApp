@@ -19,6 +19,7 @@ import LabelAndInfoIcon from "../../StatisticComponents/LabelAndInfoIcon";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import { connect } from "react-redux";
 import IncumbentModal from "./IncumbentModal";
+import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 
 class ConstraintSelection extends Component {
   handleSwitch(e, key) {

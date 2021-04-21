@@ -15,12 +15,15 @@ class IncumbentModal extends Component {
 
   // Fetch the incumbents for the chosen state
   componentDidMount() {
-    this.loadIncumbents();
+    NetworkingUtilities.loadIncumbents(this.props.CurrentState);
   }
 
-  async loadIncumbents() {
-    NetworkingUtilities.loadIncumbents().then(results => this.props.IncumbentProtectionInfo = results);
-  }
+  // async loadIncumbents() {
+  //   NetworkingUtilities.loadIncumbents(this.props.CurrentState).then(results => {
+  //     //Object.assign(this.props.IncumbentProtectionInfo, results);
+  //     //this.props.IncumbentProtectionInfo = results;
+  //   })
+  // }
 
   render() {
     return (
@@ -56,7 +59,7 @@ class IncumbentModal extends Component {
           }
         >
           <Row>
-            {Object.keys(this.props.IncumbentProtectionInfo).map((key) => {
+            {Object.keys(NetworkingUtilities.loadIncumbents(this.props.CurrentState)).map((key) => {
               return (
                 <Col s={4} key={key}>
                   <Row>
@@ -66,7 +69,7 @@ class IncumbentModal extends Component {
                           id={key + "-protection-checkbox"}
                           className="incumbent-protection-option"
                           value={key}
-                          checked={this.props.IncumbentProtectionInfo[key]}
+                          checked={NetworkingUtilities.loadIncumbents(this.props.CurrentState)[key]}
                           onChange={(e) =>
                             this.props.updateIncumbentProtection(
                               key,

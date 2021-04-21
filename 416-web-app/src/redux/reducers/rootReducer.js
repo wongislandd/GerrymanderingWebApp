@@ -20,6 +20,7 @@ const defaultDistricting = new Districting(
 
 /* Initial State */
 const initState = {
+
   DisplayPrecincts: false,
   DisplayCounties: false,
   DisplayDistricts: true,
@@ -83,7 +84,7 @@ const initState = {
     "Stella Pang": false,
     "Jihu Mun": false,
     "Jim Huynh": false,
-    "Christopher Wong": true,
+    "Christopher Wong": true, 
   },
 
 
