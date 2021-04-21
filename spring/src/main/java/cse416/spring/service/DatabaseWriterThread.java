@@ -20,6 +20,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DatabaseWriterThread extends Thread{
     String name;
@@ -28,8 +29,9 @@ public class DatabaseWriterThread extends Thread{
     HashMap<Integer, Precinct> precinctHash;
     int rangeStart;
     int rangeEndExclusive;
+    AtomicBoolean availableRef;
 
-    public DatabaseWriterThread(String name, JSONArray districtings, int rangeStart, int rangeEndExclusive) {
+    public DatabaseWriterThread(String name, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
         this.name = name;
         /* Create the entity manager */
         EntityManagerFactory emf = Persistence.createEntityManagerFactory( "orioles_db" );
@@ -46,6 +48,7 @@ public class DatabaseWriterThread extends Thread{
         this.districtings = districtings;
         this.rangeStart = rangeStart;
         this.rangeEndExclusive = rangeEndExclusive;
+        this.availableRef = availableRef;
     }
 
     @Override
@@ -76,10 +79,25 @@ public class DatabaseWriterThread extends Thread{
             final long endTime = System.currentTimeMillis();
             System.out.println("[THREAD " + name + "] Created Districting " +(i+1) + " in: " + (endTime - startTime) + "ms");
         }
-        final long startTime = System.currentTimeMillis();
-        em.getTransaction().commit();
-        final long endTime = System.currentTimeMillis();
-        System.out.println("[THREAD " + name + "] Committed in : " + (endTime - startTime) + "ms");
+
+        boolean first = true;
+        while(true) {
+            if (availableRef.get()) {
+                availableRef.set(false);
+                System.out.println("[THREAD " + name + "] Starting commit");
+                final long startTime = System.currentTimeMillis();
+                em.getTransaction().commit();
+                final long endTime = System.currentTimeMillis();
+                System.out.println("[THREAD " + name + "] Committed in : " + (endTime - startTime) + "ms");
+                availableRef.set(true);
+                break;
+            } else {
+                if (first) {
+                    System.out.println("[THREAD " + name + "] Ready and waiting to commit.");
+                    first = false;
+                }
+            }
+        }
         em.close();
     }
 
@@ -107,30 +125,6 @@ public class DatabaseWriterThread extends Thread{
 
     public static int calculateDeviationFromAverage(Geometry hull, Demographics d) {
         return 5;
-    }
-
-    public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
-        //Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
-        // lets try it
-
-        Demographics demographics = compileDemographics(precincts);
-        /* Calculate some stats to be attached to the district */
-        MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
-        Compactness compactness = new Compactness(.5,.6,.7);
-
-        // Theres gonna be even more work once we actually put the formulas here -vv
-        int splitCounties = calculateSplitCounties(precincts);
-        double populationEquality = calculatePopulationEquality(demographics);
-        double politicalFairness = calculatePoliticalFairness(demographics);
-//        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
-//        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
-        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
-        /* Create the newDistrict */
-        return new District(demographics, precincts, dm);
     }
 
     public static Demographics compileDemographics(ArrayList<Precinct> precincts) {
@@ -166,4 +160,27 @@ public class DatabaseWriterThread extends Thread{
         return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian,total_black,total_natives,total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
     }
 
+    public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
+        //Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
+        // lets try it
+
+        Demographics demographics = compileDemographics(precincts);
+        /* Calculate some stats to be attached to the district */
+        MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
+                demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
+        Compactness compactness = new Compactness(.5,.6,.7);
+
+        // Theres gonna be even more work once we actually put the formulas here -vv
+        int splitCounties = calculateSplitCounties(precincts);
+        double populationEquality = calculatePopulationEquality(demographics);
+        double politicalFairness = calculatePoliticalFairness(demographics);
+//        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
+//        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
+        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
+        /* Create the newDistrict */
+        return new District(demographics, precincts, dm);
+    }
 }

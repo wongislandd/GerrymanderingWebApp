@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DatabaseWritingService {
 
@@ -100,10 +101,11 @@ public class DatabaseWritingService {
         JSONArray districtings = jo.getJSONArray("districtings");
         /* Create threads to do work */
         ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
-        DatabaseWriterThread newThread = new DatabaseWriterThread("ONE", districtings, 0, 50);
-        DatabaseWriterThread newThread2 = new DatabaseWriterThread("TWO", districtings, 50, 100);
-        DatabaseWriterThread newThread3 = new DatabaseWriterThread("THREE", districtings, 100, 150);
-        DatabaseWriterThread newThread4 = new DatabaseWriterThread("FOUR", districtings, 150, 200);
+        AtomicBoolean availableRef = new AtomicBoolean(true);
+        DatabaseWriterThread newThread = new DatabaseWriterThread("ONE", districtings, 0, 5, availableRef);
+        DatabaseWriterThread newThread2 = new DatabaseWriterThread("TWO", districtings, 5, 10, availableRef);
+        DatabaseWriterThread newThread3 = new DatabaseWriterThread("THREE", districtings, 10, 15, availableRef);
+        DatabaseWriterThread newThread4 = new DatabaseWriterThread("FOUR", districtings, 15, 20, availableRef);
         threads.add(newThread);
         threads.add(newThread2);
         threads.add(newThread3);
@@ -114,9 +116,8 @@ public class DatabaseWritingService {
         }
     }
 
-
-
-
+// Have a districting store it's JSON but not a reference to a collection of districts
+// Districts
 
 
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
