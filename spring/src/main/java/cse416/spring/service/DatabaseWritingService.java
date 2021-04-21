@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import org.springframework.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
@@ -94,133 +96,28 @@ public class DatabaseWritingService {
     }
 
     public static void persistDistrictings() throws IOException {
-        EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
-        em.getTransaction().begin();
         JSONObject jo = readFile("/json/NC/districtingsExample.json");
         JSONArray districtings = jo.getJSONArray("districtings");
-        Query query = em.createQuery("SELECT p FROM Precinct p");
-        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
-        HashMap<Integer, Precinct> precinctHash = new HashMap<>();
-        /* Initialize the precinct hash map, containing all precincts before the loop*/
-        for (int i=0;i<allPrecincts.size();i++) {
-            precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
+        /* Create threads to do work */
+        ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
+        DatabaseWriterThread newThread = new DatabaseWriterThread("ONE", districtings, 0, 50);
+        DatabaseWriterThread newThread2 = new DatabaseWriterThread("TWO", districtings, 50, 100);
+        DatabaseWriterThread newThread3 = new DatabaseWriterThread("THREE", districtings, 100, 150);
+        DatabaseWriterThread newThread4 = new DatabaseWriterThread("FOUR", districtings, 150, 200);
+        threads.add(newThread);
+        threads.add(newThread2);
+        threads.add(newThread3);
+        threads.add(newThread4);
+        System.out.println("Beginning Multithreading");
+        for (int i=0;i<threads.size();i++) {
+            threads.get(i).start();
         }
-
-        // i think the commiting might take a long time because
-        // i think something to do with the Cascading makes it so
-        // every precinct is also being updated somehow EVERYTIME we update a district
-        // which is a lot of times
-
-        /* For each districting */
-        for (int i = 0; i < districtings.length(); i++) {
-            // FeatureCollectionJSON collectionJSON = new FeatureCollectionJSON();
-            final long startTime = System.currentTimeMillis();
-            JSONObject districting = districtings.getJSONObject(i);
-            Iterator<String> keys = districting.keys();
-            ArrayList<District> districtsInDistricting = new ArrayList<>();
-            /* For each district in the districting */
-            while (keys.hasNext()) {
-                String districtID = keys.next();
-                JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
-                /* For each precinct ID in the district */
-                ArrayList<Precinct> precinctsInDistrict = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
-                districtsInDistricting.add(constructDistrictFromPrecincts(precinctsInDistrict));
-            }
-            Districting newDistricting = new Districting(districtsInDistricting);
-            em.persist(newDistricting);
-            final long endTime = System.currentTimeMillis();
-            System.out.println("Created Districting " +(i+1) + " in: " + (endTime - startTime) + "ms");
-        }
-        final long startTime = System.currentTimeMillis();
-        em.getTransaction().commit();
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Committed in : " + (endTime - startTime) + "ms");
-        // IF U WANNA LOOK AND SEE HOW U CAN SPEED THIS UP TOO IDK
-        // true lets see what it does
     }
 
-    public static int calculateSplitCounties(ArrayList<Precinct> precincts) {
-        return 5;
-    }
 
-    public static int calculatePopulationEquality(Demographics d) {
-        return 5;
-    }
-    public static int calculatePoliticalFairness(Demographics d) {
-        return 5;
-    }
-    public static int calculateDeviationFromEnacted(Geometry hull, Demographics d) {
-        return 5;
-    }
 
-    public static int calculateDeviationFromAverage(Geometry hull, Demographics d) {
-        return 5;
-    }
 
-    public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
-        //Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
-        // lets try it
 
-        Demographics demographics = compileDemographics(precincts);
-        /* Calculate some stats to be attached to the district */
-        MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
-        Compactness compactness = new Compactness(.5,.6,.7);
-
-        // Theres gonna be even more work once we actually put the formulas here -vv
-        int splitCounties = calculateSplitCounties(precincts);
-        double populationEquality = calculatePopulationEquality(demographics);
-        double politicalFairness = calculatePoliticalFairness(demographics);
-//        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
-//        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
-        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
-        /* Create the newDistrict */
-        return new District(demographics, precincts, dm);
-    }
-
-    public static Demographics compileDemographics(ArrayList<Precinct> precincts) {
-        int total_democrats = 0;
-        int total_republicans = 0;
-        int total_otherParty = 0;
-        int total_asian = 0;
-        int total_black = 0;
-        int total_natives = 0;
-        int total_pacific = 0;
-        int total_whiteHispanic = 0;
-        int total_whiteNonHispanic = 0;
-        int total_otherRace = 0;
-        int total_TP = 0;
-        int total_VAP = 0;
-        int total_CVAP = 0;
-        for (int i=0;i<precincts.size();i++) {
-            Demographics currentPrecinctDemographics = precincts.get(i).getDemographics();
-            total_democrats += currentPrecinctDemographics.getDemocrats();
-            total_republicans += currentPrecinctDemographics.getRepublicans();
-            total_otherParty += currentPrecinctDemographics.getOtherParty();
-            total_asian += currentPrecinctDemographics.getAsian();
-            total_black += currentPrecinctDemographics.getBlack();
-            total_natives += currentPrecinctDemographics.getNatives();
-            total_pacific += currentPrecinctDemographics.getPacific();
-            total_whiteHispanic += currentPrecinctDemographics.getWhiteHispanic();
-            total_whiteNonHispanic += currentPrecinctDemographics.getWhiteNonHispanic();
-            total_otherRace += currentPrecinctDemographics.getOtherRace();
-            total_TP += currentPrecinctDemographics.getTP();
-            total_VAP += currentPrecinctDemographics.getVAP();
-            total_CVAP += currentPrecinctDemographics.getCVAP();
-        }
-        return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian,total_black,total_natives,total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
-    }
-
-    public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys, HashMap<Integer, Precinct> precinctHash) {
-        ArrayList<Precinct> results = new ArrayList<>();
-        for (int i = 0; i < precinctKeys.length(); i++) {
-            results.add(precinctHash.get(precinctKeys.getInt(i)));
-        }
-        return results;
-    }
 
     public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
         ArrayList<Integer> queryKeys = new ArrayList<>();
