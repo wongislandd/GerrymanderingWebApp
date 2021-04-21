@@ -51,7 +51,7 @@ public class StateController {
     public ResponseEntity<String> loadIncumbents() {
         try {
             // Currently just returns a hardcoded list of incumbents
-            String body = "{\"Jimothy\": \"false\", \"Jim Jam\": \"false\", \"James\": \"false\", \"Gym\": \"false\"}";
+            String body = "{\"Jimothy\": false, \"Jim Jam\": false, \"James\": false, \"Gym\": false}";
             return new ResponseEntity<>(body, HttpStatus.OK);
         }
         catch (Exception ex) {
