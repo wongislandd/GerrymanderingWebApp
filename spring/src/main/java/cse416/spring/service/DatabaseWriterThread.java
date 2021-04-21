@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DatabaseWriterThread extends Thread{
+public class DatabaseWriterThread extends Thread {
     String name;
     EntityManager em;
     JSONArray districtings;
@@ -34,17 +34,12 @@ public class DatabaseWriterThread extends Thread{
     public DatabaseWriterThread(String name, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
         this.name = name;
         /* Create the entity manager */
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory( "orioles_db" );
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         this.em = emf.createEntityManager();
-        /* Create the precinct hash */
+        /* Create the precinct hash, each thread must have their own version
+        * or else Hibernate will consider the precinct objects within them to be detached*/
+        precinctHash = getPrecinctHash(em);
         System.out.println("Creating Precinct Hash");
-        Query query = em.createQuery("SELECT p FROM Precinct p");
-        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
-        precinctHash = new HashMap<>();
-        /* Initialize the precinct hash map, containing all precincts before the loop*/
-        for (int i=0;i<allPrecincts.size();i++) {
-            precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
-        }
         this.districtings = districtings;
         this.rangeStart = rangeStart;
         this.rangeEndExclusive = rangeEndExclusive;
@@ -69,26 +64,29 @@ public class DatabaseWriterThread extends Thread{
             /* For each district in the districting */
             while (keys.hasNext()) {
                 String districtID = keys.next();
+                int districtNumber = Integer.parseInt(districtID);
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
-                /* For each precinct ID in the district */
-                ArrayList<Precinct> precinctsInDistrict = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
-                districtsInDistricting.add(constructDistrictFromPrecincts(precinctsInDistrict));
+                District d = constructDistrictFromJSONArray(districtNumber, precinctKeysInDistrict);
+                /* Add the district to the list to be used for calculating measures later */
+                districtsInDistricting.add(d);
+                /* Persist the districting, seems like the ID is set after the persist, but I feel like this can go weird with the threads */
+                em.persist(d);
             }
             Districting newDistricting = new Districting(districtsInDistricting);
             em.persist(newDistricting);
             final long endTime = System.currentTimeMillis();
-            System.out.println("[THREAD " + name + "] Created Districting " +(i+1) + " in: " + (endTime - startTime) + "ms");
+            System.out.println("[THREAD " + name + "] Created Districting " + (i + 1) + " in: " + (endTime - startTime) + "ms");
         }
 
         boolean first = true;
-        while(true) {
+        while (true) {
             if (availableRef.get()) {
                 availableRef.set(false);
                 System.out.println("[THREAD " + name + "] Starting commit");
                 final long startTime = System.currentTimeMillis();
                 em.getTransaction().commit();
                 final long endTime = System.currentTimeMillis();
-                System.out.println("[THREAD " + name + "] Committed in : " + (endTime - startTime) + "ms");
+                System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
                 availableRef.set(true);
                 break;
             } else {
@@ -116,9 +114,11 @@ public class DatabaseWriterThread extends Thread{
     public static int calculatePopulationEquality(Demographics d) {
         return 5;
     }
+
     public static int calculatePoliticalFairness(Demographics d) {
         return 5;
     }
+
     public static int calculateDeviationFromEnacted(Geometry hull, Demographics d) {
         return 5;
     }
@@ -141,7 +141,7 @@ public class DatabaseWriterThread extends Thread{
         int total_TP = 0;
         int total_VAP = 0;
         int total_CVAP = 0;
-        for (int i=0;i<precincts.size();i++) {
+        for (int i = 0; i < precincts.size(); i++) {
             Demographics currentPrecinctDemographics = precincts.get(i).getDemographics();
             total_democrats += currentPrecinctDemographics.getDemocrats();
             total_republicans += currentPrecinctDemographics.getRepublicans();
@@ -157,13 +157,11 @@ public class DatabaseWriterThread extends Thread{
             total_VAP += currentPrecinctDemographics.getVAP();
             total_CVAP += currentPrecinctDemographics.getCVAP();
         }
-        return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian,total_black,total_natives,total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
+        return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian, total_black, total_natives, total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
     }
 
-    public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
-        //Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
-        // lets try it
-
+    public District constructDistrictFromJSONArray(int districtNumber, JSONArray precinctKeysInDistrict) {
+        ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
         Demographics demographics = compileDemographics(precincts);
         /* Calculate some stats to be attached to the district */
         MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
@@ -171,9 +169,8 @@ public class DatabaseWriterThread extends Thread{
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
-        Compactness compactness = new Compactness(.5,.6,.7);
+        Compactness compactness = new Compactness(.5, .6, .7);
 
-        // Theres gonna be even more work once we actually put the formulas here -vv
         int splitCounties = calculateSplitCounties(precincts);
         double populationEquality = calculatePopulationEquality(demographics);
         double politicalFairness = calculatePoliticalFairness(demographics);
@@ -181,6 +178,18 @@ public class DatabaseWriterThread extends Thread{
 //        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
         DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
         /* Create the newDistrict */
-        return new District(demographics, precincts, dm);
+        return new District(districtNumber, demographics, dm, precinctKeysInDistrict);
     }
+
+    public HashMap<Integer, Precinct> getPrecinctHash(EntityManager em) {
+        Query query = em.createQuery("SELECT p FROM Precinct p");
+        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
+        precinctHash = new HashMap<>();
+        /* Initialize the precinct hash map, containing all precincts before the loop*/
+        for (int i = 0; i < allPrecincts.size(); i++) {
+            precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
+        }
+        return precinctHash;
+    }
+
 }

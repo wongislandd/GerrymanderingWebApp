@@ -1,10 +1,13 @@
 package cse416.spring.models.district;
 
 import com.vividsolutions.jts.geom.Geometry;
+import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.hibernate.annotations.Type;
 import org.hibernate.spatial.JTSGeometryType;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,11 +16,11 @@ import java.util.Collection;
 public class District {
     private long id;
 
+    int districtNumber;
+
     Demographics demographics;
 
-    Geometry geometry;
-
-    Collection<Precinct> precincts;
+    JSONObject precinctKeys;
 
     DistrictMeasures measures;
 
@@ -26,7 +29,6 @@ public class District {
     public District() {
 
     }
-
 
     /**
      * Calculate the difference between this district and another district
@@ -38,6 +40,14 @@ public class District {
         return 1;
     }
 
+    @Column
+    public int getDistrictNumber() {
+        return districtNumber;
+    }
+
+    public void setDistrictNumber(int districtNumber) {
+        this.districtNumber = districtNumber;
+    }
 
     @Id
     @GeneratedValue
@@ -49,23 +59,14 @@ public class District {
         this.id = id;
     }
 
-
-    @Transient
-    public Geometry getGeometry() {
-        return geometry;
+    @Column(columnDefinition = "TEXT")
+    @Convert(converter = JSONObjectConverter.class)
+    public JSONObject getPrecinctKeys() {
+        return precinctKeys;
     }
 
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    public Collection<Precinct> getPrecincts() {
-        return precincts;
-    }
-
-    public void setPrecincts(Collection<Precinct> precincts) {
-        this.precincts = precincts;
+    public void setPrecinctKeys(JSONObject precinctKeys) {
+        this.precinctKeys = precinctKeys;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -95,10 +96,11 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    public District(Demographics demographics, Collection<Precinct> precincts, DistrictMeasures measures) {
+    public District(int districtNumber, Demographics demographics, DistrictMeasures measures, JSONArray precinctKeys) {
+        this.districtNumber = districtNumber;
         this.demographics = demographics;
-        this.precincts = precincts;
         this.measures = measures;
+        this.precinctKeys = new JSONObject().put("precincts", precinctKeys);
     }
 
 }

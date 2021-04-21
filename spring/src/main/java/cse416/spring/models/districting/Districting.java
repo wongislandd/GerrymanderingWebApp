@@ -1,8 +1,11 @@
 package cse416.spring.models.districting;
 
+import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictMeasures;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +13,9 @@ import java.util.Collection;
 
 @Entity
 public class Districting {
-    Collection<District> districts;
+
+    JSONObject districtKeys;
+
     DistrictingMeasures measures;
     double ObjectiveFunctionScore;
     private long id;
@@ -18,19 +23,26 @@ public class Districting {
     public Districting() {
 
     }
+
     public Districting(ArrayList<District> districts) {
-        this.districts = districts;
+        JSONArray districtKeysArr = new JSONArray();
+        for (int i=0;i<districts.size();i++) {
+            districtKeysArr.put(districts.get(i).getId());
+        }
+        this.districtKeys = new JSONObject().put("districts", districtKeys);
         this.measures = compileDistrictingMeasures(districts);
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    public Collection<District> getDistricts() {
-        return districts;
+    @Column(columnDefinition = "TEXT")
+    @Convert(converter = JSONObjectConverter.class)
+    public JSONObject getDistrictKeys() {
+        return districtKeys;
     }
 
-    public void setDistricts(Collection<District> districts) {
-        this.districts = districts;
+    public void setDistrictKeys(JSONObject districtKeys) {
+        this.districtKeys = districtKeys;
     }
+
 
     @OneToOne(cascade = CascadeType.ALL)
     public DistrictingMeasures getMeasures() {

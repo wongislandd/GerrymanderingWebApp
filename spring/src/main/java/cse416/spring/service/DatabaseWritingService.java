@@ -102,15 +102,13 @@ public class DatabaseWritingService {
         /* Create threads to do work */
         ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
         AtomicBoolean availableRef = new AtomicBoolean(true);
-        DatabaseWriterThread newThread = new DatabaseWriterThread("ONE", districtings, 0, 5, availableRef);
-        DatabaseWriterThread newThread2 = new DatabaseWriterThread("TWO", districtings, 5, 10, availableRef);
-        DatabaseWriterThread newThread3 = new DatabaseWriterThread("THREE", districtings, 10, 15, availableRef);
-        DatabaseWriterThread newThread4 = new DatabaseWriterThread("FOUR", districtings, 15, 20, availableRef);
-        threads.add(newThread);
-        threads.add(newThread2);
-        threads.add(newThread3);
-        threads.add(newThread4);
-        System.out.println("Beginning Multithreading");
+        int numThreads = 2;
+        int workForEachThread = 3;
+        for (int i=1; i<numThreads+1;i++) {
+            DatabaseWriterThread newThread = new DatabaseWriterThread("T" +i, districtings, (i-1)*workForEachThread, workForEachThread*i, availableRef);
+            threads.add(newThread);
+        }
+        /* Start Multithreading */
         for (int i=0;i<threads.size();i++) {
             threads.get(i).start();
         }
