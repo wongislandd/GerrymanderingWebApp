@@ -23,7 +23,7 @@ public class Districting {
         this.measures = compileDistrictingMeasures(districts);
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     public Collection<District> getDistricts() {
         return districts;
     }

@@ -112,7 +112,7 @@ public class DatabaseWritingService {
         // which is a lot of times
 
         /* For each districting */
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < districtings.length(); i++) {
             // FeatureCollectionJSON collectionJSON = new FeatureCollectionJSON();
             final long startTime = System.currentTimeMillis();
             JSONObject districting = districtings.getJSONObject(i);

@@ -3,6 +3,7 @@ package cse416.spring.controller;
 import cse416.spring.helperclasses.Server;
 import cse416.spring.helperclasses.ConstrainedDistrictings;
 import cse416.spring.models.districting.DistrictingConstraints;
+import cse416.spring.service.DistrictingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.nio.file.Files;
 @RequestMapping("/districting")
 public class DistrictingController {
     Server server;
+    DistrictingService service = new DistrictingService();
 
     @Autowired
     ConstrainedDistrictings currentConstraintedDistrictings;
@@ -25,6 +27,13 @@ public class DistrictingController {
     public DistrictingController(Server server, ConstrainedDistrictings currentConstraintedDistrictings) {
         this.server = server;
         this.currentConstraintedDistrictings = currentConstraintedDistrictings;
+    }
+
+    @PostMapping(value = "getInterestingDistrictings")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> getInterestingDistrictings() {
+        service.getInterestingDistrictings();
+        return new ResponseEntity<>("hi", HttpStatus.OK);
     }
 
     /* Load a particular districting based on ID */
