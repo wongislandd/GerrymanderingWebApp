@@ -50,7 +50,7 @@ public class District {
     }
 
 
-    @Lob
+    @Transient
     public Geometry getGeometry() {
         return geometry;
     }
@@ -59,6 +59,9 @@ public class District {
         this.geometry = geometry;
     }
 
+    // this means that if u call persist on a district then it'll also persist the
+    // precincts, i think it doesn't do it if the precinct already exists but MAYBE not
+    // maybe it does do it
     @ManyToMany(cascade = CascadeType.PERSIST)
     public Collection<Precinct> getPrecincts() {
         return precincts;
@@ -95,13 +98,10 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    public District(Demographics demographics, Geometry hull, Collection<Precinct> precincts, DistrictMeasures measures) {
+    public District(Demographics demographics, Collection<Precinct> precincts, DistrictMeasures measures) {
         this.demographics = demographics;
-        this.geometry = hull;
         this.precincts = precincts;
         this.measures = measures;
     }
-
-
 
 }

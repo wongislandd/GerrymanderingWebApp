@@ -20,14 +20,12 @@ public class DistrictMeasures {
 
     double deviationFromEnacted;
 
-    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness, double politicalFairness, int splitCounties, double deviationFromEnacted, double deviationFromAverage) {
+    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness, double politicalFairness, int splitCounties) {
         this.populationEquality = populationEquality;
         this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
         this.politicalFairness = politicalFairness;
         this.splitCounties = splitCounties;
-        this.deviationFromEnacted = deviationFromEnacted;
-        this.deviationFromAverage = deviationFromAverage;
     }
 
     public DistrictMeasures() {
@@ -80,7 +78,7 @@ public class DistrictMeasures {
         this.splitCounties = splitCounties;
     }
 
-    @Column
+    @Transient
     public double getDeviationFromEnacted() {
         return deviationFromEnacted;
     }
@@ -89,7 +87,7 @@ public class DistrictMeasures {
         this.deviationFromEnacted = deviationFromEnacted;
     }
 
-    @Column
+    @Transient
     public double getDeviationFromAverage() {
         return deviationFromAverage;
     }

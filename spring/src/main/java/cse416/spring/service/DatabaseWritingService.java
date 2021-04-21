@@ -96,7 +96,7 @@ public class DatabaseWritingService {
     public static void persistDistrictings() throws IOException {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
-        JSONObject jo = readFile("/json/NC/districtingExample.json");
+        JSONObject jo = readFile("/json/NC/districtingsMinified.json");
         JSONArray districtings = jo.getJSONArray("districtings");
         Query query = em.createQuery("SELECT p FROM Precinct p");
         ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
@@ -106,9 +106,15 @@ public class DatabaseWritingService {
             precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
         }
 
+        // i think the commiting might take a long time because
+        // i think something to do with the Cascading makes it so
+        // every precinct is also being updated somehow EVERYTIME we update a district
+        // which is a lot of times
+
         /* For each districting */
         for (int i = 0; i < districtings.length(); i++) {
             // FeatureCollectionJSON collectionJSON = new FeatureCollectionJSON();
+            final long startTime = System.currentTimeMillis();
             JSONObject districting = districtings.getJSONObject(i);
             Iterator<String> keys = districting.keys();
             ArrayList<District> districtsInDistricting = new ArrayList<>();
@@ -121,10 +127,16 @@ public class DatabaseWritingService {
                 districtsInDistricting.add(constructDistrictFromPrecincts(precinctsInDistrict));
             }
             Districting newDistricting = new Districting(districtsInDistricting);
-            System.out.println("Persisting districting " + i);
             em.persist(newDistricting);
+            final long endTime = System.currentTimeMillis();
+            System.out.println("Created a districting in: " + (endTime - startTime) + "ms");
         }
+        final long startTime = System.currentTimeMillis();
         em.getTransaction().commit();
+        final long endTime = System.currentTimeMillis();
+        System.out.println("Committed in : " + (endTime - startTime) + "ms");
+        // IF U WANNA LOOK AND SEE HOW U CAN SPEED THIS UP TOO IDK
+        // YA ILL PUSH AGAIN 1 SEC
     }
 
     public static int calculateSplitCounties(ArrayList<Precinct> precincts) {
@@ -146,7 +158,7 @@ public class DatabaseWritingService {
     }
 
     public static District constructDistrictFromPrecincts(ArrayList<Precinct> precincts) {
-        Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
+        //Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
         // lets try it
 
         Demographics demographics = compileDemographics(precincts);
@@ -162,11 +174,11 @@ public class DatabaseWritingService {
         int splitCounties = calculateSplitCounties(precincts);
         double populationEquality = calculatePopulationEquality(demographics);
         double politicalFairness = calculatePoliticalFairness(demographics);
-        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
-        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
-        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties, deviationFromEnacted, deviationFromAverage);
+//        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
+//        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
+        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
         /* Create the newDistrict */
-        return new District(demographics, hull, precincts, dm);
+        return new District(demographics, precincts, dm);
     }
 
     public static Demographics compileDemographics(ArrayList<Precinct> precincts) {
