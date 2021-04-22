@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DatabaseWriterThread extends Thread {
+public class DistrictingWriterThread extends Thread {
     String name;
     EntityManager em;
     JSONArray districtings;
@@ -31,7 +31,7 @@ public class DatabaseWriterThread extends Thread {
     int rangeEndExclusive;
     AtomicBoolean availableRef;
 
-    public DatabaseWriterThread(String name, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
+    public DistrictingWriterThread(String name, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
         this.name = name;
         /* Create the entity manager */
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
@@ -65,7 +65,8 @@ public class DatabaseWriterThread extends Thread {
                 String districtID = keys.next();
                 int districtNumber = Integer.parseInt(districtID);
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
-                District d = constructDistrictFromJSONArray(districtNumber, precinctKeysInDistrict);
+                ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
+                District d = new District(districtNumber, precincts);
                 /* Add the district to the list to be used for calculating measures later */
                 districtsInDistricting.add(d);
                 /* Persist the districting, seems like the ID is set after the persist, but I feel like this can go weird with the threads */
@@ -104,81 +105,6 @@ public class DatabaseWriterThread extends Thread {
         }
         return results;
     }
-
-    public static int calculateSplitCounties(ArrayList<Precinct> precincts) {
-        return 5;
-    }
-
-    public static int calculatePopulationEquality(Demographics d) {
-        return 5;
-    }
-
-    public static int calculatePoliticalFairness(Demographics d) {
-        return 5;
-    }
-
-    public static int calculateDeviationFromEnacted(Geometry hull, Demographics d) {
-        return 5;
-    }
-
-    public static int calculateDeviationFromAverage(Geometry hull, Demographics d) {
-        return 5;
-    }
-
-    public static Demographics compileDemographics(ArrayList<Precinct> precincts) {
-        int total_democrats = 0;
-        int total_republicans = 0;
-        int total_otherParty = 0;
-        int total_asian = 0;
-        int total_black = 0;
-        int total_natives = 0;
-        int total_pacific = 0;
-        int total_whiteHispanic = 0;
-        int total_whiteNonHispanic = 0;
-        int total_otherRace = 0;
-        int total_TP = 0;
-        int total_VAP = 0;
-        int total_CVAP = 0;
-        for (int i = 0; i < precincts.size(); i++) {
-            Demographics currentPrecinctDemographics = precincts.get(i).getDemographics();
-            total_democrats += currentPrecinctDemographics.getDemocrats();
-            total_republicans += currentPrecinctDemographics.getRepublicans();
-            total_otherParty += currentPrecinctDemographics.getOtherParty();
-            total_asian += currentPrecinctDemographics.getAsian();
-            total_black += currentPrecinctDemographics.getBlack();
-            total_natives += currentPrecinctDemographics.getNatives();
-            total_pacific += currentPrecinctDemographics.getPacific();
-            total_whiteHispanic += currentPrecinctDemographics.getWhiteHispanic();
-            total_whiteNonHispanic += currentPrecinctDemographics.getWhiteNonHispanic();
-            total_otherRace += currentPrecinctDemographics.getOtherRace();
-            total_TP += currentPrecinctDemographics.getTP();
-            total_VAP += currentPrecinctDemographics.getVAP();
-            total_CVAP += currentPrecinctDemographics.getCVAP();
-        }
-        return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian, total_black, total_natives, total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
-    }
-
-    public District constructDistrictFromJSONArray(int districtNumber, JSONArray precinctKeysInDistrict) {
-        ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
-        Demographics demographics = compileDemographics(precincts);
-        /* Calculate some stats to be attached to the district */
-        MajorityMinorityInfo minorityInfo = new MajorityMinorityInfo(
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN));
-        Compactness compactness = new Compactness(.5, .6, .7);
-
-        int splitCounties = calculateSplitCounties(precincts);
-        double populationEquality = calculatePopulationEquality(demographics);
-        double politicalFairness = calculatePoliticalFairness(demographics);
-//        double deviationFromEnacted = calculateDeviationFromEnacted(hull, demographics);
-//        double deviationFromAverage = calculateDeviationFromAverage(hull, demographics);
-        DistrictMeasures dm = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
-        /* Create the newDistrict */
-        return new District(districtNumber, demographics, dm, precinctKeysInDistrict);
-    }
-
 
 
 }

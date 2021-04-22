@@ -1,18 +1,9 @@
 package cse416.spring.service;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import cse416.spring.enums.MinorityPopulation;
-import cse416.spring.helperclasses.FeatureCollectionJSON;
 import cse416.spring.helperclasses.builders.ConcaveHullBuilder;
 import cse416.spring.helperclasses.EntityManagerSingleton;
-import cse416.spring.helperclasses.SingleFeatureGeoJson;
 import cse416.spring.models.county.County;
-import cse416.spring.models.district.Compactness;
-import cse416.spring.models.district.District;
-import cse416.spring.models.district.DistrictMeasures;
-import cse416.spring.models.district.MajorityMinorityInfo;
-import cse416.spring.models.districting.Districting;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
@@ -29,7 +20,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DatabaseWritingService {
@@ -86,6 +76,7 @@ public class DatabaseWritingService {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
         JSONObject jo = readFile("/json/NC/CountiesPrecinctsMapping.json");
+        HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
         Iterator<String> keys = jo.keys();
         /* For each county */
         while (keys.hasNext()) {
@@ -94,17 +85,16 @@ public class DatabaseWritingService {
             JSONObject county = jo.getJSONObject(key);
             String name = county.getString("name");
             JSONArray precinctKeys = county.getJSONArray("precincts");
-            ArrayList<Precinct> precincts = getPrecinctObjectsFromKeys(precinctKeys, em);
-            Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
+            ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, precinctHash);
             /* Get the precinct keys */
-            County c = new County(Integer.parseInt(key), name, precincts, hull);
+            County c = new County(Integer.parseInt(key), name, precincts);
             em.persist(c);
         }
         /* Commit and close */
         em.getTransaction().commit();
     }
 
-    public static boolean areThreadsAlive(ArrayList<DatabaseWriterThread> threads) {
+    public static boolean areThreadsAlive(ArrayList<DistrictingWriterThread> threads) {
         for (int i=0;i<threads.size();i++) {
             if (threads.get(i).isAlive()) {
                 return true;
@@ -127,10 +117,10 @@ public class DatabaseWritingService {
             JSONArray districtings = jo.getJSONArray("districtings");
             int numThreads = 5;
             int workForEachThread = 10;
-            ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
+            ArrayList<DistrictingWriterThread> threads = new ArrayList<>();
             AtomicBoolean availableRef = new AtomicBoolean(true);
             for (int j=1; j<numThreads+1;j++) {
-                DatabaseWriterThread newThread = new DatabaseWriterThread("T" +j, precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
+                DistrictingWriterThread newThread = new DistrictingWriterThread("T" +j, precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
                 threads.add(newThread);
             }
             /* Start Multithreading */
@@ -160,15 +150,12 @@ public class DatabaseWritingService {
         return precinctHash;
     }
 
-    public static ArrayList<Precinct> getPrecinctObjectsFromKeys(JSONArray precinctKeys, EntityManager em) {
-        ArrayList<Integer> queryKeys = new ArrayList<>();
-        /* Access the pre-existing precinct objects and associate them */
+    public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys, HashMap<Integer, Precinct> precinctHash) {
+        ArrayList<Precinct> results = new ArrayList<>();
         for (int i = 0; i < precinctKeys.length(); i++) {
-            queryKeys.add(precinctKeys.getInt(i));
+            results.add(precinctHash.get(precinctKeys.getInt(i)));
         }
-        Query query = em.createQuery("SELECT p FROM Precinct p");
-        ArrayList<Precinct> resultList = new ArrayList<Precinct>(query.getResultList());
-        return resultList;
+        return results;
     }
 
 }

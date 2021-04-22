@@ -1,6 +1,7 @@
 package cse416.spring.models.county;
 
 import com.vividsolutions.jts.geom.Geometry;
+import cse416.spring.helperclasses.builders.ConcaveHullBuilder;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +16,6 @@ public class County {
     int id;
     String name;
     Geometry geometry;
-
     String precinctKeys;
 
     public County() {
@@ -58,7 +58,7 @@ public class County {
         this.id = id;
     }
 
-    public County(int id, String name, ArrayList<Precinct> precincts, Geometry geometry) {
+    public County(int id, String name, ArrayList<Precinct> precincts) {
         this.id = id;
         this.name = name;
         JSONArray precinctKeysArr = new JSONArray();
@@ -66,8 +66,6 @@ public class County {
             precinctKeysArr.put(precincts.get(i).getId());
         }
         this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
-        this.geometry = geometry;
+        this.geometry = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
     }
-
-
 }
