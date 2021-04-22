@@ -56,7 +56,7 @@ public class DatabaseWriterThread extends Thread {
         /* For each districting */
         for (int i = rangeStart; i < rangeEndExclusive; i++) {
             // FeatureCollectionJSON collectionJSON = new FeatureCollectionJSON();
-            final long startTime = System.currentTimeMillis();
+            //final long startTime = System.currentTimeMillis();
             JSONObject districting = districtings.getJSONObject(i);
             Iterator<String> keys = districting.keys();
             ArrayList<District> districtsInDistricting = new ArrayList<>();
@@ -73,23 +73,23 @@ public class DatabaseWriterThread extends Thread {
             }
             Districting newDistricting = new Districting(districtsInDistricting);
             em.persist(newDistricting);
-            final long endTime = System.currentTimeMillis();
-            System.out.println("[THREAD " + name + "] Created Districting " + (i + 1) + " in: " + (endTime - startTime) + "ms");
+            //final long endTime = System.currentTimeMillis();
+            //System.out.println("[THREAD " + name + "] Created Districting " + (i + 1) + " in: " + (endTime - startTime) + "ms");
         }
 
         boolean first = true;
         while (true) {
             if (availableRef.compareAndSet(true, false)) {
-                System.out.println("[THREAD " + name + "] Starting commit");
-                final long startTime = System.currentTimeMillis();
+                //System.out.println("[THREAD " + name + "] Starting commit");
+                //final long startTime = System.currentTimeMillis();
                 em.getTransaction().commit();
-                final long endTime = System.currentTimeMillis();
-                System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
+                //final long endTime = System.currentTimeMillis();
+                //System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
                 availableRef.set(true);
                 break;
             } else {
                 if (first) {
-                    System.out.println("[THREAD " + name + "] Ready and waiting to commit.");
+                    //System.out.println("[THREAD " + name + "] Ready and waiting to commit.");
                     first = false;
                 }
             }

@@ -40,6 +40,12 @@ public class DatabaseWritingService {
         return new JSONObject(content);
     }
 
+    public static String[] getFilesInFolder(String directoryPath) throws IOException {
+        File file = ResourceUtils.getFile("src/main/resources/static/" + directoryPath);
+        String[] contents = file.list();
+        return contents;
+    }
+
 
     public static void persistPrecincts() throws IOException {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
@@ -74,6 +80,7 @@ public class DatabaseWritingService {
         em.getTransaction().commit();
     }
 
+
     public static void persistCounties() throws IOException {
         /* Get entity manager */
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
@@ -96,26 +103,45 @@ public class DatabaseWritingService {
         em.getTransaction().commit();
     }
 
-    public static void persistDistrictings() throws IOException {
-        JSONObject jo = readFile("/json/NC/districtingsExample.json");
-        JSONArray districtings = jo.getJSONArray("districtings");
-        /* Create threads to do work */
-        ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
-        AtomicBoolean availableRef = new AtomicBoolean(true);
+    public static boolean areThreadsAlive(ArrayList<DatabaseWriterThread> threads) {
+        for (int i=0;i<threads.size();i++) {
+            if (threads.get(i).isAlive()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static void persistDistrictings() throws IOException, InterruptedException {
+        /* Create threads to do work */
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         EntityManager em = emf.createEntityManager();
         HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
+        String[] files = getFilesInFolder("/json/NC/districtings");
+        // For every file in . . .
+        for (int i=0;i<files.length;i++) {
+            final long startTime = System.currentTimeMillis();
+            System.out.println("Starting file " + files[i]);
+            JSONObject jo = readFile("/json/NC/districtings/" + files[i]);
+            JSONArray districtings = jo.getJSONArray("districtings");
+            int numThreads = 5;
+            int workForEachThread = 10;
+            ArrayList<DatabaseWriterThread> threads = new ArrayList<>();
+            AtomicBoolean availableRef = new AtomicBoolean(true);
+            for (int j=1; j<numThreads+1;j++) {
+                DatabaseWriterThread newThread = new DatabaseWriterThread("T" +j, precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
+                threads.add(newThread);
+            }
+            /* Start Multithreading */
 
-        int numThreads = 4;
-        int workForEachThread = 50;
-        for (int i=1; i<numThreads+1;i++) {
-            DatabaseWriterThread newThread = new DatabaseWriterThread("T" +i, precinctHash, districtings, (i-1)*workForEachThread, workForEachThread*i, availableRef);
-            threads.add(newThread);
-        }
-        /* Start Multithreading */
-        for (int i=0;i<threads.size();i++) {
-            threads.get(i).start();
+            for (int j=0;j<threads.size();j++) {
+                threads.get(j).start();
+            }
+            while(areThreadsAlive(threads)) {
+
+            }
+            final long endTime = System.currentTimeMillis();
+            System.out.println("[MAIN] Persisted /" + files[i] + " in " + (endTime - startTime) + "ms");
         }
         em.close();
         emf.close();

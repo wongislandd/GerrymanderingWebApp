@@ -6,11 +6,12 @@ import org.json.JSONObject;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.io.Serializable;
 
 // https://ilhicas.com/2019/04/26/Persisting-JSONObject-Using-JPA.html
 
 @Converter
-public class JSONObjectConverter implements AttributeConverter<JSONObject, String> {
+public class JSONObjectConverter implements AttributeConverter<JSONObject, String>, Serializable {
 
     @Override
     public String convertToDatabaseColumn(JSONObject jsonData) {
@@ -37,4 +38,5 @@ public class JSONObjectConverter implements AttributeConverter<JSONObject, Strin
         }
         return jsonData;
     }
+
 }

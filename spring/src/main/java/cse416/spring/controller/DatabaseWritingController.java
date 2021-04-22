@@ -33,14 +33,14 @@ public class DatabaseWritingController {
 
     @PostMapping("/writeDistrictings")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> persistDistrictings() throws IOException {
+    public ResponseEntity<String> persistDistrictings() throws IOException, InterruptedException {
         service.persistDistrictings();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
     @PostMapping("/persistAll")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> test() throws IOException {
+    public ResponseEntity<String> test() throws IOException, InterruptedException {
         service.persistPrecincts();
         service.persistCounties();
         service.persistDistrictings();
