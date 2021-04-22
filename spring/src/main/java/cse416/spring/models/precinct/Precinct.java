@@ -1,7 +1,5 @@
 package cse416.spring.models.precinct;
 
-import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.JSONObjectConverter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,11 +9,11 @@ import javax.persistence.*;
 @Entity
 public class Precinct {
     String name;
-    JSONObject geoJson;
+    String geoJson;
     Demographics demographics;
     private int id;
 
-    public Precinct(int id, String name, JSONObject geoJson, Demographics demographics) {
+    public Precinct(int id, String name, String geoJson, Demographics demographics) {
         this.name = name;
         this.geoJson = geoJson;
         this.demographics = demographics;
@@ -37,17 +35,16 @@ public class Precinct {
     }
 
     @Column(columnDefinition = "TEXT")
-    @Convert(converter = JSONObjectConverter.class)
-    public JSONObject getGeoJson() {
+    public String getGeoJson() {
         return geoJson;
     }
 
-    public void setGeoJson(JSONObject geometry) {
+    public void setGeoJson(String geometry) {
         this.geoJson = geometry;
     }
 
     public JSONArray retrieveCoordinates() {
-        return geoJson.getJSONObject("geometry").getJSONArray("coordinates").getJSONArray(0);
+        return new JSONObject(geoJson).getJSONObject("geometry").getJSONArray("coordinates").getJSONArray(0);
     }
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,13 +1,12 @@
 package cse416.spring.models.county;
 
 import com.vividsolutions.jts.geom.Geometry;
-import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.precinct.Precinct;
-import org.hibernate.annotations.Type;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -17,9 +16,7 @@ public class County {
     String name;
     Geometry geometry;
 
-    // Have county store an array of precinct IDs? Shouldn't store whole object,
-    // or should it?
-    Collection<Precinct> precincts;
+    String precinctKeys;
 
     public County() {
 
@@ -43,13 +40,13 @@ public class County {
         this.geometry = geometry;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    public Collection<Precinct> getPrecincts() {
-        return precincts;
+    @Column(columnDefinition = "TEXT")
+    public String getPrecinctKeys() {
+        return precinctKeys;
     }
 
-    public void setPrecincts(Collection<Precinct> precincts) {
-        this.precincts = precincts;
+    public void setPrecinctKeys(String precinctKeys) {
+        this.precinctKeys = precinctKeys;
     }
 
     @Id
@@ -61,10 +58,14 @@ public class County {
         this.id = id;
     }
 
-    public County(int id, String name, Collection<Precinct> precincts, Geometry geometry) {
+    public County(int id, String name, ArrayList<Precinct> precincts, Geometry geometry) {
         this.id = id;
         this.name = name;
-        this.precincts = precincts;
+        JSONArray precinctKeysArr = new JSONArray();
+        for (int i=0;i<precincts.size();i++) {
+            precinctKeysArr.put(precincts.get(i).getId());
+        }
+        this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
         this.geometry = geometry;
     }
 

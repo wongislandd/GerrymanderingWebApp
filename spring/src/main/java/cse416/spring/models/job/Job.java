@@ -1,12 +1,9 @@
 package cse416.spring.models.job;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.JSONObjectConverter;
-import cse416.spring.models.districting.Districting;
 import org.json.JSONObject;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 
 @Entity
@@ -14,26 +11,23 @@ public class Job {
     private long id;
     StateName state;
     JobSummary summary;
-    JSONObject districtingKeys;
+    String districtingKeys;
 
 
     public Job(StateName state, JobSummary summary) {
         this.state = state;
         this.summary = summary;
-        this.districtingKeys = new JSONObject();
     }
 
     public Job() {
 
     }
 
-    @Column(columnDefinition = "TEXT")
-    @Convert(converter = JSONObjectConverter.class)
-    public JSONObject getDistrictingKeys() {
+    public String getDistrictingKeys() {
         return districtingKeys;
     }
 
-    public void setDistrictingKeys(JSONObject geometry) {
+    public void setDistrictingKeys(String geometry) {
         this.districtingKeys = geometry;
     }
 

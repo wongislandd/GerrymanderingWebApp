@@ -1,6 +1,5 @@
 package cse416.spring.models.districting;
 
-import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictMeasures;
@@ -9,12 +8,12 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity
 public class Districting {
 
-    JSONObject districtKeys;
+    /* Should be convertible into a JSONObject*/
+    String districtKeys;
 
     DistrictingMeasures measures;
     double ObjectiveFunctionScore;
@@ -29,17 +28,16 @@ public class Districting {
         for (int i=0;i<districts.size();i++) {
             districtKeysArr.put(districts.get(i).getId());
         }
-        this.districtKeys = new JSONObject().put("districts", districtKeys);
+        this.districtKeys = new JSONObject().put("districts", districtKeysArr).toString();
         this.measures = compileDistrictingMeasures(districts);
     }
 
     @Column(columnDefinition = "TEXT")
-    @Convert(converter = JSONObjectConverter.class)
-    public JSONObject getDistrictKeys() {
+    public String getDistrictKeys() {
         return districtKeys;
     }
 
-    public void setDistrictKeys(JSONObject districtKeys) {
+    public void setDistrictKeys(String districtKeys) {
         this.districtKeys = districtKeys;
     }
 

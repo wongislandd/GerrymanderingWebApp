@@ -72,7 +72,7 @@ public class DatabaseWritingService {
             int id = properties.getInt("id");
             Demographics demographics = new Demographics(democrats, republicans, otherParty, asian, black, natives,
                     pacific, whiteHispanic, whiteNonHispanic, otherRace, TP, VAP, CVAP);
-            Precinct p = new Precinct(id, precinctName, feature, demographics);
+            Precinct p = new Precinct(id, precinctName, feature.toString(), demographics);
             em.persist(p);
         }
 
@@ -96,6 +96,7 @@ public class DatabaseWritingService {
             JSONArray precinctKeys = county.getJSONArray("precincts");
             ArrayList<Precinct> precincts = getPrecinctObjectsFromKeys(precinctKeys, em);
             Geometry hull = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
+            /* Get the precinct keys */
             County c = new County(Integer.parseInt(key), name, precincts, hull);
             em.persist(c);
         }
@@ -133,7 +134,6 @@ public class DatabaseWritingService {
                 threads.add(newThread);
             }
             /* Start Multithreading */
-
             for (int j=0;j<threads.size();j++) {
                 threads.get(j).start();
             }

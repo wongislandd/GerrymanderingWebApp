@@ -8,9 +8,10 @@ import javax.persistence.*;
 @Entity
 public class FeatureCollectionJSON {
     public long id;
-    public JSONObject json = new JSONObject();
+    public String geoJson;
 
     public FeatureCollectionJSON() {
+        JSONObject json = new JSONObject();
         json.put("type", "FeatureCollection");
         json.put("features", new JSONArray());
     }
@@ -22,7 +23,7 @@ public class FeatureCollectionJSON {
 //        "coordinates": [...],
 //        "properties": {...}
     public void put(JSONObject featureJSON) {
-        json.append("features", featureJSON);
+        geoJson = new JSONObject(geoJson).append("features", featureJSON).toString();
     }
 
     @Id
@@ -36,12 +37,11 @@ public class FeatureCollectionJSON {
     }
 
     @Column(columnDefinition = "TEXT")
-    @Convert(converter = JSONObjectConverter.class)
-    public JSONObject getJson() {
-        return json;
+    public String getGeoJson() {
+        return geoJson;
     }
 
-    public void setJson(JSONObject json) {
-        this.json = json;
+    public void setGeoJson(String geoJson) {
+        this.geoJson = geoJson;
     }
 }

@@ -1,16 +1,10 @@
 package cse416.spring.models.district;
 
-import com.vividsolutions.jts.geom.Geometry;
-import cse416.spring.helperclasses.JSONObjectConverter;
 import cse416.spring.models.precinct.Demographics;
-import cse416.spring.models.precinct.Precinct;
-import org.hibernate.annotations.Type;
-import org.hibernate.spatial.JTSGeometryType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 public class District {
@@ -20,7 +14,7 @@ public class District {
 
     Demographics demographics;
 
-    JSONObject precinctKeys;
+    String precinctKeys;
 
     DistrictMeasures measures;
 
@@ -59,13 +53,11 @@ public class District {
         this.id = id;
     }
 
-    @Column(columnDefinition = "TEXT")
-    @Convert(converter = JSONObjectConverter.class)
-    public JSONObject getPrecinctKeys() {
+    public String getPrecinctKeys() {
         return precinctKeys;
     }
 
-    public void setPrecinctKeys(JSONObject precinctKeys) {
+    public void setPrecinctKeys(String precinctKeys) {
         this.precinctKeys = precinctKeys;
     }
 
@@ -100,7 +92,7 @@ public class District {
         this.districtNumber = districtNumber;
         this.demographics = demographics;
         this.measures = measures;
-        this.precinctKeys = new JSONObject().put("precincts", precinctKeys);
+        this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
     }
 
 }
