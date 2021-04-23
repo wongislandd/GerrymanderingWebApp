@@ -154,6 +154,7 @@ public class DatabaseWritingService {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
+        em.getTransaction().commit();
         em.close();
 
 
@@ -207,6 +208,11 @@ public class DatabaseWritingService {
         EntityManager em2 = emf.createEntityManager();
 
         Job newJob = createJob(state, jobId, js, em2);
+        em2.getTransaction().begin();
+        em2.persist(newJob);
+        em2.getTransaction().commit();
+
+
         em2.close();
         emf.close();
         final long endTime = System.currentTimeMillis();

@@ -80,12 +80,7 @@ const initState = {
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
     All incumbents start off as false (not protected) */
-  IncumbentProtectionInfo: {
-    "Stella Pang": false,
-    "Jihu Mun": false,
-    "Jim Huynh": false,
-    "Christopher Wong": true, 
-  },
+  IncumbentProtectionInfo: [],
 
 
   Jobs : [],
@@ -251,12 +246,12 @@ const rootReducer = (state = initState, action) => {
         ConstraintSliderSettings: newSettings,
       };
     case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
+      var updatedIncumbents = [...state.IncumbentProtectionInfo];
+      updatedIncumbents[action.Key].protected = action.NewValue;
+      console.log(updatedIncumbents)
       return {
         ...state,
-        IncumbentProtectionInfo: {
-          ...state.IncumbentProtectionInfo,
-          [action.Key]: action.NewValue,
-        },
+        IncumbentProtectionInfo : updatedIncumbents,
       };
     case ActionTypes.UPDATE_POPULATION_CONSTRAINT:
       return {
@@ -428,6 +423,11 @@ const rootReducer = (state = initState, action) => {
         ...state,
         StateCounties: action.Outlines,
       };
+    case ActionTypes.POPULATE_INCUMBENTS:
+      return {
+        ...state,
+        IncumbentProtectionInfo : action.Incumbents,
+      }
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       var newExpandedSet = [...state.ExpandedSummaries];
       if (!newExpandedSet.includes(action.Name)) {

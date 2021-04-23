@@ -1,31 +1,19 @@
 package cse416.spring.service;
 
+import com.github.javafaker.Faker;
+import cse416.spring.enums.StateName;
+import cse416.spring.models.precinct.Incumbent;
+
+import java.util.ArrayList;
+
 public class StateService {
-//    public int rng(int min, int max) {
-//        return (int)Math.floor(Math.random()*(max-min+1)+min);
-//    }
-//
-//    public Demographics generateRandomDemographics() {
-//        Demographics d = new Demographics();
-//    }
-//
-//    public Precinct generateRandomPrecinct() {
-//        Precinct p = new Precinct();
-//        return p;
-//    }
-//
-//    public District generateRandomDistrict() {
-//        District d = new District();
-//        return d;
-//    }
-//
-//    public Districting generateRandomDistricting() {
-//        Districting d = new Districting();
-//        return d;
-//    }
-//
-//    public HashSet<Districting> generateRandomDistrictings() {
-//        HashSet<Districting> districtings = new HashSet<Districting>();
-//        return districtings;
-//    }
+    public static ArrayList<Incumbent> getIncumbents(StateName state) {
+        int numIncumbents = 5;
+        Faker faker = new Faker();
+        ArrayList<Incumbent> fakePeople = new ArrayList<Incumbent>();
+        for (int i=0; i<numIncumbents;i++) {
+            fakePeople.add(new Incumbent(faker.gameOfThrones().character(), faker.gameOfThrones().city()));
+        }
+    return fakePeople;
+    }
 }

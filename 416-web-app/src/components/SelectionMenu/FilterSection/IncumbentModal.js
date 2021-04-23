@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
 import { connect } from "react-redux";
 import {
-  setEnabledStateOfConstraint,
-  updateConstraintSliderSettings,
   updateIncumbentProtection,
-  updatePopulationConstraint,
+  populateIncumbents,
 } from "../../../redux/actions/settingActions";
 import { Row, Col, Modal, Button } from "react-materialize";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
@@ -15,15 +13,14 @@ class IncumbentModal extends Component {
 
   // Fetch the incumbents for the chosen state
   componentDidMount() {
-    NetworkingUtilities.loadIncumbents(this.props.CurrentState);
+    this.populateIncumbents(this.props.CurrentState);
   }
 
-  // async loadIncumbents() {
-  //   NetworkingUtilities.loadIncumbents(this.props.CurrentState).then(results => {
-  //     //Object.assign(this.props.IncumbentProtectionInfo, results);
-  //     //this.props.IncumbentProtectionInfo = results;
-  //   })
-  // }
+  async populateIncumbents() {
+    NetworkingUtilities.loadIncumbents(this.props.CurrentState).then(results => {
+      this.props.populateIncumbents(results);
+    })
+  }
 
   render() {
     return (
@@ -59,7 +56,7 @@ class IncumbentModal extends Component {
           }
         >
           <Row>
-            {Object.keys(NetworkingUtilities.loadIncumbents(this.props.CurrentState)).map((key) => {
+            {Object.keys(this.props.IncumbentProtectionInfo).map((key) => {
               return (
                 <Col s={4} key={key}>
                   <Row>
@@ -69,7 +66,7 @@ class IncumbentModal extends Component {
                           id={key + "-protection-checkbox"}
                           className="incumbent-protection-option"
                           value={key}
-                          checked={NetworkingUtilities.loadIncumbents(this.props.CurrentState)[key]}
+                          checked={this.props.IncumbentProtectionInfo[key].protected}
                           onChange={(e) =>
                             this.props.updateIncumbentProtection(
                               key,
@@ -78,8 +75,9 @@ class IncumbentModal extends Component {
                           }
                         />
                       }
-                      label={key}
+                      label={this.props.IncumbentProtectionInfo[key].name + " (" + this.props.IncumbentProtectionInfo[key].residence + ")"}
                     />
+
                   </Row>
                 </Col>
               );
@@ -96,14 +94,8 @@ const mapDispatchToProps = (dispatch) => {
     updateIncumbentProtection: (key, newVal) => {
       dispatch(updateIncumbentProtection(key, newVal));
     },
-    updatePopulationConstraint: (key, newVal) => {
-      dispatch(updatePopulationConstraint(key, newVal));
-    },
-    updateConstraintSliderSettings: (key, newVal) => {
-      dispatch(updateConstraintSliderSettings(key, newVal));
-    },
-    setEnabledStateOfConstraint: (key, bool) => {
-      dispatch(setEnabledStateOfConstraint(key, bool));
+    populateIncumbents : (incumbents) => {
+      dispatch(populateIncumbents(incumbents))
     },
   };
 };
@@ -111,8 +103,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     IncumbentProtectionInfo: state.IncumbentProtectionInfo,
-    PopulationConstraintSelection: state.PopulationConstraintSelection,
-    ConstraintSettings: state.ConstraintSettings,
   };
 };
 

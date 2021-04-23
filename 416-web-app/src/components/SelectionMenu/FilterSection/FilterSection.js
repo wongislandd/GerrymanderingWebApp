@@ -186,7 +186,7 @@ function FilterSection(props) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={activeStep == getSteps().length - 1 ^ !props.DistrictingsAreConstrained}
+                disabled={activeStep == getSteps().length - 1 || !props.DistrictingsAreConstrained}
                 className={classes.button + " redBrownBtn"}
               >
                 Next

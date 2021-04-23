@@ -6,6 +6,8 @@ import cse416.spring.helperclasses.Server;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.job.Job;
 import cse416.spring.models.job.JobSummary;
+import cse416.spring.models.precinct.Incumbent;
+import cse416.spring.service.StateService;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,17 +45,13 @@ public class StateController {
 
 
 
-    @GetMapping("/statename/loadIncumbents")
+    @GetMapping("/{stateID}/loadIncumbents")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadIncumbents() {
-        try {
-            // Currently just returns a hardcoded list of incumbents
-            String body = "{\"Jimothy\": false, \"Jim Jam\": false, \"James\": false, \"Gym\": false}";
-            return new ResponseEntity<>(body, HttpStatus.OK);
-        }
-        catch (Exception ex) {
-            return new ResponseEntity<>("", HttpStatus.EXPECTATION_FAILED);
-        }
+    public ResponseEntity<ArrayList<Incumbent>> loadIncumbents(@PathVariable("stateID") String state) {
+        // MAP THE STATE STRING TO THE ENUM TO BE CALLED HERE (NC -> StateName.NORTH_CAROLINA) can use a switch statement
+        // or maybe something cleaner?
+        ArrayList<Incumbent> incumbents = StateService.getIncumbents(StateName.NORTH_CAROLINA);
+        return new ResponseEntity<>(incumbents, HttpStatus.OK);
     }
 
 //    @GetMapping("/current/jobs")

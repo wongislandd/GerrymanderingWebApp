@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return;
+  return {};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortingCollapsible);
