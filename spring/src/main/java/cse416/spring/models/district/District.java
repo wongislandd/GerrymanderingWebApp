@@ -4,7 +4,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -12,30 +11,30 @@ import java.util.ArrayList;
 
 @Entity
 public class District {
+
     private long id;
-
-    int districtNumber;
-
-    Demographics demographics;
-
-    String precinctKeys;
-
-    DistrictMeasures measures;
-
-    double objectiveFunctionScore;
+    private int districtNumber;
+    private Demographics demographics;
+    private String precinctKeys;
+    private DistrictMeasures measures;
+    private double objectiveFunctionScore;
 
     public District() {
-
     }
 
-    /**
-     * Calculate the difference between this district and another district
-     * Used for deviation from enacted and deviation from average, just pass their demographics in here.
-     * @param other
-     * @return
-     */
-    public double calculateDeviationFrom(District other) {
-        return 1;
+    public District(int districtNumber, ArrayList<Precinct> precincts) {
+        this.districtNumber = districtNumber;
+        this.demographics = compileDemographics(precincts);
+        this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
+
+        /* TODO: Complete the math for these*/
+        double populationEquality = this.calculatePopulationEquality();
+        MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
+        Compactness compactness = calculateCompactness();
+        double politicalFairness = calculatePoliticalFairness(demographics);
+        int splitCounties = calculateSplitCounties(precincts);
+
+        this.measures = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
     }
 
     @Column
@@ -93,27 +92,15 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    public District(int districtNumber, ArrayList<Precinct> precincts) {
-        //int districtNumber, Demographics demographics, DistrictMeasures measures, JSONArray precinctKeys
-        this.districtNumber = districtNumber;
-        this.demographics = compileDemographics(precincts);
-        MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
-
-        /* Complete the math for these*/
-        int splitCounties = calculateSplitCounties(precincts);
-        double populationEquality = calculatePopulationEquality(demographics);
-        double politicalFairness = calculatePoliticalFairness(demographics);
-        Compactness compactness = calculateCompactness();
-
-        this.measures =  new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
-        this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
+    public double calculateDeviationFrom(District other) {
+        return 1;
     }
 
     private int calculateSplitCounties(ArrayList<Precinct> precincts) {
         return 5;
     }
 
-    private int calculatePopulationEquality(Demographics d) {
+    private int calculatePopulationEquality() {
         return 5;
     }
 
@@ -127,6 +114,10 @@ public class District {
 
     private int calculateDeviationFromAverage(Geometry hull, Demographics d) {
         return 5;
+    }
+
+    private Compactness calculateCompactness() {
+        return new Compactness(.5, .6, .7);
     }
 
     private static Demographics compileDemographics(ArrayList<Precinct> precincts) {
@@ -160,18 +151,17 @@ public class District {
             total_VAP += currentPrecinctDemographics.getVAP();
             total_CVAP += currentPrecinctDemographics.getCVAP();
         }
-        return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian, total_black, total_natives, total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace, total_TP, total_VAP, total_CVAP);
+
+        return new Demographics(total_democrats, total_republicans, total_otherParty, total_asian, total_black,
+                total_natives, total_pacific, total_whiteHispanic, total_whiteNonHispanic, total_otherRace,
+                total_TP, total_VAP, total_CVAP);
     }
 
     private MajorityMinorityInfo compileMinorityInfo(Demographics demographics) {
-        return(new MajorityMinorityInfo(
+        return (new MajorityMinorityInfo(
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN)));
-    }
-
-    private Compactness calculateCompactness() {
-        return new Compactness(.5, .6, .7);
     }
 }
