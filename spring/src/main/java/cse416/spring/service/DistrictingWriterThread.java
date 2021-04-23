@@ -35,10 +35,7 @@ public class DistrictingWriterThread extends Thread {
     public DistrictingWriterThread(int jobID, String name, EntityManager em, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
         this.jobID = jobID;
         this.name = name;
-        /* Create the entity manager */
         this.em = em;
-        /* Create the precinct hash, each thread must have their own version
-        * or else Hibernate will consider the precinct objects within them to be detached*/
         this.precinctHash = precinctHash;
         this.districtings = districtings;
         this.rangeStart = rangeStart;

@@ -99,9 +99,10 @@ public class DatabaseWritingService {
         for (int i = 0; i < features.length(); i++) {
             JSONObject feature = features.getJSONObject(i);
             Precinct p = buildPrecinctFromJSON(feature);
+            System.out.println("Persisting Precinct " + i);
             em.persist(p);
         }
-
+        System.out.println("Committing precincts.");
         em.getTransaction().commit();
     }
 
@@ -153,6 +154,7 @@ public class DatabaseWritingService {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
+        em.close();
 
 
         /** Adjust job parameters here **/
@@ -174,7 +176,7 @@ public class DatabaseWritingService {
         }
 
         // For every file in the folder . . .
-        for (int i=0;i<1;i++) {
+        for (int i=0;i<2;i++) {
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
             JSONObject jo = readFile("/json/NC/districtings/" + files[i]);
@@ -192,26 +194,25 @@ public class DatabaseWritingService {
             for (DistrictingWriterThread thread : threads) {
                 thread.start();
             }
+            while (areThreadsAlive(threads)) {
+
+            }
             final long fileEndTime = System.currentTimeMillis();
-            System.out.println("[MAIN] Persisted " + files[i] + " in " + (fileStartTime - fileEndTime) + "ms");
+            System.out.println("[MAIN] Persisted " + files[i] + " in " + (fileEndTime - fileStartTime) + "ms");
         }
         /* Close entity managers */
         for (int j=0; j<ems.size();j++) {
             ems.get(j).close();
         }
+        EntityManager em2 = emf.createEntityManager();
 
-        Job newJob = createJob(state, jobId, js, em);
-
-        em.persist(newJob);
-        em.getTransaction().commit();
-        em.close();
+        Job newJob = createJob(state, jobId, js, em2);
+        em2.close();
         emf.close();
         final long endTime = System.currentTimeMillis();
         System.out.println("[MAIN] Persisted a job (ID="+jobId+") of " + newJob.getSummary().getSize() + " districtings in: " + (endTime - startTime) + "ms");
     }
 
-// Have a districting store it's JSON but not a reference to a collection of districts
-// Districts
     public static HashMap<Integer, Precinct> getPrecinctHash(EntityManager em) {
         Query query = em.createQuery("SELECT p FROM Precinct p");
         ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
