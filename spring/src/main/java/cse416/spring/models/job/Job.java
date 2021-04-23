@@ -14,8 +14,9 @@ public class Job {
     String districtingKeys;
 
 
-    public Job(StateName state, JobSummary summary) {
+    public Job(StateName state, String districtingKeys, JobSummary summary) {
         this.state = state;
+        this.districtingKeys = districtingKeys;
         this.summary = summary;
     }
 
@@ -23,6 +24,7 @@ public class Job {
 
     }
 
+    @Lob
     public String getDistrictingKeys() {
         return districtingKeys;
     }

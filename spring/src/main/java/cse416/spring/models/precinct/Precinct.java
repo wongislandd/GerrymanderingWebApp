@@ -9,7 +9,9 @@ import javax.persistence.*;
 @Entity
 public class Precinct {
     String name;
+
     String geoJson;
+
     Demographics demographics;
     private int id;
 
@@ -34,7 +36,7 @@ public class Precinct {
         this.name = name;
     }
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
     public String getGeoJson() {
         return geoJson;
     }

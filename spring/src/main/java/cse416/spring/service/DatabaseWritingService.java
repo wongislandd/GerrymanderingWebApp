@@ -1,9 +1,14 @@
 package cse416.spring.service;
 
 import com.vividsolutions.jts.geom.Geometry;
+import cse416.spring.enums.StateName;
+import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.helperclasses.builders.ConcaveHullBuilder;
 import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.models.county.County;
+import cse416.spring.models.districting.Districting;
+import cse416.spring.models.job.Job;
+import cse416.spring.models.job.JobSummary;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
@@ -63,6 +68,7 @@ public class DatabaseWritingService {
             Demographics demographics = new Demographics(democrats, republicans, otherParty, asian, black, natives,
                     pacific, whiteHispanic, whiteNonHispanic, otherRace, TP, VAP, CVAP);
             Precinct p = new Precinct(id, precinctName, feature.toString(), demographics);
+            System.out.println("PERSISTING PRECINCT " + i);
             em.persist(p);
         }
 
@@ -79,6 +85,7 @@ public class DatabaseWritingService {
         HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
         Iterator<String> keys = jo.keys();
         /* For each county */
+        int counter = 0;
         while (keys.hasNext()) {
             // Key is the county ID
             String key = keys.next();
@@ -88,6 +95,7 @@ public class DatabaseWritingService {
             ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, precinctHash);
             /* Get the precinct keys */
             County c = new County(Integer.parseInt(key), name, precincts);
+            System.out.println("PERSISTING COUNTY " + counter++);
             em.persist(c);
         }
         /* Commit and close */
@@ -105,22 +113,43 @@ public class DatabaseWritingService {
 
     public static void persistDistrictings() throws IOException, InterruptedException {
         /* Create threads to do work */
+        final long startTime = System.currentTimeMillis();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
         HashMap<Integer, Precinct> precinctHash = getPrecinctHash(em);
-        String[] files = getFilesInFolder("/json/NC/districtings");
-        // For every file in . . .
-        for (int i=0;i<files.length;i++) {
-            final long startTime = System.currentTimeMillis();
+
+
+        /** Adjust job parameters here **/
+        StateName state = StateName.NORTH_CAROLINA;
+        int jobId = 1;
+        MGGGParams params = new MGGGParams(10000, .1);
+        /* Size will be set adaptively later */
+        JobSummary js = new JobSummary("North Carolina 10% max population difference.", params, -1);
+        String jobFolderPath = "/json/NC/districtings";
+        /*************************************/
+
+        /* Create entity managers for the threads */
+        int numThreads = 5;
+        int workForEachThread = 10;
+        String[] files = getFilesInFolder(jobFolderPath);
+        ArrayList<EntityManager> ems = new ArrayList<>();
+        for (int j=0; j<numThreads;j++) {
+            ems.add(emf.createEntityManager());
+        }
+
+        // For every file in the folder . . .
+        for (int i=0;i<1;i++) {
+            final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
             JSONObject jo = readFile("/json/NC/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");
-            int numThreads = 5;
-            int workForEachThread = 10;
+
             ArrayList<DistrictingWriterThread> threads = new ArrayList<>();
             AtomicBoolean availableRef = new AtomicBoolean(true);
+            /* Create threads */
             for (int j=1; j<numThreads+1;j++) {
-                DistrictingWriterThread newThread = new DistrictingWriterThread("T" +j, precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
+                DistrictingWriterThread newThread = new DistrictingWriterThread(jobId,"T" +j, ems.get(j-1), precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
                 threads.add(newThread);
             }
             /* Start Multithreading */
@@ -130,11 +159,22 @@ public class DatabaseWritingService {
             while(areThreadsAlive(threads)) {
 
             }
-            final long endTime = System.currentTimeMillis();
-            System.out.println("[MAIN] Persisted /" + files[i] + " in " + (endTime - startTime) + "ms");
+            final long fileEndTime = System.currentTimeMillis();
+            System.out.println("[MAIN] Persisted " + files[i] + " in " + (fileStartTime - fileEndTime) + "ms");
         }
+        /* Close entity managers */
+        for (int j=0; j<ems.size();j++) {
+            ems.get(j).close();
+        }
+
+        Job newJob = createJob(state, jobId, js, em);
+
+        em.persist(newJob);
+        em.getTransaction().commit();
         em.close();
         emf.close();
+        final long endTime = System.currentTimeMillis();
+        System.out.println("[MAIN] Persisted a job (ID="+jobId+") of " + newJob.getSummary().getSize() + " districtings in: " + (endTime - startTime) + "ms");
     }
 
 // Have a districting store it's JSON but not a reference to a collection of districts
@@ -156,6 +196,18 @@ public class DatabaseWritingService {
             results.add(precinctHash.get(precinctKeys.getInt(i)));
         }
         return results;
+    }
+
+    private static Job createJob(StateName state, int jobId, JobSummary js, EntityManager em) {
+        Query query = em.createQuery("SELECT d FROM Districting d WHERE d.jobID = :jobId");
+        query.setParameter("jobId", jobId);
+        ArrayList<Districting> districtingsInJob = new ArrayList<Districting>(query.getResultList());
+        JSONArray districtingKeysArr = new JSONArray();
+        for (int i=0;i<districtingsInJob.size();i++) {
+            districtingKeysArr.put(districtingsInJob.get(i).getId());
+        }
+        js.setSize(districtingsInJob.size());
+        return new Job(state, new JSONObject().put("districtings",districtingKeysArr).toString(), js);
     }
 
 }

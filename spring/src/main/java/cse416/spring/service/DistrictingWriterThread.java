@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DistrictingWriterThread extends Thread {
+    int jobID;
     String name;
     EntityManager em;
     JSONArray districtings;
@@ -31,11 +32,11 @@ public class DistrictingWriterThread extends Thread {
     int rangeEndExclusive;
     AtomicBoolean availableRef;
 
-    public DistrictingWriterThread(String name, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
+    public DistrictingWriterThread(int jobID, String name, EntityManager em, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
+        this.jobID = jobID;
         this.name = name;
         /* Create the entity manager */
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        this.em = emf.createEntityManager();
+        this.em = em;
         /* Create the precinct hash, each thread must have their own version
         * or else Hibernate will consider the precinct objects within them to be detached*/
         this.precinctHash = precinctHash;
@@ -72,7 +73,7 @@ public class DistrictingWriterThread extends Thread {
                 /* Persist the districting, seems like the ID is set after the persist, but I feel like this can go weird with the threads */
                 em.persist(d);
             }
-            Districting newDistricting = new Districting(districtsInDistricting);
+            Districting newDistricting = new Districting(jobID, districtsInDistricting);
             em.persist(newDistricting);
             //final long endTime = System.currentTimeMillis();
             //System.out.println("[THREAD " + name + "] Created Districting " + (i + 1) + " in: " + (endTime - startTime) + "ms");
@@ -81,11 +82,11 @@ public class DistrictingWriterThread extends Thread {
         boolean first = true;
         while (true) {
             if (availableRef.compareAndSet(true, false)) {
-                //System.out.println("[THREAD " + name + "] Starting commit");
-                //final long startTime = System.currentTimeMillis();
+                System.out.println("[THREAD " + name + "] Starting commit");
+                final long startTime = System.currentTimeMillis();
                 em.getTransaction().commit();
-                //final long endTime = System.currentTimeMillis();
-                //System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
+                final long endTime = System.currentTimeMillis();
+                System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
                 availableRef.set(true);
                 break;
             } else {
@@ -95,7 +96,6 @@ public class DistrictingWriterThread extends Thread {
                 }
             }
         }
-        em.close();
     }
 
     public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys, HashMap<Integer, Precinct> precinctHash) {

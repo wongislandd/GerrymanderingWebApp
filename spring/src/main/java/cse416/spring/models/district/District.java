@@ -57,6 +57,7 @@ public class District {
         this.id = id;
     }
 
+    @Lob
     public String getPrecinctKeys() {
         return precinctKeys;
     }

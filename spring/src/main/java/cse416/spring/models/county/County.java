@@ -40,7 +40,7 @@ public class County {
         this.geometry = geometry;
     }
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
     public String getPrecinctKeys() {
         return precinctKeys;
     }

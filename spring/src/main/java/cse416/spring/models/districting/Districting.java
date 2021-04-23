@@ -15,6 +15,8 @@ public class Districting {
     /* Should be convertible into a JSONObject*/
     String districtKeys;
 
+    int jobID;
+
     DistrictingMeasures measures;
     double ObjectiveFunctionScore;
     private long id;
@@ -23,16 +25,17 @@ public class Districting {
 
     }
 
-    public Districting(ArrayList<District> districts) {
+    public Districting(int jobID, ArrayList<District> districts) {
         JSONArray districtKeysArr = new JSONArray();
         for (int i=0;i<districts.size();i++) {
             districtKeysArr.put(districts.get(i).getId());
         }
+        this.jobID = jobID;
         this.districtKeys = new JSONObject().put("districts", districtKeysArr).toString();
         this.measures = compileDistrictingMeasures(districts);
     }
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
     public String getDistrictKeys() {
         return districtKeys;
     }
@@ -41,6 +44,14 @@ public class Districting {
         this.districtKeys = districtKeys;
     }
 
+    @Column
+    public int getJobID() {
+        return jobID;
+    }
+
+    public void setJobID(int jobID) {
+        this.jobID = jobID;
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     public DistrictingMeasures getMeasures() {

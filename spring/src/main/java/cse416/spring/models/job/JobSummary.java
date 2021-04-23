@@ -13,7 +13,7 @@ public class JobSummary {
     private long id;
 
 
-    public JobSummary(String description, int size, MGGGParams params) {
+    public JobSummary(String description, MGGGParams params, int size) {
         this.description = description;
         this.size = size;
         this.params = params;
