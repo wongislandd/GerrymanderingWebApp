@@ -69,7 +69,7 @@ public class DistrictingWriterThread extends Thread {
                 int districtNumber = Integer.parseInt(districtID);
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
                 ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
-                District d = new District(districtNumber, precincts);
+                District d = new District(districtNumber, precincts, stateName);
                 /* Add the district to the list to be used for calculating measures later */
                 districtsInDistricting.add(d);
                 /* Persist the districting, seems like the ID is set after the persist, but I feel like this can go weird with the threads */

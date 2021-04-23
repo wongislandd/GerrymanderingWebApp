@@ -2,6 +2,8 @@ package cse416.spring.models.district;
 
 import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.MinorityPopulation;
+import cse416.spring.enums.StateName;
+import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONObject;
@@ -22,13 +24,15 @@ public class District {
     public District() {
     }
 
-    public District(int districtNumber, ArrayList<Precinct> precincts) {
+    public District(int districtNumber, ArrayList<Precinct> precincts, StateName stateName) {
         this.districtNumber = districtNumber;
         this.demographics = compileDemographics(precincts);
         this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
 
         /* TODO: Complete the math for these*/
-        double populationEquality = this.calculatePopulationEquality();
+        int idealPopulation = IdealPopulation.getIdealVoterPopulation(stateName);
+        double populationEquality = this.calculatePopulationEquality(idealPopulation);
+
         MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness();
         double politicalFairness = calculatePoliticalFairness(demographics);
@@ -100,8 +104,9 @@ public class District {
         return 5;
     }
 
-    private int calculatePopulationEquality() {
-        return 5;
+    private double calculatePopulationEquality(int idealPopulation) {
+        double popRatio = (double) demographics.getVAP() / idealPopulation;
+        return Math.pow((popRatio - 1), 2);
     }
 
     private int calculatePoliticalFairness(Demographics d) {

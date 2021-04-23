@@ -179,11 +179,4 @@ public class Demographics {
     public void setCVAP(int CVAP) {
         this.CVAP = CVAP;
     }
-
-
-
-
-
-
-
 }
