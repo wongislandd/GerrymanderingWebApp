@@ -26,6 +26,14 @@ export async function loadDistricting(id) {
 }
 
 
+const stateFullToId = {
+  "TEXAS" : "TX",
+  "NORTH_CAROLINA" : "NC",
+  "LOUISIANA" : "LA",
+  // Default to NC
+  "UNSELECTED" : "NC",
+}
+
 export async function loadStateOutlines() {
   let fullUrl = baseURL + "/states/getOutlines";
   const response = await fetch(fullUrl);
@@ -43,22 +51,30 @@ export async function loadStateOutlines() {
 
 
 export async function getJobs(state) {
-  let fullUrl = baseURL + "/states/current/jobs";
+  let fullUrl = baseURL + "/states/" + stateFullToId[state] + "/loadJobs";
   const response = await fetch(fullUrl);
   let body = await response.json();
+  console.log(body)
   var jobs = ParsingUtilities.parseJobJSONToObjects(body)
   return jobs;
 }
 
 export async function loadIncumbents(state) {
-  // "statename" is a placeholder
-  let fullUrl = baseURL + "/states/" + state + "/loadIncumbents";
+  let fullUrl = baseURL + "/states/" + stateFullToId[state] + "/loadIncumbents";
   const response = await fetch(fullUrl);
   let body = await response.json();
   let incumbents = ParsingUtilities.parseIncumbentsJSONToObjects(body);
   return incumbents;
 }
 
+
+export async function loadPrecincts(state) {
+    console.log("LOAD PRECINCTS CALLED");
+    let fullUrl = baseURL + "/states/" + state + "/loadPrecincts";
+    const response = await fetch(fullUrl);
+    let body = await response.json();
+    return body;
+}
 
 export async function applyConstraints() {
   // const params = {

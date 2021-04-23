@@ -71,7 +71,7 @@ class ConstraintSelection extends Component {
           </option>
           {Object.keys(SelectionMenuUtilities.POPULATIONS).map((key) => {
             return (
-              <option key={key} value={key}>
+              <option key={key} value={key} disabled = {key=="CVAP"}>
                 {SelectionMenuUtilities.POPULATIONS[key]}
               </option>
             );

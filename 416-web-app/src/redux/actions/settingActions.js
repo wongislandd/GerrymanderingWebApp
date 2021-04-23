@@ -308,6 +308,13 @@ export const populateIncumbents = (incumbents) => {
   }
 }
 
+export const populatePrecincts = (precinctsGeoJson) => {
+  return {
+    type : ActionTypes.POPULATE_PRECINCTS,
+    PrecinctsGeoJson : precinctsGeoJson,
+  }
+} 
+
 export const setCurrentJob = (job) => {
   return {
     type : ActionTypes.SET_CURRENT_JOB,

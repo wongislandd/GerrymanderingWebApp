@@ -1,7 +1,5 @@
 import React, { Component, useState } from "react";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
-//import PrecinctGeoData from "../../data/NC/PrecinctGeoDataOutput.json";
-import PrecinctGeoData from "../../data/NC/PrecinctGeoDataSimplified.json";
 import CountyGeoData from "../../data/NC/CountiesGeoData.json";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import { connect } from "react-redux";
@@ -231,13 +229,15 @@ class MapBoxComponent extends Component {
           ref={this.props.MapRef}
         >
           {this._renderTooltip()}
+          {this.props.PrecinctsGeoJson != null ? 
+          <div>
           <Source
             id={MapUtilities.IDs.PRECINCT_SOURCE_ID}
             type="geojson"
-            data={PrecinctGeoData}
+            data={this.props.PrecinctsGeoJson}
             generateId={true}
           />
-          ,
+
           <Layer
             id={MapUtilities.IDs.PRECINCT_FILL_LAYER_ID}
             type="fill"
@@ -273,7 +273,12 @@ class MapBoxComponent extends Component {
             paint={{
               "line-opacity": 1,
             }}
-          />
+          /></div>
+            :
+            <div>
+
+            </div>
+            }
           <Source
             id={MapUtilities.IDs.COUNTY_SOURCE_ID}
             type="geojson"
@@ -412,6 +417,7 @@ const mapStateToProps = (state, ownProps) => {
     MapRef: state.MapRef,
     MapViewport: state.MapViewport,
     Loaded: state.Loaded,
+    PrecinctsGeoJson : state.PrecinctsGeoJson,
   };
 };
 

@@ -28,6 +28,7 @@ class SettingsMode extends Component {
                 this.props.togglePrecinctSwitch(!this.props.DisplayPrecincts)
               }
               checked={this.props.DisplayPrecincts}
+              disabled={this.props.PrecinctsGeoJson == null}
             />
           </Row>
           <Row>
@@ -77,6 +78,7 @@ const mapStateToProps = (state, ownProps) => {
     DisplayPrecincts: state.DisplayPrecincts,
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
+    PrecinctsGeoJson : state.PrecinctsGeoJson,
   };
 };
 

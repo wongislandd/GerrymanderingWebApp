@@ -7,7 +7,7 @@ export function parseStateCountyDict(stateCountyJSON) {
 export function parseJobJSONToObjects(jobsJSON) {    
     var jobs = []
     for (var job of jobsJSON) {
-        jobs.push(new Job(job.summary.id, job.summary.description, job.summary.size, job.summary.params))
+        jobs.push(new Job(job.id, job.summary.description, job.summary.size, job.summary.params))
     }
     return jobs
 }

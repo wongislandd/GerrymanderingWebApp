@@ -5,15 +5,14 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 
-@Entity
 public class FeatureCollectionJSON {
     public long id;
-    public String geoJson;
+    public JSONObject geoJson;
 
     public FeatureCollectionJSON() {
-        JSONObject json = new JSONObject();
-        json.put("type", "FeatureCollection");
-        json.put("features", new JSONArray());
+        geoJson = new JSONObject();
+        geoJson.put("type", "FeatureCollection");
+        geoJson.put("features", new JSONArray());
     }
 
 /* We put strings in of this JSON format */
@@ -23,25 +22,18 @@ public class FeatureCollectionJSON {
 //        "coordinates": [...],
 //        "properties": {...}
     public void put(JSONObject featureJSON) {
-        geoJson = new JSONObject(geoJson).append("features", featureJSON).toString();
+        geoJson.append("features", featureJSON);
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
-        return id;
+    public String toString() {
+        return geoJson.toString();
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Column(columnDefinition = "TEXT")
-    public String getGeoJson() {
+    public JSONObject getGeoJson() {
         return geoJson;
     }
 
-    public void setGeoJson(String geoJson) {
+    public void setGeoJson(JSONObject geoJson) {
         this.geoJson = geoJson;
     }
 }

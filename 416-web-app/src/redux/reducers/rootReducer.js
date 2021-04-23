@@ -85,6 +85,7 @@ const initState = {
 
   Jobs : [],
 
+  PrecinctsGeoJson : null,
 
 
   /* Usable Map */
@@ -427,6 +428,12 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         IncumbentProtectionInfo : action.Incumbents,
+      }
+    case ActionTypes.POPULATE_PRECINCTS:
+      console.log(action.PrecinctsGeoJson)
+      return {
+        ...state,
+        PrecinctsGeoJson : action.PrecinctsGeoJson,
       }
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       var newExpandedSet = [...state.ExpandedSummaries];

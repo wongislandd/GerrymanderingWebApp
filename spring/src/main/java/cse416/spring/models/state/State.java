@@ -16,7 +16,7 @@ public class State {
     StateName name;
     Collection<Job> jobs;
     Job currentJob;
-    FeatureCollectionJSON outline;
+    String outline;
     Collection<County> counties;
     Districting enactedDistricting;
     Collection<Incumbent> incumbents;
@@ -26,7 +26,7 @@ public class State {
 
     }
 
-    public State(StateName name, Collection<Job> jobs, Job currentJob, FeatureCollectionJSON outline, Collection<County> counties, Districting enactedDistricting, Collection<Incumbent> incumbents) {
+    public State(StateName name, Collection<Job> jobs, Job currentJob, String outline, Collection<County> counties, Districting enactedDistricting, Collection<Incumbent> incumbents) {
         this.name = name;
         this.jobs = jobs;
         this.currentJob = currentJob;
@@ -72,12 +72,12 @@ public class State {
         this.currentJob = currentJob;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public FeatureCollectionJSON getOutline() {
+    @Column
+    public String getOutline() {
         return this.outline;
     }
 
-    public void setOutline(FeatureCollectionJSON outline) {
+    public void setOutline(String outline) {
         this.outline = outline;
     }
 
