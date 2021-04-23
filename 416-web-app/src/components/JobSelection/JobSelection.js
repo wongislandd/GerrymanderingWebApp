@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Col, Row, Collapsible, Icon, CollapsibleItem } from 'react-materialize'
 import { connect } from 'react-redux'
-import { loadInJobs, setCurrentState, setCurrentJob, populatePrecincts } from '../../redux/actions/settingActions'
+import { loadInJobs, setCurrentState, setCurrentJob, populatePrecincts, populateCounties } from '../../redux/actions/settingActions'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 import * as NetworkingUtilities from '../../network/NetworkingUtilities'
@@ -9,12 +9,20 @@ import * as NetworkingUtilities from '../../network/NetworkingUtilities'
 class JobSelection extends Component {
     componentDidMount() {
         NetworkingUtilities.getJobs(this.props.CurrentState).then(jobs => this.props.loadInJobs(jobs))
+        this.populateCounties();
         this.populatePrecincts();
     }
 
     async populatePrecincts() {
         NetworkingUtilities.loadPrecincts(this.props.CurrentState).then(results => {
             this.props.populatePrecincts(results)
+        })
+    }
+
+    async populateCounties() {
+        NetworkingUtilities.loadCounties(this.props.CurrentState).then(results => {
+            console.log(results)
+            this.props.populateCounties(results)
         })
     }
 
@@ -99,6 +107,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         populatePrecincts : (precincts) => {
             dispatch(populatePrecincts(precincts))
+        },
+        populateCounties : (counties) => {
+            dispatch(populateCounties(counties))
         },
         setCurrentJob : (job) => {
             dispatch(setCurrentJob(job))

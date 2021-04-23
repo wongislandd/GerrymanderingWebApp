@@ -38,7 +38,7 @@ public class DatabaseWritingService {
         return file.list();
     }
 
-    private static Precinct buildPrecinctFromJSON(JSONObject feature) {
+    private static Precinct buildPrecinctFromJSON(StateName state, JSONObject feature) {
         JSONObject properties = feature.getJSONObject("properties");
 
         String precinctName = properties.getString("PREC_NAME");
@@ -61,7 +61,7 @@ public class DatabaseWritingService {
         Demographics demographics = new Demographics(democrats, republicans, otherParty, asian, black, natives,
                 pacific, whiteHispanic, whiteNonHispanic, otherRace, TP, VAP, CVAP);
 
-        return new Precinct(id, precinctName, feature.toString(), demographics);
+        return new Precinct(state, id, precinctName, feature.toString(), demographics);
     }
 
     private static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys, HashMap<Integer, Precinct> precinctHash) {
@@ -92,13 +92,16 @@ public class DatabaseWritingService {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
 
+        /* Customization */
         String precinctsFilePath = "/json/NC/PrecinctGeoDataSimplified.json";
+        StateName stateName = StateName.NORTH_CAROLINA;
+
         JSONObject jo = readFile(precinctsFilePath);
         JSONArray features = jo.getJSONArray("features");
 
         for (int i = 0; i < features.length(); i++) {
             JSONObject feature = features.getJSONObject(i);
-            Precinct p = buildPrecinctFromJSON(feature);
+            Precinct p = buildPrecinctFromJSON(stateName, feature);
             System.out.println("Persisting Precinct " + i);
             em.persist(p);
         }
@@ -112,7 +115,11 @@ public class DatabaseWritingService {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
 
+
+        /* Customization */
         String countiesFilePath = "/json/NC/CountiesPrecinctsMapping.json";
+        StateName stateName = StateName.NORTH_CAROLINA;
+
         JSONObject jo = readFile(countiesFilePath);
         HashMap<Integer, Precinct> allPrecincts = getAllPrecincts(em);
         Iterator<String> keys = jo.keys();
@@ -127,9 +134,8 @@ public class DatabaseWritingService {
             String name = county.getString("name");
             JSONArray precinctKeys = county.getJSONArray("precincts");
             ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, allPrecincts);
-
             // Get the precinct keys
-            County c = new County(Integer.parseInt(key), name, precincts);
+            County c = new County(stateName, Integer.parseInt(key), name, precincts);
             System.out.println("PERSISTING COUNTY " + counter++);
             em.persist(c);
         }

@@ -1,5 +1,6 @@
 package cse416.spring.models.precinct;
 
+import cse416.spring.enums.StateName;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,9 +14,13 @@ public class Precinct {
     String geoJson;
 
     Demographics demographics;
+
+    StateName state;
+
     private int id;
 
-    public Precinct(int id, String name, String geoJson, Demographics demographics) {
+    public Precinct(StateName state, int id, String name, String geoJson, Demographics demographics) {
+        this.state = state;
         this.name = name;
         this.geoJson = geoJson;
         this.demographics = demographics;
@@ -25,6 +30,15 @@ public class Precinct {
 
     public Precinct() {
 
+    }
+
+    @Column
+    public StateName getState() {
+        return state;
+    }
+
+    public void setState(StateName state) {
+        this.state = state;
     }
 
     @Column

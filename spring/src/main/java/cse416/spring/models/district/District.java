@@ -6,6 +6,7 @@ import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -27,7 +28,11 @@ public class District {
     public District(int districtNumber, ArrayList<Precinct> precincts, StateName stateName) {
         this.districtNumber = districtNumber;
         this.demographics = compileDemographics(precincts);
-        this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
+        JSONArray precinctKeysArr = new JSONArray();
+        for (Precinct p : precincts) {
+            precinctKeysArr.put(p.getId());
+        }
+        this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
 
         /* TODO: Complete the math for these*/
         int idealPopulation = IdealPopulation.getIdealVoterPopulation(stateName);

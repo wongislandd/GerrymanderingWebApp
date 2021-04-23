@@ -1,6 +1,7 @@
 package cse416.spring.models.county;
 
 import com.vividsolutions.jts.geom.Geometry;
+import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.builders.ConcaveHullBuilder;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
@@ -16,9 +17,20 @@ public class County {
     String name;
     Geometry geometry;
     String precinctKeys;
+    StateName state;
+
 
     public County() {
 
+    }
+
+    @Column
+    public StateName getState() {
+        return state;
+    }
+
+    public void setState(StateName state) {
+        this.state = state;
     }
 
     @Column
@@ -57,7 +69,8 @@ public class County {
         this.id = id;
     }
 
-    public County(int id, String name, ArrayList<Precinct> precincts) {
+    public County(StateName state, int id, String name, ArrayList<Precinct> precincts) {
+        this.state = state;
         this.id = id;
         this.name = name;
 

@@ -1,8 +1,10 @@
 package cse416.spring.service;
 
 import com.github.javafaker.Faker;
+import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
+import cse416.spring.models.county.County;
 import cse416.spring.models.job.Job;
 import cse416.spring.models.precinct.Incumbent;
 import cse416.spring.models.precinct.Precinct;
@@ -12,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StateService {
@@ -33,6 +36,20 @@ public class StateService {
         query.setParameter("state", state);
         ArrayList<Job> allJobs = new ArrayList<Job>(query.getResultList());
         return allJobs;
+    }
+
+    public static String getCounties(StateName state) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT c FROM County c where c.state=:state");
+        query.setParameter("state", state);
+        ArrayList<County> allCounties = new ArrayList<County>(query.getResultList());
+        ArrayList<Geometry> geometries = new ArrayList<>();
+        for (County county : allCounties) {
+            geometries.add(county.getGeometry());
+        }
+        FeatureCollectionJSON geoJson = new FeatureCollectionJSON(geometries);
+        return geoJson.toString();
     }
 
     public static String getPrecincts(StateName state) {

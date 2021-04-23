@@ -76,6 +76,16 @@ export async function loadPrecincts(state) {
     return body;
 }
 
+export async function loadCounties(state) {
+  console.log("LOAD COUNTIES CALLED");
+  let fullUrl = baseURL + "/states/" + state + "/loadCounties";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
+  return body;
+}
+
+
+
 export async function applyConstraints() {
   // const params = {
   //   compactness : new Compactness(state.ConstraintSliderSettings[2].value, state.ConstraintSliderSettings[3].value, state.ConstraintSliderSettings[4].value)

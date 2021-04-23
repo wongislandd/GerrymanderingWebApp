@@ -80,6 +80,17 @@ public class StateController {
         return new ResponseEntity<>(precinctsGeoJson, HttpStatus.OK);
     }
 
+
+    @GetMapping("/{stateID}/loadCounties")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> loadCounties(@PathVariable("stateID") String stateID) {
+        // MAP THE STATE STRING TO THE ENUM TO BE CALLED HERE (NC -> StateName.NORTH_CAROLINA) can use a switch statement
+        // or maybe something cleaner?
+        String countiesGeoJson = StateService.getCounties(getStateNameFromStateID(stateID));
+        return new ResponseEntity<>(countiesGeoJson, HttpStatus.OK);
+    }
+
+
     @GetMapping("/test")
     @CrossOrigin
     public ResponseEntity<String> getTest(HttpServletRequest request) {

@@ -315,6 +315,13 @@ export const populatePrecincts = (precinctsGeoJson) => {
   }
 } 
 
+export const populateCounties = (countiesGeoJson) => {
+  return {
+    type : ActionTypes.POPULATE_COUNTIES,
+    CountiesGeoJson : countiesGeoJson,
+  }
+}
+
 export const setCurrentJob = (job) => {
   return {
     type : ActionTypes.SET_CURRENT_JOB,

@@ -1,6 +1,5 @@
 import React, { Component, useState } from "react";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
-import CountyGeoData from "../../data/NC/CountiesGeoData.json";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import { connect } from "react-redux";
 import {
@@ -279,40 +278,41 @@ class MapBoxComponent extends Component {
 
             </div>
             }
-          <Source
-            id={MapUtilities.IDs.COUNTY_SOURCE_ID}
-            type="geojson"
-            data={CountyGeoData}
-            generateId={true}
-          />
-          <Layer
-            id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID}
-            type="fill"
-            source={MapUtilities.IDs.COUNTY_SOURCE_ID}
-            layout={{
-              visibility: this.props.DisplayCounties ? "visible" : "none",
-            }}
-            paint={{
-              "fill-color": "lightblue",
-              "fill-opacity": [
-                "case",
-                ["boolean", ["feature-state", "hover"], false],
-                0.6,
-                0.3,
-              ],
-            }}
-          />
-          <Layer
-            id={MapUtilities.IDs.COUNTY_LINE_LAYER_ID}
-            type="line"
-            source={MapUtilities.IDs.COUNTY_SOURCE_ID}
-            layout={{
-              visibility: this.props.DisplayCounties ? "visible" : "none",
-            }}
-            paint={{
-              "line-opacity": 1,
-            }}
-          />
+          {this.props.CountiesGeoJson != null ? <div>
+            <Source
+              id={MapUtilities.IDs.COUNTY_SOURCE_ID}
+              type="geojson"
+              data={this.props.CountiesGeoJson}
+              generateId={true}
+            />
+            <Layer
+              id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID}
+              type="fill"
+              source={MapUtilities.IDs.COUNTY_SOURCE_ID}
+              layout={{
+                visibility: this.props.DisplayCounties ? "visible" : "none",
+              }}
+              paint={{
+                "fill-color": "lightblue",
+                "fill-opacity": [
+                  "case",
+                  ["boolean", ["feature-state", "hover"], false],
+                  0.6,
+                  0.3,
+                ],
+              }}
+            />
+            <Layer
+              id={MapUtilities.IDs.COUNTY_LINE_LAYER_ID}
+              type="line"
+              source={MapUtilities.IDs.COUNTY_SOURCE_ID}
+              layout={{
+                visibility: this.props.DisplayCounties ? "visible" : "none",
+              }}
+              paint={{
+                "line-opacity": 1,
+              }}
+            /></div> : <div></div>}
           <Source
             id={MapUtilities.IDs.DISTRICT_SOURCE_ID}
             type="geojson"
@@ -418,6 +418,7 @@ const mapStateToProps = (state, ownProps) => {
     MapViewport: state.MapViewport,
     Loaded: state.Loaded,
     PrecinctsGeoJson : state.PrecinctsGeoJson,
+    CountiesGeoJson : state.CountiesGeoJson,
   };
 };
 

@@ -40,6 +40,7 @@ class SettingsMode extends Component {
                 this.props.toggleCountySwitch(!this.props.DisplayCounties)
               }
               checked={this.props.DisplayCounties}
+              disabled={this.props.CountiesGeoJson == null}
             />
           </Row>
           <Row>
@@ -79,6 +80,7 @@ const mapStateToProps = (state, ownProps) => {
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
     PrecinctsGeoJson : state.PrecinctsGeoJson,
+    CountiesGeoJson : state.CountiesGeoJson,
   };
 };
 
