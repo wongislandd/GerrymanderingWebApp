@@ -1,6 +1,8 @@
 package cse416.spring.service;
 
+import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.EntityManagerSingleton;
+import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.models.county.County;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.job.Job;
@@ -144,7 +146,7 @@ public class DatabaseWritingService {
         return false;
     }
 
-    public static void persistDistrictings() throws IOException, InterruptedException {
+    public static void persistDistrictings() throws IOException {
         /* Create threads to do work */
         final long startTime = System.currentTimeMillis();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
@@ -219,14 +221,6 @@ public class DatabaseWritingService {
             precinctHash.put(allPrecincts.get(i).getId(), allPrecincts.get(i));
         }
         return precinctHash;
-    }
-
-    public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys, HashMap<Integer, Precinct> precinctHash) {
-        ArrayList<Precinct> results = new ArrayList<>();
-        for (int i = 0; i < precinctKeys.length(); i++) {
-            results.add(precinctHash.get(precinctKeys.getInt(i)));
-        }
-        return results;
     }
 
     private static Job createJob(StateName state, int jobId, JobSummary js, EntityManager em) {
