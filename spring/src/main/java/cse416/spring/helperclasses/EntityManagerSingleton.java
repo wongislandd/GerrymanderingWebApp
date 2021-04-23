@@ -5,10 +5,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class EntityManagerSingleton {
-    private static EntityManagerSingleton instance = new EntityManagerSingleton();
+    private static final EntityManagerSingleton instance = new EntityManagerSingleton();
 
-    private EntityManagerFactory emfactory;
-    private EntityManager em;
+    private final EntityManagerFactory emfactory;
+    private final EntityManager em;
 
     private EntityManagerSingleton(){
         emfactory = Persistence.createEntityManagerFactory( "orioles_db" );

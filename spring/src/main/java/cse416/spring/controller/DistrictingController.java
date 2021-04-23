@@ -1,10 +1,7 @@
 package cse416.spring.controller;
 
-import cse416.spring.helperclasses.Server;
-import cse416.spring.helperclasses.ConstrainedDistrictings;
 import cse416.spring.models.districting.DistrictingConstraints;
 import cse416.spring.service.DistrictingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -17,22 +14,14 @@ import java.nio.file.Files;
 @RestController
 @RequestMapping("/districting")
 public class DistrictingController {
-    Server server;
-    DistrictingService service = new DistrictingService();
-
-    @Autowired
-    ConstrainedDistrictings currentConstraintedDistrictings;
-
-
-    public DistrictingController(Server server, ConstrainedDistrictings currentConstraintedDistrictings) {
-        this.server = server;
-        this.currentConstraintedDistrictings = currentConstraintedDistrictings;
+    public DistrictingController() {
     }
 
-    @PostMapping(value = "getInterestingDistrictings")
+    @PostMapping(value = "/getInterestingDistrictings")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> getInterestingDistrictings() {
-        service.getInterestingDistrictings();
+        // TODO: Implement
+        DistrictingService.getInterestingDistrictings();
         return new ResponseEntity<>("hi", HttpStatus.OK);
     }
 
@@ -47,10 +36,8 @@ public class DistrictingController {
             // Build a districting object from the id and then return it
 
             return new ResponseEntity<>(content, HttpStatus.OK);
-
         }
         catch (Exception ex) {
-            System.out.println(ex);
             return new ResponseEntity<>("{\"message\":\""+ex.getMessage()+"\"}", HttpStatus.CONFLICT);
         }
     }
@@ -63,28 +50,12 @@ public class DistrictingController {
             // Construct a set of IDs which match said constraints
             //server.postConstraints()
             // Return the set of IDs
+            // TODO: Implement
 
             return new ResponseEntity<>("{\"message\":\""+"YUH"+"\"}", HttpStatus.CONFLICT);
         }
         catch (Exception ex) {
-            System.out.println(ex);
             return new ResponseEntity<>("{\"message\":\""+ex.getMessage()+"\"}", HttpStatus.CONFLICT);
         }
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
-    }
-
-    public ConstrainedDistrictings getCurrentConstraintedDistrictings() {
-        return currentConstraintedDistrictings;
-    }
-
-    public void setCurrentConstraintedDistrictings(ConstrainedDistrictings currentConstraintedDistrictings) {
-        this.currentConstraintedDistrictings = currentConstraintedDistrictings;
     }
 }

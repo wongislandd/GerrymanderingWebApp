@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 
 
 @Entity
@@ -61,11 +60,13 @@ public class County {
     public County(int id, String name, ArrayList<Precinct> precincts) {
         this.id = id;
         this.name = name;
-        JSONArray precinctKeysArr = new JSONArray();
-        for (int i=0;i<precincts.size();i++) {
-            precinctKeysArr.put(precincts.get(i).getId());
+
+        JSONArray precinctKeys = new JSONArray();
+        for (Precinct precinct : precincts) {
+            precinctKeys.put(precinct.getId());
         }
-        this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
+
+        this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
         this.geometry = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
     }
 }
