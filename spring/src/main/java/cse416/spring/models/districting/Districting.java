@@ -30,10 +30,7 @@ public class Districting {
 
         this.jobID = jobID;
         this.measures = compileDistrictingMeasures(districts);
-        this.ObjectiveFunctionScore = 0;
-
-        JSONObject districtKeysJSON = new JSONObject().put("districts", districtKeys);
-        this.districtKeys = districtKeysJSON.toString();
+        this.districtKeys = new JSONObject().put("districts", districtKeys).toString();
     }
 
     @Lob

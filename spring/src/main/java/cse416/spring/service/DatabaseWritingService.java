@@ -186,7 +186,7 @@ public class DatabaseWritingService {
             AtomicBoolean availableRef = new AtomicBoolean(true);
             /* Create threads */
             for (int j=1; j<numThreads+1;j++) {
-                DistrictingWriterThread newThread = new DistrictingWriterThread(jobId,"T" +j, ems.get(j-1), precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
+                DistrictingWriterThread newThread = new DistrictingWriterThread(state, jobId,"T" +j, ems.get(j-1), precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
                 threads.add(newThread);
             }
 

@@ -2,6 +2,7 @@ package cse416.spring.service;
 
 import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.MinorityPopulation;
+import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.District;
@@ -23,6 +24,7 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DistrictingWriterThread extends Thread {
+    StateName stateName;
     int jobID;
     String name;
     EntityManager em;
@@ -32,7 +34,10 @@ public class DistrictingWriterThread extends Thread {
     int rangeEndExclusive;
     AtomicBoolean availableRef;
 
-    public DistrictingWriterThread(int jobID, String name, EntityManager em, HashMap<Integer,Precinct> precinctHash, JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
+    public DistrictingWriterThread(StateName stateName, int jobID, String name, EntityManager em, HashMap<Integer,Precinct> precinctHash,
+                                   JSONArray districtings, int rangeStart, int rangeEndExclusive, AtomicBoolean availableRef) {
+
+        this.stateName = stateName;
         this.jobID = jobID;
         this.name = name;
         this.em = em;
