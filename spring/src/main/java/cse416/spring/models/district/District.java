@@ -143,8 +143,9 @@ public class District {
         int total_TP = 0;
         int total_VAP = 0;
         int total_CVAP = 0;
-        for (int i = 0; i < precincts.size(); i++) {
-            Demographics currentPrecinctDemographics = precincts.get(i).getDemographics();
+
+        for (Precinct precinct : precincts) {
+            Demographics currentPrecinctDemographics = precinct.getDemographics();
             total_democrats += currentPrecinctDemographics.getDemocrats();
             total_republicans += currentPrecinctDemographics.getRepublicans();
             total_otherParty += currentPrecinctDemographics.getOtherParty();

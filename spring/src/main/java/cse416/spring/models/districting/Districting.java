@@ -3,6 +3,7 @@ package cse416.spring.models.districting;
 import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictMeasures;
+import cse416.spring.models.district.MajorityMinorityInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,27 +13,27 @@ import java.util.ArrayList;
 @Entity
 public class Districting {
 
-    /* Should be convertible into a JSONObject*/
-    String districtKeys;
-
-    int jobID;
-
-    DistrictingMeasures measures;
-    double ObjectiveFunctionScore;
     private long id;
+    private int jobID;
+    private DistrictingMeasures measures;
+    private double ObjectiveFunctionScore;
+    private String districtKeys;
 
     public Districting() {
-
     }
 
     public Districting(int jobID, ArrayList<District> districts) {
-        JSONArray districtKeysArr = new JSONArray();
-        for (int i=0;i<districts.size();i++) {
-            districtKeysArr.put(districts.get(i).getId());
+        JSONArray districtKeys = new JSONArray();
+        for (District district : districts) {
+            districtKeys.put(district.getId());
         }
+
         this.jobID = jobID;
-        this.districtKeys = new JSONObject().put("districts", districtKeysArr).toString();
         this.measures = compileDistrictingMeasures(districts);
+        this.ObjectiveFunctionScore = 0;
+
+        JSONObject districtKeysJSON = new JSONObject().put("districts", districtKeys);
+        this.districtKeys = districtKeysJSON.toString();
     }
 
     @Lob
@@ -81,39 +82,59 @@ public class Districting {
         this.id = id;
     }
 
-    public DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
+    private static MajorityMinorityDistrictsCount getMMDistrictsCount(ArrayList<District> districts) {
         int blackDistricts = 0;
         int hispanicDistricts = 0;
         int asianDistricts = 0;
         int nativeDistricts = 0;
+
+        for (District district : districts) {
+            MajorityMinorityInfo mmInfo = district.getMeasures().getMajorityMinorityInfo();
+
+            if (mmInfo.isBlackMajority()) {
+                blackDistricts += 1;
+            } else if (mmInfo.isHispanicMajority()) {
+                hispanicDistricts += 1;
+            } else if (mmInfo.isAsianMajority()) {
+                asianDistricts += 1;
+            } else if (mmInfo.isNativeMajority()) {
+                nativeDistricts += 1;
+            }
+        }
+
+        return new MajorityMinorityDistrictsCount(blackDistricts, hispanicDistricts, asianDistricts, nativeDistricts);
+    }
+
+    private static Compactness getAvgCompactness(ArrayList<District> districts) {
         double totalPolsbyPopperCompactness = 0;
         double totalPopulationFatnessCompactness = 0;
         double totalGraphCompactness = 0;
+
+        int numDistricts = districts.size();
+
+        for (District district : districts) {
+            DistrictMeasures districtMeasures = district.getMeasures();
+            totalPolsbyPopperCompactness += districtMeasures.getCompactness().getPolsbyPopper();
+            totalPopulationFatnessCompactness += districtMeasures.getCompactness().getPopulationFatness();
+            totalGraphCompactness += districtMeasures.getCompactness().getGraphCompactness();
+        }
+
+        return new Compactness(totalPolsbyPopperCompactness / numDistricts,
+                totalPopulationFatnessCompactness / numDistricts,
+                totalGraphCompactness / numDistricts);
+    }
+
+    private static DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
         double totalSplitCounties = 0;
         double totalPopulationEquality = 0;
         double totalPoliticalFairness = 0;
         double totalDeviationFromEnacted = 0;
         double totalDeviationFromAverage = 0;
 
+        int numDistricts = districts.size();
 
-        for (int i=0;i<districts.size();i++) {
-            DistrictMeasures districtMeasures = districts.get(i).getMeasures();
-            if (districtMeasures.getMajorityMinorityInfo().isBlackMajority()) {
-                blackDistricts += 1;
-            }
-            if (districtMeasures.getMajorityMinorityInfo().isHispanicMajority()) {
-                hispanicDistricts += 1;
-            }
-            if (districtMeasures.getMajorityMinorityInfo().isAsianMajority()) {
-                asianDistricts += 1;
-            }
-            if (districtMeasures.getMajorityMinorityInfo().isNativeMajority()) {
-                nativeDistricts += 1;
-            }
-
-            totalPolsbyPopperCompactness += districtMeasures.getCompactness().getPolsbyPopper();
-            totalPopulationFatnessCompactness += districtMeasures.getCompactness().getPopulationFatness();
-            totalGraphCompactness += districtMeasures.getCompactness().getGraphCompactness();
+        for (District district : districts) {
+            DistrictMeasures districtMeasures = district.getMeasures();
 
             totalPopulationEquality += districtMeasures.getPopulationEquality();
             totalPoliticalFairness += districtMeasures.getPoliticalFairness();
@@ -121,15 +142,17 @@ public class Districting {
             totalSplitCounties += districtMeasures.getSplitCounties();
             totalDeviationFromEnacted += districtMeasures.getDeviationFromEnacted();
             totalDeviationFromAverage += districtMeasures.getDeviationFromAverage();
-        };
-        MajorityMinorityDistrictsCount minorityDistrictsCount = new MajorityMinorityDistrictsCount(blackDistricts, hispanicDistricts, asianDistricts, nativeDistricts);
-        Compactness compactnessAvg = new Compactness(totalPolsbyPopperCompactness/districts.size(), totalPopulationFatnessCompactness/districts.size(), totalGraphCompactness/districts.size());
-        double populationEqualityAvg = totalPopulationEquality / districts.size();
-        double politicalFairnessAvg = totalPoliticalFairness / districts.size();
-        double deviationFromEnactedAvg = totalDeviationFromEnacted / districts.size();
-        double deviationFromAverageAvg = totalDeviationFromAverage / districts.size();
-        return new DistrictingMeasures(minorityDistrictsCount, compactnessAvg,
-                populationEqualityAvg, politicalFairnessAvg, totalSplitCounties, deviationFromEnactedAvg, deviationFromAverageAvg);
+        }
 
+        MajorityMinorityDistrictsCount mmDistrictsCount = getMMDistrictsCount(districts);
+        Compactness compactnessAvg = getAvgCompactness(districts);
+
+        double populationEqualityAvg = totalPopulationEquality / numDistricts;
+        double politicalFairnessAvg = totalPoliticalFairness / numDistricts;
+        double deviationFromEnactedAvg = totalDeviationFromEnacted / numDistricts;
+        double deviationFromAverageAvg = totalDeviationFromAverage / numDistricts;
+
+        return new DistrictingMeasures(mmDistrictsCount, compactnessAvg,
+                populationEqualityAvg, politicalFairnessAvg, totalSplitCounties, deviationFromEnactedAvg, deviationFromAverageAvg);
     }
 }
