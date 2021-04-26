@@ -25,7 +25,8 @@ public class DistrictMeasures {
         this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
         this.politicalFairness = politicalFairness;
-        this.splitCounties = splitCounties;
+        this.deviationFromAverage = Math.random();
+        this.deviationFromEnacted = Math.random();
     }
 
     public DistrictMeasures() {
@@ -78,7 +79,8 @@ public class DistrictMeasures {
         this.splitCounties = splitCounties;
     }
 
-    @Transient
+//    @Transient maybe keep as column ??? ???
+    @Column
     public double getDeviationFromEnacted() {
         return deviationFromEnacted;
     }
@@ -87,7 +89,8 @@ public class DistrictMeasures {
         this.deviationFromEnacted = deviationFromEnacted;
     }
 
-    @Transient
+//    @Transient
+    @Column
     public double getDeviationFromAverage() {
         return deviationFromAverage;
     }

@@ -11,8 +11,8 @@ public class TopScoring implements AnalysisCategoryContainer{
 
     int maxSize = 10;
 
-    public TopScoring(ArrayList<Districting> entries) {
-        this.entries = entries;
+    public TopScoring() {
+        this.entries = new ArrayList<>();
     }
 
     public ArrayList<Districting> getEntries() {
@@ -42,22 +42,23 @@ public class TopScoring implements AnalysisCategoryContainer{
 
     @Override
     public boolean shouldInsert(Districting districting) {
-        /* If this districting's score is greater than the lowest score on the list, replace.*/
-        if (entries.get(-1).getObjectiveFunctionScore() < districting.getObjectiveFunctionScore() || entries.size() < maxSize) {
-            return true;
-        } else {
-            return false;
-        }
+//        /* If this districting's score is greater than the lowest score on the list, replace.*/
+//        if (entries.get(-1).getObjectiveFunctionScore() < districting.getObjectiveFunctionScore() || entries.size() < maxSize) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return true;
     }
 
     @Override
     public void insert(Districting districting) {
-        if (entries.size() < maxSize) {
-            entries.add(districting);
-        } else {
-            entries.remove(-1);
-            entries.add(districting);
-        }
-        sortEntries();
+//        if (entries.size() < maxSize) {
+//            entries.add(districting);
+//        } else {
+//            entries.remove(-1);
+//            entries.add(districting);
+//        }
+//        sortEntries();
     }
 }

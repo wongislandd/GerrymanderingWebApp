@@ -101,8 +101,19 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
+
+    /* Temporary helper functions for generating fake data */
+    private int generateRandInt(int min, int max) {
+        return ((int)Math.floor(Math.random()*(max-min+1)+min));
+    }
+
+    private double generateRandDouble(int min, int max) {
+        return (double)Math.round((Math.random()*(max-min+1)+min) * 100) / 100;
+    }
+
+
     public double calculateDeviationFrom(District other) {
-        return 1;
+        return Math.random();
     }
 
     private int calculateSplitCounties(ArrayList<Precinct> precincts) {
@@ -114,20 +125,20 @@ public class District {
         return Math.pow((popRatio - 1), 2);
     }
 
-    private int calculatePoliticalFairness(Demographics d) {
-        return 5;
+    private double calculatePoliticalFairness(Demographics d) {
+        return Math.random();
     }
 
-    private int calculateDeviationFromEnacted(Geometry hull, Demographics d) {
-        return 5;
+    private double calculateDeviationFromEnacted(Geometry hull, Demographics d) {
+        return Math.random();
     }
 
-    private int calculateDeviationFromAverage(Geometry hull, Demographics d) {
-        return 5;
+    private double calculateDeviationFromAverage(Geometry hull, Demographics d) {
+        return Math.random();
     }
 
     private Compactness calculateCompactness() {
-        return new Compactness(.5, .6, .7);
+        return new Compactness(Math.random(), Math.random(), Math.random());
     }
 
     private static Demographics compileDemographics(ArrayList<Precinct> precincts) {

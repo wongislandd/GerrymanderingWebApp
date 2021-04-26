@@ -183,7 +183,7 @@ public class DatabaseWritingService {
         }
 
         // For every file in the folder . . .
-        for (int i=0;i<2;i++) {
+        for (int i=0;i<6;i++) {
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
             JSONObject jo = readFile("/json/NC/districtings/" + files[i]);

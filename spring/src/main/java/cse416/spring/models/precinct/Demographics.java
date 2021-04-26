@@ -41,13 +41,17 @@ public class Demographics {
     public boolean isMajorityMinorityDistrict(MinorityPopulation p) {
         switch (p) {
             case BLACK:
-                return (black / VAP) > .5;
+                //return (black / VAP) > .5;
+                return (Math.random()) > .5;
             case ASIAN:
-                return (asian / VAP) > .5;
+                //return (asian / VAP) > .5;
+                return (Math.random()) > .5;
             case HISPANIC:
-                return (whiteHispanic / VAP) > .5;
+                //return (whiteHispanic / VAP) > .5;
+                return (Math.random()) > .5;
             case NATIVE_AMERICAN:
-                return (natives / VAP) > .5;
+                //return (natives / VAP) > .5;
+                return (Math.random()) > .5;
             default:
                 return false;
         }

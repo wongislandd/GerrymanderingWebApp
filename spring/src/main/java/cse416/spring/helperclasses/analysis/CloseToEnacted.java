@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class CloseToEnacted implements AnalysisCategoryContainer{
     ArrayList<Districting> entries;
 
-    public CloseToEnacted(ArrayList<Districting> entries) {
-        this.entries = entries;
+    public CloseToEnacted() {
+        this.entries = new ArrayList<>();
     }
 
     public ArrayList<Districting> getEntries() {
@@ -22,7 +22,8 @@ public class CloseToEnacted implements AnalysisCategoryContainer{
 
     @Override
     public boolean shouldInsert(Districting districting) {
-        return false;
+        // sort similar to top scoring based on deviation to enacted instead
+        return true;
     }
 
     @Override

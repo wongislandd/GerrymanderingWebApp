@@ -85,7 +85,6 @@ export async function loadCounties(state) {
 }
 
 
-
 export async function applyConstraints() {
   // const params = {
   //   compactness : new Compactness(state.ConstraintSliderSettings[2].value, state.ConstraintSliderSettings[3].value, state.ConstraintSliderSettings[4].value)

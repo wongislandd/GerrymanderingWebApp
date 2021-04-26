@@ -12,8 +12,8 @@ public class HighScoringMajorityMinority implements AnalysisCategoryContainer{
     int desiredMinorityDistrictUpperBound;
     int desiredMinorityDistrictLowerBound;
 
-    public HighScoringMajorityMinority(ArrayList<Districting> entries, MinorityPopulation minority, int desiredMinorityDistrictUpperBound, int desiredMinorityDistrictLowerBound) {
-        this.entries = entries;
+    public HighScoringMajorityMinority(MinorityPopulation minority,  int desiredMinorityDistrictLowerBound, int desiredMinorityDistrictUpperBound) {
+        this.entries = new ArrayList<>();
         this.minority = minority;
         this.desiredMinorityDistrictUpperBound = desiredMinorityDistrictUpperBound;
         this.desiredMinorityDistrictLowerBound = desiredMinorityDistrictLowerBound;
@@ -29,17 +29,25 @@ public class HighScoringMajorityMinority implements AnalysisCategoryContainer{
 
     @Override
     public boolean shouldInsert(Districting districting) {
-        switch(minority) {
-            case BLACK:
-                int blackDistricts = districting.getMeasures().getMinorityDistrictsCount().getBlackDistricts();
-                if (desiredMinorityDistrictLowerBound <= blackDistricts &&
-                        blackDistricts <= desiredMinorityDistrictUpperBound) {
-//                        districting.getObjectiveFunctionScore();
-//                        districting.getMeasures().getDeviationFromAverageAvg();
-                }
-        }
+        // Is the districting's majority minority district count within the desired range?
 
-        return false;
+        // no -> reject
+        // yes -> multiply the districting's objective function score by it's deviationFromAverage
+        // sort the list based on that result
+
+
+
+//        switch(minority) {
+//            case BLACK:
+//                int blackDistricts = districting.getMeasures().getMinorityDistrictsCount().getBlackDistricts();
+//                if (desiredMinorityDistrictLowerBound <= blackDistricts &&
+//                        blackDistricts <= desiredMinorityDistrictUpperBound) {
+////                        districting.getObjectiveFunctionScore();
+////                        districting.getMeasures().getDeviationFromAverageAvg();
+//                }
+//        }
+
+        return true;
     }
 
     @Override

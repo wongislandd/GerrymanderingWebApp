@@ -12,12 +12,14 @@ import java.nio.file.Files;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/districting")
+@RequestMapping("/districtings")
 public class DistrictingController {
     public DistrictingController() {
     }
 
-    @PostMapping(value = "/getInterestingDistrictings")
+
+    //GET MAPPING TO https://localhost:3000/districtings/getSummary
+    @GetMapping(value = "/getSummary")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> getInterestingDistrictings() {
         // TODO: Implement

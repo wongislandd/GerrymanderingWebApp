@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class TopAreaPairDeviation implements AnalysisCategoryContainer{
     ArrayList<Districting> entries;
 
-    public TopAreaPairDeviation(ArrayList<Districting> entries) {
-        this.entries = entries;
+    public TopAreaPairDeviation() {
+        this.entries = new ArrayList<>();
     }
     
     public ArrayList<Districting> getEntries() {
@@ -22,7 +22,8 @@ public class TopAreaPairDeviation implements AnalysisCategoryContainer{
 
     @Override
     public boolean shouldInsert(Districting districting) {
-        return false;
+        // ??????????????????????????????????
+        return true;
     }
 
     @Override
@@ -34,5 +35,7 @@ public class TopAreaPairDeviation implements AnalysisCategoryContainer{
     public void insert(Districting districting) {
 
     }
+
+
 
 }
