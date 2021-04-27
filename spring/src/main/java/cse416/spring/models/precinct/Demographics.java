@@ -21,14 +21,14 @@ public class Demographics {
     public Demographics() {
     }
 
-    public Demographics(int asian, int black, int natives, int pacific, int whiteHispanic, int whiteNonHispanic,
+    public Demographics(int asian, int black, int natives, int pacific, int white, int hispanic,
                         int otherRace, int TP, int VAP, int CVAP) {
         this.asian = asian;
         this.black = black;
         this.natives = natives;
         this.pacific = pacific;
-        this.white = whiteHispanic;
-        this.hispanic = whiteNonHispanic;
+        this.white = white;
+        this.hispanic = hispanic;
         this.otherRace = otherRace;
         this.TP = TP;
         this.VAP = VAP;
