@@ -19,7 +19,7 @@ public class StateController {
     }
 
     private static StateName getStateName(String stateID) {
-        switch(stateID) {
+        switch (stateID) {
             case "LA":
                 return StateName.LOUISIANA;
             case "TX":

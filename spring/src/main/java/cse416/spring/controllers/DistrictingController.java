@@ -28,11 +28,12 @@ public class DistrictingController {
 
     /**
      * Build the response entity to send in case of an error.
+     *
      * @param ex The exception object
      * @return A response entity with a CONFLICT HTTP status.
      */
     private static ResponseEntity<String> buildErrorResponseEntity(Exception ex) {
-        String body = "{\"message\":\""+ex.getMessage()+"\"}";
+        String body = "{\"message\":\"" + ex.getMessage() + "\"}";
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -48,8 +49,7 @@ public class DistrictingController {
 
             // Build a districting object from the id and then return it
             return new ResponseEntity<>(content, HttpStatus.OK);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return buildErrorResponseEntity(ex);
         }
     }
@@ -64,9 +64,8 @@ public class DistrictingController {
             // Return the set of IDs
             // TODO: Implement
 
-            return new ResponseEntity<>("{\"message\":\""+"YUH"+"\"}", HttpStatus.NOT_IMPLEMENTED);
-        }
-        catch (Exception ex) {
+            return new ResponseEntity<>("{\"message\":\"" + "YUH" + "\"}", HttpStatus.NOT_IMPLEMENTED);
+        } catch (Exception ex) {
             return buildErrorResponseEntity(ex);
         }
     }

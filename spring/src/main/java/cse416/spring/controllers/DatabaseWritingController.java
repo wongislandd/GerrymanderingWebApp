@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 /**
- * The DatabaseWritingController class is a controller that provides methods
- * for persisting precincts, counties and districtings into the database.
+ * A controller that provides methods for persisting precincts, counties
+ * and districtings into the database.
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
