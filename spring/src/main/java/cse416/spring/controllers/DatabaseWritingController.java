@@ -1,4 +1,4 @@
-package cse416.spring.controller;
+package cse416.spring.controllers;
 
 import cse416.spring.service.DatabaseWritingService;
 import org.springframework.http.HttpStatus;
@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+/**
+ * The DatabaseWritingController class is a controller that provides methods
+ * for persisting precincts, counties and districtings into the database.
+ */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/db")
