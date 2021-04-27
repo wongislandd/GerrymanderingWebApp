@@ -12,15 +12,17 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+/**
+ * A class to represent a congressional district.
+ */
 @Entity
 public class District {
-
-    private long id;
     private int districtNumber;
     private Demographics demographics;
     private String precinctKeys;
     private DistrictMeasures measures;
     private double objectiveFunctionScore;
+    private long id;
 
     public District() {
     }
@@ -35,7 +37,7 @@ public class District {
         this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
 
         /* TODO: Complete the math for these*/
-        int idealPopulation = IdealPopulation.getIdealVoterPopulation(stateName);
+        int idealPopulation = IdealPopulation.getIdealPopulation(stateName);
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
 
         MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
@@ -43,7 +45,8 @@ public class District {
         double politicalFairness = calculatePoliticalFairness(demographics);
         int splitCounties = calculateSplitCounties(precincts);
 
-        this.measures = new DistrictMeasures(populationEquality, minorityInfo, compactness, politicalFairness, splitCounties);
+        this.measures = new DistrictMeasures(populationEquality, minorityInfo,
+                compactness, politicalFairness, splitCounties);
     }
 
     @Column
@@ -101,16 +104,16 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-
     /* Temporary helper functions for generating fake data */
     private int generateRandInt(int min, int max) {
-        return ((int)Math.floor(Math.random()*(max-min+1)+min));
+        return ((int) Math.floor(Math.random() * (max - min + 1) + min));
     }
 
     private double generateRandDouble(int min, int max) {
-        return (double)Math.round((Math.random()*(max-min+1)+min) * 100) / 100;
+        return (double) Math.round((Math.random() * (max - min + 1) + min) * 100) / 100;
     }
 
+    // Methods to calculate district measures
 
     public double calculateDeviationFrom(District other) {
         return Math.random();
@@ -121,7 +124,7 @@ public class District {
     }
 
     private double calculatePopulationEquality(int idealPopulation) {
-        double popRatio = (double) demographics.getVAP() / idealPopulation;
+        double popRatio = (double) demographics.getTP() / idealPopulation;
         return Math.pow((popRatio - 1), 2);
     }
 

@@ -48,6 +48,5 @@ public class DistrictingService {
         ArrayList<Districting> r3 = topAreaPairDeviation.getEntries();
         ArrayList<Districting> r4 = topScoring.getEntries();
         System.out.println("Put breakpoint here to view the listings after");
-
     }
 }
