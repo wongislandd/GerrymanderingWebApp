@@ -59,9 +59,7 @@ const initState = {
       0.05,
       true
     ),
-    new Filter("Compactness (Polsby-Popper)", 0.5, 0, 1, 0.05, true),
-    new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
-    new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness", 0.5, 0, 1, 0.05, true),
     new Filter("Political Fairness", 0.5, 0, 1, 0.05, true),
   ],
 
@@ -69,13 +67,17 @@ const initState = {
   ConstraintSliderSettings: [
     new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
     new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
-    new Filter("Compactness (Polsby-Popper)", 0.5, 0, 1, 0.05, true),
-    new Filter("Compactness (Population Fatness)", 0.5, 0, 1, 0.05, true),
-    new Filter("Compactness (Graph Compactness)", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness", 0.5, 0, 1, 0.05, true),
   ],
 
+
+  
+
   PopulationConstraintSelection: null,
+
   MinorityConstraintSelection: null,
+
+  CompactnessConstraintSelection : null,
 
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state

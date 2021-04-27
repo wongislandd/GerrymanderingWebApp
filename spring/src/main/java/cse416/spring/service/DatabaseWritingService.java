@@ -95,7 +95,7 @@ public class DatabaseWritingService {
         em.getTransaction().begin();
 
         /* Customization */
-        String precinctsFilePath = "/json/NC/PrecinctGeoDataSimplified.json";
+        String precinctsFilePath = "/json/NC/precincts_output.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readFile(precinctsFilePath);
@@ -210,7 +210,7 @@ public class DatabaseWritingService {
         }
 
         // For every file in the folder . . .
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 20; i++) {
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);

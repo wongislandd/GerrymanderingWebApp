@@ -1,6 +1,6 @@
 import json
 
-inputFile = "../input/PrecinctGeoDataSimplified.json"
+inputFile = "../input/precincts_output.json"
 outputFile ="../output/CountiesPrecinctsMapping.json"
 
 
@@ -11,9 +11,9 @@ with open(inputFile) as f:
     features = data["features"]
     for feature in features:
         properties = feature["properties"]
-        countyID = properties["county_id"]
+        countyID = properties["county"]
         if countyID not in countyPrecinctsDict:
-            countyPrecinctsDict[countyID] = {'name' : properties["county_nam"], 'precincts' : [properties['id']]}
+            countyPrecinctsDict[countyID] = {'name' : countyID, 'precincts' : [properties['id']]}
         else:
             countyPrecinctsDict[countyID]['precincts'].append(properties["id"])
     with open(outputFile, 'w+') as json_file:

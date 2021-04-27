@@ -4,6 +4,7 @@ import cse416.spring.enums.StateName;
 import cse416.spring.models.job.Job;
 import cse416.spring.models.precinct.Incumbent;
 import cse416.spring.service.StateService;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,15 @@ public class StateController {
             default:
                 return StateName.NORTH_CAROLINA;
         }
+    }
+
+
+
+    @GetMapping("/getOutlines")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> getOutlines() {
+        Map<String, String> outlineMap = StateService.getAllStatesCountyGeometry();
+        return new ResponseEntity<>(new JSONObject(outlineMap).toString(), HttpStatus.OK);
     }
 
     @GetMapping("/{stateID}/loadIncumbents")
