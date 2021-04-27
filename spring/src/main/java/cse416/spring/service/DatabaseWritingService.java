@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DatabaseWritingService {
-
     private static JSONObject readFile(String filePath) throws IOException {
         File file = ResourceUtils.getFile("src/main/resources/static/" + filePath);
         String content = new String(Files.readAllBytes(file.toPath()));
@@ -41,25 +40,23 @@ public class DatabaseWritingService {
     private static Precinct buildPrecinctFromJSON(StateName state, JSONObject feature) {
         JSONObject properties = feature.getJSONObject("properties");
 
-        String precinctName = properties.getString("PREC_NAME");
-        int democrats = properties.getInt("DEM");
-        int republicans = properties.getInt("REP");
-        int otherParty = properties.getInt("OTHER");
-        int asian = properties.getInt("A");
-        int black = properties.getInt("B");
-        int natives = properties.getInt("I");
-        int pacific = properties.getInt("P");
-        int whiteHispanic = properties.getInt("WHL");
-        int whiteNonHispanic = properties.getInt("WNL");
-        int otherRace = properties.getInt("O");
-
-        int TP = -1;
-        int VAP = democrats + republicans + otherParty;
-        int CVAP = -1;
         int id = properties.getInt("id");
+        String precinctName = properties.getString("name");
 
-        Demographics demographics = new Demographics(democrats, republicans, otherParty, asian, black, natives,
-                pacific, whiteHispanic, whiteNonHispanic, otherRace, TP, VAP, CVAP);
+        int asian = properties.getInt("asian");
+        int black = properties.getInt("black");
+        int natives = properties.getInt("native_american");
+        int pacific = properties.getInt("pacific_islander");
+        int white = properties.getInt("white");
+        int hispanic = properties.getInt("hispanic");
+        int otherRace = properties.getInt("other");
+
+        int TP = properties.getInt("population");
+        int VAP = -1;
+        int CVAP = -1;
+
+        Demographics demographics = new Demographics(asian, black, natives,
+                pacific, white, hispanic, otherRace, TP, VAP, CVAP);
 
         return new Precinct(state, id, precinctName, feature.toString(), demographics);
     }
@@ -178,12 +175,12 @@ public class DatabaseWritingService {
         int workForEachThread = 10;
         String[] files = getFilesInFolder(jobFolderPath);
         ArrayList<EntityManager> ems = new ArrayList<>();
-        for (int j=0; j<numThreads;j++) {
+        for (int j = 0; j < numThreads; j++) {
             ems.add(emf.createEntityManager());
         }
 
         // For every file in the folder . . .
-        for (int i=0;i<6;i++) {
+        for (int i = 0; i < 6; i++) {
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
             JSONObject jo = readFile("/json/NC/districtings/" + files[i]);
@@ -192,8 +189,8 @@ public class DatabaseWritingService {
             ArrayList<DistrictingWriterThread> threads = new ArrayList<>();
             AtomicBoolean availableRef = new AtomicBoolean(true);
             /* Create threads */
-            for (int j=1; j<numThreads+1;j++) {
-                DistrictingWriterThread newThread = new DistrictingWriterThread(state, jobId,"T" +j, ems.get(j-1), precinctHash, districtings, (j-1)*workForEachThread, workForEachThread*j, availableRef);
+            for (int j = 1; j < numThreads + 1; j++) {
+                DistrictingWriterThread newThread = new DistrictingWriterThread(state, jobId, "T" + j, ems.get(j - 1), precinctHash, districtings, (j - 1) * workForEachThread, workForEachThread * j, availableRef);
                 threads.add(newThread);
             }
 
@@ -208,7 +205,7 @@ public class DatabaseWritingService {
             System.out.println("[MAIN] Persisted " + files[i] + " in " + (fileEndTime - fileStartTime) + "ms");
         }
         /* Close entity managers */
-        for (int j=0; j<ems.size();j++) {
+        for (int j = 0; j < ems.size(); j++) {
             ems.get(j).close();
         }
         EntityManager em2 = emf.createEntityManager();
@@ -222,7 +219,7 @@ public class DatabaseWritingService {
         em2.close();
         emf.close();
         final long endTime = System.currentTimeMillis();
-        System.out.println("[MAIN] Persisted a job (ID="+jobId+") of " + newJob.getSummary().getSize() + " districtings in: " + (endTime - startTime) + "ms");
+        System.out.println("[MAIN] Persisted a job (ID=" + jobId + ") of " + newJob.getSummary().getSize() + " districtings in: " + (endTime - startTime) + "ms");
     }
 
     public static HashMap<Integer, Precinct> getPrecinctHash(EntityManager em) {
@@ -241,11 +238,11 @@ public class DatabaseWritingService {
         query.setParameter("jobId", jobId);
         ArrayList<Districting> districtingsInJob = new ArrayList<Districting>(query.getResultList());
         JSONArray districtingKeysArr = new JSONArray();
-        for (int i=0;i<districtingsInJob.size();i++) {
+        for (int i = 0; i < districtingsInJob.size(); i++) {
             districtingKeysArr.put(districtingsInJob.get(i).getId());
         }
         js.setSize(districtingsInJob.size());
-        return new Job(state, new JSONObject().put("districtings",districtingKeysArr).toString(), js);
+        return new Job(state, new JSONObject().put("districtings", districtingKeysArr).toString(), js);
     }
 
 }

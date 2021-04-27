@@ -7,57 +7,33 @@ import javax.persistence.*;
 @Entity
 public class Demographics {
     private long id;
-    int democrats;
-    int republicans;
-    int otherParty;
     int asian;
     int black;
     int natives;
     int pacific;
-    int whiteHispanic;
-    int whiteNonHispanic;
+    int white;
+    int hispanic;
     int otherRace;
     int TP;
     int VAP;
     int CVAP;
 
-    public Demographics(int democrats, int republicans, int otherParty, int asian, int black, int natives, int pacific, int whiteHispanic, int whiteNonHispanic, int otherRace, int TP, int VAP, int CVAP) {
-        this.democrats = democrats;
-        this.republicans = republicans;
-        this.otherParty = otherParty;
+    public Demographics() {
+    }
+
+    public Demographics(int asian, int black, int natives, int pacific, int whiteHispanic, int whiteNonHispanic,
+                        int otherRace, int TP, int VAP, int CVAP) {
         this.asian = asian;
         this.black = black;
         this.natives = natives;
         this.pacific = pacific;
-        this.whiteHispanic = whiteHispanic;
-        this.whiteNonHispanic = whiteNonHispanic;
+        this.white = whiteHispanic;
+        this.hispanic = whiteNonHispanic;
         this.otherRace = otherRace;
         this.TP = TP;
         this.VAP = VAP;
         this.CVAP = CVAP;
     }
-
-
-    public boolean isMajorityMinorityDistrict(MinorityPopulation p) {
-        switch (p) {
-            case BLACK:
-                //return (black / VAP) > .5;
-                return (Math.random()) > .5;
-            case ASIAN:
-                //return (asian / VAP) > .5;
-                return (Math.random()) > .5;
-            case HISPANIC:
-                //return (whiteHispanic / VAP) > .5;
-                return (Math.random()) > .5;
-            case NATIVE_AMERICAN:
-                //return (natives / VAP) > .5;
-                return (Math.random()) > .5;
-            default:
-                return false;
-        }
-    }
-
-
 
     @Id
     @GeneratedValue
@@ -67,10 +43,6 @@ public class Demographics {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Demographics() {
-
     }
 
     @Column
@@ -83,30 +55,6 @@ public class Demographics {
     }
 
     @Column
-    public int getDemocrats() {
-        return democrats;
-    }
-
-    public void setDemocrats(int democrats) {
-        this.democrats = democrats;
-    }
-    @Column
-    public int getRepublicans() {
-        return republicans;
-    }
-
-    public void setRepublicans(int republicans) {
-        this.republicans = republicans;
-    }
-    @Column
-    public int getOtherParty() {
-        return otherParty;
-    }
-
-    public void setOtherParty(int otherParty) {
-        this.otherParty = otherParty;
-    }
-    @Column
     public int getAsian() {
         return asian;
     }
@@ -114,14 +62,17 @@ public class Demographics {
     public void setAsian(int asian) {
         this.asian = asian;
     }
+
     @Column
     public int getBlack() {
         return black;
     }
+
     @Column
     public void setBlack(int black) {
         this.black = black;
     }
+
     @Column
     public int getNatives() {
         return natives;
@@ -132,21 +83,21 @@ public class Demographics {
     }
 
     @Column
-    public int getWhiteNonHispanic() {
-        return whiteNonHispanic;
+    public int getWhite() {
+        return white;
     }
 
-    public void setWhiteNonHispanic(int whiteNonHispanic) {
-        this.whiteNonHispanic = whiteNonHispanic;
+    public void setWhite(int white) {
+        this.white = white;
     }
 
     @Column
-    public int getWhiteHispanic() {
-        return whiteHispanic;
+    public int getHispanic() {
+        return hispanic;
     }
 
-    public void setWhiteHispanic(int whiteHispanic) {
-        this.whiteHispanic = whiteHispanic;
+    public void setHispanic(int hispanic) {
+        this.hispanic = hispanic;
     }
 
     @Column
@@ -157,6 +108,7 @@ public class Demographics {
     public void setOtherRace(int otherRace) {
         this.otherRace = otherRace;
     }
+
     @Column
     public int getTP() {
         return TP;
@@ -182,5 +134,24 @@ public class Demographics {
 
     public void setCVAP(int CVAP) {
         this.CVAP = CVAP;
+    }
+
+    public boolean isMajorityMinorityDistrict(MinorityPopulation p) {
+        switch (p) {
+            case BLACK:
+                //return (black / VAP) > .5;
+                return (Math.random()) > .5;
+            case ASIAN:
+                //return (asian / VAP) > .5;
+                return (Math.random()) > .5;
+            case HISPANIC:
+                //return (whiteHispanic / VAP) > .5;
+                return (Math.random()) > .5;
+            case NATIVE_AMERICAN:
+                //return (natives / VAP) > .5;
+                return (Math.random()) > .5;
+            default:
+                return false;
+        }
     }
 }
