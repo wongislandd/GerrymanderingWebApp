@@ -33,11 +33,13 @@ def get_pop_data(record_nums):
 
             if record_num in record_nums:
                 pop = {
+                    'population': int(fields[5]),
                     'white': int(fields[7]),
                     'black': int(fields[8]),
                     'native_american': int(fields[9]),
                     'asian': int(fields[10]),
                     'pacific_islander': int(fields[11]),
+                    'other': int(fields[12]),
                     'hispanic': int(fields[77])
                 }
 
