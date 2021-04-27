@@ -104,6 +104,7 @@ function FilterSection(props) {
   };
 
   const handleNext = () => {
+    console.log()
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
@@ -129,9 +130,9 @@ function FilterSection(props) {
     if (activeStep == 0) {
       // activeStep represents where in the constraints the user is.
       // CONSTRAIN DISTRICTINGS
-      let districtingJSON = await NetworkingUtilities.loadDistricting(1);
-      let newDistricting = new Districting(1, districtingJSON);
-      props.loadInDistricting(newDistricting);
+      // let districtingJSON = await NetworkingUtilities.loadDistricting(1);
+      // let newDistricting = new Districting(1, districtingJSON);
+      // props.loadInDistricting(newDistricting);
       props.setNumberOfDistrictingsAvailable(
         StatUtilities.rollARandomNumberOfDistrictings()
       );
@@ -147,7 +148,6 @@ function FilterSection(props) {
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
   };
-
   return (
     <div className="SelectionMenuSection FilterSection">
       {/* Button for returning to map */}

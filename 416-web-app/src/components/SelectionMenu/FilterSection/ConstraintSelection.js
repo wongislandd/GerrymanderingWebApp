@@ -6,6 +6,7 @@ import {
   updateIncumbentProtection,
   updatePopulationConstraint,
   updateMinorityConstraint,
+  updateCompactnessConstraint,
 } from "../../../redux/actions/settingActions";
 import {
   Row,
@@ -20,11 +21,9 @@ import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import { connect } from "react-redux";
 import IncumbentModal from "./IncumbentModal";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
+import ConstraintSlider from "./ConstraintSlider";
 
 class ConstraintSelection extends Component {
-  handleSwitch(e, key) {
-    this.props.setEnabledStateOfConstraint(key, e.target.checked);
-  }
 
   render() {
     return (
@@ -79,50 +78,9 @@ class ConstraintSelection extends Component {
         </Select>
         {/* Section for Setting Constriants */}
         <div className="filterSectionItem">
-          {Object.keys(this.props.ConstraintSliderSettings).map((key) => {
-            let filter = this.props.ConstraintSliderSettings[key];
-            if (!Array.isArray(filter.value)) {
-              return (
-                <Row key={key}>
-                  <div className="constraintAndCheckbox">
-                    <h6>
-                      {filter.name}{" "}
-                      <b>({this.props.ConstraintSliderSettings[key].value})</b>
-                    </h6>
-                    <Switch
-                      id={"Switch-" + key}
-                      offLabel=""
-                      onChange={(e) => {
-                        this.handleSwitch(e, key);
-                      }}
-                      onLabel=""
-                      checked={filter.enabled}
-                      className="constraintSwitch"
-                    />
-                  </div>
-                  <Slider
-                    disabled={!filter.enabled}
-                    onChange={(e, newValue) =>
-                      this.props.updateConstraintSliderSettings(key, newValue)
-                    }
-                    value={filter.value}
-                    max={filter.maxVal}
-                    min={filter.minVal}
-                    name={filter.name}
-                    step={filter.step}
-                    marks
-                    valueLabelDisplay="auto"
-                  />
-                </Row>
-              );
-            }
-          })}
+          <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]}/>
         </div>
         {/* Incumbent protection, part of constraints  */}
-        <Row>
-          <IncumbentModal />
-        </Row>
-        <Row>
           <LabelAndInfoIcon
             label={
               SelectionMenuUtilities.LABELS.MINORITY_POPULATION_TO_CONSTRAIN
@@ -136,7 +94,7 @@ class ConstraintSelection extends Component {
             id="Select-9"
             multiple={false}
             onChange={(e) =>
-              this.props.updatePopulationConstraint(e.target.value)
+              this.props.updateMinorityConstraint(e.target.value)
             }
             options={{
               classes: "",
@@ -168,6 +126,53 @@ class ConstraintSelection extends Component {
               );
             })}
           </Select>
+          <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts]}/>
+        <LabelAndInfoIcon
+          label={SelectionMenuUtilities.LABELS.COMPACTNESS_TYPE}
+          description={
+            SelectionMenuUtilities.DESCRIPTIONS.COMPACTNESS_TYPE_CONSTRAINT
+          }
+        />
+                <Select
+          icon={<Icon>people</Icon>}
+          id="Select-9"
+          multiple={false}
+          onChange={(e) =>
+            this.props.updateCompactnessConstraint(e.target.value)
+          }
+          options={{
+            classes: "",
+            dropdownOptions: {
+              alignment: "left",
+              autoTrigger: true,
+              closeOnClick: true,
+              constrainWidth: true,
+              coverTrigger: true,
+              hover: false,
+              inDuration: 150,
+              onCloseEnd: null,
+              onCloseStart: null,
+              onOpenEnd: null,
+              onOpenStart: null,
+              outDuration: 250,
+            },
+          }}
+          value=""
+        >
+          <option disabled value="">
+            {SelectionMenuUtilities.LABELS.CHOOSE_A_TYPE_OF_COMPACTNESS}
+          </option>
+          {Object.keys(SelectionMenuUtilities.COMPACTNESS_TYPES).map((key) => {
+            return (
+              <option key={key} value={key} disabled = {key=="CVAP"}>
+                {SelectionMenuUtilities.COMPACTNESS_TYPES[key]}
+              </option>
+            );
+          })}
+        </Select>
+        <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness]}/>
+        <Row>
+        <IncumbentModal />
         </Row>
       </div>
     );
@@ -185,11 +190,8 @@ const mapDispatchToProps = (dispatch) => {
     updateMinorityConstraint: (key) => {
       dispatch(updateMinorityConstraint(key));
     },
-    updateConstraintSliderSettings: (key, newVal) => {
-      dispatch(updateConstraintSliderSettings(key, newVal));
-    },
-    setEnabledStateOfConstraint: (key, bool) => {
-      dispatch(setEnabledStateOfConstraint(key, bool));
+    updateCompactnessConstraint: (key) => {
+      dispatch(updateCompactnessConstraint(key))
     },
   };
 };

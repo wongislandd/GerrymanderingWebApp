@@ -34,6 +34,7 @@ const initState = {
   /* Default to UNSELECTED */
   CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
+  /* Default to null*/
   CurrentJob : null,
 
   /* Map Reference */
@@ -64,20 +65,22 @@ const initState = {
   ],
 
   /* Constraint Settings */
-  ConstraintSliderSettings: [
-    new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
-    new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
-    new Filter("Compactness", 0.5, 0, 1, 0.05, true),
-  ],
+  ConstraintSliderSettings: {
+    "PopulationDifference" : new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
+    "MajorityMinorityDistricts" : new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
+    "Compactness" : new Filter("Compactness", 0.5, 0, 1, 0.05, true),
+  },
 
 
-  
 
-  PopulationConstraintSelection: null,
 
-  MinorityConstraintSelection: null,
+  PopulationSelection: null,
 
-  CompactnessConstraintSelection : null,
+  MinoritySelection: null,
+
+  CompactnessSelection : null,
+
+
 
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
@@ -153,7 +156,7 @@ Add action type to ./ActionTypes.js and then make use of it here as well as in t
 */
 const rootReducer = (state = initState, action) => {
   if (!ACTIONS_TO_IGNORE_FOR_LOGGING.includes(action.type)) {
-    //console.log(action);
+    console.log(action);
   }
   switch (action.type) {
     case ActionTypes.SET_CURRENT_STATE:
@@ -236,18 +239,24 @@ const rootReducer = (state = initState, action) => {
         ObjectiveFunctionSettings: newSettings,
       };
     case ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS:
-      var newSettings = [...state.ConstraintSliderSettings];
-      newSettings[action.Key].value = action.NewValue;
+      var newFilter = state.ConstraintSliderSettings[action.Key]
+      newFilter.value = action.NewValue
       return {
         ...state,
-        ConstraintSliderSettings: newSettings,
+        ConstraintSliderSettings: {
+          ...state.ConstraintSliderSettings,
+           [action.Key] : newFilter
+        }
       };
     case ActionTypes.SET_ENABLED_STATE_OF_CONSTRAINT:
-      var newSettings = [...state.ConstraintSliderSettings];
-      newSettings[action.Key].enabled = action.Bool;
+      var newFilter = state.ConstraintSliderSettings[action.Key];
+      newFilter.enabled = action.Bool;
       return {
         ...state,
-        ConstraintSliderSettings: newSettings,
+        ConstraintSliderSettings: {
+          ...state.ConstraintSliderSettings,
+          [action.Key] : newFilter
+        }
       };
     case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
       var updatedIncumbents = [...state.IncumbentProtectionInfo];
@@ -260,12 +269,17 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.UPDATE_POPULATION_CONSTRAINT:
       return {
         ...state,
-        PopulationConstraintSelection: action.Key,
+        PopulationSelection: action.Key,
       };
+      case ActionTypes.UPDATE_COMPACTNESS_CONSTRAINT:
+        return {
+          ...state,
+          CompactnessSelection: action.Key,
+        };
     case ActionTypes.UPDATE_MINORITY_CONSTRAINT:
       return {
         ...state,
-        MinorityConstraintSelection: action.Key,
+        MinoritySelection: action.Key,
       };
     case ActionTypes.SET_IN_SELECTION_MENU:
       return {

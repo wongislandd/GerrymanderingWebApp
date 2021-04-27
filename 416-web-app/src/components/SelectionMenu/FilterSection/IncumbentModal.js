@@ -13,7 +13,9 @@ class IncumbentModal extends Component {
 
   // Fetch the incumbents for the chosen state
   componentDidMount() {
-    this.populateIncumbents(this.props.CurrentState);
+    if (this.props.IncumbentProtectionInfo.length === 0 ) {
+      this.populateIncumbents(this.props.CurrentState);
+    }
   }
 
   async populateIncumbents() {

@@ -115,6 +115,13 @@ export const updatePopulationConstraint = (key) => {
   };
 };
 
+export const updateCompactnessConstraint = (key) => {
+  return {
+    type : ActionTypes.UPDATE_COMPACTNESS_CONSTRAINT,
+    Key : key
+  }
+}
+
 export const updateMinorityConstraint = (key) => {
   return {
     type: ActionTypes.UPDATE_MINORITY_CONSTRAINT,
