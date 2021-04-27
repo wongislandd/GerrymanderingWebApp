@@ -2,24 +2,23 @@ package cse416.spring.models.district;
 
 import javax.persistence.*;
 
+/**
+ * A data class to represent the three compactness measures of a district.
+ */
 @Entity
 public class Compactness {
-    double polsbyPopper;
-
-    double populationFatness;
-
-    double graphCompactness;
-
+    private double polsbyPopper;
+    private double populationFatness;
+    private double graphCompactness;
     private long id;
+
+    public Compactness() {
+    }
 
     public Compactness(double polsbyPopper, double populationFatness, double graphCompactness) {
         this.polsbyPopper = polsbyPopper;
         this.populationFatness = populationFatness;
         this.graphCompactness = graphCompactness;
-    }
-
-    public Compactness() {
-
     }
 
     @Column

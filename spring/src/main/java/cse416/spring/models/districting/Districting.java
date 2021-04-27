@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 @Entity
 public class Districting {
-
     private long id;
     private int jobID;
     private DistrictingMeasures measures;
@@ -121,10 +120,13 @@ public class Districting {
                 totalGraphCompactness / numDistricts);
     }
 
+    private static double calculateSplitCountyScore() {
+        // TODO: Implement
+        return 0.0;
+    }
+
     private static DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
-        double totalSplitCounties = 0;
         double totalPopulationEquality = 0;
-        double totalPoliticalFairness = 0;
         double totalDeviationFromEnacted = 0;
         double totalDeviationFromAverage = 0;
 
@@ -134,9 +136,6 @@ public class Districting {
             DistrictMeasures districtMeasures = district.getMeasures();
 
             totalPopulationEquality += districtMeasures.getPopulationEquality();
-            totalPoliticalFairness += districtMeasures.getPoliticalFairness();
-
-            totalSplitCounties += districtMeasures.getSplitCounties();
             totalDeviationFromEnacted += districtMeasures.getDeviationFromEnacted();
             totalDeviationFromAverage += districtMeasures.getDeviationFromAverage();
         }
@@ -145,11 +144,13 @@ public class Districting {
         Compactness compactnessAvg = getAvgCompactness(districts);
 
         double populationEqualityAvg = totalPopulationEquality / numDistricts;
-        double politicalFairnessAvg = totalPoliticalFairness / numDistricts;
         double deviationFromEnactedAvg = totalDeviationFromEnacted / numDistricts;
         double deviationFromAverageAvg = totalDeviationFromAverage / numDistricts;
 
+        double splitCountyScore = calculateSplitCountyScore();
+
         return new DistrictingMeasures(mmDistrictsCount, compactnessAvg,
-                populationEqualityAvg, politicalFairnessAvg, totalSplitCounties, deviationFromEnactedAvg, deviationFromAverageAvg);
+                populationEqualityAvg, splitCountyScore,
+                deviationFromEnactedAvg, deviationFromAverageAvg);
     }
 }

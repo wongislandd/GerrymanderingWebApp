@@ -9,7 +9,6 @@ public class DistrictingMeasures {
     MajorityMinorityDistrictsCount minorityDistrictsCount;
     Compactness compactnessAvg;
     double populationEqualityAvg;
-    double politicalFairnessAvg;
     double splitCountiesScore;
     double deviationFromEnactedAvg;
     double deviationFromAverageAvg;
@@ -21,11 +20,11 @@ public class DistrictingMeasures {
     }
 
     /* Calculate districting measures from the collection of district measures */
-    public DistrictingMeasures(MajorityMinorityDistrictsCount minorityDistrictsCount, Compactness compactnessAvg, double populationEqualityAvg, double politicalFairnessAvg, double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
+    public DistrictingMeasures(MajorityMinorityDistrictsCount minorityDistrictsCount, Compactness compactnessAvg, double populationEqualityAvg,
+                               double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
         this.populationEqualityAvg = populationEqualityAvg;
         this.minorityDistrictsCount = minorityDistrictsCount;
         this.compactnessAvg = compactnessAvg;
-        this.politicalFairnessAvg = politicalFairnessAvg;
         this.splitCountiesScore = splitCountiesScore;
         this.deviationFromEnactedAvg = deviationFromEnactedAvg;
         this.deviationFromAverageAvg = deviationFromAverageAvg;
@@ -57,14 +56,7 @@ public class DistrictingMeasures {
     public void setCompactnessAvg(Compactness compactnessAvg) {
         this.compactnessAvg = compactnessAvg;
     }
-    @Column
-    public double getPoliticalFairnessAvg() {
-        return politicalFairnessAvg;
-    }
 
-    public void setPoliticalFairnessAvg(double politicalFairnessAvg) {
-        this.politicalFairnessAvg = politicalFairnessAvg;
-    }
     @Column
     public double getSplitCountiesScore() {
         return splitCountiesScore;
@@ -73,6 +65,7 @@ public class DistrictingMeasures {
     public void setSplitCountiesScore(double splitCountiesScore) {
         this.splitCountiesScore = splitCountiesScore;
     }
+
     @Column
     public double getDeviationFromEnactedAvg() {
         return deviationFromEnactedAvg;
@@ -81,6 +74,7 @@ public class DistrictingMeasures {
     public void setDeviationFromEnactedAvg(double deviationFromEnactedAvg) {
         this.deviationFromEnactedAvg = deviationFromEnactedAvg;
     }
+
     @Column
     public double getDeviationFromAverageAvg() {
         return deviationFromAverageAvg;

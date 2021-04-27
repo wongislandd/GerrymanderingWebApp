@@ -11,20 +11,19 @@ public class ObjectiveFunctionWeights {
     double deviationFromAverage;
     double deviationFromEnacted;
     Compactness compactness;
-    double politicalFairness;
     private long id;
 
     public ObjectiveFunctionWeights() {
 
     }
 
-    public ObjectiveFunctionWeights(double populationEquality, double splitCountyScores, double deviationFromAverage, double deviationFromEnacted, Compactness compactness, double politicalFairness) {
+    public ObjectiveFunctionWeights(double populationEquality, double splitCountyScores, double deviationFromAverage,
+                                    double deviationFromEnacted, Compactness compactness) {
         this.populationEquality = populationEquality;
         this.splitCountyScores = splitCountyScores;
         this.deviationFromAverage = deviationFromAverage;
         this.deviationFromEnacted = deviationFromEnacted;
         this.compactness = compactness;
-        this.politicalFairness = politicalFairness;
     }
 
     @Column
@@ -70,15 +69,6 @@ public class ObjectiveFunctionWeights {
 
     public void setCompactness(Compactness compactness) {
         this.compactness = compactness;
-    }
-
-    @Column
-    public double getPoliticalFairness() {
-        return politicalFairness;
-    }
-
-    public void setPoliticalFairness(double politicalFairness) {
-        this.politicalFairness = politicalFairness;
     }
 
     @Id
