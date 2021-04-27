@@ -5,26 +5,16 @@ import javax.persistence.*;
 @Entity
 public class DistrictMeasures {
     private long id;
-
     double populationEquality;
-
     MajorityMinorityInfo majorityMinorityInfo;
-
     Compactness compactness;
-
-    double politicalFairness;
-
-    int splitCounties;
-
     double deviationFromAverage;
-
     double deviationFromEnacted;
 
-    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness, double politicalFairness, int splitCounties) {
+    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
         this.populationEquality = populationEquality;
         this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
-        this.politicalFairness = politicalFairness;
         this.deviationFromAverage = Math.random();
         this.deviationFromEnacted = Math.random();
     }
@@ -59,24 +49,6 @@ public class DistrictMeasures {
 
     public void setCompactness(Compactness compactness) {
         this.compactness = compactness;
-    }
-
-    @Column
-    public double getPoliticalFairness() {
-        return politicalFairness;
-    }
-
-    public void setPoliticalFairness(double politicalFairness) {
-        this.politicalFairness = politicalFairness;
-    }
-
-    @Column
-    public int getSplitCounties() {
-        return splitCounties;
-    }
-
-    public void setSplitCounties(int splitCounties) {
-        this.splitCounties = splitCounties;
     }
 
 //    @Transient maybe keep as column ??? ???

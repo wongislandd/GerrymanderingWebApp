@@ -46,11 +46,9 @@ public class District {
 
         MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness();
-        double politicalFairness = calculatePoliticalFairness(demographics);
-        int splitCounties = calculateSplitCounties(precincts);
 
         this.measures = new DistrictMeasures(populationEquality, minorityInfo,
-                compactness, politicalFairness, splitCounties);
+                compactness);
     }
 
     @Column
@@ -123,17 +121,9 @@ public class District {
         return Math.random();
     }
 
-    private int calculateSplitCounties(ArrayList<Precinct> precincts) {
-        return 5;
-    }
-
     private double calculatePopulationEquality(int idealPopulation) {
         double popRatio = (double) demographics.getTP() / idealPopulation;
         return Math.pow((popRatio - 1), 2);
-    }
-
-    private double calculatePoliticalFairness(Demographics d) {
-        return Math.random();
     }
 
     private double calculateDeviationFromEnacted(Geometry hull, Demographics d) {
