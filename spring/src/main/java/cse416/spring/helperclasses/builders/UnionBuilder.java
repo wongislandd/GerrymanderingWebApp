@@ -6,7 +6,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.operation.overlayng.CoverageUnion;
+import org.locationtech.jts.operation.union.UnaryUnionOp;
 
 import java.util.ArrayList;
 
@@ -57,6 +57,6 @@ public class UnionBuilder {
         geometryArr = geometries.toArray(geometryArr);
 
         GeometryCollection gc = gf.createGeometryCollection(geometryArr);
-        return CoverageUnion.union(gc);
+        return UnaryUnionOp.union(gc);
     }
 }
