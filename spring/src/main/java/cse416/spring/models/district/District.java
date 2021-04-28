@@ -41,7 +41,6 @@ public class District {
         }
         this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
 
-        /* TODO: Complete the math for these*/
         int idealPopulation = IdealPopulation.getIdealPopulation(stateName);
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
 
@@ -107,15 +106,6 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionScore;
     }
 
-    /* Temporary helper functions for generating fake data */
-    private int generateRandInt(int min, int max) {
-        return ((int) Math.floor(Math.random() * (max - min + 1) + min));
-    }
-
-    private double generateRandDouble(int min, int max) {
-        return (double) Math.round((Math.random() * (max - min + 1) + min) * 100) / 100;
-    }
-
     // Methods to calculate district measures
 
     public double calculateDeviationFrom(District other) {
@@ -135,11 +125,13 @@ public class District {
         return Math.random();
     }
 
-    private Compactness calculateCompactness(ArrayList<Precinct> precincts) {
+    private static Compactness calculateCompactness(ArrayList<Precinct> precincts) {
         Geometry geometry = UnionBuilder.getUnion(precincts);
-
-        // TODO: Implement the rest
-        return new Compactness(Math.random(), Math.random(), Math.random());
+        return new Compactness(
+                Compactness.calculatePolsbyPopper(geometry),
+                Compactness.calculateFatness(geometry),
+                0
+        );
     }
 
     private static Demographics compileDemographics(ArrayList<Precinct> precincts) {
@@ -173,7 +165,7 @@ public class District {
                 total_TP, total_VAP, total_CVAP);
     }
 
-    private MajorityMinorityInfo compileMinorityInfo(Demographics demographics) {
+    private static MajorityMinorityInfo compileMinorityInfo(Demographics demographics) {
         return (new MajorityMinorityInfo(
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
                 demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),

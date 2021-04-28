@@ -1,5 +1,9 @@
 package cse416.spring.models.district;
 
+import org.locationtech.jts.algorithm.MinimumBoundingCircle;
+import org.locationtech.jts.algorithm.construct.MaximumInscribedCircle;
+import org.locationtech.jts.geom.Geometry;
+
 import javax.persistence.*;
 
 /**
@@ -56,5 +60,25 @@ public class Compactness {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public static double calculatePolsbyPopper(Geometry geometry) {
+        double area = geometry.getArea();
+        double perimeter = geometry.getLength();
+        return (4 * Math.PI * area) / Math.pow(perimeter, 2);
+    }
+
+    public static double calculateFatness(Geometry geometry) {
+        double inscribedRadius = MaximumInscribedCircle.getRadiusLine(
+                geometry, 0).getLength();
+
+        MinimumBoundingCircle boundingCircle = new MinimumBoundingCircle(
+                geometry);
+        double boundingRadius = boundingCircle.getRadius();
+
+        /* Calculate the ratio of the areas of the two circles, which is just
+           the ratios of the squares of the radii
+         */
+        return Math.pow(inscribedRadius, 2) / Math.pow(boundingRadius, 2);
     }
 }
