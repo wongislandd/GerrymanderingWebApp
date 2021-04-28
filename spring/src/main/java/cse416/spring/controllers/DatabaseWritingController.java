@@ -1,6 +1,6 @@
 package cse416.spring.controllers;
 
-import cse416.spring.service.DatabaseWritingService;
+import cse416.spring.service.database.DatabaseWritingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

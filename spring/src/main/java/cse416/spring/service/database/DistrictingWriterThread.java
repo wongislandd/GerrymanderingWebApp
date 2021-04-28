@@ -1,4 +1,4 @@
-package cse416.spring.service;
+package cse416.spring.service.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.models.district.District;

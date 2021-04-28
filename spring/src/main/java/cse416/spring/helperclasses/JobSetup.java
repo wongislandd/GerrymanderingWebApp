@@ -1,4 +1,4 @@
-package cse416.spring.service;
+package cse416.spring.helperclasses;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.MGGGParams;
