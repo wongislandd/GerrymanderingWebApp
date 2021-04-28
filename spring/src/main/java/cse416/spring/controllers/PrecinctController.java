@@ -3,19 +3,12 @@ package cse416.spring.controllers;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
 import cse416.spring.models.precinct.Precinct;
-import cse416.spring.service.JobService;
 import cse416.spring.service.PrecinctService;
-import cse416.spring.service.StateService;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.util.ArrayList;
 
 import static cse416.spring.controllers.StateController.getStateName;
@@ -24,9 +17,8 @@ import static cse416.spring.controllers.StateController.getStateName;
 @RestController
 @RequestMapping("/precincts")
 public class PrecinctController {
-    private PrecinctService precinctService;
+    private final PrecinctService precinctService;
 
-    @Autowired
     public PrecinctController(PrecinctService service) {
         this.precinctService = service;
     }
@@ -38,7 +30,6 @@ public class PrecinctController {
         return new ResponseEntity<>(precinctsGeoJson, HttpStatus.OK);
     }
 
-
     public String getPrecincts(StateName state) {
         FeatureCollectionJSON geoJson = new FeatureCollectionJSON();
         ArrayList<Precinct> allPrecincts = new ArrayList<>(precinctService.findByState(state));
@@ -47,5 +38,4 @@ public class PrecinctController {
         }
         return geoJson.toString();
     }
-
 }

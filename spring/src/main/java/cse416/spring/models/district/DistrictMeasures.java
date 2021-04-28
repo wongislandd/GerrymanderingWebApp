@@ -8,19 +8,18 @@ public class DistrictMeasures {
     double populationEquality;
     MajorityMinorityInfo majorityMinorityInfo;
     Compactness compactness;
-    double deviationFromAverage;
-    double deviationFromEnacted;
+    Deviation deviationFromAverage;
+    Deviation deviationFromEnacted;
 
     public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
         this.populationEquality = populationEquality;
         this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
-        this.deviationFromAverage = Math.random();
-        this.deviationFromEnacted = Math.random();
+        this.deviationFromAverage = new Deviation(Math.random(), Math.random());
+        this.deviationFromEnacted = new Deviation(Math.random(), Math.random());
     }
 
     public DistrictMeasures() {
-
     }
 
     @Column
@@ -51,23 +50,21 @@ public class DistrictMeasures {
         this.compactness = compactness;
     }
 
-//    @Transient maybe keep as column ??? ???
-    @Column
-    public double getDeviationFromEnacted() {
+    @OneToOne(cascade = CascadeType.ALL)
+    public Deviation getDeviationFromEnacted() {
         return deviationFromEnacted;
     }
 
-    public void setDeviationFromEnacted(double deviationFromEnacted) {
+    public void setDeviationFromEnacted(Deviation deviationFromEnacted) {
         this.deviationFromEnacted = deviationFromEnacted;
     }
 
-//    @Transient
-    @Column
-    public double getDeviationFromAverage() {
+    @Transient
+    public Deviation getDeviationFromAverage() {
         return deviationFromAverage;
     }
 
-    public void setDeviationFromAverage(double deviationFromAverage) {
+    public void setDeviationFromAverage(Deviation deviationFromAverage) {
         this.deviationFromAverage = deviationFromAverage;
     }
 

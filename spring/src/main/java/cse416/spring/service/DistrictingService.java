@@ -8,13 +8,9 @@ import java.util.List;
 public interface DistrictingService {
     Districting findById(long id);
 
-    Districting findByName(String name);
-
     List<Districting> findByJob(int jobId);
 
     List<Districting> findAllDistrictings();
-
-
 
 //    public static void getInterestingDistrictings() {
 

@@ -92,7 +92,8 @@ public class DistrictingWriterThread extends Thread {
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
                 ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
-                District d = new District(districtNumber, precincts, stateName);
+                // TODO: Change the null to the enacted districting
+                District d = new District(districtNumber, precincts, stateName, null);
                 districtsInDistricting.add(d);
                 em.persist(d);
                 System.out.println("[THREAD " + name + "] Created District.");

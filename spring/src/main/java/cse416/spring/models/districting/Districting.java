@@ -1,9 +1,6 @@
 package cse416.spring.models.districting;
 
-import cse416.spring.models.district.Compactness;
-import cse416.spring.models.district.District;
-import cse416.spring.models.district.DistrictMeasures;
-import cse416.spring.models.district.MajorityMinorityInfo;
+import cse416.spring.models.district.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -127,8 +124,8 @@ public class Districting {
 
     private static DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
         double totalPopulationEquality = 0;
-        double totalDeviationFromEnacted = 0;
-        double totalDeviationFromAverage = 0;
+        Deviation totalDeviationFromEnacted = new Deviation();
+        Deviation totalDeviationFromAverage = new Deviation();
 
         int numDistricts = districts.size();
 
@@ -136,16 +133,16 @@ public class Districting {
             DistrictMeasures districtMeasures = district.getMeasures();
 
             totalPopulationEquality += districtMeasures.getPopulationEquality();
-            totalDeviationFromEnacted += districtMeasures.getDeviationFromEnacted();
-            totalDeviationFromAverage += districtMeasures.getDeviationFromAverage();
+            totalDeviationFromEnacted.add(districtMeasures.getDeviationFromEnacted());
+            totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
         }
 
         MajorityMinorityDistrictsCount mmDistrictsCount = getMMDistrictsCount(districts);
         Compactness compactnessAvg = getAvgCompactness(districts);
 
         double populationEqualityAvg = totalPopulationEquality / numDistricts;
-        double deviationFromEnactedAvg = totalDeviationFromEnacted / numDistricts;
-        double deviationFromAverageAvg = totalDeviationFromAverage / numDistricts;
+        Deviation deviationFromEnactedAvg = totalDeviationFromEnacted.getAverage(numDistricts);
+        Deviation deviationFromAverageAvg = totalDeviationFromAverage.getAverage(numDistricts);
 
         double splitCountyScore = calculateSplitCountyScore();
 

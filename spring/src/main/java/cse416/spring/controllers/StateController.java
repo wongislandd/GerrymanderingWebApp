@@ -1,26 +1,20 @@
 package cse416.spring.controllers;
 
-import com.github.javafaker.Faker;
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.FeatureCollectionJSON;
-import cse416.spring.models.job.Job;
-import cse416.spring.models.precinct.Incumbent;
 import cse416.spring.service.StateService;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,7 +22,6 @@ import java.util.*;
 public class StateController {
     private StateService service;
 
-    @Autowired
     public StateController(StateService service) {
         this.service = service;
     }

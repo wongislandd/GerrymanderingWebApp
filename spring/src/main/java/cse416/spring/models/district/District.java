@@ -32,7 +32,9 @@ public class District {
     public District() {
     }
 
-    public District(int districtNumber, ArrayList<Precinct> precincts, StateName stateName) {
+    public District(int districtNumber, ArrayList<Precinct> precincts, StateName stateName,
+                    District enactedDistrict) {
+
         this.districtNumber = districtNumber;
         this.demographics = compileDemographics(precincts);
         JSONArray precinctKeysArr = new JSONArray();
@@ -43,9 +45,12 @@ public class District {
 
         int idealPopulation = IdealPopulation.getIdealPopulation(stateName);
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
-
         MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness(precincts);
+
+        if (enactedDistrict != null) {
+
+        }
 
         this.measures = new DistrictMeasures(populationEquality, minorityInfo,
                 compactness);
