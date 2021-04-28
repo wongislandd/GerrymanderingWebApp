@@ -1,4 +1,39 @@
 package cse416.spring.service;
 
-public class StateServiceImpl {
+import cse416.spring.enums.StateName;
+import cse416.spring.models.state.State;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
+
+public class StateServiceImpl implements StateService {
+    EntityManager em;
+
+    @Autowired
+    public StateServiceImpl(EntityManager em){
+        this.em = em;
+    }
+
+    @Override
+    public State findById(long id) {
+        State state = em.find(State.class, id);
+        return state;
+    }
+
+    @Override
+    public State findByStateName(StateName state) {
+        Query query = em.createQuery("SELECT s FROM State s WHERE s.state=:state");
+        query.setParameter("state", state);
+        List<State> states = query.getResultList();
+        return states.get(0);
+    }
+
+    @Override
+    public List<State> findAllStates() {
+        Query query = em.createQuery("SELECT s FROM State s");
+        List<State> states = query.getResultList();
+        return states;
+    }
 }
