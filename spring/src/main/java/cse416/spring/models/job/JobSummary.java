@@ -4,7 +4,7 @@ import cse416.spring.helperclasses.MGGGParams;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "JobSummaries")
 public class JobSummary {
 
     String description;

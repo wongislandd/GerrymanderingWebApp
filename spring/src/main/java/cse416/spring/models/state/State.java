@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 
-@Entity
+@Entity(name = "States")
 public class State {
     StateName name;
     Collection<Job> jobs;

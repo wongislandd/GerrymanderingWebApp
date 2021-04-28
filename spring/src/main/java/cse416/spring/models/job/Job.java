@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import javax.persistence.*;
 
 
-@Entity
+@Entity(name="Jobs")
 public class Job {
     private long id;
     StateName state;

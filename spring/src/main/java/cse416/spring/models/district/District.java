@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * A class to represent a congressional district.
  */
-@Entity
+@Entity(name = "Districts")
 public class District {
     /**
      * District number that corresponds to the district numbering of the

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 
 
-@Entity
+@Entity(name = "Incumbents")
 public class Incumbent {
     String name;
     String residence;
