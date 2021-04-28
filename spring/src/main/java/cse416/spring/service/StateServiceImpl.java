@@ -21,13 +21,12 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public State findById(long id) {
-        State state = em.find(State.class, id);
-        return state;
+        return em.find(State.class, id);
     }
 
     @Override
     public State findByStateName(StateName state) {
-        Query query = em.createQuery("SELECT s FROM State s WHERE s.state=:state");
+        Query query = em.createQuery("SELECT s FROM State s WHERE s.name=:state");
         query.setParameter("state", state);
         List<State> states = query.getResultList();
         return states.get(0);
@@ -36,7 +35,6 @@ public class StateServiceImpl implements StateService {
     @Override
     public List<State> findAllStates() {
         Query query = em.createQuery("SELECT s FROM State s");
-        List<State> states = query.getResultList();
-        return states;
+        return (List<State>) query.getResultList();
     }
 }

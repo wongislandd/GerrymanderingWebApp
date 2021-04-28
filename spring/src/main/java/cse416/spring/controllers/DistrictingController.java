@@ -1,7 +1,6 @@
 package cse416.spring.controllers;
 
 import cse416.spring.models.districting.DistrictingConstraints;
-import cse416.spring.service.DistrictingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;

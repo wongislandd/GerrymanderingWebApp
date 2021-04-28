@@ -4,18 +4,11 @@ import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
 import cse416.spring.models.county.County;
 import cse416.spring.service.CountyService;
-import cse416.spring.service.PrecinctService;
-import cse416.spring.service.StateService;
 import org.locationtech.jts.geom.Geometry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.util.ArrayList;
 
 import static cse416.spring.controllers.StateController.getStateName;
@@ -24,9 +17,8 @@ import static cse416.spring.controllers.StateController.getStateName;
 @RestController
 @RequestMapping("/counties")
 public class CountyController {
-    private CountyService countyService;
+    private final CountyService countyService;
 
-    @Autowired
     public CountyController(CountyService service) {
         this.countyService = service;
     }

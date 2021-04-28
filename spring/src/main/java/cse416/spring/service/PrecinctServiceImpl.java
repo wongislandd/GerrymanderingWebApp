@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Service
-public class PrecinctServiceImpl implements PrecinctService{
+public class PrecinctServiceImpl implements PrecinctService {
 
     EntityManager em;
 
@@ -21,8 +21,7 @@ public class PrecinctServiceImpl implements PrecinctService{
 
     @Override
     public Precinct findById(long id) {
-        Precinct precinct = em.find(Precinct.class, id);
-        return precinct;
+        return em.find(Precinct.class, id);
     }
 
     @Override
@@ -36,15 +35,13 @@ public class PrecinctServiceImpl implements PrecinctService{
     @Override
     public List<Precinct> findAllPrecincts() {
         Query query = em.createQuery("SELECT p from Precinct p");
-        List<Precinct> precincts = query.getResultList();
-        return precincts;
+        return (List<Precinct>) query.getResultList();
     }
 
     @Override
     public List<Precinct> findByState(StateName state) {
-        Query query = em.createQuery("SELECT p FROM Precinct p WHERE c.state=:state");
+        Query query = em.createQuery("SELECT p FROM Precinct p WHERE p.state=:state");
         query.setParameter("state", state);
-        List<Precinct> precincts = query.getResultList();
-        return precincts;
+        return (List<Precinct>) query.getResultList();
     }
 }

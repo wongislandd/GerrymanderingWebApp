@@ -1,7 +1,6 @@
 package cse416.spring.service;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.models.job.Job;
 import cse416.spring.models.precinct.Incumbent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ public class IncumbentServiceImpl implements IncumbentService {
     public List<Incumbent> findByStateName(StateName state) {
         Query query = em.createQuery("SELECT i from Incumbent i WHERE i.state=:state");
         query.setParameter("state", state);
-        List<Incumbent>  incumbents = query.getResultList();
-        return incumbents;
+        return (List<Incumbent>) query.getResultList();
     }
 }
