@@ -4,11 +4,14 @@ import cse416.spring.enums.StateName;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.job.Job;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+
+@Service
 public class JobServiceImpl implements JobService {
     EntityManager em;
 
@@ -24,7 +27,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> findByState(StateName state) {
+    public List<Job> findByStateName(StateName state) {
         Query query = em.createQuery("SELECT j from Job j WHERE j.state=:state");
         query.setParameter("state", state);
         List<Job> jobs = query.getResultList();

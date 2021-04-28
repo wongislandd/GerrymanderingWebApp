@@ -1,5 +1,7 @@
 package cse416.spring.models.precinct;
 
+import cse416.spring.enums.StateName;
+
 import javax.persistence.*;
 
 
@@ -9,14 +11,25 @@ public class Incumbent {
     String name;
     String residence;
     private long id;
+    StateName state;
 
     public Incumbent(){
 
     }
 
-    public Incumbent(String name, String residence) {
+    public Incumbent(String name, StateName state, String residence) {
         this.name = name;
+        this.state = state;
         this.residence = residence;
+    }
+
+    @Column
+    public StateName getState() {
+        return state;
+    }
+
+    public void setState(StateName state) {
+        this.state = state;
     }
 
     @Column

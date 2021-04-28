@@ -8,7 +8,7 @@ import java.util.List;
 public interface JobService {
     Job findById(long id);
 
-    List<Job> findByState(StateName state);
+    List<Job> findByStateName(StateName state);
 
     List<Job> findAllJobs();
 }

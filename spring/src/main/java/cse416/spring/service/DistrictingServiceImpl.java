@@ -3,11 +3,13 @@ package cse416.spring.service;
 import cse416.spring.models.county.County;
 import cse416.spring.models.districting.Districting;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+@Service
 public class DistrictingServiceImpl implements DistrictingService{
 
     private EntityManager em;
