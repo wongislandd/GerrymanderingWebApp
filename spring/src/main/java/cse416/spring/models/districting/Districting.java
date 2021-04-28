@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.ArrayList;
 
-@Entity
+@Entity(name = "Districtings")
 public class Districting {
     private long id;
     private int jobID;
@@ -30,6 +30,7 @@ public class Districting {
     }
 
     @Lob
+    @Column(name = "districting_keys")
     public String getDistrictKeys() {
         return districtKeys;
     }

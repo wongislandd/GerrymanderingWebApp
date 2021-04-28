@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Precincts")
 public class Precinct {
     String name;
     String geoJson;
@@ -46,6 +46,7 @@ public class Precinct {
     }
 
     @Lob
+    @Column(name = "geo_json")
     public String getGeoJson() {
         return geoJson;
     }

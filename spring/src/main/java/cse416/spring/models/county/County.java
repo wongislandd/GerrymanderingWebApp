@@ -14,7 +14,7 @@ import javax.persistence.Lob;
 import java.util.ArrayList;
 
 
-@Entity
+@Entity(name = "Counties")
 public class County {
     int id;
     String name;
@@ -55,6 +55,7 @@ public class County {
     }
 
     @Lob
+    @Column(name = "precinct_keys")
     public String getPrecinctKeys() {
         return precinctKeys;
     }

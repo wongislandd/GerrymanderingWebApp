@@ -9,7 +9,7 @@ import javax.persistence.*;
 /**
  * A data class to represent the three compactness measures of a district.
  */
-@Entity
+@Entity(name = "Compactnesses")
 public class Compactness {
     private double polsbyPopper;
     private double populationFatness;

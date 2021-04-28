@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.ArrayList;
 
-@Entity
+@Entity(name = "EnactedDistrictings")
 public class EnactedDistricting extends Districting {
     private StateName state;
 
