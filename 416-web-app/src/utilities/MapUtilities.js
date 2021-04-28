@@ -23,9 +23,9 @@ export const IDs = {
 /* To correspond with the labels in the GeoJson */
 export const PROPERTY_LABELS = {
   /* District Properties */
-  PRECINCT_NAME: "PREC_NAME",
-  PRECINCT_ID: "PREC_ID",
-  COUNTY_NAME: "county_nam",
+  PRECINCT_NAME: "name",
+  PRECINCT_ID: "id",
+  COUNTY_NAME: "county",
 
   /* Population Properties */
   TOTAL_POPULATION: "TOTAL_POPULATION",

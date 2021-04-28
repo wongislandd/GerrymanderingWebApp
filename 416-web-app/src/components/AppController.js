@@ -14,15 +14,15 @@ class AppController extends Component {
 
   render() {
     // State Selection
-    // if (this.props.CurrentState == ViewportUtilities.STATE_OPTIONS.UNSELECTED) {
-    //   return <StateSelection />;
-    // }
-    // // Job Selection
-    // else if(this.props.CurrentJob == null) {
-    //   return <JobSelection/>
-    // }
-    // // Primary Selection Menu
-    // else if (this.props.InSelectionMenu) {
+    if (this.props.CurrentState == ViewportUtilities.STATE_OPTIONS.UNSELECTED) {
+      return <StateSelection />;
+    }
+    // Job Selection
+    else if(this.props.CurrentJob == null) {
+      return <JobSelection/>
+    }
+    // Primary Selection Menu
+    else if (this.props.InSelectionMenu) {
         return (
           <div className="full-screen-flex-container">
             <SelectionMenuContainer />
@@ -30,15 +30,15 @@ class AppController extends Component {
         );
     }
     // Map View
-  //   else {
-  //     return (
-  //       <div className="full-screen-flex-container">
-  //         <MapBoxComponent />
-  //         <Toolbar />
-  //       </div>
-  //     );
-  //   }
-  // }
+    else {
+      return (
+        <div className="full-screen-flex-container">
+          <MapBoxComponent />
+          <Toolbar />
+        </div>
+      );
+    }
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {

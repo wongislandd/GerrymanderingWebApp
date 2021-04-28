@@ -1,6 +1,6 @@
 package cse416.spring.helperclasses;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -210,7 +210,7 @@ public class DatabaseWritingService {
         }
 
         // For every file in the folder . . .
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 2; i++) {
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);

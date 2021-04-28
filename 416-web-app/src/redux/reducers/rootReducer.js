@@ -4,7 +4,7 @@ import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import TestGeneratedPlan from "../../data/NC/testGeneratedPlan.json";
 import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
-import TestEnvelope from "../../data/NC/TestData2.json"
+import TestData from "../../data/NC/precincts_output.json"
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
 import Job from "../../utilities/classes/models/Job";
@@ -15,7 +15,7 @@ import ExampleGeoJson from "../../data/NC/EnactedDistrictingPlan2016WithData.jso
 
 const defaultDistricting = new Districting(
   "Enacted Districting Feb 2016 - Nov 2019",
-  TestEnvelope
+  TestData
 );
 
 /* Initial State */

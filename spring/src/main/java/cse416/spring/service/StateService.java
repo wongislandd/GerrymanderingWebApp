@@ -1,7 +1,7 @@
 package cse416.spring.service;
 
 import com.github.javafaker.Faker;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
 import cse416.spring.models.county.County;

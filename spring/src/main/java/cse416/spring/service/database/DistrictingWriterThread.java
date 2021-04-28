@@ -95,12 +95,12 @@ public class DistrictingWriterThread extends Thread {
                 District d = new District(districtNumber, precincts, stateName);
                 districtsInDistricting.add(d);
                 em.persist(d);
+                System.out.println("[THREAD " + name + "] Created District.");
             }
 
             Districting newDistricting = new Districting(jobID, districtsInDistricting);
             em.persist(newDistricting);
         }
-
         commit();
     }
 }

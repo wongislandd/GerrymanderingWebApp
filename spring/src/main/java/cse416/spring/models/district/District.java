@@ -1,13 +1,14 @@
 package cse416.spring.models.district;
 
-import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.StateName;
+import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class District {
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
 
         MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
-        Compactness compactness = calculateCompactness();
+        Compactness compactness = calculateCompactness(precincts);
 
         this.measures = new DistrictMeasures(populationEquality, minorityInfo,
                 compactness);
@@ -122,7 +123,7 @@ public class District {
     }
 
     private double calculatePopulationEquality(int idealPopulation) {
-        double popRatio = (double) demographics.getTP() / idealPopulation;
+        double popRatio = (double) this.demographics.getTP() / idealPopulation;
         return Math.pow((popRatio - 1), 2);
     }
 
@@ -134,7 +135,10 @@ public class District {
         return Math.random();
     }
 
-    private Compactness calculateCompactness() {
+    private Compactness calculateCompactness(ArrayList<Precinct> precincts) {
+        Geometry geometry = UnionBuilder.getUnion(precincts);
+
+        // TODO: Implement the rest
         return new Compactness(Math.random(), Math.random(), Math.random());
     }
 
