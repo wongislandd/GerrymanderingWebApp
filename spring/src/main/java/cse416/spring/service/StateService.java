@@ -31,12 +31,4 @@ public interface StateService {
 
     List<State> findAllStates();
 
-//
-
-//
-
-//    }
-//
-//
-
 }
