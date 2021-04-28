@@ -1,13 +1,16 @@
 package cse416.spring.models.county;
 
-import com.vividsolutions.jts.geom.Geometry;
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.builders.ConcaveHullBuilder;
+import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.locationtech.jts.geom.Geometry;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.util.ArrayList;
 
 
@@ -80,6 +83,6 @@ public class County {
         }
 
         this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
-        this.geometry = new ConcaveHullBuilder(precincts).getConcaveGeometryOfPrecincts();
+        this.geometry = UnionBuilder.getUnion(precincts);
     }
 }

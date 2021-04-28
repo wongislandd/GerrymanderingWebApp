@@ -6,20 +6,17 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 
-
 @Entity
 public class Precinct {
     String name;
-
     String geoJson;
-
     Demographics demographics;
-
     StateName state;
-
     private int id;
 
-    public Precinct(StateName state, int id, String name, String geoJson, Demographics demographics) {
+    public Precinct(StateName state, int id, String name, String geoJson,
+                    Demographics demographics) {
+
         this.state = state;
         this.name = name;
         this.geoJson = geoJson;
@@ -27,9 +24,7 @@ public class Precinct {
         this.id = id;
     }
 
-
     public Precinct() {
-
     }
 
     @Column
@@ -60,7 +55,8 @@ public class Precinct {
     }
 
     public JSONArray retrieveCoordinates() {
-        return new JSONObject(geoJson).getJSONObject("geometry").getJSONArray("coordinates").getJSONArray(0);
+        return new JSONObject(geoJson).getJSONObject("geometry")
+                .getJSONArray("coordinates").getJSONArray(0);
     }
 
     @OneToOne(cascade = CascadeType.ALL)
