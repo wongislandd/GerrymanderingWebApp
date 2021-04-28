@@ -76,7 +76,7 @@ public class DatabaseWritingService {
     }
 
     private static HashMap<Integer, Precinct> getAllPrecincts(EntityManager em) {
-        Query query = em.createQuery("SELECT p FROM Precinct p");
+        Query query = em.createQuery("SELECT p FROM Precincts p");
         ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
 
         // Convert the allPrecincts list into a hashmap of (id, precinct)
@@ -146,7 +146,7 @@ public class DatabaseWritingService {
     }
 
     private static Job createJob(StateName state, int jobId, JobSummary js, EntityManager em) {
-        Query query = em.createQuery("SELECT d FROM Districting d WHERE d.jobID = :jobId");
+        Query query = em.createQuery("SELECT d FROM Districtings d WHERE d.jobID = :jobId");
         query.setParameter("jobId", jobId);
 
         ArrayList<Districting> districtingsInJob = new ArrayList<Districting>(query.getResultList());

@@ -26,7 +26,7 @@ public class PrecinctServiceImpl implements PrecinctService {
 
     @Override
     public Precinct findByName(String name) {
-        Query query = em.createQuery("SELECT p FROM Precinct p WHERE p.name=:name");
+        Query query = em.createQuery("SELECT p FROM Precincts p WHERE p.name=:name");
         query.setParameter("name", name);
         List<Precinct> precincts = query.getResultList();
         return precincts.get(0);
@@ -34,13 +34,13 @@ public class PrecinctServiceImpl implements PrecinctService {
 
     @Override
     public List<Precinct> findAllPrecincts() {
-        Query query = em.createQuery("SELECT p from Precinct p");
+        Query query = em.createQuery("SELECT p from Precincts p");
         return (List<Precinct>) query.getResultList();
     }
 
     @Override
     public List<Precinct> findByState(StateName state) {
-        Query query = em.createQuery("SELECT p FROM Precinct p WHERE p.state=:state");
+        Query query = em.createQuery("SELECT p FROM Precincts p WHERE p.state=:state");
         query.setParameter("state", state);
         return (List<Precinct>) query.getResultList();
     }

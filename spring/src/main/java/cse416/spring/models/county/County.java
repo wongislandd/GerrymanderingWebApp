@@ -55,7 +55,6 @@ public class County {
     }
 
     @Lob
-    @Column(name = "precinct_keys")
     public String getPrecinctKeys() {
         return precinctKeys;
     }

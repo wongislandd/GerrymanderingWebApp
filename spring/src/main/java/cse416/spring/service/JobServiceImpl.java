@@ -26,14 +26,13 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<Job> findByStateName(StateName state) {
-        Query query = em.createQuery("SELECT j from Job j WHERE j.state=:state");
+        Query query = em.createQuery("SELECT j from Jobs j WHERE j.state=:state");
         query.setParameter("state", state);
         return (List<Job>) query.getResultList();
     }
-
     @Override
     public List<Job> findAllJobs() {
-        Query query = em.createQuery("SELECT j from Job j");
+        Query query = em.createQuery("SELECT j from Jobs j");
         return (List<Job>) query.getResultList();
     }
 }

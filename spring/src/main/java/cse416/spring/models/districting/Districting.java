@@ -30,7 +30,6 @@ public class Districting {
     }
 
     @Lob
-    @Column(name = "districting_keys")
     public String getDistrictKeys() {
         return districtKeys;
     }
@@ -39,7 +38,6 @@ public class Districting {
         this.districtKeys = districtKeys;
     }
 
-    @Column
     public int getJobID() {
         return jobID;
     }

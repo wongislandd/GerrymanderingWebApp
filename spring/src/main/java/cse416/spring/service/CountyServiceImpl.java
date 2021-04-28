@@ -23,7 +23,7 @@ public class CountyServiceImpl implements CountyService {
 
     @Override
     public County findByName(String name) {
-        Query query = em.createQuery("SELECT c FROM County c WHERE c.name=:name");
+        Query query = em.createQuery("SELECT c FROM Counties c WHERE c.name=:name");
         query.setParameter("name", name);
         List<County> counties = query.getResultList();
         return counties.get(0);
@@ -31,13 +31,13 @@ public class CountyServiceImpl implements CountyService {
 
     @Override
     public List<County> findAllCounties() {
-        Query query = em.createQuery("SELECT c FROM County c");
+        Query query = em.createQuery("SELECT c FROM Counties c");
         return (List<County>) query.getResultList();
     }
 
     @Override
     public List<County> findByStateName(StateName state) {
-        Query query = em.createQuery("SELECT c FROM County c where c.state=:state");
+        Query query = em.createQuery("SELECT c FROM Counties c where c.state=:state");
         query.setParameter("state", state);
         return (List<County>) query.getResultList();
     }

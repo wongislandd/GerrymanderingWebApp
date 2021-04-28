@@ -20,7 +20,7 @@ public class IncumbentServiceImpl implements IncumbentService {
 
     @Override
     public List<Incumbent> findByStateName(StateName state) {
-        Query query = em.createQuery("SELECT i from Incumbent i WHERE i.state=:state");
+        Query query = em.createQuery("SELECT i from Incumbents i WHERE i.state=:state");
         query.setParameter("state", state);
         return (List<Incumbent>) query.getResultList();
     }

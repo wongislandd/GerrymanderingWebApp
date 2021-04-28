@@ -2,6 +2,7 @@ package cse416.spring.service;
 
 
 import cse416.spring.models.districting.Districting;
+import cse416.spring.models.districting.DistrictingConstraints;
 
 import java.util.List;
 
@@ -12,7 +13,5 @@ public interface DistrictingService {
 
     List<Districting> findAllDistrictings();
 
-//    public static void getInterestingDistrictings() {
-
-//    }
+    List<Districting> findByConstraints(DistrictingConstraints constriants);
 }

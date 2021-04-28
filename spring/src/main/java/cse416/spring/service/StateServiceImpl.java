@@ -26,7 +26,7 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public State findByStateName(StateName state) {
-        Query query = em.createQuery("SELECT s FROM State s WHERE s.name=:state");
+        Query query = em.createQuery("SELECT s FROM States s WHERE s.name=:state");
         query.setParameter("state", state);
         List<State> states = query.getResultList();
         return states.get(0);
@@ -34,7 +34,7 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public List<State> findAllStates() {
-        Query query = em.createQuery("SELECT s FROM State s");
+        Query query = em.createQuery("SELECT s FROM States s");
         return (List<State>) query.getResultList();
     }
 }

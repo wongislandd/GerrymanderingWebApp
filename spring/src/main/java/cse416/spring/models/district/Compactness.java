@@ -70,7 +70,7 @@ public class Compactness {
 
     public static double calculateFatness(Geometry geometry) {
         double inscribedRadius = MaximumInscribedCircle.getRadiusLine(
-                geometry, 0).getLength();
+                geometry, 1).getLength();
 
         MinimumBoundingCircle boundingCircle = new MinimumBoundingCircle(
                 geometry);

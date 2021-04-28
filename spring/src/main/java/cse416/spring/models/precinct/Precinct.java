@@ -46,7 +46,6 @@ public class Precinct {
     }
 
     @Lob
-    @Column(name = "geo_json")
     public String getGeoJson() {
         return geoJson;
     }
