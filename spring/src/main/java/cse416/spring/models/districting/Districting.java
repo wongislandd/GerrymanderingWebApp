@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class Districting {
     private long id;
     private int jobID;
-    private DistrictingMeasures measures;
-    private double ObjectiveFunctionScore;
-    private String districtKeys;
+    protected DistrictingMeasures measures;
+    protected double ObjectiveFunctionScore;
+    protected String districtKeys;
 
     public Districting() {
     }
