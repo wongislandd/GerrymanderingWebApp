@@ -1,6 +1,7 @@
 package cse416.spring.models.districting;
 
 import cse416.spring.models.district.Compactness;
+import cse416.spring.models.district.Deviation;
 
 import javax.persistence.*;
 
@@ -10,18 +11,17 @@ public class DistrictingMeasures {
     Compactness compactnessAvg;
     double populationEqualityAvg;
     double splitCountiesScore;
-    double deviationFromEnactedAvg;
-    double deviationFromAverageAvg;
+    Deviation deviationFromEnactedAvg;
+    Deviation deviationFromAverageAvg;
 
     private long id;
 
     public DistrictingMeasures() {
-
     }
 
     /* Calculate districting measures from the collection of district measures */
     public DistrictingMeasures(MajorityMinorityDistrictsCount minorityDistrictsCount, Compactness compactnessAvg, double populationEqualityAvg,
-                               double splitCountiesScore, double deviationFromEnactedAvg, double deviationFromAverageAvg) {
+                               double splitCountiesScore, Deviation deviationFromEnactedAvg, Deviation deviationFromAverageAvg) {
         this.populationEqualityAvg = populationEqualityAvg;
         this.minorityDistrictsCount = minorityDistrictsCount;
         this.compactnessAvg = compactnessAvg;
@@ -66,21 +66,21 @@ public class DistrictingMeasures {
         this.splitCountiesScore = splitCountiesScore;
     }
 
-    @Column
-    public double getDeviationFromEnactedAvg() {
+    @OneToOne(cascade = CascadeType.ALL)
+    public Deviation getDeviationFromEnactedAvg() {
         return deviationFromEnactedAvg;
     }
 
-    public void setDeviationFromEnactedAvg(double deviationFromEnactedAvg) {
+    public void setDeviationFromEnactedAvg(Deviation deviationFromEnactedAvg) {
         this.deviationFromEnactedAvg = deviationFromEnactedAvg;
     }
 
-    @Column
-    public double getDeviationFromAverageAvg() {
+    @Transient
+    public Deviation getDeviationFromAverageAvg() {
         return deviationFromAverageAvg;
     }
 
-    public void setDeviationFromAverageAvg(double deviationFromAverageAvg) {
+    public void setDeviationFromAverageAvg(Deviation deviationFromAverageAvg) {
         this.deviationFromAverageAvg = deviationFromAverageAvg;
     }
 
