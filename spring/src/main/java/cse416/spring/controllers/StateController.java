@@ -33,22 +33,6 @@ public class StateController {
         this.service = service;
     }
 
-
-    private static Map<String, String> getAllStatesCountyGeometry() {
-        Map<String, String> countiesByState = new HashMap<String, String>();
-        try {
-            File NC = ResourceUtils.getFile("src/main/resources/static/json/NC/NCBoundary.json");
-            File LA = ResourceUtils.getFile("src/main/resources/static/json/LA/LABoundary.json");
-            File TX = ResourceUtils.getFile("src/main/resources/static/json/TX/TXBoundary.json");
-            countiesByState.put("NC", new String(Files.readAllBytes(NC.toPath())).replaceAll("\\n",""));
-            countiesByState.put("LA", new String(Files.readAllBytes(LA.toPath())).replaceAll("\\n",""));
-            countiesByState.put("TX", new String(Files.readAllBytes(TX.toPath())).replaceAll("\\n",""));
-            return countiesByState;
-        } catch (Exception ex) {
-            return countiesByState;
-        }
-    }
-
     public static StateName getStateName(String stateID) {
         switch (stateID) {
             case "LA":
@@ -65,6 +49,22 @@ public class StateController {
     public ResponseEntity<String> getOutlines() {
         Map<String, String> outlineMap = getAllStatesCountyGeometry();
         return new ResponseEntity<>(new JSONObject(outlineMap).toString(), HttpStatus.OK);
+    }
+
+
+    private static Map<String, String> getAllStatesCountyGeometry() {
+        Map<String, String> countiesByState = new HashMap<String, String>();
+        try {
+            File NC = ResourceUtils.getFile("src/main/resources/static/json/NC/NCBoundary.json");
+            File LA = ResourceUtils.getFile("src/main/resources/static/json/LA/LABoundary.json");
+            File TX = ResourceUtils.getFile("src/main/resources/static/json/TX/TXBoundary.json");
+            countiesByState.put("NC", new String(Files.readAllBytes(NC.toPath())).replaceAll("\\n",""));
+            countiesByState.put("LA", new String(Files.readAllBytes(LA.toPath())).replaceAll("\\n",""));
+            countiesByState.put("TX", new String(Files.readAllBytes(TX.toPath())).replaceAll("\\n",""));
+            return countiesByState;
+        } catch (Exception ex) {
+            return countiesByState;
+        }
     }
 
 

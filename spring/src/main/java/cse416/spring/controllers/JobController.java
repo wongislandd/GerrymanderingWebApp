@@ -4,6 +4,7 @@ import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
 import cse416.spring.models.job.Job;
 import cse416.spring.service.JobService;
+import cse416.spring.service.JobServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,10 @@ import static cse416.spring.controllers.StateController.getStateName;
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
-    private JobService jobService;
+    private JobServiceImpl jobService;
 
     @Autowired
-    public JobController(JobService service) {
+    public JobController(JobServiceImpl service) {
         this.jobService = service;
     }
 

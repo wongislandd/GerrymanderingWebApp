@@ -42,7 +42,7 @@ public class PrecinctServiceImpl implements PrecinctService{
 
     @Override
     public List<Precinct> findByState(StateName state) {
-        Query query = em.createQuery("SELECT p FROM Precinct p WHERE c.state=:state");
+        Query query = em.createQuery("SELECT p FROM Precinct p WHERE p.state=:state");
         query.setParameter("state", state);
         List<Precinct> precincts = query.getResultList();
         return precincts;

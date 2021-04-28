@@ -8,7 +8,7 @@ import * as NetworkingUtilities from '../../network/NetworkingUtilities'
 
 class JobSelection extends Component {
     componentDidMount() {
-        NetworkingUtilities.getJobs(this.props.CurrentState).then(jobs => this.props.loadInJobs(jobs))
+        NetworkingUtilities.loadJobs(this.props.CurrentState).then(jobs => this.props.loadInJobs(jobs))
         this.populateCounties();
         this.populatePrecincts();
     }

@@ -50,8 +50,8 @@ export async function loadStateOutlines() {
 }
 
 
-export async function getJobs(state) {
-  let fullUrl = baseURL + "/states/" + stateFullToId[state] + "/loadJobs";
+export async function loadJobs(state) {
+  let fullUrl = baseURL + "/jobs/" + stateFullToId[state] + "/loadJobs";
   const response = await fetch(fullUrl);
   let body = await response.json();
   console.log(body)
@@ -60,7 +60,7 @@ export async function getJobs(state) {
 }
 
 export async function loadIncumbents(state) {
-  let fullUrl = baseURL + "/states/" + stateFullToId[state] + "/loadIncumbents";
+  let fullUrl = baseURL + "/incumbents/" + stateFullToId[state] + "/loadIncumbents";
   const response = await fetch(fullUrl);
   let body = await response.json();
   let incumbents = ParsingUtilities.parseIncumbentsJSONToObjects(body);
@@ -70,7 +70,7 @@ export async function loadIncumbents(state) {
 
 export async function loadPrecincts(state) {
     console.log("LOAD PRECINCTS CALLED");
-    let fullUrl = baseURL + "/states/" + state + "/loadPrecincts";
+    let fullUrl = baseURL + "/precincts/" + state + "/loadPrecincts";
     const response = await fetch(fullUrl);
     let body = await response.json();
     return body;
@@ -78,7 +78,7 @@ export async function loadPrecincts(state) {
 
 export async function loadCounties(state) {
   console.log("LOAD COUNTIES CALLED");
-  let fullUrl = baseURL + "/states/" + state + "/loadCounties";
+  let fullUrl = baseURL + "/counties/" + state + "/loadCounties";
   const response = await fetch(fullUrl);
   let body = await response.json();
   return body;
