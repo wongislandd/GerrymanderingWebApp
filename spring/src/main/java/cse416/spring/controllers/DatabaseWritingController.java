@@ -61,8 +61,11 @@ public class DatabaseWritingController {
     public ResponseEntity<String> writeAll() throws IOException {
         final long fileStartTime = System.currentTimeMillis();
         PrecinctWriter.persistPrecincts();
+        System.out.println("Persisted Precincts");
         CountyWriter.persistCounties();
+        System.out.println("Persisted Counties");
         DistrictingWriter.persistEnactedDistrictings();
+        System.out.println("Persisted Enacted Districtings");
         DistrictingWriter.persistDistrictings();
         final long fileEndTime = System.currentTimeMillis();
         System.out.println("Wrote the entire database in " + (fileEndTime - fileStartTime) + "ms");
