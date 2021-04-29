@@ -7,7 +7,7 @@ import cse416.spring.models.district.District;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
+@Entity(name = "EnactedDistrictings")
 public class EnactedDistricting {
     private long id;
     private StateName state;

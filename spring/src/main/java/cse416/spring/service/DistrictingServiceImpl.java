@@ -1,5 +1,6 @@
 package cse416.spring.service;
 
+import cse416.spring.enums.StateName;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingConstraints;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,14 @@ public class DistrictingServiceImpl implements DistrictingService {
         Query query = em.createQuery("SELECT d FROM Districtings d WHERE d.id =:id");
         query.setParameter("id", jobId);
         return (List<Districting>) query.getResultList();
+    }
+
+    @Override
+    public Districting findEnactedByState(StateName state){
+        Query query = em.createQuery("SELECT d FROM EnactedDistrictings d WHERE d.state =:state");
+        query.setParameter("state", state);
+        List<Districting> results =  query.getResultList();
+        return results.get(0);
     }
 
     @Override

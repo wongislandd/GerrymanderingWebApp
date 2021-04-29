@@ -1,6 +1,7 @@
 package cse416.spring.service;
 
 
+import cse416.spring.enums.StateName;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingConstraints;
 
@@ -14,4 +15,6 @@ public interface DistrictingService {
     List<Districting> findAllDistrictings();
 
     List<Districting> findByConstraints(DistrictingConstraints constriants);
+
+    Districting findEnactedByState(StateName state);
 }
