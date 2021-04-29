@@ -29,7 +29,7 @@ import static cse416.spring.service.database.PrecinctWriter.getAllPrecincts;
  * districtings into the database.
  */
 
-@Service
+
 public class DistrictingWriter {
 
     // TODO Turn this into an SQL query within PrecinctService

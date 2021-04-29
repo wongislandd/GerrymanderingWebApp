@@ -21,12 +21,6 @@ import java.io.IOException;
 @RequestMapping("/db")
 public class DatabaseWritingController {
 
-    private final DistrictingWriter databaseWritingService;
-
-    public DatabaseWritingController(DistrictingWriter service) {
-        this.databaseWritingService = service;
-    }
-
     @PostMapping("/writePrecincts")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writePrecincts() throws IOException {

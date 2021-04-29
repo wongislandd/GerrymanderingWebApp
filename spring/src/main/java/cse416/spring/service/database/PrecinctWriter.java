@@ -3,6 +3,8 @@ package cse416.spring.service.database;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
+import cse416.spring.service.PrecinctService;
+import cse416.spring.service.PrecinctServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,9 +48,8 @@ public class PrecinctWriter {
         // Get all precincts
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        Query query = em.createQuery("SELECT p FROM Precincts p");
-        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
+        PrecinctService precinctService = new PrecinctServiceImpl(em);
+        ArrayList<Precinct> allPrecincts = new ArrayList<>(precinctService.findAllPrecincts());
 
         // Convert the allPrecincts list into a hashmap of (id, precinct)
         HashMap<Integer, Precinct> precinctHash = new HashMap<>();
@@ -56,7 +57,6 @@ public class PrecinctWriter {
         for (Precinct precinct : allPrecincts) {
             precinctHash.put(precinct.getId(), precinct);
         }
-        em.getTransaction().commit();
         em.close();
         emf.close();
         return precinctHash;
