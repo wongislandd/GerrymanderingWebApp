@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static cse416.spring.service.database.DatabaseWritingService.getPrecinctsFromKeys;
+
 public class DistrictingWriterThread extends Thread {
     StateName stateName;
     int jobID;
@@ -44,15 +46,6 @@ public class DistrictingWriterThread extends Thread {
         super.start();
     }
 
-    private static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
-                                                            HashMap<Integer, Precinct> precinctHash) {
-        ArrayList<Precinct> results = new ArrayList<>();
-        for (int i = 0; i < precinctKeys.length(); i++) {
-            results.add(precinctHash.get(precinctKeys.getInt(i)));
-        }
-
-        return results;
-    }
 
     private void commit() {
         boolean first = true;

@@ -11,6 +11,7 @@ import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * A class that provides methods for persisting precincts, counties and
  * districtings into the database.
  */
+
+@Service
 public class DatabaseWritingService {
     private static JSONObject readFile(String filePath) throws IOException {
         File file = ResourceUtils.getFile("src/main/resources/static/" + filePath);
@@ -65,7 +68,7 @@ public class DatabaseWritingService {
         return new Precinct(state, id, precinctName, feature.toString(), demographics);
     }
 
-    private static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
+    public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
                                                             HashMap<Integer, Precinct> allPrecincts) {
         ArrayList<Precinct> results = new ArrayList<>();
         for (int i = 0; i < precinctKeys.length(); i++) {
@@ -94,6 +97,7 @@ public class DatabaseWritingService {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         em.getTransaction().begin();
 
+
         /* Customization */
         String precinctsFilePath = "/json/NC/precincts_output.json";
         StateName stateName = StateName.NORTH_CAROLINA;
@@ -112,6 +116,7 @@ public class DatabaseWritingService {
         em.getTransaction().commit();
     }
 
+
     public static void persistCounties() throws IOException {
         // Get entity manager
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
@@ -124,6 +129,8 @@ public class DatabaseWritingService {
         JSONObject jo = readFile(countiesFilePath);
         HashMap<Integer, Precinct> allPrecincts = getAllPrecincts(em);
         Iterator<String> keys = jo.keys();
+
+
 
         /* For each county */
         int counter = 0;
@@ -199,10 +206,16 @@ public class DatabaseWritingService {
         String jobFolderPath = "/json/NC/districtings";
         // ************************************ /
 
+        JSONObject countyPrecinctJson = readFile("/json/NC/counties/CountiesPrecinctsMapping.json");
+
+
+
+
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
         String[] files = getFilesInFolder(jobFolderPath);
+
 
         ArrayList<EntityManager> ems = new ArrayList<>();
         for (int j = 0; j < numThreads; j++) {

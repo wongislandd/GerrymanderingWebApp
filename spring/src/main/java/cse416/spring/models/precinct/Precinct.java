@@ -45,7 +45,7 @@ public class Precinct {
         this.name = name;
     }
 
-    @Lob
+    @Column(columnDefinition = "json")
     public String getGeoJson() {
         return geoJson;
     }

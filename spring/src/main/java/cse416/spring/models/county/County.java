@@ -19,9 +19,7 @@ public class County {
     int id;
     String name;
     Geometry geometry;
-    String precinctKeys;
     StateName state;
-
 
     public County() {
 
@@ -54,15 +52,6 @@ public class County {
         this.geometry = geometry;
     }
 
-    @Lob
-    public String getPrecinctKeys() {
-        return precinctKeys;
-    }
-
-    public void setPrecinctKeys(String precinctKeys) {
-        this.precinctKeys = precinctKeys;
-    }
-
     @Id
     public int getId() {
         return id;
@@ -81,8 +70,6 @@ public class County {
         for (Precinct precinct : precincts) {
             precinctKeys.put(precinct.getId());
         }
-
-        this.precinctKeys = new JSONObject().put("precincts", precinctKeys).toString();
         this.geometry = UnionBuilder.getUnion(precincts);
     }
 }

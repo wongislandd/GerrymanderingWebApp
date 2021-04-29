@@ -1,5 +1,6 @@
 package cse416.spring.controllers;
 
+import cse416.spring.service.CountyService;
 import cse416.spring.service.database.DatabaseWritingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,12 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/db")
 public class DatabaseWritingController {
+
+    private final DatabaseWritingService databaseWritingService;
+
+    public DatabaseWritingController(DatabaseWritingService service) {
+        this.databaseWritingService = service;
+    }
 
     @PostMapping("/writePrecincts")
     @CrossOrigin(origins = "http://localhost:3000")
