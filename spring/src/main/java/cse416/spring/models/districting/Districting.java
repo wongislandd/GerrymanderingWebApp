@@ -13,31 +13,27 @@ public class Districting {
     private int jobID;
     protected DistrictingMeasures measures;
     protected double ObjectiveFunctionScore;
-    protected String districtKeys;
+    protected ArrayList<District> districts;
 
     public Districting() {
     }
 
     public Districting(int jobID, ArrayList<District> districts) {
-        JSONArray districtKeys = new JSONArray();
-        for (District district : districts) {
-            districtKeys.put(district.getId());
-        }
-
         this.jobID = jobID;
         this.measures = compileDistrictingMeasures(districts);
-        this.districtKeys = new JSONObject().put("districts", districtKeys).toString();
+        this.districts = districts;
     }
 
-    @Lob
-    public String getDistrictKeys() {
-        return districtKeys;
+    @OneToMany(cascade=CascadeType.ALL)
+    public ArrayList<District> getDistricts() {
+        return districts;
     }
 
-    public void setDistrictKeys(String districtKeys) {
-        this.districtKeys = districtKeys;
+    public void setDistricts(ArrayList<District> districts) {
+        this.districts = districts;
     }
 
+    @Column
     public int getJobID() {
         return jobID;
     }

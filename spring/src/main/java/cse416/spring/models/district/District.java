@@ -24,8 +24,8 @@ public class District {
      */
     private int districtNumber;
     private Demographics demographics;
-    private String precinctKeys;
     private DistrictMeasures measures;
+    private Geometry geometry;
     private double objectiveFunctionScore;
     private long id;
 
@@ -37,16 +37,16 @@ public class District {
 
         this.districtNumber = districtNumber;
         this.demographics = compileDemographics(precincts);
+        this.geometry = UnionBuilder.getUnion(precincts);
+
         JSONArray precinctKeysArr = new JSONArray();
         for (Precinct p : precincts) {
             precinctKeysArr.put(p.getId());
         }
-        this.precinctKeys = new JSONObject().put("precincts", precinctKeysArr).toString();
-
         int idealPopulation = IdealPopulation.getIdealPopulation(stateName);
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
         MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
-        Compactness compactness = calculateCompactness(precincts);
+        Compactness compactness = calculateCompactness(geometry);
 
         if (enactedDistrict != null) {
 
@@ -76,13 +76,14 @@ public class District {
     }
 
     @Lob
-    public String getPrecinctKeys() {
-        return precinctKeys;
+    public Geometry getGeometry() {
+        return geometry;
     }
 
-    public void setPrecinctKeys(String precinctKeys) {
-        this.precinctKeys = precinctKeys;
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
     }
+
 
     @OneToOne(cascade = CascadeType.ALL)
     public DistrictMeasures getMeasures() {
@@ -130,8 +131,7 @@ public class District {
         return Math.random();
     }
 
-    private static Compactness calculateCompactness(ArrayList<Precinct> precincts) {
-        Geometry geometry = UnionBuilder.getUnion(precincts);
+    private static Compactness calculateCompactness(Geometry geometry) {
         return new Compactness(
                 Compactness.calculatePolsbyPopper(geometry),
                 Compactness.calculateFatness(geometry),
