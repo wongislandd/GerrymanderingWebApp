@@ -4,7 +4,9 @@ import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.models.county.County;
+import cse416.spring.models.district.District;
 import cse416.spring.models.districting.Districting;
+import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.models.job.Job;
 import cse416.spring.models.job.JobSummary;
 import cse416.spring.models.precinct.Demographics;
@@ -34,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 public class DatabaseWritingService {
     private static JSONObject readFile(String filePath) throws IOException {
-        File file = ResourceUtils.getFile("src/main/resources/static/" + filePath);
+        File file = ResourceUtils.getFile("src/main/resources/static/json" + filePath);
         String content = new String(Files.readAllBytes(file.toPath()));
         return new JSONObject(content);
     }
@@ -69,7 +71,7 @@ public class DatabaseWritingService {
     }
 
     public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
-                                                            HashMap<Integer, Precinct> allPrecincts) {
+                                                           HashMap<Integer, Precinct> allPrecincts) {
         ArrayList<Precinct> results = new ArrayList<>();
         for (int i = 0; i < precinctKeys.length(); i++) {
             results.add(allPrecincts.get(precinctKeys.getInt(i)));
@@ -78,7 +80,11 @@ public class DatabaseWritingService {
         return results;
     }
 
-    private static HashMap<Integer, Precinct> getAllPrecincts(EntityManager em) {
+    private static HashMap<Integer, Precinct> getAllPrecincts() {
+        // Get all precincts
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
         Query query = em.createQuery("SELECT p FROM Precincts p");
         ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
 
@@ -88,18 +94,21 @@ public class DatabaseWritingService {
         for (Precinct precinct : allPrecincts) {
             precinctHash.put(precinct.getId(), precinct);
         }
-
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
         return precinctHash;
     }
 
     public static void persistPrecincts() throws IOException {
         // Initialize entity manager
-        EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
 
         /* Customization */
-        String precinctsFilePath = "/json/NC/precincts_output.json";
+        String precinctsFilePath = "/NC/precincts_output.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readFile(precinctsFilePath);
@@ -114,20 +123,23 @@ public class DatabaseWritingService {
 
         System.out.println("Committing precincts.");
         em.getTransaction().commit();
+        em.close();
+        emf.close();
     }
 
 
     public static void persistCounties() throws IOException {
         // Get entity manager
-        EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
         /* Customization */
-        String countiesFilePath = "/json/NC/counties/CountiesPrecinctsMapping.json";
+        String countiesFilePath = "/NC/counties/CountiesPrecinctsMapping.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readFile(countiesFilePath);
-        HashMap<Integer, Precinct> allPrecincts = getAllPrecincts(em);
+        HashMap<Integer, Precinct> allPrecincts = getAllPrecincts();
         Iterator<String> keys = jo.keys();
 
 
@@ -150,6 +162,8 @@ public class DatabaseWritingService {
         }
 
         em.getTransaction().commit();
+        em.close();
+        emf.close();
     }
 
     private static Job createJob(StateName state, int jobId, JobSummary js, EntityManager em) {
@@ -163,7 +177,7 @@ public class DatabaseWritingService {
         }
 
         js.setSize(districtingsInJob.size());
-        return new Job(state, new JSONObject().put("districtings", districtingKeysArr).toString(), js);
+        return new Job(state, js);
     }
 
     private static boolean areThreadsAlive(ArrayList<DistrictingWriterThread> threads) {
@@ -185,16 +199,45 @@ public class DatabaseWritingService {
         em.getTransaction().commit();
     }
 
-    public static void persistDistrictings() throws IOException {
-        final long startTime = System.currentTimeMillis();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+    public static void persistEnactedDistrictings() throws IOException {
+        StateName stateName = StateName.NORTH_CAROLINA;
+        String enactedFilePath = "/NC/nc_enacted.json";
+        JSONObject enactedJson = readFile(enactedFilePath);
+        JSONObject districting = enactedJson.getJSONArray("districtings").getJSONObject(0);
+        Iterator<String> keys = districting.keys();
+        ArrayList<District> districtsInDistricting = new ArrayList<>();
 
-        // Get all precincts
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
+
+        // Adjust job parameters here
+
+        /* For each district in the districting */
+        while (keys.hasNext()) {
+            String districtID = keys.next();
+            int districtNumber = Integer.parseInt(districtID);
+            JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
+            ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
+            // TODO: Change the null to the enacted districting
+            District d = new District(districtNumber, precincts, stateName, null, enactedFilePath, 0);
+            districtsInDistricting.add(d);
+        }
         EntityManager em = emf.createEntityManager();
+        EnactedDistricting enactedDistricting = new EnactedDistricting(stateName, districtsInDistricting);
+
+        // Commit
         em.getTransaction().begin();
-        HashMap<Integer, Precinct> precinctHash = getAllPrecincts(em);
+        em.persist(enactedDistricting);
         em.getTransaction().commit();
         em.close();
+        emf.close();
+    }
+
+
+    public static void persistDistrictings() throws IOException {
+        final long startTime = System.currentTimeMillis();
+        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;
@@ -206,17 +249,12 @@ public class DatabaseWritingService {
         String jobFolderPath = "/json/NC/districtings";
         // ************************************ /
 
-        JSONObject countyPrecinctJson = readFile("/json/NC/counties/CountiesPrecinctsMapping.json");
-
-
-
-
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
         String[] files = getFilesInFolder(jobFolderPath);
 
-
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         ArrayList<EntityManager> ems = new ArrayList<>();
         for (int j = 0; j < numThreads; j++) {
             ems.add(emf.createEntityManager());
@@ -227,17 +265,17 @@ public class DatabaseWritingService {
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
-            JSONObject jo = readFile("/json/NC/districtings/" + files[i]);
+            JSONObject jo = readFile("/NC/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");
 
             ArrayList<DistrictingWriterThread> threads = new ArrayList<>();
             AtomicBoolean availableRef = new AtomicBoolean(true);
 
             // Create threads
-            for (int j = 1; j < numThreads + 1; j++) {
-                DistrictingWriterThread newThread = new DistrictingWriterThread(state, jobId,
-                        "T" + j, ems.get(j - 1), precinctHash, districtings, (j - 1) * workForEachThread,
-                        workForEachThread * j, availableRef);
+            for (int j = 0; j < numThreads; j++) {
+                DistrictingWriterThread newThread = new DistrictingWriterThread(state, "/NC/districtings/"+files[i], jobId,
+                        "T" + j, ems.get(j), precinctHash, districtings, (j) * workForEachThread,
+                        workForEachThread * (j + 1), availableRef);
                 threads.add(newThread);
             }
 

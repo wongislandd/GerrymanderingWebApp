@@ -40,6 +40,14 @@ public class DatabaseWritingController {
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
+    @PostMapping("/writeEnacted")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> writeEnactedDistrictings() throws IOException {
+        DatabaseWritingService.persistEnactedDistrictings();
+        return new ResponseEntity<>("Written.", HttpStatus.OK);
+    }
+
+
     @PostMapping("/writeDistrictings")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeDistrictings() throws IOException {
@@ -50,9 +58,13 @@ public class DatabaseWritingController {
     @PostMapping("/writeAll")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeAll() throws IOException {
+        final long fileStartTime = System.currentTimeMillis();
         DatabaseWritingService.persistPrecincts();
         DatabaseWritingService.persistCounties();
+        DatabaseWritingService.persistEnactedDistrictings();
         DatabaseWritingService.persistDistrictings();
+        final long fileEndTime = System.currentTimeMillis();
+        System.out.println("Wrote the entire database in " + (fileEndTime - fileStartTime) + "ms");
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 }

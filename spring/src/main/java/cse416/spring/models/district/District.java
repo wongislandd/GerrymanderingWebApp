@@ -25,6 +25,8 @@ public class District {
     private int districtNumber;
     private Demographics demographics;
     private DistrictMeasures measures;
+    private String filePath;
+    private int indexInFile;
     private Geometry geometry;
     private double objectiveFunctionScore;
     private long id;
@@ -32,12 +34,18 @@ public class District {
     public District() {
     }
 
+    /* filePath = file in districtings folder (ex. nc_plans_1_0.json)
+       indexInFile = refers to the districting this district is a part of
+       districtNumber = which district it is in that districting
+     */
     public District(int districtNumber, ArrayList<Precinct> precincts, StateName stateName,
-                    District enactedDistrict) {
+                    District enactedDistrict, String filePath, int indexInFile) {
 
         this.districtNumber = districtNumber;
         this.demographics = compileDemographics(precincts);
         this.geometry = UnionBuilder.getUnion(precincts);
+        this.filePath = filePath;
+        this.indexInFile = indexInFile;
 
         JSONArray precinctKeysArr = new JSONArray();
         for (Precinct p : precincts) {
@@ -54,6 +62,24 @@ public class District {
 
         this.measures = new DistrictMeasures(populationEquality, minorityInfo,
                 compactness);
+    }
+
+    @Column
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Column
+    public int getIndexInFile() {
+        return indexInFile;
+    }
+
+    public void setIndexInFile(int indexInFile) {
+        this.indexInFile = indexInFile;
     }
 
     @Column
@@ -75,7 +101,7 @@ public class District {
         this.id = id;
     }
 
-    @Lob
+    @Transient
     public Geometry getGeometry() {
         return geometry;
     }

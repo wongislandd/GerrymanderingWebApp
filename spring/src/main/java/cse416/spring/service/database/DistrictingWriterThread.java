@@ -21,16 +21,18 @@ public class DistrictingWriterThread extends Thread {
     String name;
     EntityManager em;
     JSONArray districtings;
+    String filePath;
     HashMap<Integer, Precinct> precinctHash;
     int rangeStart;
     int rangeEndExclusive;
     AtomicBoolean availableRef;
 
-    public DistrictingWriterThread(StateName stateName, int jobID, String name, EntityManager em,
+    public DistrictingWriterThread(StateName stateName, String filePath, int jobID, String name, EntityManager em,
                                    HashMap<Integer, Precinct> precinctHash, JSONArray districtings, int rangeStart,
                                    int rangeEndExclusive, AtomicBoolean availableRef) {
 
         this.stateName = stateName;
+        this.filePath = filePath;
         this.jobID = jobID;
         this.name = name;
         this.em = em;
@@ -86,7 +88,7 @@ public class DistrictingWriterThread extends Thread {
                 ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
                 // TODO: Change the null to the enacted districting
-                District d = new District(districtNumber, precincts, stateName, null);
+                District d = new District(districtNumber, precincts, stateName, null, filePath, i);
                 districtsInDistricting.add(d);
                 em.persist(d);
                 System.out.println("[THREAD " + name + "] Created District.");
