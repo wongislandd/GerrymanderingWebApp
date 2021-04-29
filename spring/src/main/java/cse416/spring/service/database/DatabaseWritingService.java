@@ -123,7 +123,7 @@ public class DatabaseWritingService {
         em.getTransaction().begin();
 
         /* Customization */
-        String countiesFilePath = "/json/NC/CountiesPrecinctsMapping.json";
+        String countiesFilePath = "/json/NC/counties/CountiesPrecinctsMapping.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readFile(countiesFilePath);

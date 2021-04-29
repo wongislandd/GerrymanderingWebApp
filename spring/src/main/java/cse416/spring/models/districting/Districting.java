@@ -6,14 +6,15 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity(name = "Districtings")
 public class Districting {
     private long id;
     private int jobID;
-    protected DistrictingMeasures measures;
-    protected double ObjectiveFunctionScore;
-    protected ArrayList<District> districts;
+    private DistrictingMeasures measures;
+    private double ObjectiveFunctionScore;
+    private Collection<District> districts;
 
     public Districting() {
     }
@@ -25,11 +26,11 @@ public class Districting {
     }
 
     @OneToMany(cascade=CascadeType.ALL)
-    public ArrayList<District> getDistricts() {
+    public Collection<District> getDistricts() {
         return districts;
     }
 
-    public void setDistricts(ArrayList<District> districts) {
+    public void setDistricts(Collection<District> districts) {
         this.districts = districts;
     }
 

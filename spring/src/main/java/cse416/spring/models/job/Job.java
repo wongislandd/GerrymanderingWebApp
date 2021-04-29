@@ -11,26 +11,14 @@ public class Job {
     private long id;
     StateName state;
     JobSummary summary;
-    String districtingKeys;
 
-
-    public Job(StateName state, String districtingKeys, JobSummary summary) {
+    public Job(StateName state, JobSummary summary) {
         this.state = state;
-        this.districtingKeys = districtingKeys;
         this.summary = summary;
     }
 
     public Job() {
 
-    }
-
-    @Lob
-    public String getDistrictingKeys() {
-        return districtingKeys;
-    }
-
-    public void setDistrictingKeys(String geometry) {
-        this.districtingKeys = geometry;
     }
 
     @Column
