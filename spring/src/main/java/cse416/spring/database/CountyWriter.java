@@ -1,4 +1,4 @@
-package cse416.spring.service.database;
+package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.models.county.County;
@@ -15,8 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import static cse416.spring.helperclasses.FileReader.readJsonFile;
-import static cse416.spring.service.database.DistrictingWriter.getPrecinctsFromKeys;
-import static cse416.spring.service.database.PrecinctWriter.getAllPrecincts;
+import static cse416.spring.database.DistrictingWriter.getPrecinctsFromKeys;
+import static cse416.spring.database.PrecinctWriter.getAllPrecincts;
 
 public class CountyWriter {
     public static void persistCounties() throws IOException {

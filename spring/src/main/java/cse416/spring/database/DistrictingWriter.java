@@ -1,4 +1,4 @@
-package cse416.spring.service.database;
+package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.MGGGParams;
@@ -10,7 +10,6 @@ import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.DistrictingServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,14 +22,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cse416.spring.helperclasses.FileReader.getFilesInFolder;
 import static cse416.spring.helperclasses.FileReader.readJsonFile;
-import static cse416.spring.service.database.PrecinctWriter.getAllPrecincts;
+import static cse416.spring.database.PrecinctWriter.getAllPrecincts;
 
 /**
  * A class that provides methods for persisting precincts, counties and
  * districtings into the database.
  */
 
-@Service
+
 public class DistrictingWriter {
 
     // TODO Turn this into an SQL query within PrecinctService

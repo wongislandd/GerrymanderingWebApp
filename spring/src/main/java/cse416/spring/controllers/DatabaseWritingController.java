@@ -1,8 +1,8 @@
 package cse416.spring.controllers;
 
-import cse416.spring.service.database.CountyWriter;
-import cse416.spring.service.database.DistrictingWriter;
-import cse416.spring.service.database.PrecinctWriter;
+import cse416.spring.database.CountyWriter;
+import cse416.spring.database.DistrictingWriter;
+import cse416.spring.database.PrecinctWriter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,12 +20,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/db")
 public class DatabaseWritingController {
-
-    private final DistrictingWriter databaseWritingService;
-
-    public DatabaseWritingController(DistrictingWriter service) {
-        this.databaseWritingService = service;
-    }
 
     @PostMapping("/writePrecincts")
     @CrossOrigin(origins = "http://localhost:3000")
