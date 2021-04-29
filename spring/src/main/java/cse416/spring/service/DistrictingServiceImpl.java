@@ -3,6 +3,7 @@ package cse416.spring.service;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingConstraints;
+import cse416.spring.models.districting.EnactedDistricting;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -30,10 +31,10 @@ public class DistrictingServiceImpl implements DistrictingService {
     }
 
     @Override
-    public Districting findEnactedByState(StateName state){
+    public EnactedDistricting findEnactedByState(StateName state){
         Query query = em.createQuery("SELECT d FROM EnactedDistrictings d WHERE d.state =:state");
         query.setParameter("state", state);
-        List<Districting> results =  query.getResultList();
+        List<EnactedDistricting> results =  query.getResultList();
         return results.get(0);
     }
 
