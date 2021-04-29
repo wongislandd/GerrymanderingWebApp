@@ -7,6 +7,7 @@ import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.models.job.JobSummary;
 import cse416.spring.models.precinct.Precinct;
+import cse416.spring.service.DistrictingServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -66,8 +67,6 @@ public class DistrictingWriter {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
 
-        // Adjust job parameters here
-
         /* For each district in the districting */
         while (keys.hasNext()) {
             String districtID = keys.next();
@@ -116,6 +115,10 @@ public class DistrictingWriter {
             ems.add(emf.createEntityManager());
         }
 
+        EntityManager em = emf.createEntityManager();
+        EnactedDistricting enactedDistricting = new DistrictingServiceImpl(em).findEnactedByState(state);
+        em.close();
+
         // For every file in the folder . . .
         for (int i = 0; i < 1; i++) {
             // Read districtings from the file
@@ -129,8 +132,8 @@ public class DistrictingWriter {
 
             // Create threads
             for (int j = 0; j < numThreads; j++) {
-                DistrictingWriterThread newThread = new DistrictingWriterThread(state, "/NC/districtings/"+files[i], jobId,
-                        "T" + j, ems.get(j), precinctHash, districtings, (j) * workForEachThread,
+                DistrictingWriterThread newThread = new DistrictingWriterThread(state, "/NC/districtings/" + files[i], jobId,
+                        "T" + j, ems.get(j), precinctHash, enactedDistricting, districtings, (j) * workForEachThread,
                         workForEachThread * (j + 1), availableRef);
                 threads.add(newThread);
             }
@@ -152,7 +155,7 @@ public class DistrictingWriter {
         }
 
         // Persist the job
-        EntityManager em = emf.createEntityManager();
+        em = emf.createEntityManager();
         JobWriter.persistJob(state, jobId, js, em);
         em.close();
         emf.close();

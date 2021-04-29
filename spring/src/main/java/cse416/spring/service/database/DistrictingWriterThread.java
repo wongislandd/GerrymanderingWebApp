@@ -4,6 +4,7 @@ import cse416.spring.enums.StateName;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.Districting;
+import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ public class DistrictingWriterThread extends Thread {
     int jobID;
     String name;
     EntityManager em;
+    EnactedDistricting enactedDistricting;
     JSONArray districtings;
     String filePath;
     HashMap<Integer, Precinct> precinctHash;
@@ -29,8 +31,9 @@ public class DistrictingWriterThread extends Thread {
     AtomicBoolean availableRef;
 
     public DistrictingWriterThread(StateName stateName, String filePath, int jobID, String name, EntityManager em,
-                                   HashMap<Integer, Precinct> precinctHash, JSONArray districtings, int rangeStart,
-                                   int rangeEndExclusive, AtomicBoolean availableRef) {
+                                   HashMap<Integer, Precinct> precinctHash, EnactedDistricting enactedDistricting,
+                                   JSONArray districtings, int rangeStart, int rangeEndExclusive,
+                                   AtomicBoolean availableRef) {
 
         this.stateName = stateName;
         this.filePath = filePath;
@@ -38,6 +41,7 @@ public class DistrictingWriterThread extends Thread {
         this.name = name;
         this.em = em;
         this.precinctHash = precinctHash;
+        this.enactedDistricting = enactedDistricting;
         this.districtings = districtings;
         this.rangeStart = rangeStart;
         this.rangeEndExclusive = rangeEndExclusive;
@@ -96,7 +100,7 @@ public class DistrictingWriterThread extends Thread {
                 System.out.println("[THREAD " + name + "] Created District.");
             }
 
-            Districting newDistricting = new Districting(jobID, districtsInDistricting);
+            Districting newDistricting = new Districting(jobID, districtsInDistricting, enactedDistricting);
             em.persist(newDistricting);
         }
         commit();
