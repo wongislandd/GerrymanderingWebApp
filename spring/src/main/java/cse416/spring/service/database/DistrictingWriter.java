@@ -2,14 +2,10 @@ package cse416.spring.service.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.MGGGParams;
-import cse416.spring.models.county.County;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictReference;
-import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.EnactedDistricting;
-import cse416.spring.models.job.Job;
 import cse416.spring.models.job.JobSummary;
-import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cse416.spring.helperclasses.FileReader.getFilesInFolder;
 import static cse416.spring.helperclasses.FileReader.readJsonFile;
+import static cse416.spring.service.database.PrecinctWriter.getAllPrecincts;
 
 /**
  * A class that provides methods for persisting precincts, counties and
@@ -34,31 +30,9 @@ import static cse416.spring.helperclasses.FileReader.readJsonFile;
  */
 
 @Service
-public class DatabaseWritingService {
-    private static Precinct buildPrecinctFromJSON(StateName state, JSONObject feature) {
-        JSONObject properties = feature.getJSONObject("properties");
+public class DistrictingWriter {
 
-        int id = properties.getInt("id");
-        String precinctName = properties.getString("name");
-
-        int asian = properties.getInt("asian");
-        int black = properties.getInt("black");
-        int natives = properties.getInt("native_american");
-        int pacific = properties.getInt("pacific_islander");
-        int white = properties.getInt("white");
-        int hispanic = properties.getInt("hispanic");
-        int otherRace = properties.getInt("other");
-
-        int TP = properties.getInt("population");
-        int VAP = -1;
-        int CVAP = -1;
-
-        Demographics demographics = new Demographics(asian, black, natives,
-                pacific, white, hispanic, otherRace, TP, VAP, CVAP);
-
-        return new Precinct(state, id, precinctName, feature.toString(), demographics);
-    }
-
+    // TODO Turn this into an SQL query within PrecinctService
     public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
                                                            HashMap<Integer, Precinct> allPrecincts) {
         ArrayList<Precinct> results = new ArrayList<>();
@@ -67,106 +41,6 @@ public class DatabaseWritingService {
         }
 
         return results;
-    }
-
-    private static HashMap<Integer, Precinct> getAllPrecincts() {
-        // Get all precincts
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        Query query = em.createQuery("SELECT p FROM Precincts p");
-        ArrayList<Precinct> allPrecincts = new ArrayList<Precinct>(query.getResultList());
-
-        // Convert the allPrecincts list into a hashmap of (id, precinct)
-        HashMap<Integer, Precinct> precinctHash = new HashMap<>();
-
-        for (Precinct precinct : allPrecincts) {
-            precinctHash.put(precinct.getId(), precinct);
-        }
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
-        return precinctHash;
-    }
-
-    public static void persistPrecincts() throws IOException {
-        // Initialize entity manager
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-
-
-        /* Customization */
-        String precinctsFilePath = "/NC/precincts_output.json";
-        StateName stateName = StateName.NORTH_CAROLINA;
-
-        JSONObject jo = readJsonFile(precinctsFilePath);
-        JSONArray features = jo.getJSONArray("features");
-
-        for (int i = 0; i < features.length(); i++) {
-            JSONObject feature = features.getJSONObject(i);
-            Precinct p = buildPrecinctFromJSON(stateName, feature);
-            System.out.println("Persisting Precinct " + i);
-            em.persist(p);
-        }
-
-        System.out.println("Committing precincts.");
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
-    }
-
-
-    public static void persistCounties() throws IOException {
-        // Get entity manager
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-
-        /* Customization */
-        String countiesFilePath = "/NC/counties/CountiesPrecinctsMapping.json";
-        StateName stateName = StateName.NORTH_CAROLINA;
-
-        JSONObject jo = readJsonFile(countiesFilePath);
-        HashMap<Integer, Precinct> allPrecincts = getAllPrecincts();
-        Iterator<String> keys = jo.keys();
-
-
-
-        /* For each county */
-        int counter = 0;
-        while (keys.hasNext()) {
-            // Key is the county ID
-            String countyID = keys.next();
-            JSONObject county = jo.getJSONObject(countyID);
-
-            // Build the county object
-            String name = county.getString("name");
-            JSONArray precinctKeys = county.getJSONArray("precincts");
-            ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, allPrecincts);
-
-            County c = new County(stateName, Integer.parseInt(countyID), name, precincts);
-            System.out.println("PERSISTING COUNTY " + counter++);
-            em.persist(c);
-        }
-
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
-    }
-
-    private static Job createJob(StateName state, int jobId, JobSummary js, EntityManager em) {
-        Query query = em.createQuery("SELECT d FROM Districtings d WHERE d.jobID = :jobId");
-        query.setParameter("jobId", jobId);
-
-        ArrayList<Districting> districtingsInJob = new ArrayList<Districting>(query.getResultList());
-        JSONArray districtingKeysArr = new JSONArray();
-        for (Districting districting : districtingsInJob) {
-            districtingKeysArr.put(districting.getId());
-        }
-
-        js.setSize(districtingsInJob.size());
-        return new Job(state, js);
     }
 
     private static boolean areThreadsAlive(ArrayList<DistrictingWriterThread> threads) {
@@ -179,14 +53,6 @@ public class DatabaseWritingService {
         return false;
     }
 
-    private static void persistJob(StateName state, int jobId, JobSummary js,
-                                   EntityManager em) {
-
-        Job newJob = createJob(state, jobId, js, em);
-        em.getTransaction().begin();
-        em.persist(newJob);
-        em.getTransaction().commit();
-    }
 
     public static void persistEnactedDistrictings() throws IOException {
         StateName stateName = StateName.NORTH_CAROLINA;
@@ -286,9 +152,9 @@ public class DatabaseWritingService {
         }
 
         // Persist the job
-        EntityManager em2 = emf.createEntityManager();
-        persistJob(state, jobId, js, em2);
-        em2.close();
+        EntityManager em = emf.createEntityManager();
+        JobWriter.persistJob(state, jobId, js, em);
+        em.close();
         emf.close();
 
         final long endTime = System.currentTimeMillis();

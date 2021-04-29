@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static cse416.spring.service.database.DatabaseWritingService.getPrecinctsFromKeys;
+import static cse416.spring.service.database.DistrictingWriter.getPrecinctsFromKeys;
 
 public class DistrictingWriterThread extends Thread {
     StateName stateName;

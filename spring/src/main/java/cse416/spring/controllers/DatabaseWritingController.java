@@ -1,7 +1,8 @@
 package cse416.spring.controllers;
 
-import cse416.spring.service.CountyService;
-import cse416.spring.service.database.DatabaseWritingService;
+import cse416.spring.service.database.CountyWriter;
+import cse416.spring.service.database.DistrictingWriter;
+import cse416.spring.service.database.PrecinctWriter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,30 +21,30 @@ import java.io.IOException;
 @RequestMapping("/db")
 public class DatabaseWritingController {
 
-    private final DatabaseWritingService databaseWritingService;
+    private final DistrictingWriter databaseWritingService;
 
-    public DatabaseWritingController(DatabaseWritingService service) {
+    public DatabaseWritingController(DistrictingWriter service) {
         this.databaseWritingService = service;
     }
 
     @PostMapping("/writePrecincts")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writePrecincts() throws IOException {
-        DatabaseWritingService.persistPrecincts();
+        PrecinctWriter.persistPrecincts();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
     @PostMapping("/writeCounties")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeCounties() throws IOException {
-        DatabaseWritingService.persistCounties();
+        CountyWriter.persistCounties();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
     @PostMapping("/writeEnacted")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeEnactedDistrictings() throws IOException {
-        DatabaseWritingService.persistEnactedDistrictings();
+        DistrictingWriter.persistEnactedDistrictings();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
@@ -51,7 +52,7 @@ public class DatabaseWritingController {
     @PostMapping("/writeDistrictings")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeDistrictings() throws IOException {
-        DatabaseWritingService.persistDistrictings();
+        DistrictingWriter.persistDistrictings();
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
@@ -59,10 +60,10 @@ public class DatabaseWritingController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeAll() throws IOException {
         final long fileStartTime = System.currentTimeMillis();
-        DatabaseWritingService.persistPrecincts();
-        DatabaseWritingService.persistCounties();
-        DatabaseWritingService.persistEnactedDistrictings();
-        DatabaseWritingService.persistDistrictings();
+        PrecinctWriter.persistPrecincts();
+        CountyWriter.persistCounties();
+        DistrictingWriter.persistEnactedDistrictings();
+        DistrictingWriter.persistDistrictings();
         final long fileEndTime = System.currentTimeMillis();
         System.out.println("Wrote the entire database in " + (fileEndTime - fileStartTime) + "ms");
         return new ResponseEntity<>("Written.", HttpStatus.OK);
