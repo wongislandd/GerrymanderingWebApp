@@ -19,10 +19,11 @@ public class Districting {
     public Districting() {
     }
 
-    public Districting(int jobID, ArrayList<District> districts) {
+    public Districting(int jobID, ArrayList<District> districts, EnactedDistricting enactedDistricting) {
         this.jobID = jobID;
         this.measures = compileDistrictingMeasures(districts);
         this.districts = districts;
+        this.renumberDistricts(enactedDistricting);
     }
 
     @OneToMany(cascade=CascadeType.ALL)
@@ -69,6 +70,11 @@ public class Districting {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    private void renumberDistricts(EnactedDistricting enactedDistricting) {
+        // TODO Implement
+
     }
 
     private static MajorityMinorityDistrictsCount getMMDistrictsCount(ArrayList<District> districts) {
