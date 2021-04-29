@@ -81,7 +81,17 @@
 			<artifactId>jts-core</artifactId>
 			<version>1.18.1</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-core</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.5</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

@@ -1,8 +1,7 @@
 package cse416.spring.models.districting;
 
 import cse416.spring.models.district.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -74,7 +73,7 @@ public class Districting {
 
     private void renumberDistricts(EnactedDistricting enactedDistricting) {
         // TODO Implement
-
+        ArrayList<District> districts = new ArrayList<>(this.districts);
     }
 
     private static MajorityMinorityDistrictsCount getMMDistrictsCount(ArrayList<District> districts) {
