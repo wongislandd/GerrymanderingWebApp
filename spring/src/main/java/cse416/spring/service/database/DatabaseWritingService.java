@@ -1,10 +1,10 @@
 package cse416.spring.service.database;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.EntityManagerSingleton;
 import cse416.spring.helperclasses.MGGGParams;
 import cse416.spring.models.county.County;
 import cse416.spring.models.district.District;
+import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.models.job.Job;
@@ -14,19 +14,19 @@ import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static cse416.spring.helperclasses.FileReader.getFilesInFolder;
+import static cse416.spring.helperclasses.FileReader.readJsonFile;
 
 /**
  * A class that provides methods for persisting precincts, counties and
@@ -35,17 +35,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class DatabaseWritingService {
-    private static JSONObject readFile(String filePath) throws IOException {
-        File file = ResourceUtils.getFile("src/main/resources/static/json" + filePath);
-        String content = new String(Files.readAllBytes(file.toPath()));
-        return new JSONObject(content);
-    }
-
-    private static String[] getFilesInFolder(String directoryPath) throws IOException {
-        File dir = ResourceUtils.getFile("src/main/resources/static/" + directoryPath);
-        return dir.list();
-    }
-
     private static Precinct buildPrecinctFromJSON(StateName state, JSONObject feature) {
         JSONObject properties = feature.getJSONObject("properties");
 
@@ -111,7 +100,7 @@ public class DatabaseWritingService {
         String precinctsFilePath = "/NC/precincts_output.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
-        JSONObject jo = readFile(precinctsFilePath);
+        JSONObject jo = readJsonFile(precinctsFilePath);
         JSONArray features = jo.getJSONArray("features");
 
         for (int i = 0; i < features.length(); i++) {
@@ -138,7 +127,7 @@ public class DatabaseWritingService {
         String countiesFilePath = "/NC/counties/CountiesPrecinctsMapping.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
-        JSONObject jo = readFile(countiesFilePath);
+        JSONObject jo = readJsonFile(countiesFilePath);
         HashMap<Integer, Precinct> allPrecincts = getAllPrecincts();
         Iterator<String> keys = jo.keys();
 
@@ -202,7 +191,7 @@ public class DatabaseWritingService {
     public static void persistEnactedDistrictings() throws IOException {
         StateName stateName = StateName.NORTH_CAROLINA;
         String enactedFilePath = "/NC/nc_enacted.json";
-        JSONObject enactedJson = readFile(enactedFilePath);
+        JSONObject enactedJson = readJsonFile(enactedFilePath);
         JSONObject districting = enactedJson.getJSONArray("districtings").getJSONObject(0);
         Iterator<String> keys = districting.keys();
         ArrayList<District> districtsInDistricting = new ArrayList<>();
@@ -216,11 +205,12 @@ public class DatabaseWritingService {
         /* For each district in the districting */
         while (keys.hasNext()) {
             String districtID = keys.next();
-            int districtNumber = Integer.parseInt(districtID);
+            int districtIndex = Integer.parseInt(districtID);
             JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
             ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
             // TODO: Change the null to the enacted districting
-            District d = new District(districtNumber, precincts, stateName, null, enactedFilePath, 0);
+            DistrictReference districtReference = new DistrictReference(enactedFilePath, 0, districtIndex);
+            District d = new District(precincts, stateName, null, districtReference);
             districtsInDistricting.add(d);
         }
         EntityManager em = emf.createEntityManager();
@@ -265,7 +255,7 @@ public class DatabaseWritingService {
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
-            JSONObject jo = readFile("/NC/districtings/" + files[i]);
+            JSONObject jo = readJsonFile("/NC/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");
 
             ArrayList<DistrictingWriterThread> threads = new ArrayList<>();

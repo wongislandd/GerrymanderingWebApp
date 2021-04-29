@@ -2,6 +2,7 @@ package cse416.spring.service.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.models.district.District;
+import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
@@ -83,12 +84,13 @@ public class DistrictingWriterThread extends Thread {
             /* For each district in the districting */
             while (keys.hasNext()) {
                 String districtID = keys.next();
-                int districtNumber = Integer.parseInt(districtID);
+                int districtIndex = Integer.parseInt(districtID);
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
                 ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
+                DistrictReference districtReference = new DistrictReference(filePath, i, districtIndex);
                 // TODO: Change the null to the enacted districting
-                District d = new District(districtNumber, precincts, stateName, null, filePath, i);
+                District d = new District(precincts, stateName, null, districtReference);
                 districtsInDistricting.add(d);
                 em.persist(d);
                 System.out.println("[THREAD " + name + "] Created District.");

@@ -7,7 +7,6 @@ import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
@@ -25,27 +24,24 @@ public class District {
     private int districtNumber;
     private Demographics demographics;
     private DistrictMeasures measures;
-    private String filePath;
-    private int indexInFile;
     private Geometry geometry;
+    private DistrictReference districtReference;
     private double objectiveFunctionScore;
     private long id;
 
     public District() {
     }
 
+
     /* filePath = file in districtings folder (ex. nc_plans_1_0.json)
        indexInFile = refers to the districting this district is a part of
        districtNumber = which district it is in that districting
      */
-    public District(int districtNumber, ArrayList<Precinct> precincts, StateName stateName,
-                    District enactedDistrict, String filePath, int indexInFile) {
-
-        this.districtNumber = districtNumber;
+    public District(ArrayList<Precinct> precincts, StateName stateName,
+                    District enactedDistrict, DistrictReference districtReference) {
         this.demographics = compileDemographics(precincts);
         this.geometry = UnionBuilder.getUnion(precincts);
-        this.filePath = filePath;
-        this.indexInFile = indexInFile;
+        this.districtReference = districtReference;
 
         JSONArray precinctKeysArr = new JSONArray();
         for (Precinct p : precincts) {
@@ -64,23 +60,6 @@ public class District {
                 compactness);
     }
 
-    @Column
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    @Column
-    public int getIndexInFile() {
-        return indexInFile;
-    }
-
-    public void setIndexInFile(int indexInFile) {
-        this.indexInFile = indexInFile;
-    }
 
     @Column
     public int getDistrictNumber() {
@@ -89,6 +68,15 @@ public class District {
 
     public void setDistrictNumber(int districtNumber) {
         this.districtNumber = districtNumber;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public DistrictReference getDistrictReference() {
+        return districtReference;
+    }
+
+    public void setDistrictReference(DistrictReference districtReference) {
+        this.districtReference = districtReference;
     }
 
     @Id
