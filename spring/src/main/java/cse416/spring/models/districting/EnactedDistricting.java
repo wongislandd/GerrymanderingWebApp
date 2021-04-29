@@ -18,6 +18,10 @@ public class EnactedDistricting {
         this.districts = districts;
     }
 
+    public EnactedDistricting() {
+
+    }
+
     @Id
     @GeneratedValue
     public long getId() {

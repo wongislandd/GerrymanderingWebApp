@@ -1,4 +1,4 @@
-package cse416.spring.service.database;
+package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.models.district.District;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static cse416.spring.service.database.DistrictingWriter.getPrecinctsFromKeys;
+import static cse416.spring.database.DistrictingWriter.getPrecinctsFromKeys;
 
 public class DistrictingWriterThread extends Thread {
     StateName stateName;

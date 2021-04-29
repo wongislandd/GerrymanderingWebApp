@@ -1,4 +1,4 @@
-package cse416.spring.service.database;
+package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
 import cse416.spring.models.precinct.Demographics;
@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
