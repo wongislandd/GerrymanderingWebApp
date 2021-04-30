@@ -21,6 +21,8 @@ public class Precinct {
     String name;
     @Column
     String geoJson;
+    @Column
+    private int precinctId;
     @OneToOne(cascade = CascadeType.ALL)
     Demographics demographics;
     @Column
@@ -32,7 +34,7 @@ public class Precinct {
         this.name = name;
         this.geoJson = geoJson;
         this.demographics = demographics;
-        this.id = id;
+        this.precinctId = id;
     }
 
     public JSONArray retrieveCoordinates() {

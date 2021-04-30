@@ -7,7 +7,9 @@ import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
 import cse416.spring.helperclasses.analysis.TopScoring;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.helperclasses.DistrictingConstraints;
+import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.DistrictingService;
+import cse416.spring.service.PrecinctService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +19,31 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/districtings")
 public class DistrictingController {
     DistrictingService districtingService;
+    PrecinctService precinctService;
 
     @Autowired
-    public DistrictingController(DistrictingService service) {
-        this.districtingService = service;
+    public DistrictingController(DistrictingService districtingService, PrecinctService precinctService) {
+        this.districtingService = districtingService;
+        this.precinctService = precinctService;
     }
+
+    @GetMapping(value = "/load/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> loadDistricting(@PathVariable("id") long id) {
+        HashMap<Integer, Precinct> precinctHash = precinctService.getPrecinctHashMap();
+
+        return new ResponseEntity<>("hi", HttpStatus.OK);
+    }
+
+
+
 
     @GetMapping(value = "/getSummary")
     @CrossOrigin(origins = "http://localhost:3000")

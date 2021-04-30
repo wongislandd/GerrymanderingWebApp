@@ -30,7 +30,7 @@ public class District {
     @Id
     @GeneratedValue
     private long id;
-    @Column
+    @Transient
     private int districtNumber;
     @OneToOne(cascade = CascadeType.ALL)
     private Demographics demographics;

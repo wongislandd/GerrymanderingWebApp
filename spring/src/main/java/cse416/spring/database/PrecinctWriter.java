@@ -43,7 +43,7 @@ public class PrecinctWriter {
     }
 
     // TODO Utilize PrecinctService to get all precincts
-    public static HashMap<Long, Precinct> getAllPrecincts() {
+    public static HashMap<Integer, Precinct> getAllPrecincts() {
         // Get all precincts
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         EntityManager em = emf.createEntityManager();
@@ -51,10 +51,10 @@ public class PrecinctWriter {
         ArrayList<Precinct> allPrecincts = new ArrayList<>(precinctService.findAllPrecincts());
 
         // Convert the allPrecincts list into a hashmap of (id, precinct)
-        HashMap<Long, Precinct> precinctHash = new HashMap<>();
+        HashMap<Integer, Precinct> precinctHash = new HashMap<>();
 
         for (Precinct precinct : allPrecincts) {
-            precinctHash.put(precinct.getId(), precinct);
+            precinctHash.put(precinct.getPrecinctId(), precinct);
         }
         em.close();
         emf.close();

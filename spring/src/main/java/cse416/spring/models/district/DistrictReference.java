@@ -21,12 +21,12 @@ public class DistrictReference {
     @Column
     private int districtingIndex;
     @Column
-    private int districtIndex;
+    private String districtKey;
 
-    public DistrictReference(String filePath, int districtingIndex, int districtIndex) {
+    public DistrictReference(String filePath, int districtingIndex, String districtKey) {
         this.filePath = filePath;
         this.districtingIndex = districtingIndex;
-        this.districtIndex = districtIndex;
+        this.districtKey = districtKey;
     }
 
     public DistrictReference() {

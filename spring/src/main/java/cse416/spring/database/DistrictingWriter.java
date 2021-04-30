@@ -34,7 +34,7 @@ public class DistrictingWriter {
 
     // TODO Turn this into an SQL query within PrecinctService
     public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
-                                                           HashMap<Long, Precinct> allPrecincts) {
+                                                           HashMap<Integer, Precinct> allPrecincts) {
         ArrayList<Precinct> results = new ArrayList<>();
         for (int i = 0; i < precinctKeys.length(); i++) {
             results.add(allPrecincts.get(precinctKeys.getInt(i)));
@@ -64,16 +64,15 @@ public class DistrictingWriter {
 
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        HashMap<Long, Precinct> precinctHash = getAllPrecincts();
+        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
 
         /* For each district in the districting */
         while (keys.hasNext()) {
-            String districtID = keys.next();
-            int districtIndex = Integer.parseInt(districtID);
-            JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
+            String districtKey = keys.next();
+            JSONArray precinctKeysInDistrict = districting.getJSONArray(districtKey);
             ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
             // TODO: Change the null to the enacted districting
-            DistrictReference districtReference = new DistrictReference(enactedFilePath, 0, districtIndex);
+            DistrictReference districtReference = new DistrictReference(enactedFilePath, 0, districtKey);
             District d = new District(precincts, stateName, null, districtReference);
             districtsInDistricting.add(d);
         }
@@ -91,7 +90,7 @@ public class DistrictingWriter {
 
     public static void persistDistrictings() throws IOException {
         final long startTime = System.currentTimeMillis();
-        HashMap<Long, Precinct> precinctHash = getAllPrecincts();
+        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;

@@ -16,6 +16,11 @@ public class EnactedDistricting {
     public EnactedDistricting(StateName state, Collection<District> districts) {
         this.state = state;
         this.districts = districts;
+
+        for (District district : this.districts) {
+            String districtKey = district.getDistrictReference().getDistrictKey();
+            district.setDistrictNumber(Integer.parseInt(districtKey));
+        }
     }
 
     public EnactedDistricting() {

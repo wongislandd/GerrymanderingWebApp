@@ -45,8 +45,6 @@ public class FeatureCollectionJSON {
             feature.put("geometry", geometry);
             geoJson.getJSONArray("features").put(feature);
         }
-        //geoJson.put("features", allFeatures);
-        System.out.println("YOOOO");
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -44,4 +45,15 @@ public class PrecinctServiceImpl implements PrecinctService {
         query.setParameter("state", state);
         return (List<Precinct>) query.getResultList();
     }
+
+    @Override
+    public HashMap<Integer, Precinct> getPrecinctHashMap() {
+        List<Precinct> allPrecincts = findAllPrecincts();
+        HashMap<Integer, Precinct> precinctHash = new HashMap<>();
+        for (Precinct precinct : allPrecincts) {
+            precinctHash.put(precinct.getPrecinctId(), precinct);
+        }
+        return precinctHash;
+    }
+
 }
