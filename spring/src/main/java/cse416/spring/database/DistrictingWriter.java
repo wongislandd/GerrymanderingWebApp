@@ -8,6 +8,7 @@ import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.models.job.JobSummary;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.DistrictingServiceImpl;
+import cse416.spring.singletons.PrecinctHashSingleton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cse416.spring.helperclasses.FileReader.getFilesInFolder;
 import static cse416.spring.helperclasses.FileReader.readJsonFile;
-import static cse416.spring.database.PrecinctWriter.getAllPrecincts;
 
 /**
  * A class that provides methods for persisting precincts, counties and
@@ -64,7 +64,7 @@ public class DistrictingWriter {
 
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
+        HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(stateName);
 
         /* For each district in the districting */
         while (keys.hasNext()) {
@@ -90,7 +90,6 @@ public class DistrictingWriter {
 
     public static void persistDistrictings() throws IOException {
         final long startTime = System.currentTimeMillis();
-        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;
@@ -101,6 +100,8 @@ public class DistrictingWriter {
         JobSummary js = new JobSummary("North Carolina 10% max population difference.", params, -1);
         String jobFolderPath = "/json/NC/districtings";
         // ************************************ /
+
+        HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(state);
 
         // Create entity managers for the threads
         int numThreads = 5;

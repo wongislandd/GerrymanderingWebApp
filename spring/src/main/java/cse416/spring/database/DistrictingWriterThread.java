@@ -100,6 +100,7 @@ public class DistrictingWriterThread extends Thread {
             }
 
             Districting newDistricting = new Districting(jobID, districtsInDistricting, enactedDistricting);
+//            newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
         }
         commit();
