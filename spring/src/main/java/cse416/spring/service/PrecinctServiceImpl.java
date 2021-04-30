@@ -47,8 +47,8 @@ public class PrecinctServiceImpl implements PrecinctService {
     }
 
     @Override
-    public HashMap<Integer, Precinct> getPrecinctHashMap() {
-        List<Precinct> allPrecincts = findAllPrecincts();
+    public HashMap<Integer, Precinct> getPrecinctHashMapByState(StateName state) {
+        List<Precinct> allPrecincts = findByState(state);
         HashMap<Integer, Precinct> precinctHash = new HashMap<>();
         for (Precinct precinct : allPrecincts) {
             precinctHash.put(precinct.getPrecinctId(), precinct);
