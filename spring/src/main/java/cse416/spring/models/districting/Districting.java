@@ -58,7 +58,7 @@ public class Districting {
     }
 
     public void setObjectiveFunctionScore(double objectiveFunctionScore) {
-        ObjectiveFunctionScore = objectiveFunctionScore;
+        this.ObjectiveFunctionScore = objectiveFunctionScore;
     }
 
     @Id
