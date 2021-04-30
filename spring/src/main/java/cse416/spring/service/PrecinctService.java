@@ -15,5 +15,5 @@ public interface PrecinctService {
 
     List<Precinct> findByState(StateName state);
 
-    HashMap<Integer, Precinct> getPrecinctHashMap();
+    HashMap<Integer, Precinct> getPrecinctHashMapByState(StateName state);
 }

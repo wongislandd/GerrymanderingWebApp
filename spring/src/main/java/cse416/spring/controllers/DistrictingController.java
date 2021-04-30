@@ -1,6 +1,7 @@
 package cse416.spring.controllers;
 
 import cse416.spring.enums.MinorityPopulation;
+import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.analysis.CloseToEnacted;
 import cse416.spring.helperclasses.analysis.HighScoringMajorityMinority;
 import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
@@ -17,6 +18,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,12 +36,13 @@ public class DistrictingController {
         this.precinctService = precinctService;
     }
 
-    @GetMapping(value = "/load/{id}")
+    @GetMapping(value = "/{state}/load/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadDistricting(@PathVariable("id") long id) {
-        HashMap<Integer, Precinct> precinctHash = precinctService.getPrecinctHashMap();
-
-        return new ResponseEntity<>("hi", HttpStatus.OK);
+    public ResponseEntity<String> loadDistricting(@PathVariable("state") StateName state, @PathVariable("id") long id) throws IOException {
+        HashMap<Integer, Precinct> precinctHash = precinctService.getPrecinctHashMapByState(state);
+        Districting districting = districtingService.findById(id);
+        String geoJson = districting.getDistrictingGeoJson(precinctHash);
+        return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
 
 
