@@ -46,7 +46,7 @@ public class EnactedDistricting {
         this.state = state;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Collection<District> getDistricts() {
         return districts;
     }
