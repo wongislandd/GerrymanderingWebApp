@@ -1,53 +1,29 @@
 package cse416.spring.models.job;
 
 import cse416.spring.enums.StateName;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.json.JSONObject;
 
 import javax.persistence.*;
 
 
 @Entity(name="Jobs")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Job {
+    @Id
+    @GeneratedValue
     private long id;
+    @Column
     StateName state;
+    @OneToOne(cascade = CascadeType.ALL)
     JobSummary summary;
 
     public Job(StateName state, JobSummary summary) {
         this.state = state;
         this.summary = summary;
     }
-
-    public Job() {
-
-    }
-
-    @Column
-    public StateName getState() {
-        return state;
-    }
-
-    public void setState(StateName state) {
-        this.state = state;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public JobSummary getSummary() {
-        return summary;
-    }
-
-    public void setSummary(JobSummary summary) {
-        this.summary = summary;
-    }
-
-
 }

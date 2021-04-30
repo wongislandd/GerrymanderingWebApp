@@ -1,15 +1,25 @@
 package cse416.spring.models.job;
 
 import cse416.spring.helperclasses.MGGGParams;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity(name = "JobSummaries")
+@Getter
+@Setter
+@NoArgsConstructor
 public class JobSummary {
-
+    @Column
     String description;
+    @Column
     int size;
+    @OneToOne(cascade = CascadeType.ALL)
     MGGGParams params;
+    @Id
+    @GeneratedValue
     private long id;
 
 
@@ -19,44 +29,4 @@ public class JobSummary {
         this.params = params;
     }
 
-    public JobSummary() {
-
-    }
-
-    @Column
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Column
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public MGGGParams getParams() {
-        return params;
-    }
-
-    public void setParams(MGGGParams params) {
-        this.params = params;
-    }
-
-    @Id
-    @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

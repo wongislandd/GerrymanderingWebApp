@@ -1,60 +1,37 @@
 package cse416.spring.models.district;
 
 
+import cse416.spring.enums.StateName;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "DistrictReferences")
+@Getter
+@Setter
+@NoArgsConstructor
 public class DistrictReference {
-    private long id;
-    private String filePath;
-    private int districtingIndex;
-    private int districtIndex;
-
-    public DistrictReference(String filePath, int districtingIndex, int districtIndex) {
-        this.filePath = filePath;
-        this.districtingIndex = districtingIndex;
-        this.districtIndex = districtIndex;
-    }
-
-    public DistrictReference() {}
-
     @Id
     @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    private long id;
     @Column
-    public String getFilePath() {
-        return filePath;
-    }
+    private StateName state;
+    @Column
+    private String filePath;
+    @Column
+    private int districtingIndex;
+    @Column
+    private String districtKey;
 
-    public void setFilePath(String filePath) {
+    public DistrictReference(StateName state, String filePath, int districtingIndex, String districtKey) {
+        this.state = state;
         this.filePath = filePath;
-    }
-
-    @Column
-    public int getDistrictingIndex() {
-        return districtingIndex;
-    }
-
-    public void setDistrictingIndex(int districtingIndex) {
         this.districtingIndex = districtingIndex;
-    }
-
-    @Column
-    public int getDistrictIndex() {
-        return districtIndex;
-    }
-
-    public void setDistrictIndex(int districtIndex) {
-        this.districtIndex = districtIndex;
+        this.districtKey = districtKey;
     }
 }

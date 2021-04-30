@@ -87,12 +87,11 @@ public class DistrictingWriterThread extends Thread {
 
             /* For each district in the districting */
             while (keys.hasNext()) {
-                String districtID = keys.next();
-                int districtIndex = Integer.parseInt(districtID);
-                JSONArray precinctKeysInDistrict = districting.getJSONArray(districtID);
+                String districtKey = keys.next();
+                JSONArray precinctKeysInDistrict = districting.getJSONArray(districtKey);
                 ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
-                DistrictReference districtReference = new DistrictReference(filePath, i, districtIndex);
+                DistrictReference districtReference = new DistrictReference(stateName, filePath, i, districtKey);
                 // TODO: Change the null to the enacted districting
                 District d = new District(precincts, stateName, null, districtReference);
                 districtsInDistricting.add(d);
@@ -101,6 +100,7 @@ public class DistrictingWriterThread extends Thread {
             }
 
             Districting newDistricting = new Districting(jobID, districtsInDistricting, enactedDistricting);
+//            newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
         }
         commit();

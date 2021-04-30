@@ -1,72 +1,55 @@
 package cse416.spring.models.district;
 
+import cse416.spring.enums.MinorityPopulation;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "MajorityMinorityInfos")
+@Getter
+@Setter
+@NoArgsConstructor
 public class MajorityMinorityInfo {
     @Column
-    public boolean isBlackMajority() {
-        return blackMajority;
-    }
-
-    public void setBlackMajority(boolean blackMajority) {
-        this.blackMajority = blackMajority;
-    }
-
+    private double blackPercentage;
     @Column
-    public boolean isHispanicMajority() {
-        return hispanicMajority;
-    }
-
-    public void setHispanicMajority(boolean hispanicMajority) {
-        this.hispanicMajority = hispanicMajority;
-    }
-
+    private double hispanicPercentage;
     @Column
-    public boolean isAsianMajority() {
-        return asianMajority;
-    }
-
-    public void setAsianMajority(boolean asianMajority) {
-        this.asianMajority = asianMajority;
-    }
-
+    private double asianPercentage;
     @Column
-    public boolean isNativeMajority() {
-        return nativeMajority;
-    }
-
-    public void setNativeMajority(boolean nativeMajority) {
-        this.nativeMajority = nativeMajority;
-    }
-
-    boolean blackMajority;
-    boolean hispanicMajority;
-    boolean asianMajority;
-    boolean nativeMajority;
-    private Long id;
-
-    public MajorityMinorityInfo(boolean blackMajority, boolean hispanicMajority, boolean asianMajority, boolean nativeMajority) {
-        this.blackMajority = blackMajority;
-        this.hispanicMajority = hispanicMajority;
-        this.asianMajority = asianMajority;
-        this.nativeMajority = nativeMajority;
-    }
-
-    public MajorityMinorityInfo() {
-
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    private double nativePercentage;
     @Id
     @GeneratedValue
-    public Long getId() {
-        return id;
+    private Long id;
+
+
+    public boolean isMajorityMinorityDistrict(MinorityPopulation minority, double threshold) {
+        switch (minority) {
+            case BLACK:
+                return blackPercentage > threshold;
+            case ASIAN:
+                return asianPercentage > threshold;
+            case HISPANIC:
+                return hispanicPercentage > threshold;
+            case NATIVE_AMERICAN:
+                return nativePercentage > threshold;
+            default:
+                return false;
+        }
     }
+
+
+    public MajorityMinorityInfo(double blackPercentage, double hispanicPercentage, double asianPercentage, double nativePercentage) {
+        this.blackPercentage = blackPercentage;
+        this.hispanicPercentage = hispanicPercentage;
+        this.asianPercentage = asianPercentage;
+        this.nativePercentage = nativePercentage;
+    }
+
+
 }

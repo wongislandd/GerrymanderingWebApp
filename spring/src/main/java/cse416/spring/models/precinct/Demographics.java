@@ -1,25 +1,40 @@
 package cse416.spring.models.precinct;
 
 import cse416.spring.enums.MinorityPopulation;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Demographics {
+    @Id
+    @GeneratedValue
     private long id;
+    @Column
     int asian;
+    @Column
     int black;
+    @Column
     int natives;
+    @Column
     int pacific;
+    @Column
     int white;
+    @Column
     int hispanic;
+    @Column
     int otherRace;
+    @Column
     int TP;
+    @Column
     int VAP;
+    @Column
     int CVAP;
-
-    public Demographics() {
-    }
 
     public Demographics(int asian, int black, int natives, int pacific, int white, int hispanic,
                         int otherRace, int TP, int VAP, int CVAP) {
@@ -35,123 +50,18 @@ public class Demographics {
         this.CVAP = CVAP;
     }
 
-    @Id
-    @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Column
-    public int getPacific() {
-        return pacific;
-    }
-
-    public void setPacific(int pacific) {
-        this.pacific = pacific;
-    }
-
-    @Column
-    public int getAsian() {
-        return asian;
-    }
-
-    public void setAsian(int asian) {
-        this.asian = asian;
-    }
-
-    @Column
-    public int getBlack() {
-        return black;
-    }
-
-    @Column
-    public void setBlack(int black) {
-        this.black = black;
-    }
-
-    @Column
-    public int getNatives() {
-        return natives;
-    }
-
-    public void setNatives(int natives) {
-        this.natives = natives;
-    }
-
-    @Column
-    public int getWhite() {
-        return white;
-    }
-
-    public void setWhite(int white) {
-        this.white = white;
-    }
-
-    @Column
-    public int getHispanic() {
-        return hispanic;
-    }
-
-    public void setHispanic(int hispanic) {
-        this.hispanic = hispanic;
-    }
-
-    @Column
-    public int getOtherRace() {
-        return otherRace;
-    }
-
-    public void setOtherRace(int otherRace) {
-        this.otherRace = otherRace;
-    }
-
-    @Column
-    public int getTP() {
-        return TP;
-    }
-
-    public void setTP(int TVP) {
-        this.TP = TVP;
-    }
-
-    @Column
-    public int getVAP() {
-        return VAP;
-    }
-
-    public void setVAP(int VAP) {
-        this.VAP = VAP;
-    }
-
-    @Column
-    public int getCVAP() {
-        return CVAP;
-    }
-
-    public void setCVAP(int CVAP) {
-        this.CVAP = CVAP;
-    }
-
-    public boolean isMajorityMinorityDistrict(MinorityPopulation p) {
-        switch (p) {
+    public double getMinorityPercentage(MinorityPopulation minority) {
+        switch (minority) {
             case BLACK:
-                //return (black / VAP) > .5;
-                return (Math.random()) > .5;
+                return (black / TP);
             case ASIAN:
-                //return (asian / VAP) > .5;
-                return (Math.random()) > .5;
+                return (asian / TP);
             case HISPANIC:
-                //return (whiteHispanic / VAP) > .5;
-                return (Math.random()) > .5;
+                return (hispanic / TP);
             case NATIVE_AMERICAN:
-                //return (natives / VAP) > .5;
-                return (Math.random()) > .5;
+                return (natives / TP);
             default:
-                return false;
+                return 0;
         }
     }
 }

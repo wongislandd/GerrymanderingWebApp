@@ -3,6 +3,7 @@ package cse416.spring.service;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.precinct.Precinct;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface PrecinctService {
@@ -13,4 +14,6 @@ public interface PrecinctService {
     List<Precinct> findAllPrecincts();
 
     List<Precinct> findByState(StateName state);
+
+    HashMap<Integer, Precinct> getPrecinctHashMapByState(StateName state);
 }
