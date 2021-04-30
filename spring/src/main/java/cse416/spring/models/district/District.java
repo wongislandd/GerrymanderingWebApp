@@ -6,6 +6,7 @@ import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
+import cse416.spring.singletons.PrecinctHashSingleton;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A class to represent a congressional district.
@@ -71,7 +73,10 @@ public class District {
                 compactness);
     }
 
-
+    public void generateGeometry() {
+        HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(districtReference.getState());
+        // TODO Finish this
+    }
 
     // Methods to calculate district measures
 

@@ -72,7 +72,7 @@ public class DistrictingWriter {
             JSONArray precinctKeysInDistrict = districting.getJSONArray(districtKey);
             ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
             // TODO: Change the null to the enacted districting
-            DistrictReference districtReference = new DistrictReference(enactedFilePath, 0, districtKey);
+            DistrictReference districtReference = new DistrictReference(stateName, enactedFilePath, 0, districtKey);
             District d = new District(precincts, stateName, null, districtReference);
             districtsInDistricting.add(d);
         }
