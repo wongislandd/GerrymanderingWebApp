@@ -45,7 +45,7 @@ public class CountyWriter {
             JSONArray precinctKeys = county.getJSONArray("precincts");
             ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, allPrecincts);
 
-            County c = new County(stateName, Integer.parseInt(countyID), name, precincts);
+            County c = new County(stateName, name, precincts);
             System.out.println("PERSISTING COUNTY " + counter++);
             em.persist(c);
         }

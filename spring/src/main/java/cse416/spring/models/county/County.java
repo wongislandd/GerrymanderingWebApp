@@ -29,9 +29,8 @@ public class County {
     @Column
     private StateName state;
 
-    public County(StateName state, int id, String name, ArrayList<Precinct> precincts) {
+    public County(StateName state, String name, ArrayList<Precinct> precincts) {
         this.state = state;
-        this.id = id;
         this.name = name;
 
         JSONArray precinctKeys = new JSONArray();

@@ -19,7 +19,7 @@ public class Precinct {
     private long id;
     @Column
     String name;
-    @Column
+    @Column(columnDefinition = "json")
     String geoJson;
     @Column
     private int precinctId;
