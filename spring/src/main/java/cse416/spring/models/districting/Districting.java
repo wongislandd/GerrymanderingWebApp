@@ -94,7 +94,7 @@ public class Districting {
         return bipartiteGraph;
     }
 
-    private void renumberDistricts(EnactedDistricting enactedDistricting) {
+    public void renumberDistricts(EnactedDistricting enactedDistricting) {
         // Make a bipartite graph matching enacted districts to generated districts
         HashSet<District> enactedDistricts = new HashSet<District>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<District>(this.districts);
