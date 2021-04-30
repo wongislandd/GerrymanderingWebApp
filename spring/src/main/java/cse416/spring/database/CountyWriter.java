@@ -30,7 +30,7 @@ public class CountyWriter {
         StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readJsonFile(countiesFilePath);
-        HashMap<Integer, Precinct> allPrecincts = getAllPrecincts();
+        HashMap<Long, Precinct> allPrecincts = getAllPrecincts();
         Iterator<String> keys = jo.keys();
 
         /* For each county */

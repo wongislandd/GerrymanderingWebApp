@@ -6,6 +6,9 @@ import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.json.JSONArray;
 import org.locationtech.jts.geom.Geometry;
 
@@ -16,21 +19,29 @@ import java.util.ArrayList;
  * A class to represent a congressional district.
  */
 @Entity(name = "Districts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class District {
     /**
      * District number that corresponds to the district numbering of the
      * enacted districting based on the Gill metric.
      */
-    private int districtNumber;
-    private Demographics demographics;
-    private DistrictMeasures measures;
-    private Geometry geometry;
-    private DistrictReference districtReference;
-    private double objectiveFunctionScore;
+    @Id
+    @GeneratedValue
     private long id;
-
-    public District() {
-    }
+    @Column
+    private int districtNumber;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Demographics demographics;
+    @OneToOne(cascade = CascadeType.ALL)
+    private DistrictMeasures measures;
+    @OneToOne(cascade = CascadeType.ALL)
+    private DistrictReference districtReference;
+    @Transient
+    private Geometry geometry;
+    @Transient
+    private double objectiveFunctionScore;
 
 
     /* filePath = file in districtings folder (ex. nc_plans_1_0.json)
@@ -49,82 +60,18 @@ public class District {
         }
         int idealPopulation = IdealPopulation.getIdealPopulation(stateName);
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
-        MajorityMinorityInfo minorityInfo = compileMinorityInfo(demographics);
+        MajorityMinorityInfo majorityMinorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness(geometry);
 
         if (enactedDistrict != null) {
 
         }
 
-        this.measures = new DistrictMeasures(populationEquality, minorityInfo,
+        this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo,
                 compactness);
     }
 
 
-    @Column
-    public int getDistrictNumber() {
-        return districtNumber;
-    }
-
-    public void setDistrictNumber(int districtNumber) {
-        this.districtNumber = districtNumber;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public DistrictReference getDistrictReference() {
-        return districtReference;
-    }
-
-    public void setDistrictReference(DistrictReference districtReference) {
-        this.districtReference = districtReference;
-    }
-
-    @Id
-    @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Transient
-    public Geometry getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public DistrictMeasures getMeasures() {
-        return measures;
-    }
-
-    public void setMeasures(DistrictMeasures measures) {
-        this.measures = measures;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public Demographics getDemographics() {
-        return this.demographics;
-    }
-
-    public void setDemographics(Demographics demographics) {
-        this.demographics = demographics;
-    }
-
-    @Transient
-    public double getObjectiveFunctionScore() {
-        return this.objectiveFunctionScore;
-    }
-
-    public void setObjectiveFunctionScore(double objectiveFunctionScore) {
-        this.objectiveFunctionScore = objectiveFunctionScore;
-    }
 
     // Methods to calculate district measures
 
@@ -184,11 +131,12 @@ public class District {
                 total_TP, total_VAP, total_CVAP);
     }
 
-    private static MajorityMinorityInfo compileMinorityInfo(Demographics demographics) {
+    // TODO calculate the percentage population
+    private MajorityMinorityInfo compileMinorityInfo(Demographics demographics) {
         return (new MajorityMinorityInfo(
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.BLACK),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.HISPANIC),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.ASIAN),
-                demographics.isMajorityMinorityDistrict(MinorityPopulation.NATIVE_AMERICAN)));
+                demographics.getMinorityPercentage(MinorityPopulation.BLACK),
+                demographics.getMinorityPercentage(MinorityPopulation.HISPANIC),
+                demographics.getMinorityPercentage(MinorityPopulation.ASIAN),
+                demographics.getMinorityPercentage(MinorityPopulation.NATIVE_AMERICAN)));
     }
 }

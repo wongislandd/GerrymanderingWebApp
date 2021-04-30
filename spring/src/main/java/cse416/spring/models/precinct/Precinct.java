@@ -1,22 +1,33 @@
 package cse416.spring.models.precinct;
 
 import cse416.spring.enums.StateName;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
 
 @Entity(name = "Precincts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Precinct {
+    @Id
+    @GeneratedValue
+    private long id;
+    @Column
     String name;
+    @Column
     String geoJson;
+    @OneToOne(cascade = CascadeType.ALL)
     Demographics demographics;
+    @Column
     StateName state;
-    private int id;
 
     public Precinct(StateName state, int id, String name, String geoJson,
                     Demographics demographics) {
-
         this.state = state;
         this.name = name;
         this.geoJson = geoJson;
@@ -24,56 +35,8 @@ public class Precinct {
         this.id = id;
     }
 
-    public Precinct() {
-    }
-
-    @Column
-    public StateName getState() {
-        return state;
-    }
-
-    public void setState(StateName state) {
-        this.state = state;
-    }
-
-    @Column
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Column(columnDefinition = "json")
-    public String getGeoJson() {
-        return geoJson;
-    }
-
-    public void setGeoJson(String geometry) {
-        this.geoJson = geometry;
-    }
-
     public JSONArray retrieveCoordinates() {
         return new JSONObject(geoJson).getJSONObject("geometry")
                 .getJSONArray("coordinates").getJSONArray(0);
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public Demographics getDemographics() {
-        return demographics;
-    }
-
-    public void setDemographics(Demographics demographics) {
-        this.demographics = demographics;
-    }
-
-    @Id
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

@@ -34,7 +34,7 @@ public class DistrictingWriter {
 
     // TODO Turn this into an SQL query within PrecinctService
     public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
-                                                           HashMap<Integer, Precinct> allPrecincts) {
+                                                           HashMap<Long, Precinct> allPrecincts) {
         ArrayList<Precinct> results = new ArrayList<>();
         for (int i = 0; i < precinctKeys.length(); i++) {
             results.add(allPrecincts.get(precinctKeys.getInt(i)));
@@ -64,7 +64,7 @@ public class DistrictingWriter {
 
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
-        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
+        HashMap<Long, Precinct> precinctHash = getAllPrecincts();
 
         /* For each district in the districting */
         while (keys.hasNext()) {
@@ -91,7 +91,7 @@ public class DistrictingWriter {
 
     public static void persistDistrictings() throws IOException {
         final long startTime = System.currentTimeMillis();
-        HashMap<Integer, Precinct> precinctHash = getAllPrecincts();
+        HashMap<Long, Precinct> precinctHash = getAllPrecincts();
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;

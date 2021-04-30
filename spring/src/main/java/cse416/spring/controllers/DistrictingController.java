@@ -6,7 +6,7 @@ import cse416.spring.helperclasses.analysis.HighScoringMajorityMinority;
 import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
 import cse416.spring.helperclasses.analysis.TopScoring;
 import cse416.spring.models.districting.Districting;
-import cse416.spring.models.districting.DistrictingConstraints;
+import cse416.spring.helperclasses.DistrictingConstraints;
 import cse416.spring.service.DistrictingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;

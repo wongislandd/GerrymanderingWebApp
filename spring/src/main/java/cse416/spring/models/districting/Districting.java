@@ -1,6 +1,10 @@
 package cse416.spring.models.districting;
 
+import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.district.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import javax.persistence.*;
@@ -8,15 +12,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity(name = "Districtings")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Districting {
+    @Id
+    @GeneratedValue
     private long id;
+    @Column
     private int jobID;
+    @OneToOne(cascade = CascadeType.ALL)
     private DistrictingMeasures measures;
+    @Transient
     private double ObjectiveFunctionScore;
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<District> districts;
-
-    public Districting() {
-    }
 
     public Districting(int jobID, ArrayList<District> districts, EnactedDistricting enactedDistricting) {
         this.jobID = jobID;
@@ -25,78 +35,21 @@ public class Districting {
         this.renumberDistricts(enactedDistricting);
     }
 
-    @OneToMany(cascade=CascadeType.ALL)
-    public Collection<District> getDistricts() {
-        return districts;
-    }
-
-    public void setDistricts(Collection<District> districts) {
-        this.districts = districts;
-    }
-
-    @Column
-    public int getJobID() {
-        return jobID;
-    }
-
-    public void setJobID(int jobID) {
-        this.jobID = jobID;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public DistrictingMeasures getMeasures() {
-        return measures;
-    }
-
-    public void setMeasures(DistrictingMeasures measures) {
-        this.measures = measures;
-    }
-
-    @Transient
-    public double getObjectiveFunctionScore() {
-        return ObjectiveFunctionScore;
-    }
-
-    public void setObjectiveFunctionScore(double objectiveFunctionScore) {
-        ObjectiveFunctionScore = objectiveFunctionScore;
-    }
-
-    @Id
-    @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     private void renumberDistricts(EnactedDistricting enactedDistricting) {
         // TODO Implement
         ArrayList<District> districts = new ArrayList<>(this.districts);
     }
 
-    private static MajorityMinorityDistrictsCount getMMDistrictsCount(ArrayList<District> districts) {
-        int blackDistricts = 0;
-        int hispanicDistricts = 0;
-        int asianDistricts = 0;
-        int nativeDistricts = 0;
-
+    public double getMMDistrictsCount(MinorityPopulation minority, double threshhold) {
+        int count = 0;
         for (District district : districts) {
             MajorityMinorityInfo mmInfo = district.getMeasures().getMajorityMinorityInfo();
-
-            if (mmInfo.isBlackMajority()) {
-                blackDistricts += 1;
-            } else if (mmInfo.isHispanicMajority()) {
-                hispanicDistricts += 1;
-            } else if (mmInfo.isAsianMajority()) {
-                asianDistricts += 1;
-            } else if (mmInfo.isNativeMajority()) {
-                nativeDistricts += 1;
+            if (mmInfo.isMajorityMinorityDistrict(minority, threshhold)) {
+                count++;
             }
         }
-
-        return new MajorityMinorityDistrictsCount(blackDistricts, hispanicDistricts, asianDistricts, nativeDistricts);
+        return count;
     }
 
     private static Compactness getAvgCompactness(ArrayList<District> districts) {
@@ -123,7 +76,7 @@ public class Districting {
         return 0.0;
     }
 
-    private static DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
+    private DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
         double totalPopulationEquality = 0;
         Deviation totalDeviationFromEnacted = new Deviation();
         Deviation totalDeviationFromAverage = new Deviation();
@@ -138,7 +91,6 @@ public class Districting {
             totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
         }
 
-        MajorityMinorityDistrictsCount mmDistrictsCount = getMMDistrictsCount(districts);
         Compactness compactnessAvg = getAvgCompactness(districts);
 
         double populationEqualityAvg = totalPopulationEquality / numDistricts;
@@ -147,7 +99,7 @@ public class Districting {
 
         double splitCountyScore = calculateSplitCountyScore();
 
-        return new DistrictingMeasures(mmDistrictsCount, compactnessAvg,
+        return new DistrictingMeasures(compactnessAvg,
                 populationEqualityAvg, splitCountyScore,
                 deviationFromEnactedAvg, deviationFromAverageAvg);
     }

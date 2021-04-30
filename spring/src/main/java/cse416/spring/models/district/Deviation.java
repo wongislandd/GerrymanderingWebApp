@@ -1,15 +1,25 @@
 package cse416.spring.models.district;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "Deviations")
+@Getter
+@Setter
 public class Deviation {
-    private double areaDev;
-    private double populationDev;
+    @Id
+    @GeneratedValue
     private long id;
+    @Column
+    private double areaDev;
+    @Column
+    private double populationDev;
+
 
     public Deviation() {
         this(0, 0);
@@ -20,33 +30,6 @@ public class Deviation {
         this.populationDev = populationDev;
     }
 
-    @Column
-    public double getAreaDev() {
-        return areaDev;
-    }
-
-    public void setAreaDev(double areaDev) {
-        this.areaDev = areaDev;
-    }
-
-    @Column
-    public double getPopulationDev() {
-        return populationDev;
-    }
-
-    public void setPopulationDev(double populationDev) {
-        this.populationDev = populationDev;
-    }
-
-    @Id
-    @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public void add(Deviation other) {
         this.populationDev += other.getPopulationDev();

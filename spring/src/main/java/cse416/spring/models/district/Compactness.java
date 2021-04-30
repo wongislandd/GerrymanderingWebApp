@@ -1,5 +1,8 @@
 package cse416.spring.models.district;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.locationtech.jts.algorithm.MinimumBoundingCircle;
 import org.locationtech.jts.algorithm.construct.MaximumInscribedCircle;
 import org.locationtech.jts.geom.Geometry;
@@ -10,14 +13,21 @@ import javax.persistence.*;
  * A data class to represent the three compactness measures of a district.
  */
 @Entity(name = "Compactnesses")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Compactness {
-    private double polsbyPopper;
-    private double populationFatness;
-    private double graphCompactness;
+    @Id
+    @GeneratedValue
     private long id;
 
-    public Compactness() {
-    }
+    @Column
+    private double polsbyPopper;
+    @Column
+    private double populationFatness;
+    @Column
+    private double graphCompactness;
+
 
     public Compactness(double polsbyPopper, double populationFatness, double graphCompactness) {
         this.polsbyPopper = polsbyPopper;
@@ -25,42 +35,6 @@ public class Compactness {
         this.graphCompactness = graphCompactness;
     }
 
-    @Column
-    public double getPolsbyPopper() {
-        return polsbyPopper;
-    }
-
-    public void setPolsbyPopper(double polsbyPopper) {
-        this.polsbyPopper = polsbyPopper;
-    }
-
-    @Column
-    public double getPopulationFatness() {
-        return populationFatness;
-    }
-
-    public void setPopulationFatness(double populationFatness) {
-        this.populationFatness = populationFatness;
-    }
-
-    @Column
-    public double getGraphCompactness() {
-        return graphCompactness;
-    }
-
-    public void setGraphCompactness(double graphCompactness) {
-        this.graphCompactness = graphCompactness;
-    }
-
-    @Id
-    @GeneratedValue
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public static double calculatePolsbyPopper(Geometry geometry) {
         double area = geometry.getArea();

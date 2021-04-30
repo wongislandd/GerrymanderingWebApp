@@ -25,13 +25,13 @@ public class DistrictingWriterThread extends Thread {
     EnactedDistricting enactedDistricting;
     JSONArray districtings;
     String filePath;
-    HashMap<Integer, Precinct> precinctHash;
+    HashMap<Long, Precinct> precinctHash;
     int rangeStart;
     int rangeEndExclusive;
     AtomicBoolean availableRef;
 
     public DistrictingWriterThread(StateName stateName, String filePath, int jobID, String name, EntityManager em,
-                                   HashMap<Integer, Precinct> precinctHash, EnactedDistricting enactedDistricting,
+                                   HashMap<Long, Precinct> precinctHash, EnactedDistricting enactedDistricting,
                                    JSONArray districtings, int rangeStart, int rangeEndExclusive,
                                    AtomicBoolean availableRef) {
 
