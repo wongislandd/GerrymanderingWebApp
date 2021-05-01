@@ -7,11 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -32,7 +30,7 @@ public class County {
     @Column
     private StateName state;
 
-    public County(StateName state, String name, ArrayList<Precinct> precincts) {
+    public County(StateName state, String name, Collection<Precinct> precincts) {
         this.state = state;
         this.name = name;
         this.precincts = precincts;

@@ -38,14 +38,17 @@ public class Districting {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<District> districts;
 
-    public Districting(Job job, ArrayList<District> districts, EnactedDistricting enactedDistricting) {
+    public Districting(Job job, ArrayList<District> districts) {
         this.job = job;
         this.measures = compileDistrictingMeasures(districts);
         this.districts = districts;
     }
 
     public String getGeoJson() throws IOException {
-        GeoJsonBuilder geoJson = new GeoJsonBuilder().buildDistricts(districts).objectiveFunctionProperties(measures).name(Long.toString(id));
+        GeoJsonBuilder geoJson = new GeoJsonBuilder()
+                .buildDistricts(districts)
+                .objectiveFunctionProperties(measures)
+                .name(Long.toString(id));
         return geoJson.toString();
     }
 
@@ -55,14 +58,12 @@ public class Districting {
         return g1.intersection(g2).getArea();
     }
 
-    private static SimpleWeightedGraph<District, Double> getBipartiteGraph(HashSet<District> districts1,
-                                                                           HashSet<District> districts2) throws IOException {
+    private static SimpleWeightedGraph<District, Double> getBipartiteGraph(Collection<District> districts1,
+                                                                           Collection<District> districts2) throws IOException {
 
         SimpleWeightedGraph<District, Double> bipartiteGraph = new SimpleWeightedGraph<>(Double.class);
-
         for (District d : districts1)
             bipartiteGraph.addVertex(d);
-
         for (District d : districts2)
             bipartiteGraph.addVertex(d);
 
@@ -73,7 +74,6 @@ public class Districting {
                 bipartiteGraph.addEdge(d1, d2, interArea);
             }
         }
-
         return bipartiteGraph;
     }
 
@@ -107,6 +107,7 @@ public class Districting {
     }
 
     private static Compactness getAvgCompactness(ArrayList<District> districts) {
+        // TODO: Use streams?
         double totalPolsbyPopperCompactness = 0;
         double totalPopulationFatnessCompactness = 0;
         double totalGraphCompactness = 0;
@@ -129,11 +130,10 @@ public class Districting {
         HashMap<Precinct, District> map = new HashMap<>();
 
         for (District d : districts) {
-            for (Precinct p : d.getPrecinctsList()) {
+            for (Precinct p : d.getPrecincts()) {
                 map.put(p, d);
             }
         }
-
         return map;
     }
 

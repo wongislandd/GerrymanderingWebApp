@@ -20,7 +20,6 @@ public class Deviation {
     @Column
     private double populationDev;
 
-
     public Deviation() {
         this(0, 0);
     }
@@ -30,14 +29,12 @@ public class Deviation {
         this.populationDev = populationDev;
     }
 
-
     public void add(Deviation other) {
         this.populationDev += other.getPopulationDev();
         this.areaDev += other.getAreaDev();
     }
 
     public Deviation getAverage(int numDistricts) {
-        return new Deviation(this.populationDev / numDistricts,
-                this.areaDev / numDistricts);
+        return new Deviation(this.populationDev / numDistricts, this.areaDev / numDistricts);
     }
 }

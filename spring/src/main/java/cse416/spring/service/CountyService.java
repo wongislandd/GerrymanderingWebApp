@@ -3,7 +3,6 @@ package cse416.spring.service;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.county.County;
 
-import java.util.List;
 import java.util.Set;
 
 public interface CountyService {

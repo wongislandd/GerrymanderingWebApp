@@ -27,7 +27,6 @@ public class MajorityMinorityInfo {
     @GeneratedValue
     private Long id;
 
-
     public boolean isMajorityMinorityDistrict(MinorityPopulation minority, double threshold) {
         switch (minority) {
             case BLACK:
@@ -43,13 +42,10 @@ public class MajorityMinorityInfo {
         }
     }
 
-
     public MajorityMinorityInfo(double blackPercentage, double hispanicPercentage, double asianPercentage, double nativePercentage) {
         this.blackPercentage = blackPercentage;
         this.hispanicPercentage = hispanicPercentage;
         this.asianPercentage = asianPercentage;
         this.nativePercentage = nativePercentage;
     }
-
-
 }

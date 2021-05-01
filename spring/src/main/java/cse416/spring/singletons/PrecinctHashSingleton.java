@@ -37,7 +37,7 @@ public class PrecinctHashSingleton {
             case NORTH_CAROLINA:
                 return getPrecinctHashNC();
             default:
-                return null;
+                return getPrecinctHashNC();
         }
     }
 }

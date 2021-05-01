@@ -1,6 +1,5 @@
 package cse416.spring.models.job;
 
-import cse416.spring.helperclasses.MGGGParams;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

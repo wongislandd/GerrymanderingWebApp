@@ -4,7 +4,6 @@ import cse416.spring.enums.StateName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.json.JSONObject;
 
 import javax.persistence.*;
 

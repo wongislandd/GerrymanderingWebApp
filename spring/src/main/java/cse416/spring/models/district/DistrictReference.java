@@ -11,6 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/* filePath = file in districtings folder (ex. nc_plans_1_0.json)
+       indexInFile = refers to the districting this district is a part of
+       districtNumber = which district it is in that districting
+*/
 @Entity(name = "DistrictReferences")
 @Getter
 @Setter

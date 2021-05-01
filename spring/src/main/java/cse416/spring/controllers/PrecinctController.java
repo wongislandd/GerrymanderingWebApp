@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -24,7 +24,7 @@ public class PrecinctController {
     @GetMapping("/{state}/loadPrecincts")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> loadPrecincts(@PathVariable("state") StateName state) throws IOException {
-        ArrayList<Precinct> allPrecincts = new ArrayList<>(precinctService.findByState(state));
+        Collection<Precinct> allPrecincts = precinctService.findByState(state);
         String geoJson = new GeoJsonBuilder().buildPrecincts(allPrecincts).toString();
         return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }

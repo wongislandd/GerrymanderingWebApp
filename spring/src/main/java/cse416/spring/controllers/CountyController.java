@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -24,9 +24,8 @@ public class CountyController {
     @GetMapping("/{state}/loadCounties")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> loadCounties(@PathVariable("state") StateName state) throws IOException {
-        ArrayList<County> allCounties = new ArrayList<>(countyService.findByStateName(state));
+        Collection<County> allCounties = countyService.findByStateName(state);
         String geoJson = new GeoJsonBuilder().buildCounties(allCounties).toString();
         return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
-
 }

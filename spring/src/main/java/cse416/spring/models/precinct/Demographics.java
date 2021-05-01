@@ -51,6 +51,7 @@ public class Demographics {
     }
 
     public double getMinorityPercentage(MinorityPopulation minority) {
+        // TODO: Fix to floating point division
         switch (minority) {
             case BLACK:
                 return (black / TP);

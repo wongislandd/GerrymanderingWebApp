@@ -24,13 +24,12 @@ public class State {
     private Collection<Job> jobs;
     @Transient
     private Job currentJob;
+    // TODO do we need this?
     @Column
     private String outline;
 
     public State(StateName name, Collection<Job> jobs) {
-        // TODO calculate outline from union of precincts matching statename
         this.name = name;
         this.jobs = jobs;
     }
-
 }

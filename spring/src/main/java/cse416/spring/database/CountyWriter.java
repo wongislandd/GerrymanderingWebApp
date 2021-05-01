@@ -14,36 +14,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 import static cse416.spring.helperclasses.FileReader.readJsonFile;
 import static cse416.spring.database.DistrictingWriter.getPrecinctsFromKeys;
 
 public class CountyWriter {
     public static void persistCounties() throws IOException {
-        // Get entity manager
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
-        /* Customization */
         String countiesFilePath = "/NC/counties/CountiesPrecinctsMapping.json";
         StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readJsonFile(countiesFilePath);
         HashMap<Integer, Precinct> allPrecincts = PrecinctHashSingleton.getPrecinctHash(stateName);
-        Iterator<String> keys = jo.keys();
+        Iterator<String> countyKeys = jo.keys();
 
-        /* For each county */
         int counter = 0;
-        while (keys.hasNext()) {
-            // Key is the county ID
-            String countyID = keys.next();
-            JSONObject county = jo.getJSONObject(countyID);
+        while (countyKeys.hasNext()) {
+            String countyKey = countyKeys.next();
+            JSONObject county = jo.getJSONObject(countyKey);
 
             // Build the county object
             String name = county.getString("name");
             JSONArray precinctKeys = county.getJSONArray("precincts");
-            ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, allPrecincts);
+            Set<Precinct> precincts = getPrecinctsFromKeys(precinctKeys, allPrecincts);
 
             County c = new County(stateName, name, precincts);
             System.out.println("PERSISTING COUNTY " + counter++);

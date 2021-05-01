@@ -5,15 +5,12 @@ import cse416.spring.models.precinct.Precinct;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface PrecinctService {
     Precinct findById(long id);
 
-    Precinct findByName(String name);
-
-    List<Precinct> findAllPrecincts();
-
-    List<Precinct> findByState(StateName state);
+    Set<Precinct> findByState(StateName state);
 
     HashMap<Integer, Precinct> getPrecinctHashMapByState(StateName state);
 }

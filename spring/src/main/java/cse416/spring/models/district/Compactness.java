@@ -7,7 +7,10 @@ import org.locationtech.jts.algorithm.MinimumBoundingCircle;
 import org.locationtech.jts.algorithm.construct.MaximumInscribedCircle;
 import org.locationtech.jts.geom.Geometry;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * A data class to represent the three compactness measures of a district.
@@ -20,7 +23,6 @@ public class Compactness {
     @Id
     @GeneratedValue
     private long id;
-
     @Column
     private double polsbyPopper;
     @Column
@@ -28,13 +30,11 @@ public class Compactness {
     @Column
     private double graphCompactness;
 
-
     public Compactness(double polsbyPopper, double populationFatness, double graphCompactness) {
         this.polsbyPopper = polsbyPopper;
         this.populationFatness = populationFatness;
         this.graphCompactness = graphCompactness;
     }
-
 
     public static double calculatePolsbyPopper(Geometry geometry) {
         double area = geometry.getArea();
@@ -43,11 +43,8 @@ public class Compactness {
     }
 
     public static double calculateFatness(Geometry geometry) {
-        double inscribedRadius = MaximumInscribedCircle.getRadiusLine(
-                geometry, 1).getLength();
-
-        MinimumBoundingCircle boundingCircle = new MinimumBoundingCircle(
-                geometry);
+        double inscribedRadius = MaximumInscribedCircle.getRadiusLine(geometry, 1).getLength();
+        MinimumBoundingCircle boundingCircle = new MinimumBoundingCircle(geometry);
         double boundingRadius = boundingCircle.getRadius();
 
         /* Calculate the ratio of the areas of the two circles, which is just

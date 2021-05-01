@@ -1,7 +1,7 @@
 package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.MGGGParams;
+import cse416.spring.models.job.MGGGParams;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.EnactedDistricting;
@@ -17,9 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cse416.spring.helperclasses.FileReader.getFilesInFolder;
@@ -29,18 +27,14 @@ import static cse416.spring.helperclasses.FileReader.readJsonFile;
  * A class that provides methods for persisting precincts, counties and
  * districtings into the database.
  */
-
-
 public class DistrictingWriter {
-
     // TODO Turn this into an SQL query within PrecinctService
-    public static ArrayList<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
+    public static Set<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
                                                            HashMap<Integer, Precinct> allPrecincts) {
-        ArrayList<Precinct> results = new ArrayList<>();
+        Set<Precinct> results = new HashSet<>();
         for (int i = 0; i < precinctKeys.length(); i++) {
             results.add(allPrecincts.get(precinctKeys.getInt(i)));
         }
-
         return results;
     }
 
@@ -50,10 +44,8 @@ public class DistrictingWriter {
                 return true;
             }
         }
-
         return false;
     }
-
 
     public static void persistEnactedDistrictings() throws IOException {
         StateName stateName = StateName.NORTH_CAROLINA;
@@ -61,8 +53,7 @@ public class DistrictingWriter {
         JSONObject enactedJson = readJsonFile(enactedFilePath);
         JSONObject districting = enactedJson.getJSONArray("districtings").getJSONObject(0);
         Iterator<String> keys = districting.keys();
-        ArrayList<District> districtsInDistricting = new ArrayList<>();
-
+        Collection<District> districtsInDistricting = new HashSet<>();
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(stateName);
@@ -71,7 +62,8 @@ public class DistrictingWriter {
         while (keys.hasNext()) {
             String districtKey = keys.next();
             JSONArray precinctKeysInDistrict = districting.getJSONArray(districtKey);
-            ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
+            Set<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
+
             // TODO: Change the null to the enacted districting
             DistrictReference districtReference = new DistrictReference(stateName, enactedFilePath, 0, districtKey);
             District d = new District(precincts, stateName, null, districtReference);

@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class PrecinctServiceImpl implements PrecinctService {
-
     EntityManager em;
 
     @Autowired
@@ -26,34 +27,19 @@ public class PrecinctServiceImpl implements PrecinctService {
     }
 
     @Override
-    public Precinct findByName(String name) {
-        Query query = em.createQuery("SELECT p FROM Precincts p WHERE p.name=:name");
-        query.setParameter("name", name);
-        List<Precinct> precincts = query.getResultList();
-        return precincts.get(0);
-    }
-
-    @Override
-    public List<Precinct> findAllPrecincts() {
-        Query query = em.createQuery("SELECT p from Precincts p");
-        return (List<Precinct>) query.getResultList();
-    }
-
-    @Override
-    public List<Precinct> findByState(StateName state) {
-        Query query = em.createQuery("SELECT p FROM Precincts p WHERE p.state=:state");
+    public Set<Precinct> findByState(StateName state) {
+        TypedQuery<Precinct> query = em.createQuery("SELECT p FROM Precincts p WHERE p.state=:state", Precinct.class);
         query.setParameter("state", state);
-        return (List<Precinct>) query.getResultList();
+        return new HashSet<>(query.getResultList());
     }
 
     @Override
     public HashMap<Integer, Precinct> getPrecinctHashMapByState(StateName state) {
-        List<Precinct> allPrecincts = findByState(state);
+        Collection<Precinct> allPrecincts = findByState(state);
         HashMap<Integer, Precinct> precinctHash = new HashMap<>();
         for (Precinct precinct : allPrecincts) {
             precinctHash.put(precinct.getPrecinctId(), precinct);
         }
         return precinctHash;
     }
-
 }

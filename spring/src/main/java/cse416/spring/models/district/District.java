@@ -16,8 +16,9 @@ import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * A class to represent a congressional district.
@@ -27,13 +28,13 @@ import java.util.HashMap;
 @Setter
 @NoArgsConstructor
 public class District {
+    @Id
+    @GeneratedValue
+    private long id;
     /**
      * District number that corresponds to the district numbering of the
      * enacted districting based on the Gill metric.
      */
-    @Id
-    @GeneratedValue
-    private long id;
     @Transient
     private int districtNumber;
     @OneToOne(cascade = CascadeType.ALL)
@@ -43,18 +44,13 @@ public class District {
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictReference districtReference;
     @Transient
-    private ArrayList<Precinct> precincts;
+    private Collection<Precinct> precincts;
     @Transient
     private Geometry geometry;
     @Transient
     private double objectiveFunctionScore;
 
-
-    /* filePath = file in districtings folder (ex. nc_plans_1_0.json)
-       indexInFile = refers to the districting this district is a part of
-       districtNumber = which district it is in that districting
-     */
-    public District(ArrayList<Precinct> precincts, StateName stateName,
+    public District(Collection<Precinct> precincts, StateName stateName,
                     District enactedDistrict, DistrictReference districtReference) {
         this.demographics = compileDemographics(precincts);
         this.geometry = UnionBuilder.getUnion(precincts);
@@ -75,7 +71,7 @@ public class District {
 
     private void generatePrecinctsList() throws IOException {
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(districtReference.getState());
-        this.precincts = new ArrayList<>();
+        this.precincts = new HashSet<>();
         JSONArray precinctIdsInDistrict = FileReader.getDistrictsPrecinctsFromJsonFile(districtReference);
 
         for (int i = 0; i < precinctIdsInDistrict.length(); i++) {
@@ -84,25 +80,23 @@ public class District {
         }
     }
 
-    public ArrayList<Precinct> getPrecinctsList() throws IOException {
+    public Collection<Precinct> getPrecincts() throws IOException {
         if (this.precincts == null)
             this.generatePrecinctsList();
-
         return this.precincts;
     }
 
     private void generateGeometry() throws IOException {
-        this.geometry = UnionBuilder.getUnion(this.getPrecinctsList());
+        this.geometry = UnionBuilder.getUnion(this.getPrecincts());
     }
 
     public Geometry getGeometry() throws IOException {
         if (geometry == null)
             this.generateGeometry();
-
         return this.geometry;
     }
 
-    // Methods to calculate district measures
+    // TODO: Finish methods to calculate district measures
 
     public double calculateDeviationFrom(District other) {
         return Math.random();
@@ -129,7 +123,7 @@ public class District {
         );
     }
 
-    private static Demographics compileDemographics(ArrayList<Precinct> precincts) {
+    private static Demographics compileDemographics(Collection<Precinct> precincts) {
         int total_asian = 0;
         int total_black = 0;
         int total_natives = 0;

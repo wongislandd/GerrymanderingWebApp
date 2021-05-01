@@ -25,8 +25,6 @@ public class DistrictMeasures {
     @Transient
     Deviation deviationFromAverage;
 
-
-
     public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
         this.populationEquality = populationEquality;
         this.majorityMinorityInfo = minorityInfo;

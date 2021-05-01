@@ -5,7 +5,7 @@ import cse416.spring.models.county.County;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class CountyServiceImpl implements CountyService {
 
     @Override
     public County findByName(String name) {
-        Query query = em.createQuery("SELECT c FROM Counties c WHERE c.name=:name");
+        TypedQuery<County> query = em.createQuery("SELECT c FROM Counties c WHERE c.name=:name", County.class);
         query.setParameter("name", name);
         List<County> counties = query.getResultList();
         return counties.get(0);
@@ -33,8 +33,8 @@ public class CountyServiceImpl implements CountyService {
 
     @Override
     public Set<County> findByStateName(StateName state) {
-        Query query = em.createQuery("SELECT c FROM Counties c where c.state=:state");
+        TypedQuery<County> query = em.createQuery("SELECT c FROM Counties c where c.state=:state", County.class);
         query.setParameter("state", state);
-        return new HashSet<County>(query.getResultList());
+        return new HashSet<>(query.getResultList());
     }
 }

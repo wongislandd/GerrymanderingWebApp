@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -76,7 +77,7 @@ public class DistrictingWriterThread extends Thread {
             while (keys.hasNext()) {
                 String districtKey = keys.next();
                 JSONArray precinctKeysInDistrict = districting.getJSONArray(districtKey);
-                ArrayList<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
+                Collection<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
                 DistrictReference districtReference = new DistrictReference(stateName, filePath, i, districtKey);
                 // TODO: Change the null to the enacted districting
@@ -86,7 +87,7 @@ public class DistrictingWriterThread extends Thread {
                 System.out.println("[THREAD " + name + "] Created District.");
             }
 
-            Districting newDistricting = new Districting(job, districtsInDistricting, enactedDistricting);
+            Districting newDistricting = new Districting(job, districtsInDistricting);
             newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
         }

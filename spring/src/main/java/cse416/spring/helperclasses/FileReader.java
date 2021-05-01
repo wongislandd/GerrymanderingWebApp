@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -28,8 +27,6 @@ public class FileReader {
         JSONObject root = new JSONObject(content);
         JSONArray districtings = root.getJSONArray("districtings");
         JSONObject targetDistricting = districtings.getJSONObject(districtReference.getDistrictingIndex());
-        JSONArray targetDistrictsPrecincts = targetDistricting.getJSONArray(districtReference.getDistrictKey());
-        return targetDistrictsPrecincts;
+        return targetDistricting.getJSONArray(districtReference.getDistrictKey());
     }
-
 }

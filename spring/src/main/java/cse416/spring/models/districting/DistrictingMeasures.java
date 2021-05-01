@@ -28,7 +28,6 @@ public class DistrictingMeasures {
     @GeneratedValue
     private long id;
 
-
     /* Calculate districting measures from the collection of district measures */
     public DistrictingMeasures(Compactness compactnessAvg, double populationEqualityAvg,
                                double splitCountiesScore, Deviation deviationFromEnactedAvg, Deviation deviationFromAverageAvg) {
@@ -38,6 +37,4 @@ public class DistrictingMeasures {
         this.deviationFromEnactedAvg = deviationFromEnactedAvg;
         this.deviationFromAverageAvg = deviationFromAverageAvg;
     }
-
-
 }

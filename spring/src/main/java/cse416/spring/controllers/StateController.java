@@ -20,7 +20,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/states")
 public class StateController {
-    private StateService service;
+    // TODO: Do we need to use the service in this controller?
+    private final StateService service;
 
     public StateController(StateService service) {
         this.service = service;
@@ -44,9 +45,8 @@ public class StateController {
         return new ResponseEntity<>(new JSONObject(outlineMap).toString(), HttpStatus.OK);
     }
 
-
     private static Map<String, String> getAllStatesCountyGeometry() {
-        Map<String, String> countiesByState = new HashMap<String, String>();
+        Map<String, String> countiesByState = new HashMap<>();
         try {
             File NC = ResourceUtils.getFile("src/main/resources/static/json/NC/NCBoundary.json");
             File LA = ResourceUtils.getFile("src/main/resources/static/json/LA/LABoundary.json");
@@ -59,6 +59,4 @@ public class StateController {
             return countiesByState;
         }
     }
-
-
 }
