@@ -55,7 +55,7 @@ export async function loadJobs(state) {
   const response = await fetch(fullUrl);
   let body = await response.json();
   console.log(body)
-  var jobs = ParsingUtilities.parseJobJSONToObjects(body)
+  let jobs = ParsingUtilities.parseJobJSONToObjects(body)
   return jobs;
 }
 

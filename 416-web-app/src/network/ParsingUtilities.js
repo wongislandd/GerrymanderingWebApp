@@ -5,16 +5,16 @@ export function parseStateCountyDict(stateCountyJSON) {
 }
 
 export function parseJobJSONToObjects(jobsJSON) {    
-    var jobs = []
-    for (var job of jobsJSON) {
+    let jobs = []
+    for (let job of jobsJSON) {
         jobs.push(new Job(job.id, job.summary.description, job.summary.size, job.summary.params))
     }
     return jobs
 }
 
 export function parseIncumbentsJSONToObjects(incumbentsJSON) {
-    var incumbents = []
-    for (var incumbent of incumbentsJSON) {
+    let incumbents = []
+    for (let incumbent of incumbentsJSON) {
         incumbents.push(new Incumbent(incumbent.name, incumbent.residence, incumbent.id))
     }
     return incumbents;

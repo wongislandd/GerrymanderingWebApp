@@ -28,7 +28,7 @@ export const COMPARISON_DIRECTIONS = {
 };
 
 export function getPercentageChange(x, y) {
-  var decreaseValue = x - y;
+  let decreaseValue = x - y;
   return Math.round((decreaseValue / x) * 100);
 }
 

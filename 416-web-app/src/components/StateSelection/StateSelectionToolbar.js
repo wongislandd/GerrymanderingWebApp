@@ -38,7 +38,7 @@ class StateSelectionToolbar extends Component {
   selectTentativeState(state) {
     const selector = document.getElementById("state-selector");
     if (selector != null) {
-      for (var i = 0; i < selector.options.length; i++) {
+      for (let i = 0; i < selector.options.length; i++) {
         if (
           selector.options[i].value == state &&
           selector.options[i].selected != true

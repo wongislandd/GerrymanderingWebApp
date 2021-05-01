@@ -232,7 +232,7 @@ const rootReducer = (state = initState, action) => {
         Loaded: action.Loaded,
       };
     case ActionTypes.UPDATE_OBJECTIVE_FUNCTION_SETTINGS:
-      var newSettings = [...state.ObjectiveFunctionSettings];
+      let newSettings = [...state.ObjectiveFunctionSettings];
       newSettings[action.Key].value = action.NewValue;
       return {
         ...state,
@@ -259,7 +259,7 @@ const rootReducer = (state = initState, action) => {
         }
       };
     case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
-      var updatedIncumbents = [...state.IncumbentProtectionInfo];
+      let updatedIncumbents = [...state.IncumbentProtectionInfo];
       updatedIncumbents[action.Key].protected = action.NewValue;
       console.log(updatedIncumbents)
       return {
@@ -457,7 +457,7 @@ const rootReducer = (state = initState, action) => {
         CountiesGeoJson : action.CountiesGeoJson,
       }
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
-      var newExpandedSet = [...state.ExpandedSummaries];
+      let newExpandedSet = [...state.ExpandedSummaries];
       if (!newExpandedSet.includes(action.Name)) {
         newExpandedSet.push(action.Name);
       } else {

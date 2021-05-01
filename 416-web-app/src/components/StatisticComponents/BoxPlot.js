@@ -6,12 +6,12 @@ export default class BoxPlot extends Component {
     // Boxes
     const boxes = [];
     for (
-      var i = 0;
+      let i = 0;
       i < this.props.DistrictingToDisplay.geoJson.features.length;
       i++
     ) {
-      var traceValues = [];
-      for (var j = 0; j < 50; j++) {
+      let traceValues = [];
+      for (let j = 0; j < 50; j++) {
         traceValues[j] =
           (Math.random() * (i + 1)) /
           this.props.DistrictingToDisplay.geoJson.features.length;
@@ -28,7 +28,7 @@ export default class BoxPlot extends Component {
     // Points
     const points = [];
     for (
-      var i = 0;
+      let i = 0;
       i < this.props.DistrictingToDisplay.geoJson.features.length;
       i++
     ) {

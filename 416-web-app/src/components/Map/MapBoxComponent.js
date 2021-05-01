@@ -29,7 +29,7 @@ class MapBoxComponent extends Component {
 
   /* Recenter the map to the default state's location (minimized or maximized)*/
   recenterMap() {
-    var newViewport = null;
+    let newViewport = null;
     switch (this.props.CurrentState) {
       case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
         newViewport = this.props.MinimizedMap

@@ -14,7 +14,7 @@ class ConstraintSlider extends Component {
       }
     
     render() {
-            var filter = this.props.filter
+          let filter = this.props.filter
             return (
               <Row key={this.props.filterKey}>
                 <div className="constraintAndCheckbox">

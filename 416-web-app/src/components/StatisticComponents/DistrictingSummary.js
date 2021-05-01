@@ -40,14 +40,14 @@ class DistrictingSummary extends Component {
     where a collapsible item would be technically closed (not active) but still had styling as if it
     were open */
   closeAllCollapsibles() {
-    var collapsible = document.getElementById("stat-collapsible");
+    let collapsible = document.getElementById("stat-collapsible");
     if (collapsible != null) {
-      var items = collapsible.getElementsByTagName("li");
-      for (var i = 0; i < items.length; ++i) {
-        var collapsiblebodies = items[i].getElementsByClassName(
+      let items = collapsible.getElementsByTagName("li");
+      for (let i = 0; i < items.length; ++i) {
+        let collapsiblebodies = items[i].getElementsByClassName(
           "collapsible-body"
         );
-        for (var j = 0; j < collapsiblebodies.length; ++j) {
+        for (let j = 0; j < collapsiblebodies.length; ++j) {
           collapsiblebodies[j].removeAttribute("style");
         }
       }
@@ -56,7 +56,7 @@ class DistrictingSummary extends Component {
 
   /* Recenter the map to the default state's location (minimized or maximized)*/
   recenterMap() {
-    var newViewport = null;
+    let newViewport = null;
     switch (this.props.CurrentState) {
       case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
         newViewport = this.props.MinimizedMap

@@ -74,11 +74,11 @@ class CompareSection extends Component {
             {!this.readyToCompare()
               ? ""
               : Object.keys(this.statsToCompare).map((key) => {
-                  var thisDistrictingVal = this.props.ComparisonDistrictingA
+                  let thisDistrictingVal = this.props.ComparisonDistrictingA
                     .geoJson.objectivefunc[this.statsToCompare[key]];
-                  var otherDistrictingVal = this.props.ComparisonDistrictingB
+                  let otherDistrictingVal = this.props.ComparisonDistrictingB
                     .geoJson.objectivefunc[this.statsToCompare[key]];
-                  var difference = StatUtilities.getPercentageChange(
+                  let difference = StatUtilities.getPercentageChange(
                     thisDistrictingVal,
                     otherDistrictingVal
                   );
@@ -104,11 +104,11 @@ class CompareSection extends Component {
             {!this.readyToCompare()
               ? ""
               : Object.keys(this.statsToCompare).map((key) => {
-                  var thisDistrictingVal = this.props.ComparisonDistrictingB
+                  let thisDistrictingVal = this.props.ComparisonDistrictingB
                     .geoJson.objectivefunc[this.statsToCompare[key]];
-                  var otherDistrictingVal = this.props.ComparisonDistrictingA
+                  let otherDistrictingVal = this.props.ComparisonDistrictingA
                     .geoJson.objectivefunc[this.statsToCompare[key]];
-                  var difference = StatUtilities.getPercentageChange(
+                  let difference = StatUtilities.getPercentageChange(
                     thisDistrictingVal,
                     otherDistrictingVal
                   );
