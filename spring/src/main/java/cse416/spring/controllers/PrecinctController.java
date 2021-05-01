@@ -1,7 +1,7 @@
 package cse416.spring.controllers;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.FeatureCollectionJSON;
+import cse416.spring.helperclasses.FeatureCollectionJSONBuilder;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.PrecinctService;
 import org.json.JSONObject;
@@ -31,7 +31,7 @@ public class PrecinctController {
     }
 
     public String getPrecincts(StateName state) {
-        FeatureCollectionJSON geoJson = new FeatureCollectionJSON();
+        FeatureCollectionJSONBuilder geoJson = new FeatureCollectionJSONBuilder();
         ArrayList<Precinct> allPrecincts = new ArrayList<>(precinctService.findByState(state));
         for (Precinct precinct : allPrecincts) {
             geoJson.put(new JSONObject(precinct.getGeoJson()));

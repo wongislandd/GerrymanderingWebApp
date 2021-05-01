@@ -16,8 +16,8 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    // http://localhost:8080/swagger-ui.html
-
+    // Access Swagger through:
+    // http://localhost:8080/swagger-ui/
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2).select()
