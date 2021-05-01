@@ -4,13 +4,12 @@ import cse416.spring.enums.StateName;
 import cse416.spring.models.county.County;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CountyService {
     County findById(long id);
 
     County findByName(String name);
 
-    List<County> findAllCounties();
-
-    List<County> findByStateName(StateName state);
+    Set<County> findByStateName(StateName state);
 }

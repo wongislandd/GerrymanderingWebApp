@@ -12,6 +12,7 @@ import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 @Entity(name = "Counties")
@@ -24,6 +25,8 @@ public class County {
     private long id;
     @Column
     private String name;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Precinct> precincts;
     @Lob
     private Geometry geometry;
     @Column
@@ -32,6 +35,7 @@ public class County {
     public County(StateName state, String name, ArrayList<Precinct> precincts) {
         this.state = state;
         this.name = name;
+        this.precincts = precincts;
 
         JSONArray precinctKeys = new JSONArray();
         for (Precinct precinct : precincts) {
