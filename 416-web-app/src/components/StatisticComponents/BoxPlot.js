@@ -7,14 +7,14 @@ export default class BoxPlot extends Component {
     const boxes = [];
     for (
       let i = 0;
-      i < this.props.DistrictingToDisplay.geoJson.features.length;
+      i < this.props.DistrictingToDisplay.features.length;
       i++
     ) {
       let traceValues = [];
       for (let j = 0; j < 50; j++) {
         traceValues[j] =
           (Math.random() * (i + 1)) /
-          this.props.DistrictingToDisplay.geoJson.features.length;
+          this.props.DistrictingToDisplay.features.length;
       }
       boxes[i] = {
         y: traceValues,
@@ -29,7 +29,7 @@ export default class BoxPlot extends Component {
     const points = [];
     for (
       let i = 0;
-      i < this.props.DistrictingToDisplay.geoJson.features.length;
+      i < this.props.DistrictingToDisplay.features.length;
       i++
     ) {
       // Have the same name to match the marker plot on top of the box plot
@@ -37,7 +37,7 @@ export default class BoxPlot extends Component {
         x: ["District " + (i + 1)],
         y: [
           (Math.random() * (i + 1)) /
-            this.props.DistrictingToDisplay.geoJson.features.length,
+            this.props.DistrictingToDisplay.features.length,
         ],
         marker: {
           size: 5,

@@ -8,6 +8,7 @@ import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
 import cse416.spring.helperclasses.analysis.TopScoring;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.helperclasses.DistrictingConstraints;
+import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.service.DistrictingService;
 import cse416.spring.service.PrecinctService;
 import cse416.spring.singletons.PrecinctHashSingleton;
@@ -35,21 +36,26 @@ public class DistrictingController {
         this.precinctService = precinctService;
     }
 
-    @GetMapping(value = "/{state}/load/{id}")
+    @GetMapping(value = "/load/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadDistricting(@PathVariable("state") StateName state, @PathVariable("id") long id) throws IOException {
+    public ResponseEntity<String> loadDistricting(@PathVariable("id") long id) throws IOException {
         Districting districting = districtingService.findById(id);
         String geoJson = districting.getGeoJson();
         return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
 
-
-
+    @GetMapping(value = "/{state}/enacted/load")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> loadEnacted(@PathVariable("state") StateName state) throws IOException {
+        EnactedDistricting enacted = districtingService.findEnactedByState(state);
+        String geoJson = enacted.getGeoJson();
+        return new ResponseEntity<>(geoJson, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/getSummary")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> getInterestingDistrictings() {
-        // TODO: Implement
+        // TODO: Implement sorting hat
         ArrayList<Districting> allDistrictings = new ArrayList<>();
         // ^ ITERATE THROUGH THIS LIST OF DISTRICTINGS AND GET THE 4 CATEGORIES
         CloseToEnacted closeToEnacted = new CloseToEnacted();
@@ -88,22 +94,6 @@ public class DistrictingController {
     private static ResponseEntity<String> buildErrorResponseEntity(Exception ex) {
         String body = "{\"message\":\"" + ex.getMessage() + "\"}";
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @GetMapping("/load")
-    @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadDistricting(@RequestParam String id) {
-        try {
-            /* Interpret, load, and return */
-            String filePath = "src/main/resources/static/json/EnactedDistrictingPlan2011WithData.json";
-            File file = ResourceUtils.getFile(filePath);
-            String content = new String(Files.readAllBytes(file.toPath()));
-
-            // Build a districting object from the id and then return it
-            return new ResponseEntity<>(content, HttpStatus.OK);
-        } catch (Exception ex) {
-            return buildErrorResponseEntity(ex);
-        }
     }
 
     @PostMapping("/constrain")

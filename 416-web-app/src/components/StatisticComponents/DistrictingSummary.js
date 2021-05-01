@@ -111,7 +111,7 @@ class DistrictingSummary extends Component {
               <Source
                 id={MapUtilities.IDs.DISTRICT_SOURCE_ID}
                 type="geojson"
-                data={this.props.DistrictingToDisplay.geoJson}
+                data={this.props.DistrictingToDisplay}
               />
               <Layer
                 id={MapUtilities.IDs.DISTRICT_FILL_LAYER_ID}
@@ -156,7 +156,7 @@ class DistrictingSummary extends Component {
           />
         </CollapsibleItem>
 
-        {this.props.DistrictingToDisplay.geoJson.features.map(
+        {this.props.DistrictingToDisplay.features.map(
           (feature, key) => {
             return (
               <CollapsibleItem

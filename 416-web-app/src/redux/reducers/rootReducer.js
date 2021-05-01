@@ -11,7 +11,6 @@ import Job from "../../utilities/classes/models/Job";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as NetworkingUtilities from "../../network/NetworkingUtilities";
-import ExampleGeoJson from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
 
 const defaultDistricting = new Districting(
   "Enacted Districting Feb 2016 - Nov 2019",
@@ -24,7 +23,7 @@ const initState = {
   DisplayPrecincts: false,
   DisplayCounties: false,
   DisplayDistricts: true,
-  CurrentDistricting: defaultDistricting,
+  CurrentDistricting: null,
   FeaturedDistrict: null,
   FeaturedPrecinct: null,
 
@@ -130,10 +129,10 @@ const initState = {
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
   AnalysisDistrictings: {
-    TopScoring: [new Districting("A", ExampleGeoJson)],
-    HighScoringSimilarEnacted: [new Districting("B", ExampleGeoJson)],
-    HighScoringMajorityMinority: [new Districting("C", ExampleGeoJson)],
-    TopDifferentAreaPairDeviations: [new Districting("D", ExampleGeoJson)],
+    TopScoring: [],
+    HighScoringSimilarEnacted: [],
+    HighScoringMajorityMinority: [],
+    TopDifferentAreaPairDeviations: [],
   },
 
   /* STATE VARIABLES TO BE LOADED IN THROUGH THE NETWORK? IS THIS THE BEST APPROACH? */
@@ -198,12 +197,6 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         TentativeDistricting: action.TentativeDistricting,
-      };
-    case ActionTypes.SET_CURRENT_DISTRICTING:
-      return {
-        ...state,
-        CurrentDistricting: action.CurrentDistricting,
-        TentativeDistricting: null,
       };
     case ActionTypes.MOVE_MOUSE:
       return {
@@ -455,6 +448,12 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         CountiesGeoJson : action.CountiesGeoJson,
+      }
+    case ActionTypes.POPULATE_CURRENT_DISTRICTING:
+      return {
+        ...state,
+        CurrentDistricting : action.DistrictingGeoJson,
+        TentativeDistricting: null,
       }
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       let newExpandedSet = [...state.ExpandedSummaries];

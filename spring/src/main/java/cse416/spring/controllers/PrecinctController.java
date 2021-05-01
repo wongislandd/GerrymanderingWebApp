@@ -1,17 +1,15 @@
 package cse416.spring.controllers;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.FeatureCollectionJSONBuilder;
+import cse416.spring.helperclasses.GeoJsonBuilder;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.PrecinctService;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
-
-import static cse416.spring.controllers.StateController.getStateName;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -23,19 +21,11 @@ public class PrecinctController {
         this.precinctService = service;
     }
 
-    @GetMapping("/{stateID}/loadPrecincts")
+    @GetMapping("/{state}/loadPrecincts")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> loadPrecincts(@PathVariable("stateID") String stateID) {
-        String precinctsGeoJson = getPrecincts(getStateName(stateID));
-        return new ResponseEntity<>(precinctsGeoJson, HttpStatus.OK);
-    }
-
-    public String getPrecincts(StateName state) {
-        FeatureCollectionJSONBuilder geoJson = new FeatureCollectionJSONBuilder();
+    public ResponseEntity<String> loadPrecincts(@PathVariable("state") StateName state) throws IOException {
         ArrayList<Precinct> allPrecincts = new ArrayList<>(precinctService.findByState(state));
-        for (Precinct precinct : allPrecincts) {
-            geoJson.put(new JSONObject(precinct.getGeoJson()));
-        }
-        return geoJson.toString();
+        String geoJson = new GeoJsonBuilder().buildPrecincts(allPrecincts).toString();
+        return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
 }

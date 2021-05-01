@@ -5,9 +5,11 @@ import {
   setNewDistrictingSelected,
   setComparisonDistrictingA,
   setComparisonDistrictingB,
+  populateCurrentDistricting,
 } from "../../../redux/actions/settingActions";
 import { Button } from "react-materialize";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
+import * as NetworkingUtilities from '../../../network/NetworkingUtilities';
 import DistrictingSummary from "../../StatisticComponents/DistrictingSummary";
 
 /* Properties: 
@@ -15,6 +17,13 @@ import DistrictingSummary from "../../StatisticComponents/DistrictingSummary";
 */
 
 class DistrictingInfoSection extends Component {
+
+  async loadNewDistricting(id) {
+    NetworkingUtilities.loadDistricting(id).then(results => {
+      this.props.populateCurrentDistricting(results);
+    })
+  }
+  
   render() {
     return (
       <div className="districtingInfoSection">
@@ -54,7 +63,7 @@ class DistrictingInfoSection extends Component {
           <Button
             className="redBrownBtn"
             onClick={(e) => {
-              this.props.setCurrentDistricting(this.props.districting);
+              this.loadNewDistricting(this.props.districting.id);
               this.props.setNewDistrictingSelected(true);
             }}
           >
@@ -68,8 +77,8 @@ class DistrictingInfoSection extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setCurrentDistricting: (districting) => {
-      dispatch(setCurrentDistricting(districting));
+    populateCurrentDistricting: (districting) => {
+      dispatch(populateCurrentDistricting(districting));
     },
     setNewDistrictingSelected: (bool) => {
       dispatch(setNewDistrictingSelected(bool));

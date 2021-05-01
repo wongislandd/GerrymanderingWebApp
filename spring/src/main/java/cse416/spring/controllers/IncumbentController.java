@@ -3,6 +3,7 @@ package cse416.spring.controllers;
 import com.github.javafaker.Faker;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.precinct.Incumbent;
+import cse416.spring.models.state.State;
 import cse416.spring.service.IncumbentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,10 @@ public class IncumbentController {
         return fakePeople;
     }
 
-    @GetMapping("/{stateID}/loadIncumbents")
+    @GetMapping("/{state}/loadIncumbents")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<ArrayList<Incumbent>> loadIncumbents(@PathVariable("stateID") String stateID) {
-        ArrayList<Incumbent> incumbents = getIncumbents(getStateName(stateID));
+    public ResponseEntity<ArrayList<Incumbent>> loadIncumbents(@PathVariable("state") StateName state) {
+        ArrayList<Incumbent> incumbents = getIncumbents(state);
         return new ResponseEntity<>(incumbents, HttpStatus.OK);
     }
 

@@ -32,19 +32,10 @@ export const toggleCountySwitch = (bool) => {
 export const setTentativeDistricting = (districting) => {
   return {
     type: ActionTypes.SET_TENTATIVE_DISTRICTING,
-    TentativeDistricting: {
-      name: districting.name,
-      geoJson: districting.geoJson,
-    },
+    TentativeDistricting : districting,
   };
 };
 
-export const setCurrentDistricting = (districting) => {
-  return {
-    type: ActionTypes.SET_CURRENT_DISTRICTING,
-    CurrentDistricting: districting,
-  };
-};
 
 export const moveMouse = (event) => {
   if (event.nativeEvent) {
@@ -326,6 +317,13 @@ export const populateCounties = (countiesGeoJson) => {
   return {
     type : ActionTypes.POPULATE_COUNTIES,
     CountiesGeoJson : countiesGeoJson,
+  }
+}
+
+export const populateCurrentDistricting = (districtingGeoJson) => {
+  return {
+    type : ActionTypes.POPULATE_CURRENT_DISTRICTING,
+    DistrictingGeoJson : districtingGeoJson
   }
 }
 

@@ -1,12 +1,14 @@
 import state from "../redux/store"; 
 import * as ParsingUtilities from './ParsingUtilities'
+import * as ViewportUtilities from '../utilities/ViewportUtilities'
 
 const baseURL = "http://localhost:8080";
 
 export const HTTPMETHODS = {
   GET: "GET",
   POST: "POST",
-};
+}
+
 
 function getFullRequestURLWithParams(endpoint, params) {
   const URLParams = new URLSearchParams(params);
@@ -15,24 +17,13 @@ function getFullRequestURLWithParams(endpoint, params) {
 
 /* Load an individual districting based on ID */
 export async function loadDistricting(id) {
-  // The constraints, formatted into an array with only values, to become the JSON payload
-  const params = {
-    id: id,
-  };
-  let fullUrl = getFullRequestURLWithParams("/districting/load", params);
+  let fullUrl = baseURL + "/districtings/load/" + id;
   const response = await fetch(fullUrl); 
   let body = await response.json();
   return body;
 }
 
 
-const stateFullToId = {
-  "TEXAS" : "TX",
-  "NORTH_CAROLINA" : "NC",
-  "LOUISIANA" : "LA",
-  // Default to NC
-  "UNSELECTED" : "NC",
-}
 
 export async function loadStateOutlines() {
   let fullUrl = baseURL + "/states/getOutlines";
@@ -42,34 +33,41 @@ export async function loadStateOutlines() {
   /* Keys must line up with Viewport Utilities State Options*/
   // Parse results into dict which will be loaded into state
   let result = {
-    "NORTH_CAROLINA" : JSON.parse(body.NC),
-    "LOUISIANA" : JSON.parse(body.LA),
-    "TEXAS" : JSON.parse(body.TX),
+   [ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA] : JSON.parse(body.NC),
+   [ViewportUtilities.STATE_OPTIONS.LOUISIANA] : JSON.parse(body.LA),
+   [ViewportUtilities.STATE_OPTIONS.TEXAS] : JSON.parse(body.TX),
   }
   return result;
 }
 
 
-export async function loadJobs(state) {
-  let fullUrl = baseURL + "/jobs/" + stateFullToId[state] + "/loadJobs";
+export async function loadEnacted(state) {
+  let fullUrl = baseURL + "/districtings/" + state + "/enacted/load";
   const response = await fetch(fullUrl);
   let body = await response.json();
-  console.log(body)
+  return body;
+}
+
+
+export async function loadJobs(state) {
+  let fullUrl = baseURL + "/jobs/" + state + "/loadJobs";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
   let jobs = ParsingUtilities.parseJobJSONToObjects(body)
   return jobs;
 }
 
 export async function loadIncumbents(state) {
-  let fullUrl = baseURL + "/incumbents/" + stateFullToId[state] + "/loadIncumbents";
+  let fullUrl = baseURL + "/incumbents/" + state + "/loadIncumbents";
   const response = await fetch(fullUrl);
   let body = await response.json();
+  console.log(body);
   let incumbents = ParsingUtilities.parseIncumbentsJSONToObjects(body);
   return incumbents;
 }
 
 
 export async function loadPrecincts(state) {
-    console.log("LOAD PRECINCTS CALLED");
     let fullUrl = baseURL + "/precincts/" + state + "/loadPrecincts";
     const response = await fetch(fullUrl);
     let body = await response.json();
@@ -77,7 +75,6 @@ export async function loadPrecincts(state) {
 }
 
 export async function loadCounties(state) {
-  console.log("LOAD COUNTIES CALLED");
   let fullUrl = baseURL + "/counties/" + state + "/loadCounties";
   const response = await fetch(fullUrl);
   let body = await response.json();

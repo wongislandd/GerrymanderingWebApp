@@ -36,7 +36,7 @@ class DistrictingItem extends Component {
             <Col s={2}>{StatUtilities.getRandomInt(10)}</Col>
             <Col s={3}>
               {
-                this.props.districting.geoJson.objectivefunc[
+                this.props.districting.objectivefunc[
                   MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY
                 ]
               }
@@ -44,7 +44,7 @@ class DistrictingItem extends Component {
             <Col s={3}>{StatUtilities.getRandomInt(3)}</Col>
             <Col s={2}>
               {
-                this.props.districting.geoJson.objectivefunc[
+                this.props.districting.objectivefunc[
                   MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE
                 ]
               }
