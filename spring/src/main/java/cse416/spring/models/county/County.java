@@ -25,7 +25,7 @@ public class County {
     private long id;
     @Column
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     private Collection<Precinct> precincts;
     @Lob
     private Geometry geometry;
