@@ -5,7 +5,9 @@ import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.EnactedDistricting;
+import cse416.spring.models.job.Job;
 import cse416.spring.models.precinct.Precinct;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,9 +20,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cse416.spring.database.DistrictingWriter.getPrecinctsFromKeys;
 
+@AllArgsConstructor
 public class DistrictingWriterThread extends Thread {
     StateName stateName;
-    int jobID;
+    Job job;
     String name;
     EntityManager em;
     EnactedDistricting enactedDistricting;
@@ -30,24 +33,6 @@ public class DistrictingWriterThread extends Thread {
     int rangeStart;
     int rangeEndExclusive;
     AtomicBoolean availableRef;
-
-    public DistrictingWriterThread(StateName stateName, String filePath, int jobID, String name, EntityManager em,
-                                   HashMap<Integer, Precinct> precinctHash, EnactedDistricting enactedDistricting,
-                                   JSONArray districtings, int rangeStart, int rangeEndExclusive,
-                                   AtomicBoolean availableRef) {
-
-        this.stateName = stateName;
-        this.filePath = filePath;
-        this.jobID = jobID;
-        this.name = name;
-        this.em = em;
-        this.precinctHash = precinctHash;
-        this.enactedDistricting = enactedDistricting;
-        this.districtings = districtings;
-        this.rangeStart = rangeStart;
-        this.rangeEndExclusive = rangeEndExclusive;
-        this.availableRef = availableRef;
-    }
 
     @Override
     public synchronized void start() {
@@ -101,7 +86,7 @@ public class DistrictingWriterThread extends Thread {
                 System.out.println("[THREAD " + name + "] Created District.");
             }
 
-            Districting newDistricting = new Districting(jobID, districtsInDistricting, enactedDistricting);
+            Districting newDistricting = new Districting(job, districtsInDistricting, enactedDistricting);
             newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
         }

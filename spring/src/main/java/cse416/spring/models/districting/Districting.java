@@ -3,6 +3,7 @@ package cse416.spring.models.districting;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.helperclasses.GeoJsonBuilder;
 import cse416.spring.models.district.*;
+import cse416.spring.models.job.Job;
 import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,8 @@ public class Districting {
     @Id
     @GeneratedValue
     private long id;
-    @Column
-    private int jobID;
+    @ManyToOne
+    private Job job;
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictingMeasures measures;
     @Transient
@@ -37,8 +38,8 @@ public class Districting {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<District> districts;
 
-    public Districting(int jobID, ArrayList<District> districts, EnactedDistricting enactedDistricting) {
-        this.jobID = jobID;
+    public Districting(Job job, ArrayList<District> districts, EnactedDistricting enactedDistricting) {
+        this.job = job;
         this.measures = compileDistrictingMeasures(districts);
         this.districts = districts;
     }
@@ -124,10 +125,10 @@ public class Districting {
                 totalGraphCompactness / numDistricts);
     }
 
-    private HashMap<Precinct, District> getPrecinctToDistrictMap() throws IOException {
+    private static HashMap<Precinct, District> getPrecinctToDistrictMap(ArrayList<District> districts) throws IOException {
         HashMap<Precinct, District> map = new HashMap<>();
 
-        for (District d : this.districts) {
+        for (District d : districts) {
             for (Precinct p : d.getPrecinctsList()) {
                 map.put(p, d);
             }
@@ -136,9 +137,9 @@ public class Districting {
         return map;
     }
 
-
-    private static double calculateSplitCountyScore() {
+    private static double calculateSplitCountyScore(ArrayList<District> districts) {
         // TODO: Implement
+//        Set<County> countySet = CountiesSetSingleton.getCountiesSet();
         return 0.0;
     }
 
@@ -164,7 +165,7 @@ public class Districting {
         Deviation deviationFromEnactedAvg = totalDeviationFromEnacted.getAverage(numDistricts);
         Deviation deviationFromAverageAvg = totalDeviationFromAverage.getAverage(numDistricts);
 
-        double splitCountyScore = calculateSplitCountyScore();
+        double splitCountyScore = calculateSplitCountyScore(districts);
 
         return new DistrictingMeasures(compactnessAvg,
                 populationEqualityAvg, splitCountyScore,
