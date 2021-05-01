@@ -6,6 +6,7 @@ import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.models.precinct.Precinct;
+import lombok.SneakyThrows;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -75,6 +76,7 @@ public class DistrictingWriterThread extends Thread {
         }
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         em.getTransaction().begin();
@@ -100,7 +102,7 @@ public class DistrictingWriterThread extends Thread {
             }
 
             Districting newDistricting = new Districting(jobID, districtsInDistricting, enactedDistricting);
-//            newDistricting.renumberDistricts(enactedDistricting);
+            newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
         }
         commit();

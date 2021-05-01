@@ -2,8 +2,6 @@ package cse416.spring.models.districting;
 
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.helperclasses.FeatureCollectionJSON;
-import cse416.spring.helperclasses.FileReader;
-import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.models.district.*;
 import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
@@ -12,8 +10,7 @@ import lombok.Setter;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-import org.json.JSONArray;
+import org.jgrapht.graph.SimpleWeightedGraph;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
@@ -58,10 +55,10 @@ public class Districting {
         return g1.intersection(g2).getArea();
     }
 
-    private static SimpleDirectedWeightedGraph<District, Double> getBipartiteGraph(HashSet<District> districts1,
-                                                                                   HashSet<District> districts2) throws IOException {
+    private static SimpleWeightedGraph<District, Double> getBipartiteGraph(HashSet<District> districts1,
+                                                                           HashSet<District> districts2) throws IOException {
 
-        SimpleDirectedWeightedGraph<District, Double> bipartiteGraph = new SimpleDirectedWeightedGraph<>(Double.class);
+        SimpleWeightedGraph<District, Double> bipartiteGraph = new SimpleWeightedGraph<>(Double.class);
 
         for (District d : districts1)
             bipartiteGraph.addVertex(d);
@@ -84,7 +81,7 @@ public class Districting {
         // Make a bipartite graph matching enacted districts to generated districts
         HashSet<District> enactedDistricts = new HashSet<>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<>(this.districts);
-        SimpleDirectedWeightedGraph<District, Double> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
+        SimpleWeightedGraph<District, Double> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
 
         // Match each enacted district with a generated district
         HopcroftKarpMaximumCardinalityBipartiteMatching<District, Double> matcher =
@@ -93,7 +90,8 @@ public class Districting {
         Graph<District, Double> matching = matcher.getMatching().getGraph();
         for (District enactedDistrict : enactedDistricts) {
             District generatedDistrict = Graphs.neighborListOf(matching, enactedDistrict).get(0);
-            generatedDistrict.setDistrictNumber(enactedDistrict.getDistrictNumber());
+            int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
+            generatedDistrict.setDistrictNumber(districtNumber);
         }
     }
 
