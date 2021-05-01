@@ -2,21 +2,23 @@ package cse416.spring.helperclasses.analysis;
 
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.districting.Districting;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-public class HighScoringMajorityMinority implements AnalysisCategoryContainer{
+public class HighScoringMajorityMinority implements AnalysisCategoryContainer {
     ArrayList<Districting> entries;
     MinorityPopulation minority;
+    int maxSize = 10;
     int desiredMinorityDistrictUpperBound;
     int desiredMinorityDistrictLowerBound;
+    double threshold;
 
-    public HighScoringMajorityMinority(MinorityPopulation minority,  int desiredMinorityDistrictLowerBound, int desiredMinorityDistrictUpperBound) {
+    public HighScoringMajorityMinority(MinorityPopulation minority, int desiredMinorityDistrictLowerBound, int desiredMinorityDistrictUpperBound, double threshold) {
         this.entries = new ArrayList<>();
         this.minority = minority;
         this.desiredMinorityDistrictUpperBound = desiredMinorityDistrictUpperBound;
         this.desiredMinorityDistrictLowerBound = desiredMinorityDistrictLowerBound;
+        this.threshold = threshold;
     }
 
     public ArrayList<Districting> getEntries() {
@@ -29,36 +31,46 @@ public class HighScoringMajorityMinority implements AnalysisCategoryContainer{
 
     @Override
     public boolean shouldInsert(Districting districting) {
-        // Is the districting's majority minority district count within the desired range?
+        double numMinorityDistricts = districting.getMMDistrictsCount(minority, threshold);
+        if (numMinorityDistricts >= desiredMinorityDistrictLowerBound && numMinorityDistricts <= desiredMinorityDistrictUpperBound) {
+            if (entries.size() < maxSize)
+                return true;
+            double districtingMMScore = calculateMMScore(districting);
+            return districtingMMScore > calculateMMScore(entries.get(maxSize));
+        }
+        return false;
+    }
 
-        // no -> reject
-        // yes -> multiply the districting's objective function score by it's deviationFromAverage
-        // sort the list based on that result
-
-
-
-//        switch(minority) {
-//            case BLACK:
-//                int blackDistricts = districting.getMeasures().getMinorityDistrictsCount().getBlackDistricts();
-//                if (desiredMinorityDistrictLowerBound <= blackDistricts &&
-//                        blackDistricts <= desiredMinorityDistrictUpperBound) {
-////                        districting.getObjectiveFunctionScore();
-////                        districting.getMeasures().getDeviationFromAverageAvg();
-//                }
-//        }
-
-        return true;
+    private double calculateMMScore(Districting districting) {
+        /*should return a value for a districting based on how close it is to the enacted box and whisker and its OJ score
+         * need to get box and whisker numbers?*/
+        return districting.getObjectiveFunctionScore() * Math.random();
     }
 
     @Override
     public void sortEntries() {
-
+        entries.sort((d1, d2) -> {
+            double d1Value = calculateMMScore(d1);
+            double d2Value = calculateMMScore(d2);
+            double difference = d1Value - d2Value;
+            if (difference > 0) {
+                return 1;
+            } else if (difference < 0) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
     }
-
 
     @Override
     public void insert(Districting districting) {
-
+        if (entries.size() < maxSize)
+            entries.add(districting);
+        else {
+            entries.remove(maxSize - 1);
+            entries.add(districting);
+            sortEntries();
+        }
     }
-
 }

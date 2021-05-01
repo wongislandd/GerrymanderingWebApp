@@ -53,11 +53,10 @@ public class DistrictingController {
         ArrayList<Districting> allDistrictings = new ArrayList<>();
         // ^ ITERATE THROUGH THIS LIST OF DISTRICTINGS AND GET THE 4 CATEGORIES
         CloseToEnacted closeToEnacted = new CloseToEnacted();
-        HighScoringMajorityMinority highScoringMajorityMinority = new HighScoringMajorityMinority(MinorityPopulation.BLACK, 3, 6);
+        HighScoringMajorityMinority highScoringMajorityMinority = new HighScoringMajorityMinority(MinorityPopulation.BLACK, 3, 6, 0.3);
         TopAreaPairDeviation topAreaPairDeviation = new TopAreaPairDeviation();
         TopScoring topScoring = new TopScoring();
-        for (int i=0;i<allDistrictings.size();i++) {
-            Districting currentDistricting = allDistrictings.get(i);
+        for (Districting currentDistricting : allDistrictings) {
             if (closeToEnacted.shouldInsert(currentDistricting)) {
                 closeToEnacted.insert(currentDistricting);
             }
