@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CountyServiceImpl implements CountyService {
@@ -30,15 +32,9 @@ public class CountyServiceImpl implements CountyService {
     }
 
     @Override
-    public List<County> findAllCounties() {
-        Query query = em.createQuery("SELECT c FROM Counties c");
-        return (List<County>) query.getResultList();
-    }
-
-    @Override
-    public List<County> findByStateName(StateName state) {
+    public Set<County> findByStateName(StateName state) {
         Query query = em.createQuery("SELECT c FROM Counties c where c.state=:state");
         query.setParameter("state", state);
-        return (List<County>) query.getResultList();
+        return new HashSet<County>(query.getResultList());
     }
 }

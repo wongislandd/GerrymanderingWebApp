@@ -3,6 +3,7 @@ package cse416.spring.models.districting;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.helperclasses.FeatureCollectionJSONBuilder;
 import cse416.spring.models.district.*;
+import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
 @Entity(name = "Districtings")
@@ -121,6 +123,19 @@ public class Districting {
                 totalPopulationFatnessCompactness / numDistricts,
                 totalGraphCompactness / numDistricts);
     }
+
+    private HashMap<Precinct, District> getPrecinctToDistrictMap() throws IOException {
+        HashMap<Precinct, District> map = new HashMap<>();
+
+        for (District d : this.districts) {
+            for (Precinct p : d.getPrecinctsList()) {
+                map.put(p, d);
+            }
+        }
+
+        return map;
+    }
+
 
     private static double calculateSplitCountyScore() {
         // TODO: Implement

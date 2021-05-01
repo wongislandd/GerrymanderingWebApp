@@ -43,6 +43,8 @@ public class District {
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictReference districtReference;
     @Transient
+    private ArrayList<Precinct> precincts;
+    @Transient
     private Geometry geometry;
     @Transient
     private double objectiveFunctionScore;
@@ -67,32 +69,38 @@ public class District {
         MajorityMinorityInfo majorityMinorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness(geometry);
 
-        if (enactedDistrict != null) {
-
-        }
-
         this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo,
                 compactness);
     }
 
-    private void generateGeometry() throws IOException {
+    private void generatePrecinctsList() throws IOException {
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(districtReference.getState());
-        ArrayList<Precinct> precinctsInDistrict = new ArrayList<>();
+        this.precincts = new ArrayList<>();
         JSONArray precinctIdsInDistrict = FileReader.getDistrictsPrecinctsFromJsonFile(districtReference);
+
         for (int i = 0; i < precinctIdsInDistrict.length(); i++) {
             int targetPrecinctId = precinctIdsInDistrict.getInt(i);
-            precinctsInDistrict.add(precinctHash.get(targetPrecinctId));
+            this.precincts.add(precinctHash.get(targetPrecinctId));
         }
-        geometry = UnionBuilder.getUnion(precinctsInDistrict);
+    }
+
+    public ArrayList<Precinct> getPrecinctsList() throws IOException {
+        if (this.precincts == null)
+            this.generatePrecinctsList();
+
+        return this.precincts;
+    }
+
+    private void generateGeometry() throws IOException {
+        this.geometry = UnionBuilder.getUnion(this.getPrecinctsList());
     }
 
     public Geometry getGeometry() throws IOException {
-        if (geometry == null) {
-            generateGeometry();
-        }
-        return geometry;
-    }
+        if (geometry == null)
+            this.generateGeometry();
 
+        return this.geometry;
+    }
 
     // Methods to calculate district measures
 
