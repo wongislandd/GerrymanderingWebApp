@@ -46,34 +46,20 @@ public class Districting {
         this.districts = districts;
     }
 
-    private ArrayList<Geometry> getDistrictsGeometry(HashMap<Integer, Precinct> precinctHash) throws IOException {
-        ArrayList<Geometry> allDistrictGeometry = new ArrayList<>();
-        for (District district : districts) {
-            ArrayList<Precinct> precinctsInDistrict = new ArrayList<>();
-            JSONArray precinctIdsInDistrict = FileReader.getDistrictsPrecinctsFromJsonFile(district.getDistrictReference());
-            for (int i = 0; i < precinctIdsInDistrict.length(); i++) {
-                int targetPrecinctId = precinctIdsInDistrict.getInt(i);
-                precinctsInDistrict.add(precinctHash.get(targetPrecinctId));
-            }
-            allDistrictGeometry.add(UnionBuilder.getUnion(precinctsInDistrict));
-        }
-        return allDistrictGeometry;
+    public String getGeoJson(HashMap<Integer, Precinct> precinctHash) throws IOException {
+        FeatureCollectionJSON geoJson = new FeatureCollectionJSON(districts);
+        return geoJson.toString();
     }
 
-    public String getDistrictingGeoJson(HashMap<Integer, Precinct> precinctHash) throws IOException {
-        ArrayList<Geometry> districtsGeometry = getDistrictsGeometry(precinctHash);
-        FeatureCollectionJSON districtingGeoJson = new FeatureCollectionJSON(districtsGeometry);
-        return districtingGeoJson.toString();
-    }
 
-    private static double getIntersectionArea(District d1, District d2) {
+    private static double getIntersectionArea(District d1, District d2) throws IOException {
         Geometry g1 = d1.getGeometry();
         Geometry g2 = d2.getGeometry();
         return g1.intersection(g2).getArea();
     }
 
     private static SimpleDirectedWeightedGraph<District, Double> getBipartiteGraph(HashSet<District> districts1,
-                                                                                   HashSet<District> districts2) {
+                                                                                   HashSet<District> districts2) throws IOException {
 
         SimpleDirectedWeightedGraph<District, Double> bipartiteGraph = new SimpleDirectedWeightedGraph<>(Double.class);
 
@@ -94,7 +80,7 @@ public class Districting {
         return bipartiteGraph;
     }
 
-    public void renumberDistricts(EnactedDistricting enactedDistricting) {
+    public void renumberDistricts(EnactedDistricting enactedDistricting) throws IOException {
         // Make a bipartite graph matching enacted districts to generated districts
         HashSet<District> enactedDistricts = new HashSet<>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<>(this.districts);

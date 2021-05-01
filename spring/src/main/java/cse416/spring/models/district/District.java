@@ -2,6 +2,7 @@ package cse416.spring.models.district;
 
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.StateName;
+import cse416.spring.helperclasses.FileReader;
 import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.helperclasses.constants.IdealPopulation;
 import cse416.spring.models.precinct.Demographics;
@@ -14,6 +15,7 @@ import org.json.JSONArray;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -73,10 +75,24 @@ public class District {
                 compactness);
     }
 
-    public void generateGeometry() {
+    private void generateGeometry() throws IOException {
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(districtReference.getState());
-        // TODO Finish this
+        ArrayList<Precinct> precinctsInDistrict = new ArrayList<>();
+        JSONArray precinctIdsInDistrict = FileReader.getDistrictsPrecinctsFromJsonFile(districtReference);
+        for (int i = 0; i < precinctIdsInDistrict.length(); i++) {
+            int targetPrecinctId = precinctIdsInDistrict.getInt(i);
+            precinctsInDistrict.add(precinctHash.get(targetPrecinctId));
+        }
+        geometry = UnionBuilder.getUnion(precinctsInDistrict);
     }
+
+    public Geometry getGeometry() throws IOException {
+        if (geometry == null) {
+            generateGeometry();
+        }
+        return geometry;
+    }
+
 
     // Methods to calculate district measures
 
