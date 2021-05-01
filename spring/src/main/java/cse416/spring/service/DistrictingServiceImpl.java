@@ -45,8 +45,9 @@ public class DistrictingServiceImpl implements DistrictingService {
     }
 
     @Override
-    public List<Districting> findByConstraints(DistrictingConstraints constraints) {
-//        Query query = em.createQuery("SELECT d from Districtings d WHERE . . . . .");
+    public List<Districting> findByJobAndConstraints(int jobId, DistrictingConstraints constraints) {
+        //TODO Implement
+        Query query = em.createQuery("SELECT d from Districtings d");
         return null;
     }
 }

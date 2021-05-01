@@ -3,26 +3,12 @@ import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtiliti
 import { connect } from "react-redux";
 import {
   updateIncumbentProtection,
-  populateIncumbents,
 } from "../../../redux/actions/settingActions";
 import { Row, Col, Modal, Button } from "react-materialize";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 
 class IncumbentModal extends Component {
-
-  // Fetch the incumbents for the chosen state
-  componentDidMount() {
-    if (this.props.IncumbentProtectionInfo.length === 0 ) {
-      this.populateIncumbents(this.props.CurrentState);
-    }
-  }
-
-  async populateIncumbents() {
-    NetworkingUtilities.loadIncumbents(this.props.CurrentState).then(results => {
-      this.props.populateIncumbents(results);
-    })
-  }
 
   render() {
     return (
@@ -95,9 +81,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateIncumbentProtection: (key, newVal) => {
       dispatch(updateIncumbentProtection(key, newVal));
-    },
-    populateIncumbents : (incumbents) => {
-      dispatch(populateIncumbents(incumbents))
     },
   };
 };

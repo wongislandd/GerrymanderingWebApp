@@ -1,7 +1,7 @@
 package cse416.spring.models.districting;
 
 import cse416.spring.enums.MinorityPopulation;
-import cse416.spring.helperclasses.FeatureCollectionJSONBuilder;
+import cse416.spring.helperclasses.GeoJsonBuilder;
 import cse416.spring.models.district.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +42,7 @@ public class Districting {
     }
 
     public String getGeoJson() throws IOException {
-        FeatureCollectionJSONBuilder geoJson = new FeatureCollectionJSONBuilder().buildDistricts(districts);
+        GeoJsonBuilder geoJson = new GeoJsonBuilder().buildDistricts(districts).objectiveFunctionProperties(measures).name(Long.toString(id));
         return geoJson.toString();
     }
 
@@ -126,7 +126,8 @@ public class Districting {
         return 0.0;
     }
 
-    private DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
+    public DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
+        // TODO Put this in the constructor of DistrictingMeasures
         double totalPopulationEquality = 0;
         Deviation totalDeviationFromEnacted = new Deviation();
         Deviation totalDeviationFromAverage = new Deviation();

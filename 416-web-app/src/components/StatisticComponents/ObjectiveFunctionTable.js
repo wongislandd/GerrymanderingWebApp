@@ -107,7 +107,7 @@ export default class ObjectiveFunctionTable extends Component {
             <TableRow>
               <TableCell scope="row">
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY
                     ]
                   : this.props.DistrictToDisplay.properties[
@@ -116,7 +116,7 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE
                     ]
                   : this.props.DistrictToDisplay.properties[
@@ -125,7 +125,7 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS
                         .AVG_DEVIATION_FROM_AVG_DISTRICTING
                     ]
@@ -136,7 +136,7 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS
                         .AVG_DEVIATION_FROM_ENACTED_DISTRICTING
                     ]
@@ -147,7 +147,7 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS.AVG_COMPACTNESS
                     ]
                   : this.props.DistrictToDisplay.properties[
@@ -156,7 +156,7 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS.AVG_POLITICAL_FAIRNESS
                     ]
                   : this.props.DistrictToDisplay.properties[
@@ -165,7 +165,7 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.geoJson.objectivefunc[
+                  ? this.props.DistrictingToDisplay.objectivefunc[
                       MapUtilities.PROPERTY_LABELS
                         .TOTAL_MAJORITY_MINORITY_DISTRICTS
                     ]

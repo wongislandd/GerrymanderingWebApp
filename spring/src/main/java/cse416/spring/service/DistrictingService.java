@@ -15,7 +15,7 @@ public interface DistrictingService {
 
     List<Districting> findAllDistrictings();
 
-    List<Districting> findByConstraints(DistrictingConstraints constriants);
+    List<Districting> findByJobAndConstraints(int jobId, DistrictingConstraints constriants);
 
     EnactedDistricting findEnactedByState(StateName state);
 }

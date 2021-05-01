@@ -1,16 +1,35 @@
 import React, { Component } from 'react'
 import { Button, Col, Row, Collapsible, Icon, CollapsibleItem } from 'react-materialize'
 import { connect } from 'react-redux'
-import { loadInJobs, setCurrentState, setCurrentJob, populatePrecincts, populateCounties } from '../../redux/actions/settingActions'
+import { loadInJobs, setCurrentState, setCurrentJob, populatePrecincts, populateCounties, populateCurrentDistricting, populateIncumbents } from '../../redux/actions/settingActions'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 import * as NetworkingUtilities from '../../network/NetworkingUtilities'
 
 class JobSelection extends Component {
     componentDidMount() {
-        NetworkingUtilities.loadJobs(this.props.CurrentState).then(jobs => this.props.loadInJobs(jobs))
+        this.loadJobs();
+        this.loadEnactedDistricting();
         this.populateCounties();
         this.populatePrecincts();
+        this.populateIncumbents();
+    }
+
+
+    async populateIncumbents() {
+        NetworkingUtilities.loadIncumbents(this.props.CurrentState).then(results => {
+          this.props.populateIncumbents(results);
+        })
+      }
+
+    async loadJobs() {
+        NetworkingUtilities.loadJobs(this.props.CurrentState).then(jobs => this.props.loadInJobs(jobs))
+    }
+
+    async loadEnactedDistricting() {
+        NetworkingUtilities.loadEnacted(this.props.CurrentState).then(results => {
+            this.props.populateCurrentDistricting(results);
+        })
     }
 
     async populatePrecincts() {
@@ -42,6 +61,7 @@ class JobSelection extends Component {
                 {/** Job Selection Area**/}
                 <div className="job-selection-screen-display">
                 <Collapsible accordion>
+                {this.props.Jobs.length === 0 ? <div>{"Initializing " + this.props.CurrentState + "."}</div>: <div/>}
                 {Object.keys(this.props.Jobs).map((key) => {
                     let job = this.props.Jobs[key]
                     return (
@@ -111,6 +131,12 @@ const mapDispatchToProps = (dispatch) => {
         populateCounties : (counties) => {
             dispatch(populateCounties(counties))
         },
+        populateCurrentDistricting : (districting) => {
+            dispatch(populateCurrentDistricting(districting))
+        },
+        populateIncumbents : (incumbents) => {
+            dispatch(populateIncumbents(incumbents))
+          },
         setCurrentJob : (job) => {
             dispatch(setCurrentJob(job))
         }
