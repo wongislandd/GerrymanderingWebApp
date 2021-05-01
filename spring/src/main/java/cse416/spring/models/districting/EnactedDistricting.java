@@ -35,7 +35,7 @@ public class EnactedDistricting {
         this.state = state;
         this.districts = districts;
         // Placeholder until we move the measure logic into the DistrictingMeasures constructor
-        this.measures = new DistrictingMeasures();
+        this.measures = compileDistrictingMeasures(new ArrayList<>(districts));
 
         for (District district : this.districts) {
             String districtKey = district.getDistrictReference().getDistrictKey();
