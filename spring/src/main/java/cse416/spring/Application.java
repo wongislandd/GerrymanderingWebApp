@@ -8,6 +8,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@SpringBootApplication
 @EnableSwagger2
 public class Application {
 
@@ -15,8 +16,8 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    // http://localhost:8080/swagger-ui.html
-
+    // Access Swagger through:
+    // http://localhost:8080/swagger-ui/
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2).select()

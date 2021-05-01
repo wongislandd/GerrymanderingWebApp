@@ -39,7 +39,7 @@ public class DistrictingController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> loadDistricting(@PathVariable("state") StateName state, @PathVariable("id") long id) throws IOException {
         Districting districting = districtingService.findById(id);
-        String geoJson = districting.getGeoJson(PrecinctHashSingleton.getPrecinctHash(state));
+        String geoJson = districting.getGeoJson();
         return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
 

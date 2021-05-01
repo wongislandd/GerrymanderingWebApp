@@ -1,11 +1,8 @@
 package cse416.spring.models.districting;
 
 import cse416.spring.enums.MinorityPopulation;
-import cse416.spring.helperclasses.FeatureCollectionJSON;
-import cse416.spring.helperclasses.FileReader;
-import cse416.spring.helperclasses.builders.UnionBuilder;
+import cse416.spring.helperclasses.FeatureCollectionJSONBuilder;
 import cse416.spring.models.district.*;
-import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,14 +10,12 @@ import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-import org.json.JSONArray;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 
 @Entity(name = "Districtings")
@@ -46,11 +41,10 @@ public class Districting {
         this.districts = districts;
     }
 
-    public String getGeoJson(HashMap<Integer, Precinct> precinctHash) throws IOException {
-        FeatureCollectionJSON geoJson = new FeatureCollectionJSON(districts);
+    public String getGeoJson() throws IOException {
+        FeatureCollectionJSONBuilder geoJson = new FeatureCollectionJSONBuilder().buildDistricts(districts);
         return geoJson.toString();
     }
-
 
     private static double getIntersectionArea(District d1, District d2) throws IOException {
         Geometry g1 = d1.getGeometry();
