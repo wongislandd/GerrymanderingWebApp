@@ -28,33 +28,11 @@ class DistrictTooltip extends Component {
         >
           <ul>
             <li>
-              <b>District : {locationToFeature.properties.District}</b>
+              <b>District : {locationToFeature.properties[MapUtilities.PROPERTY_LABELS.DISTRICT_ID]}</b>
             </li>
             <li>
-              Population :{" "}
+              Total Population :{" "}
               {StatUtilities.addCommas(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
-              )}
-            </li>
-            <li>
-              Democratic :{" "}
-              {StatUtilities.formatResult(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT
-                ],
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
-              )}
-            </li>
-            <li>
-              Republican :{" "}
-              {StatUtilities.formatResult(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT
-                ],
                 locationToFeature.properties[
                   MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
                 ]

@@ -20,21 +20,21 @@ export const IDs = {
   COUNTY_SOURCE_ID: "county-source",
 };
 
-/* To correspond with the labels in the GeoJson */
+/* To correspond with the labels in the GeoJsonBuilder */
+/* TODO Move this to a labels utility file */
 export const PROPERTY_LABELS = {
   /* District Properties */
   PRECINCT_NAME: "name",
+  DISTRICT_ID: "id",
   PRECINCT_ID: "id",
   COUNTY_NAME: "county",
 
   /* Population Properties */
   TOTAL_POPULATION: "TOTAL_POPULATION",
   TOTAL_VOTER_COUNT: "VOTER_COUNT",
-  DEMOCRAT_COUNT: "PARTY_DEM_COUNT",
-  REPUBLICAN_COUNT: "PARTY_REP_COUNT",
-  PARTY_OTHER_COUNT: "PARTY_OTHER_COUNT",
   WHITE_COUNT: "RACE_WHITE_COUNT",
   BLACK_COUNT: "RACE_BLACK_COUNT",
+  HISPANIC_COUNT : "RACE_HISPANIC_COUNT",
   ASIAN_COUNT: "RACE_ASIAN_COUNT",
   NATIVE_COUNT: "RACE_NATIVE_COUNT",
   PACIFIC_ISLANDER_COUNT: "RACE_PACIFIC_ISLANDER_COUNT",

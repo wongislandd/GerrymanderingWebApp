@@ -102,6 +102,17 @@ public class GeoJsonBuilder {
     private JSONObject createPropertiesJsonObject(District d) {
         // TODO: Add properties
         JSONObject properties = new JSONObject();
+        properties.put("id", d.getDistrictNumber());
+        properties.put("TOTAL_POPULATION", d.getDemographics().getTP());
+        properties.put("RACE_WHITE_COUNT", d.getDemographics().getWhite());
+        properties.put("RACE_BLACK_COUNT", d.getDemographics().getBlack());
+        properties.put("RACE_HISPANIC_COUNT", d.getDemographics().getHispanic());
+        properties.put("RACE_ASIAN_COUNT", d.getDemographics().getAsian());
+        properties.put("RACE_NATIVE_COUNT", d.getDemographics().getNatives());
+        properties.put("RACE_PACIFIC_ISLANDER_COUNT", d.getDemographics().getPacific());
+        properties.put("RACE_OTHER_COUNT", d.getDemographics().getOtherRace());
+        properties.put("OBJECTIVE_FUNCTION_SCORE", d.getObjectiveFunctionScore());
+        // TODO Add Objective Function properties
         return properties;
     }
 
