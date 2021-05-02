@@ -8,8 +8,8 @@ import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.operation.union.UnaryUnionOp;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /***
  * A helper class to find the union of the geometry of a list of precincts.
@@ -38,20 +38,14 @@ public class UnionBuilder {
      */
     public static Geometry getUnion(Collection<Precinct> precincts) {
         GeometryFactory gf = new GeometryFactory();
-        Collection<Geometry> geometries = new HashSet<>();
+        Collection<Geometry> geometries = new ArrayList<>();
 
         // TODO: Try treating multipolygons as 1 object and see if it improves the union
         for (Precinct precinct : precincts) {
-            JSONArray coordinates = precinct.retrieveCoordinates();
-            if (isMultiPolygon(coordinates)) {
-                /* Each entry in coordinates in a separate polygon, the separate
-                polygon's will be treated as normal ones */
-                for (int k = 0; k < coordinates.length(); k++) {
-                    JSONArray currentPolygonCoords = coordinates.getJSONArray(k);
-                    geometries.add(gf.createPolygon(getCoords(currentPolygonCoords)));
-                }
-            } else {
-                geometries.add(gf.createPolygon(getCoords(coordinates)));
+            Collection<JSONArray> coordinates = precinct.retrieveCoordinates();
+
+            for (JSONArray polygon : coordinates) {
+                geometries.add(gf.createPolygon(getCoords(polygon)));
             }
         }
 

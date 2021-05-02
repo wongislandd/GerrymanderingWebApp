@@ -5,9 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Precincts")
 @Getter
@@ -37,8 +41,30 @@ public class Precinct {
         this.precinctId = id;
     }
 
-    public JSONArray retrieveCoordinates() {
-        return new JSONObject(geoJson).getJSONObject("geometry")
-                .getJSONArray("coordinates").getJSONArray(0);
+    private static boolean isMultiPolygon(JSONArray coordinatesJson) {
+        try {
+            JSONArray firstCoord = coordinatesJson.getJSONArray(0)
+                    .getJSONArray(0).getJSONArray(0);
+            return true;
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
+    private static JSONArray getPolygonCoords(JSONArray coordinatesJson) {
+        return coordinatesJson.getJSONArray(0);
+    }
+
+    public Collection<JSONArray> retrieveCoordinates() {
+        JSONArray coordinatesJson = new JSONObject(geoJson).getJSONObject("geometry").getJSONArray("coordinates");
+        List<JSONArray> coordinates = new ArrayList<>();
+
+        if (isMultiPolygon(coordinatesJson)) {
+            for (int i = 0; i < coordinatesJson.length(); i++)
+                coordinates.add(getPolygonCoords(coordinatesJson.getJSONArray(i)));
+        } else
+            coordinates.add(getPolygonCoords(coordinatesJson));
+
+        return coordinates;
     }
 }
