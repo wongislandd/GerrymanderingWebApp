@@ -29,9 +29,6 @@ export async function loadStateOutlines() {
   let fullUrl = baseURL + "/states/getOutlines";
   const response = await fetch(fullUrl);
   let body = await response.json();
-
-  /* Keys must line up with Viewport Utilities State Options*/
-  // Parse results into dict which will be loaded into state
   let result = {
    [ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA] : JSON.parse(body.NC),
    [ViewportUtilities.STATE_OPTIONS.LOUISIANA] : JSON.parse(body.LA),

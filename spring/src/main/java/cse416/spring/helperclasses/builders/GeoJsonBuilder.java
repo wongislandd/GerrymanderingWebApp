@@ -1,4 +1,4 @@
-package cse416.spring.helperclasses;
+package cse416.spring.helperclasses.builders;
 
 import cse416.spring.models.county.County;
 import cse416.spring.models.district.District;
@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class GeoJsonBuilder {

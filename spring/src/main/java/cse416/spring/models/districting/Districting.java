@@ -1,7 +1,7 @@
 package cse416.spring.models.districting;
 
 import cse416.spring.enums.MinorityPopulation;
-import cse416.spring.helperclasses.GeoJsonBuilder;
+import cse416.spring.helperclasses.builders.GeoJsonBuilder;
 import cse416.spring.models.district.*;
 import cse416.spring.models.job.Job;
 import cse416.spring.models.precinct.Precinct;
@@ -34,7 +34,7 @@ public class Districting {
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictingMeasures measures;
     @Transient
-    private double ObjectiveFunctionScore;
+    private double objectiveFunctionScore;
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<District> districts;
 

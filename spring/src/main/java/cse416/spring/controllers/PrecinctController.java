@@ -1,7 +1,7 @@
 package cse416.spring.controllers;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.GeoJsonBuilder;
+import cse416.spring.helperclasses.builders.GeoJsonBuilder;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.PrecinctService;
 import org.springframework.http.HttpStatus;

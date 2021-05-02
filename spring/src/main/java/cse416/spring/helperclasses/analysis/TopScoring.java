@@ -4,7 +4,6 @@ import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.Deviation;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingMeasures;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;

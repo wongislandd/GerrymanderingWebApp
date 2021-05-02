@@ -2,7 +2,7 @@ package cse416.spring.models.districting;
 
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.GeoJsonBuilder;
+import cse416.spring.helperclasses.builders.GeoJsonBuilder;
 import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.Deviation;
 import cse416.spring.models.district.District;
