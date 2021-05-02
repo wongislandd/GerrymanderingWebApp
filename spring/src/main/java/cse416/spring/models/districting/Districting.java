@@ -56,7 +56,6 @@ public class Districting {
         Geometry g1 = d1.getGeometry();
         Geometry g2 = d2.getGeometry();
         double area = g1.intersection(g2).getArea();
-        System.out.println("Area: " + area);
         return area;
     }
 
@@ -93,7 +92,6 @@ public class Districting {
         for (District enactedDistrict : enactedDistricts) {
             District generatedDistrict = Graphs.neighborListOf(matching, enactedDistrict).get(0);
             int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
-            System.out.println("Renumbered to: " + districtNumber);
             generatedDistrict.setDistrictNumber(districtNumber);
         }
     }
