@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Component
 @Getter
 @Setter
 @AllArgsConstructor

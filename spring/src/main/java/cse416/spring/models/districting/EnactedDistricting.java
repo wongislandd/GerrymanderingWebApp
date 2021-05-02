@@ -28,7 +28,7 @@ public class EnactedDistricting {
     private StateName state;
     @OneToOne(cascade = CascadeType.ALL)
     DistrictingMeasures measures;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<District> districts;
 
     public EnactedDistricting(StateName state, Collection<District> districts) {

@@ -2,6 +2,7 @@ package cse416.spring.helperclasses.analysis;
 
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.districting.Districting;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 

@@ -115,7 +115,7 @@ public class DistrictingWriter {
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 5; i++) {
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
@@ -129,7 +129,7 @@ public class DistrictingWriter {
             for (int j = 0; j < numThreads; j++) {
                 DistrictingWriterThread newThread = new DistrictingWriterThread(state, job, "T" + j,
                         ems.get(j), enactedDistricting, districtings, "/NC/districtings/" + files[i],
-                        precinctHash, workForEachThread * (j + 1), (j) * workForEachThread,
+                        precinctHash, workForEachThread * (j), (j+1) * workForEachThread,
                         availableRef);
                 threads.add(newThread);
             }

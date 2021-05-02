@@ -51,7 +51,6 @@ public class DistrictingWriterThread extends Thread {
                 em.getTransaction().commit();
                 final long endTime = System.currentTimeMillis();
                 System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
-
                 availableRef.set(true);
                 break;
             } else {

@@ -13,15 +13,12 @@ class AppController extends Component {
   }
 
   render() {
-    // State Selection
     if (this.props.CurrentState == ViewportUtilities.STATE_OPTIONS.UNSELECTED) {
       return <StateSelection />;
     }
-    // Job Selection
     else if(this.props.CurrentJob == null) {
       return <JobSelection/>
     }
-    // Primary Selection Menu
     else if (this.props.InSelectionMenu) {
         return (
           <div className="full-screen-flex-container">
@@ -29,10 +26,9 @@ class AppController extends Component {
           </div>
         );
     }
-    // Map View
     else {
       return (
-        <div className="full-screen-flex-container">
+        <div className="full-screen-flex-container MapView">
           <MapBoxComponent />
           <Toolbar />
         </div>
