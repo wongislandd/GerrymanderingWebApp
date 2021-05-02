@@ -29,7 +29,7 @@ public class Districting {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Job job;
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictingMeasures measures;

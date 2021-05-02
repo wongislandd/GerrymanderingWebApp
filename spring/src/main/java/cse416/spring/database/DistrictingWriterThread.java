@@ -87,7 +87,8 @@ public class DistrictingWriterThread extends Thread {
             }
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
-            newDistricting.renumberDistricts(enactedDistricting);
+            // TODO FIX THIS
+            //newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
         }
         commit();
