@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.locationtech.jts.util.Stopwatch;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class DistrictingWriterThread extends Thread {
 
         /* For each districting */
         for (int i = rangeStart; i < rangeEndExclusive; i++) {
+            final long fileStartTime = System.currentTimeMillis();
             JSONObject districting = districtings.getJSONObject(i);
             Iterator<String> keys = districting.keys();
             ArrayList<District> districtsInDistricting = new ArrayList<>();
@@ -83,12 +85,13 @@ public class DistrictingWriterThread extends Thread {
                 District d = new District(precincts, stateName, null, districtReference);
                 districtsInDistricting.add(d);
                 em.persist(d);
-                System.out.println("[THREAD " + name + "] Created District.");
             }
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
             newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
+            final long fileEndTime = System.currentTimeMillis();
+            System.out.println("[THREAD " + name + "] Created Districting in " + (fileEndTime - fileStartTime) + "ms");
         }
         commit();
     }

@@ -35,7 +35,7 @@ public class District {
      * District number that corresponds to the district numbering of the
      * enacted districting based on the Gill metric.
      */
-    @Transient
+    @Column
     private int districtNumber;
     @OneToOne(cascade = CascadeType.ALL)
     private Demographics demographics;
