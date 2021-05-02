@@ -55,7 +55,9 @@ public class Districting {
     private static double getIntersectionArea(District d1, District d2) throws IOException {
         Geometry g1 = d1.getGeometry();
         Geometry g2 = d2.getGeometry();
-        return g1.intersection(g2).getArea();
+        double area = g1.intersection(g2).getArea();
+        System.out.println("Area: " + area);
+        return area;
     }
 
     private static SimpleWeightedGraph<District, Double> getBipartiteGraph(Collection<District> districts1,
@@ -91,6 +93,7 @@ public class Districting {
         for (District enactedDistrict : enactedDistricts) {
             District generatedDistrict = Graphs.neighborListOf(matching, enactedDistrict).get(0);
             int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
+            System.out.println("Renumbered to: " + districtNumber);
             generatedDistrict.setDistrictNumber(districtNumber);
         }
     }

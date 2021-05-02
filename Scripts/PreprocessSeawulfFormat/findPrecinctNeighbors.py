@@ -1,12 +1,14 @@
 import geopandas
 import json
 
-# 200 feet
-NEIGHBOR_TOL = 60.96
+# Must share at least 200 feet to be considered as neighbors
+NEIGHBOR_THRESH = 60.96
 NUM_DISTRICTS = 13
 
 
+# Given a precinct, find which district contains the precinct.
 def find_district(districts, precinct):
+    # Intersection area between each district and the precinct
     inter_areas = {}
 
     for i in range(NUM_DISTRICTS):
@@ -19,6 +21,7 @@ def find_district(districts, precinct):
     max_area = 0
     district = 0
 
+    # Return the district with the maximum intersection area
     for id, area in inter_areas.items():
         if area > max_area:
             max_area = area
@@ -34,6 +37,7 @@ if __name__ == '__main__':
     with open(precinct_file) as f:
         precincts = geopandas.read_file(f)
 
+    # Convert to metric system
     precincts.to_crs('EPSG:32119', inplace=True)
 
     # Read districts
@@ -64,7 +68,7 @@ if __name__ == '__main__':
 
             inter = p1_geom.intersection(p2_geom)
 
-            if inter.length >= NEIGHBOR_TOL:
+            if inter.length >= NEIGHBOR_THRESH:
                 if p1_id_str not in neighbors:
                     neighbors[p1_id_str] = {'adjacent_nodes': []}
 
