@@ -15,10 +15,6 @@ import java.util.Collection;
  * A helper class to find the union of the geometry of a list of precincts.
  */
 public class UnionBuilder {
-    private static boolean isMultiPolygon(JSONArray coordinates) {
-        return coordinates.length() == 1;
-    }
-
     private static Coordinate[] getCoords(JSONArray coordinates) {
         Coordinate[] coords = new Coordinate[coordinates.length()];
 
@@ -40,7 +36,6 @@ public class UnionBuilder {
         GeometryFactory gf = new GeometryFactory();
         Collection<Geometry> geometries = new ArrayList<>();
 
-        // TODO: Try treating multipolygons as 1 object and see if it improves the union
         for (Precinct precinct : precincts) {
             Collection<JSONArray> coordinates = precinct.retrieveCoordinates();
 
