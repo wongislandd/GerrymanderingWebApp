@@ -40,7 +40,7 @@ public class Districting {
 
     public Districting(Job job, ArrayList<District> districts) {
         this.job = job;
-        this.measures = compileDistrictingMeasures(districts);
+        this.measures = new DistrictingMeasures(districts);
         this.districts = districts;
     }
 
@@ -107,25 +107,6 @@ public class Districting {
         return count;
     }
 
-    private static Compactness getAvgCompactness(ArrayList<District> districts) {
-        // TODO: Use streams?
-        double totalPolsbyPopperCompactness = 0;
-        double totalPopulationFatnessCompactness = 0;
-        double totalGraphCompactness = 0;
-
-        int numDistricts = districts.size();
-
-        for (District district : districts) {
-            DistrictMeasures districtMeasures = district.getMeasures();
-            totalPolsbyPopperCompactness += districtMeasures.getCompactness().getPolsbyPopper();
-            totalPopulationFatnessCompactness += districtMeasures.getCompactness().getPopulationFatness();
-            totalGraphCompactness += districtMeasures.getCompactness().getGraphCompactness();
-        }
-
-        return new Compactness(totalPolsbyPopperCompactness / numDistricts,
-                totalPopulationFatnessCompactness / numDistricts,
-                totalGraphCompactness / numDistricts);
-    }
 
     private static HashMap<Precinct, District> getPrecinctToDistrictMap(ArrayList<District> districts) throws IOException {
         HashMap<Precinct, District> map = new HashMap<>();
@@ -138,38 +119,4 @@ public class Districting {
         return map;
     }
 
-    private static double calculateSplitCountyScore(ArrayList<District> districts) {
-        // TODO: Implement
-//        Set<County> countySet = CountiesSetSingleton.getCountiesSet();
-        return 0.0;
-    }
-
-    public DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
-        // TODO Put this in the constructor of DistrictingMeasures
-        double totalPopulationEquality = 0;
-        Deviation totalDeviationFromEnacted = new Deviation();
-        Deviation totalDeviationFromAverage = new Deviation();
-
-        int numDistricts = districts.size();
-
-        for (District district : districts) {
-            DistrictMeasures districtMeasures = district.getMeasures();
-
-            totalPopulationEquality += districtMeasures.getPopulationEquality();
-            totalDeviationFromEnacted.add(districtMeasures.getDeviationFromEnacted());
-            totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
-        }
-
-        Compactness compactnessAvg = getAvgCompactness(districts);
-
-        double populationEqualityAvg = totalPopulationEquality / numDistricts;
-        Deviation deviationFromEnactedAvg = totalDeviationFromEnacted.getAverage(numDistricts);
-        Deviation deviationFromAverageAvg = totalDeviationFromAverage.getAverage(numDistricts);
-
-        double splitCountyScore = calculateSplitCountyScore(districts);
-
-        return new DistrictingMeasures(compactnessAvg,
-                populationEqualityAvg, splitCountyScore,
-                deviationFromEnactedAvg, deviationFromAverageAvg);
-    }
 }

@@ -35,7 +35,7 @@ public class EnactedDistricting {
         this.state = state;
         this.districts = districts;
         // Placeholder until we move the measure logic into the DistrictingMeasures constructor
-        this.measures = compileDistrictingMeasures(new ArrayList<>(districts));
+        this.measures = new DistrictingMeasures(new ArrayList<>(districts));
 
         for (District district : this.districts) {
             String districtKey = district.getDistrictReference().getDistrictKey();
@@ -43,34 +43,6 @@ public class EnactedDistricting {
         }
     }
 
-    public DistrictingMeasures compileDistrictingMeasures(ArrayList<District> districts) {
-        // TODO Put this in the constructor of DistrictingMeasures
-        double totalPopulationEquality = 0;
-        Deviation totalDeviationFromEnacted = new Deviation();
-        Deviation totalDeviationFromAverage = new Deviation();
-
-        int numDistricts = districts.size();
-
-        for (District district : districts) {
-            DistrictMeasures districtMeasures = district.getMeasures();
-
-            totalPopulationEquality += districtMeasures.getPopulationEquality();
-            totalDeviationFromEnacted.add(districtMeasures.getDeviationFromEnacted());
-            totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
-        }
-
-        Compactness compactnessAvg = new Compactness(.3,.4,.5);
-
-        double populationEqualityAvg = totalPopulationEquality / numDistricts;
-        Deviation deviationFromEnactedAvg = totalDeviationFromEnacted.getAverage(numDistricts);
-        Deviation deviationFromAverageAvg = totalDeviationFromAverage.getAverage(numDistricts);
-
-        double splitCountyScore = .5;
-
-        return new DistrictingMeasures(compactnessAvg,
-                populationEqualityAvg, splitCountyScore,
-                deviationFromEnactedAvg, deviationFromAverageAvg);
-    }
 
     public String getGeoJson() throws IOException {
         GeoJsonBuilder geoJson = new GeoJsonBuilder().buildDistricts(districts).objectiveFunctionProperties(measures).name("Enacted Districting");
