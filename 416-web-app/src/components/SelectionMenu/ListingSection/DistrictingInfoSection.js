@@ -18,10 +18,20 @@ import DistrictingSummary from "../../StatisticComponents/DistrictingSummary";
 
 class DistrictingInfoSection extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {loading : false}
+  }
+
   async loadNewDistricting(id) {
+    this.setState({loading : true})
     NetworkingUtilities.loadDistricting(id).then(results => {
       this.props.populateCurrentDistricting(results);
-    })
+    }).then(x =>
+      this.setState({
+        loading : false,
+      })
+    )
   }
   
   render() {
@@ -66,8 +76,9 @@ class DistrictingInfoSection extends Component {
               this.loadNewDistricting(this.props.districting.id);
               this.props.setNewDistrictingSelected(true);
             }}
+            disabled={this.state.loading || this.props.CurrentDistricting.name == this.props.districting.id}
           >
-            {SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
+            {this.props.CurrentDistricting.name == this.props.districting.id ? "Currently Displaying this Districting" : this.state.loading ? "Loading" : SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
           </Button>
         </div>
       </div>
@@ -96,6 +107,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ComparisonDistrictingA: state.ComparisonDistrictingA,
     ComparisonDistrictingB: state.ComparisonDistrictingB,
+    CurrentDistricting : state.CurrentDistricting
   };
 };
 

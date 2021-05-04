@@ -400,7 +400,6 @@ const rootReducer = (state = initState, action) => {
         FeaturedPrecinct: null,
         CompareDistrict1: null,
         CompareDistrict2: null,
-        CurrentJob : null,
         ExpandedSummaries: [],
         DistrictingsAreConstrained : false,
       };

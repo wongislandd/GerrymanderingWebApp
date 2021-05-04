@@ -72,6 +72,8 @@ public class DistrictingController {
         TopAreaPairDeviation topAreaPairDeviation = new TopAreaPairDeviation();
         CloseToEnacted closeToEnacted = new CloseToEnacted();
         topScoring.forceInsert(districtingService.findById(6038));
+        topScoring.forceInsert(districtingService.findById(6042));
+        topScoring.forceInsert(districtingService.findById(6045));
         InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, closeToEnacted, highScoringMajorityMinority, topAreaPairDeviation);
         return new ResponseEntity<>(analysis, HttpStatus.OK);
     }
