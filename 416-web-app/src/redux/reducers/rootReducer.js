@@ -55,7 +55,6 @@ const initState = {
       true
     ),
     new Filter("Compactness", 0.5, 0, 1, 0.05, true),
-    new Filter("Political Fairness", 0.5, 0, 1, 0.05, true),
   ],
 
   /* Constraint Settings */
@@ -63,7 +62,7 @@ const initState = {
     [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference] : new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
     [SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts] : new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
     [SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold] : new Filter("Minority Threshold", 0.5, 0, 1, 0.05, true),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness] : new Filter("Compactness", 0.5, 0, 1, 0.05, true),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness] : new Filter("Compactness", 0.5, 0, 1, 0.01, true),
   },
 
 
@@ -480,7 +479,8 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.SET_CURRENT_JOB:
       return {
         ...state,
-        CurrentJob : action.Job
+        CurrentJob : action.Job,
+        NumDistrictingsAvailable : action.Job.size
       }
     default:
       return state;

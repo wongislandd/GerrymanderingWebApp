@@ -139,7 +139,7 @@ const mapDispatchToProps = (dispatch) => {
           },
         setCurrentJob : (job) => {
             dispatch(setCurrentJob(job))
-        }
+        },
     };
   };
   

@@ -4,6 +4,7 @@ import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.DistrictingConstraints;
 import cse416.spring.helperclasses.InterestingDistrictingAnalysis;
+import cse416.spring.helperclasses.ObjectiveFunctionWeights;
 import cse416.spring.helperclasses.analysis.CloseToEnacted;
 import cse416.spring.helperclasses.analysis.HighScoringMajorityMinority;
 import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,16 +54,27 @@ public class DistrictingController {
 
 
     @PostMapping(path="/constrain", consumes="application/json")
-    @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<InterestingDistrictingAnalysis> constrain(@RequestBody DistrictingConstraints constraints) {
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "", allowCredentials = "true")
+    public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) {
             // TODO: Implement the constraining
             List<Districting> results = districtingService.findByConstraints(constraints);
-            TopScoring topScoring = new TopScoring();
-            HighScoringMajorityMinority highScoringMajorityMinority = new HighScoringMajorityMinority(constraints.getMinorityPopulation(), constraints.getMinMinorityDistricts(), 99, constraints.getMinorityThreshold());
-            TopAreaPairDeviation topAreaPairDeviation = new TopAreaPairDeviation();
-            CloseToEnacted closeToEnacted = new CloseToEnacted();
-            topScoring.forceInsert(districtingService.findById(6038));
-            InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, closeToEnacted, highScoringMajorityMinority, topAreaPairDeviation);
-            return new ResponseEntity<>(analysis, HttpStatus.OK);
+            request.getSession().setAttribute("districtings", results);
+            request.getSession().setAttribute("constraints", constraints);
+            return new ResponseEntity<>(results.size(), HttpStatus.OK);
     }
+
+
+    @PostMapping(path="/applyWeights", consumes="application/json")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "", allowCredentials = "true")
+    public ResponseEntity<InterestingDistrictingAnalysis> applyWeight(HttpServletRequest request, @RequestBody ObjectiveFunctionWeights weights) {
+        DistrictingConstraints constraints = (DistrictingConstraints) request.getSession().getAttribute("constraints");
+        TopScoring topScoring = new TopScoring();
+        HighScoringMajorityMinority highScoringMajorityMinority = new HighScoringMajorityMinority(constraints.getMinorityPopulation(), constraints.getMinMinorityDistricts(), 99, constraints.getMinorityThreshold());
+        TopAreaPairDeviation topAreaPairDeviation = new TopAreaPairDeviation();
+        CloseToEnacted closeToEnacted = new CloseToEnacted();
+        topScoring.forceInsert(districtingService.findById(6038));
+        InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, closeToEnacted, highScoringMajorityMinority, topAreaPairDeviation);
+        return new ResponseEntity<>(analysis, HttpStatus.OK);
+    }
+
 }

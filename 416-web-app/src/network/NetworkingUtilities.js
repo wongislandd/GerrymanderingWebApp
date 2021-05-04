@@ -97,10 +97,24 @@ export async function applyConstraints() {
     compactnessType : currentState.CompactnessSelection,
     compactnessThreshold : currentState.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness].value,
   }
-  console.log(JSON.stringify(payload))
-  let results = await axios.post(fullUrl, payload).then(response => {
-    let newAnalysis = ParsingUtilities.parseAnalysis(response.data)
-    return newAnalysis;
+  let resultSize = await axios.post(fullUrl, payload, {withCredentials: true}).then(response => {
+    return response.data;
   });
-  return results;
+  return resultSize;
+}
+
+export async function applyWeights() {
+  let currentState = state.getState()
+  let fullUrl = baseURL + "/districtings/applyWeights";
+  const payload = {
+    populationEquality : currentState.ObjectiveFunctionSettings[0].value,
+    splitCounties : currentState.ObjectiveFunctionSettings[1].value,
+    deviationFromAverage : currentState.ObjectiveFunctionSettings[2].value,
+    deviationFromEnacted : currentState.ObjectiveFunctionSettings[3].value,
+    compactness : currentState.ObjectiveFunctionSettings[4].value,
+  }
+  let analysis = await axios.post(fullUrl, payload, {withCredentials: true}).then(response => {
+    return ParsingUtilities.parseAnalysis(response.data);
+  });
+  return analysis;
 }

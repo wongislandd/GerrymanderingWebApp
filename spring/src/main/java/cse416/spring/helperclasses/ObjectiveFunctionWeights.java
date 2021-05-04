@@ -12,8 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class ObjectiveFunctionWeights {
     double populationEquality;
-    double splitCountyScores;
+    double splitCounties;
     double deviationFromAverage;
     double deviationFromEnacted;
-    Compactness compactness;
+    double compactness;
 }

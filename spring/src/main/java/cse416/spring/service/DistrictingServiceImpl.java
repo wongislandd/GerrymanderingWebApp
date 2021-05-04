@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,8 +48,27 @@ public class DistrictingServiceImpl implements DistrictingService {
     @Override
     public List<Districting> findByConstraints(DistrictingConstraints constraints) {
         //TODO Implement
-        Query query = em.createQuery("SELECT d from Districtings d WHERE d.job.id =:jobId");
+        Query query;
+        switch (constraints.getCompactnessType()) {
+            case POLSBY_POPPER:
+                query = em.createQuery("SELECT d from Districtings d WHERE d.job.id =:jobId AND d.measures.compactnessAvg.polsbyPopper>:compactnessThreshold");
+                break;
+            case GRAPH_COMPACTNESS:
+                query = em.createQuery("SELECT d from Districtings d WHERE d.job.id =:jobId AND d.measures.compactnessAvg.graphCompactness>:compactnessThreshold");
+                break;
+            default:
+                query = em.createQuery("SELECT d from Districtings d WHERE d.job.id =:jobId AND d.measures.compactnessAvg.populationFatness>:compactnessThreshold");
+        }
         query.setParameter("jobId", constraints.getJobId());
-        return query.getResultList();
+        query.setParameter("compactnessThreshold", constraints.getCompactnessThreshold());
+        List<Districting> preliminaryResults = query.getResultList();
+        List<Districting> filteredResults = new ArrayList<>();
+        for (Districting d : preliminaryResults) {
+            // TODO Also filter by voting population
+            if(d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold()) > constraints.getMinMinorityDistricts()) {
+                filteredResults.add(d);
+            };
+        }
+        return preliminaryResults;
     }
 }

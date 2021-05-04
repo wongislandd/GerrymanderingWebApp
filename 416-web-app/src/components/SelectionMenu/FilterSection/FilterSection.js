@@ -69,8 +69,15 @@ function getStepCompleteMsg(step) {
   }
 }
 
+
+async function constrainDistrictings(props) {
+  NetworkingUtilities.applyConstraints().then(resultSize => {
+    props.setNumberOfDistrictingsAvailable(resultSize)
+  })
+}
+
 async function populateAnalysis(props) {
-  NetworkingUtilities.applyConstraints().then(analysis => props.updateAnalysisDistrictings(analysis))
+  NetworkingUtilities.applyWeights().then(analysis => props.updateAnalysisDistrictings(analysis))
 }
 
 function FilterSection(props) {
@@ -121,14 +128,12 @@ function FilterSection(props) {
   const handleComplete = async () => {
     if (activeStep == 0) {
       // CONSTRAIN DISTRICTINGS
-      populateAnalysis(props);
-      props.setNumberOfDistrictingsAvailable(
-        StatUtilities.rollARandomNumberOfDistrictings()
-      );
+      constrainDistrictings(props)
       props.setDistrictingsAreConstrained(true)
     }
     if (activeStep == 1) {
       // UPDATE WEIGHTS
+      populateAnalysis(props);
       // RESET CURRENTLY DISPLAYED DISTRICTINGS
       props.resetExpandedSummaries()
       // QUERY SERVER FOR NEW SUMMARY
