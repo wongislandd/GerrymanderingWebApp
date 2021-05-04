@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DistrictingServiceImpl implements DistrictingService {
@@ -46,7 +48,7 @@ public class DistrictingServiceImpl implements DistrictingService {
     }
 
     @Override
-    public List<Districting> findByConstraints(DistrictingConstraints constraints) {
+    public Set<Districting> findByConstraints(DistrictingConstraints constraints) {
         //TODO Implement
         Query query;
         switch (constraints.getCompactnessType()) {
@@ -61,14 +63,14 @@ public class DistrictingServiceImpl implements DistrictingService {
         }
         query.setParameter("jobId", constraints.getJobId());
         query.setParameter("compactnessThreshold", constraints.getCompactnessThreshold());
-        List<Districting> preliminaryResults = query.getResultList();
-        List<Districting> filteredResults = new ArrayList<>();
+        Set<Districting> preliminaryResults = new HashSet<>(query.getResultList());
+        Set<Districting> filteredResults = new HashSet<>();
         for (Districting d : preliminaryResults) {
             // TODO Also filter by voting population
             if(d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold()) > constraints.getMinMinorityDistricts()) {
                 filteredResults.add(d);
             };
         }
-        return preliminaryResults;
+        return filteredResults;
     }
 }

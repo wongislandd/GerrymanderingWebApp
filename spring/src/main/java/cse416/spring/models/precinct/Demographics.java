@@ -54,13 +54,13 @@ public class Demographics {
         // TODO: Fix to floating point division
         switch (minority) {
             case BLACK:
-                return (black / TP);
+                return ((double)black / TP);
             case ASIAN:
-                return (asian / TP);
+                return ((double)asian / TP);
             case HISPANIC:
-                return (hispanic / TP);
+                return ((double)hispanic / TP);
             case NATIVE_AMERICAN:
-                return (natives / TP);
+                return ((double)natives / TP);
             default:
                 return 0;
         }

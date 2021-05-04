@@ -3,8 +3,10 @@ package cse416.spring.models.district;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.FileReader;
+import cse416.spring.helperclasses.ObjectiveFunctionWeights;
 import cse416.spring.helperclasses.builders.UnionBuilder;
 import cse416.spring.helperclasses.constants.IdealPopulation;
+import cse416.spring.models.districting.DistrictingMeasures;
 import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.singletons.PrecinctHashSingleton;
@@ -105,6 +107,36 @@ public class District {
     private double calculatePopulationEquality(int idealPopulation) {
         double popRatio = (double) this.demographics.getTP() / idealPopulation;
         return Math.pow((popRatio - 1), 2);
+    }
+
+    public void assignObjectiveFunctionScore(ObjectiveFunctionWeights weights) {
+
+        double populationEquality = measures.getPopulationEquality();
+        double splitCountiesScore = measures.getSplitCounties();
+        Deviation deviationFromAverage = measures.getDeviationFromAverage();
+        double areaDeviationAverage = deviationFromAverage.getAreaDev();
+        double populationDeviationAverage = deviationFromAverage.getPopulationDev();
+
+        Deviation deviationFromEnacted = measures.getDeviationFromEnacted();
+        double areaDeviationEnacted = deviationFromEnacted.getAreaDev();
+        double populationDeviationEnacted = deviationFromEnacted.getPopulationDev();
+
+        Compactness compactness = measures.getCompactness();
+        double polsbyPopper = compactness.getPolsbyPopper();
+        double populationFatness = compactness.getPopulationFatness();
+        double graphCompactness = compactness.getGraphCompactness();
+
+        double populationEqualityWeight = weights.getPopulationEquality();
+        double splitCountiesScoreWeight = weights.getSplitCounties();
+        double deviationAverageWeight = weights.getDeviationFromAverage();
+        double deviationEnactedWeight = weights.getDeviationFromEnacted();
+        double compactnessWeight = weights.getCompactness();
+
+        double objectiveFunctionResult = (populationEqualityWeight * populationEquality) + (splitCountiesScoreWeight * splitCountiesScore) +
+                (deviationAverageWeight * areaDeviationAverage) + (deviationAverageWeight * populationDeviationAverage) +
+                (deviationEnactedWeight * areaDeviationEnacted) + (deviationEnactedWeight * populationDeviationEnacted) +
+                (compactnessWeight * polsbyPopper) + (compactnessWeight * populationFatness) + (compactnessWeight * graphCompactness);
+        this.objectiveFunctionScore = objectiveFunctionResult;
     }
 
     private double calculateDeviationFromEnacted(Geometry hull, Demographics d) {

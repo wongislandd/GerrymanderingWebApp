@@ -1,6 +1,7 @@
 package cse416.spring.models.districting;
 
 import cse416.spring.enums.MinorityPopulation;
+import cse416.spring.helperclasses.ObjectiveFunctionWeights;
 import cse416.spring.helperclasses.builders.GeoJsonBuilder;
 import cse416.spring.models.district.*;
 import cse416.spring.models.job.Job;
@@ -105,6 +106,15 @@ public class Districting {
             }
         }
         return count;
+    }
+
+    public void assignObjectiveFunctionScores(ObjectiveFunctionWeights weights) {
+        double totalObjectiveFunctionScore = 0;
+        for (District d : districts) {
+            d.assignObjectiveFunctionScore(weights);
+            totalObjectiveFunctionScore += d.getObjectiveFunctionScore();
+        }
+        this.objectiveFunctionScore = totalObjectiveFunctionScore / districts.size();
     }
 
 

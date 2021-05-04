@@ -63,7 +63,7 @@ class ConstraintSelection extends Component {
               outDuration: 250,
             },
           }}
-          value=""
+          value={this.props.PopulationSelection != null ? this.props.PopulationSelection : ""}
         >
           <option disabled value="">
             {SelectionMenuUtilities.LABELS.CHOOSE_A_VOTING_POPULATION}
@@ -113,7 +113,7 @@ class ConstraintSelection extends Component {
                 outDuration: 250,
               },
             }}
-            value=""
+            value={this.props.MinoritySelection != null ? this.props.MinoritySelection : ""}
           >
             <option disabled value="">
               {SelectionMenuUtilities.LABELS.CHOOSE_A_MINORITY_POPULATION}
@@ -158,7 +158,7 @@ class ConstraintSelection extends Component {
               outDuration: 250,
             },
           }}
-          value=""
+          value={this.props.CompactnessSelection != null ? this.props.CompactnessSelection : ""}
         >
           <option disabled value="">
             {SelectionMenuUtilities.LABELS.CHOOSE_A_TYPE_OF_COMPACTNESS}
@@ -201,6 +201,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     IncumbentProtectionInfo: state.IncumbentProtectionInfo,
     ConstraintSliderSettings: state.ConstraintSliderSettings,
+    PopulationSelection : state.PopulationSelection,
+    MinoritySelection : state.MinoritySelection,
+    CompactnessSelection : state.CompactnessSelection,
   };
 };
 

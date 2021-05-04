@@ -7,6 +7,7 @@ import cse416.spring.helperclasses.DistrictingConstraints;
 import cse416.spring.models.districting.EnactedDistricting;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DistrictingService {
     Districting findById(long id);
@@ -15,7 +16,7 @@ public interface DistrictingService {
 
     List<Districting> findAllDistrictings();
 
-    List<Districting> findByConstraints(DistrictingConstraints constraints);
+    Set<Districting> findByConstraints(DistrictingConstraints constraints);
 
     EnactedDistricting findEnactedByState(StateName state);
 }
