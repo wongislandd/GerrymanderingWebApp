@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -54,7 +53,7 @@ public class DistrictingController {
 
 
     @PostMapping(path="/constrain", consumes="application/json")
-    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) {
             // TODO: Implement the constraining
             List<Districting> results = districtingService.findByConstraints(constraints);
@@ -65,7 +64,7 @@ public class DistrictingController {
 
 
     @PostMapping(path="/applyWeights", consumes="application/json")
-    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<InterestingDistrictingAnalysis> applyWeight(HttpServletRequest request, @RequestBody ObjectiveFunctionWeights weights) {
         DistrictingConstraints constraints = (DistrictingConstraints) request.getSession().getAttribute("constraints");
         TopScoring topScoring = new TopScoring();
@@ -76,5 +75,4 @@ public class DistrictingController {
         InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, closeToEnacted, highScoringMajorityMinority, topAreaPairDeviation);
         return new ResponseEntity<>(analysis, HttpStatus.OK);
     }
-
 }
