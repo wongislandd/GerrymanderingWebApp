@@ -21,7 +21,7 @@ public class PrecinctController {
         this.precinctService = service;
     }
 
-    @GetMapping("/{state}/loadPrecincts")
+    @GetMapping(value="/{state}/loadPrecincts", produces = "application/json")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> loadPrecincts(@PathVariable("state") StateName state) throws IOException {
         Collection<Precinct> allPrecincts = precinctService.findByState(state);

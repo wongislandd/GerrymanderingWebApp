@@ -15,7 +15,7 @@ import java.util.Collection;
 @Setter
 @AllArgsConstructor
 public class DistrictingConstraints {
-    int jobId;
+    long jobId;
     MinorityPopulation minorityPopulation;
     int minMinorityDistricts;
     double minorityThreshold;

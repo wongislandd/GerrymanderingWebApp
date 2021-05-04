@@ -38,7 +38,7 @@ public class StateController {
         }
     }
 
-    @GetMapping("/getOutlines")
+    @GetMapping(value="/getOutlines", produces = "application/json")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> getOutlines() {
         Map<String, String> outlineMap = getAllStatesCountyGeometry();

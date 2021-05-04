@@ -27,7 +27,7 @@ public class JobController {
         return new ArrayList<>(jobService.findByStateName(state));
     }
 
-    @GetMapping("/{state}/loadJobs")
+    @GetMapping(value="/{state}/loadJobs", produces = "application/json")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<ArrayList<Job>> loadJobs(@PathVariable("state") StateName state) {
         PrecinctHashSingleton.getPrecinctHash(state);

@@ -41,13 +41,14 @@ public class DistrictingServiceImpl implements DistrictingService {
     @Override
     public List<Districting> findAllDistrictings() {
         Query query = em.createQuery("SELECT d from Districtings d");
-        return (List<Districting>) query.getResultList();
+        return query.getResultList();
     }
 
     @Override
-    public List<Districting> findByJobAndConstraints(int jobId, DistrictingConstraints constraints) {
+    public List<Districting> findByConstraints(DistrictingConstraints constraints) {
         //TODO Implement
-        Query query = em.createQuery("SELECT d from Districtings d");
-        return null;
+        Query query = em.createQuery("SELECT d from Districtings d WHERE d.job.id =:jobId");
+        query.setParameter("jobId", constraints.getJobId());
+        return query.getResultList();
     }
 }

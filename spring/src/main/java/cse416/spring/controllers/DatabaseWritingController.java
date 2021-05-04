@@ -50,7 +50,7 @@ public class DatabaseWritingController {
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
 
-    @PostMapping("/writeAll")
+    @PostMapping(value="/writeAll")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> writeAll() throws IOException {
         final long fileStartTime = System.currentTimeMillis();

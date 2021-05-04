@@ -21,7 +21,7 @@ public class CountyController {
         this.countyService = service;
     }
 
-    @GetMapping("/{state}/loadCounties")
+    @GetMapping(value= "/{state}/loadCounties", produces = "application/json")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> loadCounties(@PathVariable("state") StateName state) throws IOException {
         Collection<County> allCounties = countyService.findByStateName(state);
