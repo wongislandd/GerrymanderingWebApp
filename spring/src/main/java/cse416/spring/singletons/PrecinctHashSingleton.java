@@ -16,7 +16,7 @@ public class PrecinctHashSingleton {
     }
 
     private static HashMap<Integer, Precinct> getPrecinctHashFromDB(StateName state) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
         HashMap<Integer, Precinct> hashmap = new PrecinctServiceImpl(em).getPrecinctHashMapByState(state);
         em.close();

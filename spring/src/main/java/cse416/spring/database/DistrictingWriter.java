@@ -9,6 +9,7 @@ import cse416.spring.models.job.Job;
 import cse416.spring.models.job.JobSummary;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.DistrictingServiceImpl;
+import cse416.spring.singletons.EmfSingleton;
 import cse416.spring.singletons.PrecinctHashSingleton;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,7 +56,7 @@ public class DistrictingWriter {
         Iterator<String> keys = districting.keys();
         Collection<District> districtsInDistricting = new HashSet<>();
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(stateName);
 
         /* For each district in the districting */
@@ -77,7 +78,6 @@ public class DistrictingWriter {
         em.persist(enactedDistricting);
         em.getTransaction().commit();
         em.close();
-        emf.close();
     }
 
 
@@ -104,7 +104,7 @@ public class DistrictingWriter {
         int workForEachThread = 10;
         String[] files = getFilesInFolder(jobFolderPath);
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
         ArrayList<EntityManager> ems = new ArrayList<>();
         for (int j = 0; j < numThreads; j++) {
             ems.add(emf.createEntityManager());

@@ -16,7 +16,7 @@ public class CountiesSetSingleton {
     }
 
     private static Set<County> getCountiesFromDB(StateName state) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
         Set<County> counties = new CountyServiceImpl(em).findByStateName(state);
         em.close();

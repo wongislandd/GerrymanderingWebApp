@@ -5,6 +5,7 @@ import cse416.spring.models.precinct.Demographics;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.PrecinctService;
 import cse416.spring.service.PrecinctServiceImpl;
+import cse416.spring.singletons.EmfSingleton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,7 +45,7 @@ public class PrecinctWriter {
 
     public static void persistPrecincts() throws IOException {
         // Initialize entity manager
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -66,6 +67,5 @@ public class PrecinctWriter {
         System.out.println("Committing precincts.");
         em.getTransaction().commit();
         em.close();
-        emf.close();
     }
 }

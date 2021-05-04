@@ -3,6 +3,7 @@ package cse416.spring.database;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.county.County;
 import cse416.spring.models.precinct.Precinct;
+import cse416.spring.singletons.EmfSingleton;
 import cse416.spring.singletons.PrecinctHashSingleton;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ import static cse416.spring.database.DistrictingWriter.getPrecinctsFromKeys;
 
 public class CountyWriter {
     public static void persistCounties() throws IOException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("orioles_db");
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -49,6 +50,5 @@ public class CountyWriter {
 
         em.getTransaction().commit();
         em.close();
-        emf.close();
     }
 }
