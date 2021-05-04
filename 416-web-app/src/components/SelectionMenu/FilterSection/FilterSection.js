@@ -43,6 +43,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function shouldDisableConstrain(props) {
+  console.log("READY TO CONSTRAIN CALLED")
+  console.log(props)
+  return (props.PopulationSelection == null || props.MinoritySelection == null || props.CompactnessSelection == null);
+}
+
+
 function getSteps() {
   return ["Select Constraints", "Apply Weights"];
 }
@@ -188,6 +195,7 @@ function FilterSection(props) {
               <Button
                 className={classes.button + " redBrownBtn"}
                 onClick={handleComplete}
+                disabled={shouldDisableConstrain(props)}
               >
                 {getStepCompleteMsg(activeStep)}
               </Button>
@@ -222,7 +230,10 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     NumDistrictingsAvailable: state.NumDistrictingsAvailable,
-    DistrictingsAreConstrained : state.DistrictingsAreConstrained
+    DistrictingsAreConstrained : state.DistrictingsAreConstrained,
+    PopulationSelection : state.PopulationSelection,
+    MinoritySelection : state.MinoritySelection,
+    CompactnessSelection : state.CompactnessSelection,
   };
 };
 
