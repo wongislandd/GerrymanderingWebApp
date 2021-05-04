@@ -1,5 +1,6 @@
 package cse416.spring.helperclasses;
 
+import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictMeasures;
 import cse416.spring.models.precinct.Demographics;
 import lombok.AllArgsConstructor;
@@ -15,4 +16,11 @@ public class DistrictSummary {
     double objectiveFunctionScore;
     Demographics demographics;
     DistrictMeasures measures;
+
+    public DistrictSummary(District district) {
+        this.districtNumber = district.getDistrictNumber();
+        this.demographics = district.getDemographics();
+        this.measures = district.getMeasures();
+        this.objectiveFunctionScore = district.getObjectiveFunctionScore();
+    }
 }

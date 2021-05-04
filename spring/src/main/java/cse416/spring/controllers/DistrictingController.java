@@ -3,6 +3,7 @@ package cse416.spring.controllers;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.StateName;
 import cse416.spring.helperclasses.DistrictingConstraints;
+import cse416.spring.helperclasses.InterestingDistrictingAnalysis;
 import cse416.spring.helperclasses.analysis.CloseToEnacted;
 import cse416.spring.helperclasses.analysis.HighScoringMajorityMinority;
 import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
@@ -81,30 +82,16 @@ public class DistrictingController {
         return new ResponseEntity<>("hi", HttpStatus.OK);
     }
 
-    /**
-     * Build the response entity to send in case of an error.
-     *
-     * @param ex The exception object
-     * @return A response entity with a CONFLICT HTTP status.
-     */
-    private static ResponseEntity<String> buildErrorResponseEntity(Exception ex) {
-        String body = "{\"message\":\"" + ex.getMessage() + "\"}";
-        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @PostMapping("/constrain")
+    @PostMapping(path="/constrain", consumes="application/json")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> constrain(@RequestBody DistrictingConstraints constraints) {
-        try {
-            // Use constraints to filter within the db
-            // Construct a set of IDs which match said constraints
-            //server.postConstraints()
-            // Return the set of IDs
-            // TODO: Implement
-
-            return new ResponseEntity<>("{\"message\":\"" + "YUH" + "\"}", HttpStatus.NOT_IMPLEMENTED);
-        } catch (Exception ex) {
-            return buildErrorResponseEntity(ex);
-        }
+    public ResponseEntity<InterestingDistrictingAnalysis> constrain(@RequestBody DistrictingConstraints constraints) {
+            // TODO: Implement the constraining
+            TopScoring topScoring = new TopScoring();
+            HighScoringMajorityMinority highScoringMajorityMinority = new HighScoringMajorityMinority(constraints.getMinorityPopulation(), constraints.getMinMinorityDistricts(), 99, constraints.getMinorityThreshold());
+            TopAreaPairDeviation topAreaPairDeviation = new TopAreaPairDeviation();
+            CloseToEnacted closeToEnacted = new CloseToEnacted();
+            topScoring.forceInsert(districtingService.findById(6038));
+            InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, closeToEnacted, highScoringMajorityMinority, topAreaPairDeviation);
+            return new ResponseEntity<>(analysis, HttpStatus.OK);
     }
 }

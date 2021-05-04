@@ -42,6 +42,11 @@ public class TopScoring implements AnalysisCategoryContainer{
         });
     }
 
+    // TODO Remove after testing
+    public void forceInsert(Districting d) {
+        entries.add(d);
+    }
+
     @Override
     public boolean shouldInsert(Districting districting) {
         // Get measures; calculate Obj Func. Score here

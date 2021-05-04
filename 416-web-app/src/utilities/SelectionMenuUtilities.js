@@ -32,23 +32,22 @@ export const DESCRIPTIONS = {
 
 
 export const MINORITIES = {
-  B: "Black",
-  HL: "Hispanic or Latino",
-  A: "Asian",
-  I: "Native American or Alaskan Native",
-  P: "Native Hawaiian or Pacific Islander",
+  BLACK: "Black",
+  HISPANIC: "Hispanic or Latino",
+  ASIAN: "Asian",
+  NATIVE_AMERICAN: "Native American or Alaskan Native",
 };
 
 export const POPULATIONS = {
-  TOTAL: "Total Population",
-  VAP: "Voting Age Population",
-  CVAP: "Citizen Voting Age Population",
+  TOTAL_POPULATION: "Total Population",
+  VOTING_AGE_POPULATION: "Voting Age Population",
+  CITIZEN_VOTING_AGE_POPULATION: "Citizen Voting Age Population",
 };
 
 export const COMPACTNESS_TYPES = {
-  PolsbyPopper : "Polsby Popper",
-  PopulationFatness : "Population Fatness",
-  GraphCompactness : "Graph Compactness",
+  POLSBY_POPPER : "Polsby Popper",
+  POPULATION_FATNESS : "Population Fatness",
+  GRAPH_COMPACTNESS : "Graph Compactness",
 }
 
 export const ANALYSIS_CATEGORIES = {
@@ -61,6 +60,7 @@ export const ANALYSIS_CATEGORIES = {
 
 export const CONSTRAINT_KEYS = {
   MajorityMinorityDistricts : "MajorityMinorityDistricts",
+  MinorityThreshold : "MinorityThreshold",
   PopulationDifference : "PopulationDifference",
   Compactness : "Compactness"
 }
@@ -73,6 +73,6 @@ export const ANALYSIS_CATEGORIES_USER_FRIENDLY = {
   HighScoringSimilarEnacted: "Highest Scoring Districtings Similar to Enacted",
   HighScoringMajorityMinority:
     "Highest Scoring Districtings with Desired Majority Minority",
-  TopDifferentAreaPairDeviations:
+  TopAreaPairDeviation:
     "Districtings with the Greatest Area Pair-Deviations",
 };

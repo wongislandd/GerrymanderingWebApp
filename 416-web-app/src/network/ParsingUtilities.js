@@ -19,3 +19,13 @@ export function parseIncumbentsJSONToObjects(incumbentsJSON) {
     }
     return incumbents;
 }
+
+export function parseAnalysis(analysisJSON) {
+    let newAnalysis = {
+        TopScoring : analysisJSON.topOFScoring,
+        HighScoringSimilarEnacted : analysisJSON.closeToEnacted,
+        HighScoringMajorityMinority : analysisJSON.highScoringWithMajorityMinority,
+        TopAreaPairDeviation : analysisJSON.topAreaPairDeviation
+    }
+    return newAnalysis;
+}

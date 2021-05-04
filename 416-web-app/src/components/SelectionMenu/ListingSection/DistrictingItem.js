@@ -14,11 +14,11 @@ class DistrictingItem extends Component {
   }
 
   isDisplayed() {
-    return (this.props.ExpandedSummaries.includes(this.props.districting.name))
+    return (this.props.ExpandedSummaries.includes(this.props.districting.id))
   }
 
   handleSelect(event) {
-    this.props.toggleExpandedSummary(this.props.districting.name)
+    this.props.toggleExpandedSummary(this.props.districting.id)
   }
 
   render() {
@@ -27,26 +27,22 @@ class DistrictingItem extends Component {
         expanded={this.isDisplayed()}
         className={"districtSummaryCollapsible"}
         header={
-          // Line up with the Sorting Collapsible
+          //Line up with the Sorting Collapsible
           <Row
             className="ListingColumnsContainer"
             onClick={(e)=>{}}
           >
-            <Col s={2}>{this.props.districting.name}</Col>
-            <Col s={2}>{StatUtilities.getRandomInt(10)}</Col>
+            <Col s={2}>{this.props.districting.id}</Col>
+            <Col s={2}>{this.props.districting.objectiveFunctionScore}</Col>
             <Col s={3}>
               {
-                this.props.districting.objectivefunc[
-                  MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY
-                ]
+                this.props.districting.measures.populationEqualityAvg
               }
             </Col>
-            <Col s={3}>{StatUtilities.getRandomInt(3)}</Col>
+            <Col s={3}>{this.props.districting.majorityMinorityDistricts}</Col>
             <Col s={2}>
               {
-                this.props.districting.objectivefunc[
-                  MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE
-                ]
+                this.props.districting.measures.splitCountiesScore
               }
             </Col>
           </Row>
@@ -57,7 +53,7 @@ class DistrictingItem extends Component {
           <h5 className="padBelowMe">
             {SelectionMenuUtilities.LABELS.DISTRICTING_BREAKDOWN}
           </h5>
-          <DistrictingInfoSection districting={this.props.districting} />
+          {/* <DistrictingInfoSection districting={this.props.districting} /> */}
         </div> : ""
       }
       </CollapsibleItem>
@@ -68,8 +64,8 @@ class DistrictingItem extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleExpandedSummary : (name) => {
-      dispatch(toggleExpandedSummary(name))
+    toggleExpandedSummary : (id) => {
+      dispatch(toggleExpandedSummary(id))
     },
   };
 };

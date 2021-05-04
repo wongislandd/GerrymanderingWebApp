@@ -70,7 +70,7 @@ class ConstraintSelection extends Component {
           </option>
           {Object.keys(SelectionMenuUtilities.POPULATIONS).map((key) => {
             return (
-              <option key={key} value={key} disabled = {key=="CVAP"}>
+              <option key={key} value={key} disabled = {key=="CITIZEN_VOTING_AGE_POPULATION" || key =="VOTING_AGE_POPULATION"}>
                 {SelectionMenuUtilities.POPULATIONS[key]}
               </option>
             );
@@ -127,6 +127,7 @@ class ConstraintSelection extends Component {
             })}
           </Select>
           <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts]}/>
+          <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold]}/>
         <LabelAndInfoIcon
           label={SelectionMenuUtilities.LABELS.COMPACTNESS_TYPE}
           description={

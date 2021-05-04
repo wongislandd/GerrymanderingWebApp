@@ -1,5 +1,4 @@
 import * as ActionTypes from "../actions/ActionTypes";
-import Districting from "../../utilities/classes/Districting";
 import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import TestGeneratedPlan from "../../data/NC/testGeneratedPlan.json";
@@ -12,10 +11,6 @@ import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as NetworkingUtilities from "../../network/NetworkingUtilities";
 
-const defaultDistricting = new Districting(
-  "Enacted Districting Feb 2016 - Nov 2019",
-  TestData
-);
 
 /* Initial State */
 const initState = {
@@ -65,9 +60,10 @@ const initState = {
 
   /* Constraint Settings */
   ConstraintSliderSettings: {
-    "PopulationDifference" : new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
-    "MajorityMinorityDistricts" : new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
-    "Compactness" : new Filter("Compactness", 0.5, 0, 1, 0.05, true),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference] : new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts] : new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold] : new Filter("Minority Threshold", 0.5, 0, 1, 0.05, true),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness] : new Filter("Compactness", 0.5, 0, 1, 0.05, true),
   },
 
 
@@ -132,7 +128,7 @@ const initState = {
     TopScoring: [],
     HighScoringSimilarEnacted: [],
     HighScoringMajorityMinority: [],
-    TopDifferentAreaPairDeviations: [],
+    TopAreaPairDeviation: [],
   },
 
   /* STATE VARIABLES TO BE LOADED IN THROUGH THE NETWORK? IS THIS THE BEST APPROACH? */

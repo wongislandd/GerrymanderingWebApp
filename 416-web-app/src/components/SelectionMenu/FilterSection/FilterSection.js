@@ -11,16 +11,9 @@ import {
   updateObjectiveFunctionSettings,
   setNumberOfDistrictingsAvailable,
   resetExpandedSummaries,
-  setDistrictingsAreConstrained
+  setDistrictingsAreConstrained,
+  updateAnalysisDistrictings
 } from "../../../redux/actions/settingActions";
-import {
-  Collapsible,
-  Row,
-  CollapsibleItem,
-  Select,
-  Icon,
-} from "react-materialize";
-import { FormControlLabel, Checkbox, Slider } from "@material-ui/core";
 import * as StatUtilities from "../../../utilities/StatUtilities";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
@@ -28,14 +21,9 @@ import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
 import Typography from "@material-ui/core/Typography";
 import ConstraintSelection from "./ConstraintSelection";
-import Districting from "../../../utilities/classes/Districting";
 import WeightSelection from "./WeightSelection";
 import ReturnToMapButton from "./ReturnToMapButton";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
-
-
-
-
 
 
 
@@ -79,6 +67,10 @@ function getStepCompleteMsg(step) {
     default:
       return "huh";
   }
+}
+
+async function populateAnalysis(props) {
+  NetworkingUtilities.applyConstraints().then(analysis => props.updateAnalysisDistrictings(analysis))
 }
 
 function FilterSection(props) {
@@ -128,11 +120,8 @@ function FilterSection(props) {
 
   const handleComplete = async () => {
     if (activeStep == 0) {
-      // activeStep represents where in the constraints the user is.
       // CONSTRAIN DISTRICTINGS
-      // let districtingJSON = await NetworkingUtilities.loadDistricting(1);
-      // let newDistricting = new Districting(1, districtingJSON);
-      // props.loadInDistricting(newDistricting);
+      populateAnalysis(props);
       props.setNumberOfDistrictingsAvailable(
         StatUtilities.rollARandomNumberOfDistrictings()
       );
@@ -218,6 +207,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setDistrictingsAreConstrained : (bool) => {
       dispatch(setDistrictingsAreConstrained(bool))
+    },
+    updateAnalysisDistrictings : (analysisDict) => {
+      dispatch(updateAnalysisDistrictings(analysisDict))
     }
   };
 };

@@ -1,5 +1,6 @@
 package cse416.spring.helperclasses;
 
+import cse416.spring.enums.CompactnessType;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.enums.VotingPopulation;
 import cse416.spring.models.district.Compactness;
@@ -14,10 +15,13 @@ import java.util.Collection;
 @Setter
 @AllArgsConstructor
 public class DistrictingConstraints {
+    int jobId;
     MinorityPopulation minorityPopulation;
+    int minMinorityDistricts;
+    double minorityThreshold;
     VotingPopulation votingPopulation;
     double maxPopulationDifference;
-    int minMinorityDistricts;
-    Compactness compactness;
-    Collection<String> incumbentOptions;
+    CompactnessType compactnessType;
+    double compactnessThreshold;
+//    Collection<String> incumbentOptions;
 }

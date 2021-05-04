@@ -1,7 +1,9 @@
 import state from "../redux/store"; 
 import * as ParsingUtilities from './ParsingUtilities'
 import * as ViewportUtilities from '../utilities/ViewportUtilities'
+import * as SelectionMenuUtilities from '../utilities/SelectionMenuUtilities'
 
+const axios = require('axios').default
 const baseURL = "http://localhost:8080";
 
 export const HTTPMETHODS = {
@@ -14,6 +16,10 @@ function getFullRequestURLWithParams(endpoint, params) {
   const URLParams = new URLSearchParams(params);
   return baseURL + endpoint + "?" + URLParams.toString();
 }
+
+
+
+
 
 /* Load an individual districting based on ID */
 export async function loadDistricting(id) {
@@ -78,14 +84,23 @@ export async function loadCounties(state) {
   return body;
 }
 
-
 export async function applyConstraints() {
-  // const params = {
-  //   compactness : new Compactness(state.ConstraintSliderSettings[2].value, state.ConstraintSliderSettings[3].value, state.ConstraintSliderSettings[4].value)
-  // }
-  // let fullUrl = getFullRequestURLWithParams("/districtings/constrain", params)
-  // const response = await fetch(fullUrl)
-  // let body = await response.json();
-  // console.log(body)
-  // return body
+  let currentState = state.getState()
+  let fullUrl = baseURL + "/districtings/constrain";
+  const payload = {
+    jobId : currentState.CurrentJob.id,
+    votingPopulation : currentState.PopulationSelection,
+    minorityThreshold : currentState.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold].value,
+    maxPopulationDifference : currentState.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference].value,
+    minorityPopulation : currentState.MinoritySelection,
+    minMinorityDistricts : currentState.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts].value,
+    compactnessType : currentState.CompactnessSelection,
+    compactnessThreshold : currentState.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness].value,
+  }
+  console.log(JSON.stringify(payload))
+  let results = await axios.post(fullUrl, payload).then(response => {
+    let newAnalysis = ParsingUtilities.parseAnalysis(response.data)
+    return newAnalysis;
+  });
+  return results;
 }
