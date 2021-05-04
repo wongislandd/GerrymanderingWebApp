@@ -22,8 +22,6 @@ public class InterestingDistrictingAnalysis {
     ArrayList<DistrictingSummary> highScoringWithMajorityMinority;
     ArrayList<DistrictingSummary> topAreaPairDeviation;
 
-
-
     public InterestingDistrictingAnalysis(TopScoring topOFScoringContainer, CloseToEnacted closeToEnactedContainer, HighScoringMajorityMinority highScoringMajorityMinorityContainer, TopAreaPairDeviation topAreaPairDeviationContainer) {
         this.topOFScoring = new ArrayList<>();
         this.closeToEnacted = new ArrayList<>();

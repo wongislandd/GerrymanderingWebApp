@@ -28,6 +28,9 @@ export const COMPARISON_DIRECTIONS = {
 };
 
 export function getPercentageChange(x, y) {
+  if(x == 0 && y == 0) {
+    return 0;
+  }
   let decreaseValue = x - y;
   return Math.round((decreaseValue / x) * 100);
 }
@@ -39,6 +42,8 @@ export function addCommas(value) {
 function percentage(partialValue, totalValue) {
   return (100 * partialValue) / totalValue;
 }
+
+
 
 export function formatResult(partialValue, totalValue) {
   return (
