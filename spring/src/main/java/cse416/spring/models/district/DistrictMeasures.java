@@ -24,6 +24,8 @@ public class DistrictMeasures {
     Deviation deviationFromEnacted;
     @Transient
     Deviation deviationFromAverage;
+    @Transient
+    int splitCounties;
 
     public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
         this.populationEquality = populationEquality;
@@ -31,5 +33,7 @@ public class DistrictMeasures {
         this.compactness = compactness;
         this.deviationFromAverage = new Deviation(Math.random(), Math.random());
         this.deviationFromEnacted = new Deviation(Math.random(), Math.random());
+        // TODO Implement counting split counties
+        this.splitCounties = (int) (Math.random() * 10);
     }
 }

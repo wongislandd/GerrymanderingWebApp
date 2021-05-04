@@ -107,71 +107,33 @@ export default class ObjectiveFunctionTable extends Component {
             <TableRow>
               <TableCell scope="row">
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS.AVG_POPULATION_EQUALITY
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS.POPULATION_EQUALITY
-                    ]}
+                  ? this.props.DistrictingToDisplay.measures.populationEqualityAvg
+                  : this.props.DistrictToDisplay.measures.populationEquality}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES_SCORE
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS.SPLIT_COUNTIES
-                    ]}
+                  ? this.props.DistrictingToDisplay.measures.splitCountiesScore
+                  : this.props.DistrictToDisplay.measures.splitCounties}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS
-                        .AVG_DEVIATION_FROM_AVG_DISTRICTING
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS
-                        .DEVIATION_FROM_AVG_DISTRICTING
-                    ]}
+                  ? this.props.DistrictingToDisplay.measures.deviationFromAverageAvg.areaDev
+                  : this.props.DistrictToDisplay.measures.deviationFromAverage.areaDev}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS
-                        .AVG_DEVIATION_FROM_ENACTED_DISTRICTING
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS
-                        .DEVIATION_FROM_ENACTED_DISTRICTING
-                    ]}
+                  ? this.props.DistrictingToDisplay.measures.deviationFromEnactedAvg.areaDev
+                  : this.props.DistrictToDisplay.measures.deviationFromEnacted.areaDev}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS.AVG_COMPACTNESS
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS.COMPACTNESS
-                    ]}
+                  ? this.props.DistrictingToDisplay.measures.compactnessAvg.polsbyPopper
+                  : this.props.DistrictToDisplay.measures.compactness.polsbyPopper}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS.AVG_POLITICAL_FAIRNESS
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS.POLITICAL_FAIRNESS
-                    ]}
-              </TableCell>
-              <TableCell>
-                {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.objectivefunc[
-                      MapUtilities.PROPERTY_LABELS
-                        .TOTAL_MAJORITY_MINORITY_DISTRICTS
-                    ]
-                  : this.props.DistrictToDisplay.properties[
-                      MapUtilities.PROPERTY_LABELS.MAJORITY_MINORITY_DISTRICT
-                    ]}
+                  ? this.props.DistrictingToDisplay.measures.majorityMinorityDistricts
+                  : this.props.DistrictToDisplay.isMajorityMinorityDistrict}
               </TableCell>
             </TableRow>
           </TableBody>

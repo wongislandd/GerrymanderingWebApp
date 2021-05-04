@@ -16,6 +16,7 @@ public class DistrictSummary {
     double objectiveFunctionScore;
     Demographics demographics;
     DistrictMeasures measures;
+    boolean isMajorityMinorityDistrict = false;
 
     public DistrictSummary(District district) {
         this.districtNumber = district.getDistrictNumber();

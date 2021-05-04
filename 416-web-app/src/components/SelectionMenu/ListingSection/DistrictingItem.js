@@ -39,7 +39,7 @@ class DistrictingItem extends Component {
                 this.props.districting.measures.populationEqualityAvg
               }
             </Col>
-            <Col s={3}>{this.props.districting.majorityMinorityDistricts}</Col>
+            <Col s={3}>{this.props.districting.measures.majorityMinorityDistricts}</Col>
             <Col s={2}>
               {
                 this.props.districting.measures.splitCountiesScore
@@ -53,7 +53,7 @@ class DistrictingItem extends Component {
           <h5 className="padBelowMe">
             {SelectionMenuUtilities.LABELS.DISTRICTING_BREAKDOWN}
           </h5>
-          {/* <DistrictingInfoSection districting={this.props.districting} /> */}
+          <DistrictingInfoSection districting={this.props.districting} />
         </div> : ""
       }
       </CollapsibleItem>

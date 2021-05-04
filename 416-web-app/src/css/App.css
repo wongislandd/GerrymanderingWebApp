@@ -329,7 +329,6 @@ button:focus {
 }
 
 .demographicsContainer {
-  display: flex;
   padding: 45px;
 }
 
@@ -438,10 +437,10 @@ button:focus {
 }
 
 .job-selection-screen-display {
-  background-color: white);
+  background-color: white;
 }
 
-
-.centerMe {
-
+.pieChart {
+  position: relative;
+  left: 50%;
 }

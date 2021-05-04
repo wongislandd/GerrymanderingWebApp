@@ -6,9 +6,13 @@ export default class RacialPieChart extends Component {
   constructor(props) {
     super(props);
   }
+
+  
+
   render() {
     return (
       <Chart
+        className="pieChart"
         width={"400px"}
         height={"200px"}
         chartType="PieChart"
@@ -17,49 +21,34 @@ export default class RacialPieChart extends Component {
           ["Race", "Count"],
           [
             "White",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.WHITE_COUNT
-            ],
+            this.props.district.demographics.white
           ],
           [
             "Black",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.BLACK_COUNT
-            ],
+            this.props.district.demographics.black,
+          ],
+          [
+            "Hispanic",
+            this.props.district.demographics.hispanic,
           ],
           [
             "Asian",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.ASIAN_COUNT
-            ],
+            this.props.district.demographics.asian,
           ],
           [
             "Native American / Alaskan",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.NATIVE_COUNT
-            ],
+            this.props.district.demographics.natives,
           ],
           [
             "Pacific Islander / Hawaiian",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.PACIFIC_ISLANDER_COUNT
-            ],
-          ],
-          [
-            "Undesignated",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.UNDESIGNATED_COUNT
-            ],
+            this.props.district.demographics.pacific,
           ],
           [
             "Other",
-            this.props.feature.properties[
-              MapUtilities.PROPERTY_LABELS.RACE_OTHER_COUNT
-            ],
+            this.props.district.demographics.other,
           ],
         ]}
         options={{
-          title: "Racial Demographics",
           pieSliceText: "none",
           pieHole: 0.2,
         }}

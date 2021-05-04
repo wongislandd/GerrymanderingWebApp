@@ -22,13 +22,11 @@ import {
 import * as MapUtilities from "../../utilities/MapUtilities";
 import * as StatUtilities from "../../utilities/StatUtilities";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
-import PartyPieChart from "./PartyPieChart";
 import RacialPieChart from "./RacialPieChart";
 import LabelAndInfoIcon from "./LabelAndInfoIcon";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
 import BoxPlot from "./BoxPlot";
 import ObjectiveFunctionTable from "./ObjectiveFunctionTable";
-import VoterDemographicsTable from "./VoterDemographicsTable";
 import RacialDemographicsTable from "./RacialDemographicsTable";
 
 class DistrictingSummary extends Component {
@@ -96,53 +94,9 @@ class DistrictingSummary extends Component {
         id="stat-collapsible"
         accordion={false}
       >
-        {this.props.InSelectionMenu ? (
-          <div>
-            <h6 className="title-text">Preview</h6>
-            <ReactMapGL
-              className="map-display"
-              longitude={this.props.MapViewport.longitude}
-              latitude={this.props.MapViewport.latitude}
-              zoom={4.8}
-              width="100%"
-              height="300px"
-              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-            >
-              <Source
-                id={MapUtilities.IDs.DISTRICT_SOURCE_ID}
-                type="geojson"
-                data={this.props.DistrictingToDisplay}
-              />
-              <Layer
-                id={MapUtilities.IDs.DISTRICT_FILL_LAYER_ID}
-                type="fill"
-                source={MapUtilities.IDs.DISTRICT_SOURCE_ID}
-                paint={{
-                  "fill-color": [
-                    "rgb",
-                    ["get", "rgb-R"],
-                    ["get", "rgb-G"],
-                    ["get", "rgb-B"],
-                  ],
-                  "fill-opacity": 0.5,
-                }}
-              />
-              <Layer
-                id={MapUtilities.IDs.DISTRICT_LINE_LAYER_ID}
-                type="line"
-                source={MapUtilities.IDs.DISTRICT_SOURCE_ID}
-                paint={{
-                  "line-opacity": 1,
-                }}
-              />
-            </ReactMapGL>
-          </div>
-        ) : (
-          <div />
-        )}
         <div>
           <h6 className="title-text centerWithinMe">Box and Whisker</h6>
-          <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay} />
+          {/* <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay} /> */}
         </div>
 
         <CollapsibleItem
@@ -156,39 +110,39 @@ class DistrictingSummary extends Component {
           />
         </CollapsibleItem>
 
-        {this.props.DistrictingToDisplay.features.map(
-          (feature, key) => {
+        {this.props.DistrictingToDisplay.districtSummaries.map(
+          (district, key) => {
             return (
               <CollapsibleItem
                 /* The key tells the highlighting engine how to identify the feature 
                          This will work so long as the key matches the feature's ID in the visual object
                          that the map renders, which I think it always will since it's in order. */
-                onMouseEnter={(e) => {
-                  if (!this.props.InSelectionMenu) {
-                    feature.id = key;
-                    this.props.addFeatureToHighlight(feature);
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!this.props.InSelectionMenu) {
-                    feature.id = key;
-                    this.props.removeFeatureHighlighting(feature);
-                  }
-                }}
-                onClick={(e) => {
-                  /* The state refreshing along with the expanded attribute cause some buggy behavior
-                            where the collapsible will be open but seen as closed, this is a price we can pay to
-                            trade off for clicking on a district to display stats, but on anywhere else this is being
-                            used we don't need that behavior. */
-                  if (!this.props.InSelectionMenu) {
-                    /* If they close the already open one. */
-                    if (key == this.props.StatShowcasedDistrictID) {
-                      this.props.setStatShowcasedDistrictID(null);
-                    } else {
-                      this.props.setStatShowcasedDistrictID(key);
-                    }
-                  }
-                }}
+                // onMouseEnter={(e) => {
+                //   if (!this.props.InSelectionMenu) {
+                //     district.id = key;
+                //     this.props.addFeatureToHighlight(district);
+                //   }
+                // }}
+                // onMouseLeave={(e) => {
+                //   if (!this.props.InSelectionMenu) {
+                //     district.id = key;
+                //     this.props.removeFeatureHighlighting(district);
+                //   }
+                // }}
+                // onClick={(e) => {
+                //   /* The state refreshing along with the expanded attribute cause some buggy behavior
+                //             where the collapsible will be open but seen as closed, this is a price we can pay to
+                //             trade off for clicking on a district to display stats, but on anywhere else this is being
+                //             used we don't need that behavior. */
+                //   if (!this.props.InSelectionMenu) {
+                //     /* If they close the already open one. */
+                //     if (key == this.props.StatShowcasedDistrictID) {
+                //       this.props.setStatShowcasedDistrictID(null);
+                //     } else {
+                //       this.props.setStatShowcasedDistrictID(key);
+                //     }
+                //   }
+                // }}
                 expanded={
                   this.props.InSelectionMenu
                     ? false
@@ -197,35 +151,30 @@ class DistrictingSummary extends Component {
                     : this.props.StatShowcasedDistrictID == key
                 }
                 key={key}
-                header={"District " + feature.properties["District"]}
-                style={{
-                  backgroundColor:
-                    "rgba(" +
-                    feature.properties["rgb-R"] +
-                    "," +
-                    feature.properties["rgb-G"] +
-                    "," +
-                    feature.properties["rgb-B"] +
-                    "," +
-                    MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY +
-                    ")",
-                }}
+                header={"District " + district.districtNumber}
+                // style={{
+                //   backgroundColor:
+                //     "rgba(" +
+                //     district.properties["rgb-R"] +
+                //     "," +
+                //     district.properties["rgb-G"] +
+                //     "," +
+                //     district.properties["rgb-B"] +
+                //     "," +
+                //     MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY +
+                //     ")",
+                // }}
               >
-                <h5>Voter Demographics</h5>
-
-                <VoterDemographicsTable DistrictToDisplay={feature} />
-
                 <h5>Racial Demographics</h5>
 
-                <RacialDemographicsTable DistrictToDisplay={feature} />
+                <RacialDemographicsTable DistrictToDisplay={district} />
 
                 <div className="demographicsContainer">
-                  <PartyPieChart feature={feature} />
-                  <RacialPieChart feature={feature} />
+                  <RacialPieChart district={district} />
                 </div>
 
                 <h5>Objective Function Details</h5>
-                <ObjectiveFunctionTable DistrictToDisplay={feature} />
+                <ObjectiveFunctionTable DistrictToDisplay={district} />
               </CollapsibleItem>
             );
           }

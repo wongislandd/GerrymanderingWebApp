@@ -26,6 +26,8 @@ public class DistrictingMeasures {
     Deviation deviationFromEnactedAvg;
     @Transient
     Deviation deviationFromAverageAvg;
+    @Transient
+    int majorityMinorityDistricts;
 
     @Id
     @GeneratedValue
@@ -39,6 +41,8 @@ public class DistrictingMeasures {
         this.splitCountiesScore = splitCountiesScore;
         this.deviationFromEnactedAvg = deviationFromEnactedAvg;
         this.deviationFromAverageAvg = deviationFromAverageAvg;
+        // TODO Access actual data by parsing through districts dynamically.
+        this.majorityMinorityDistricts = (int) (Math.random() * 10);
     }
 
     private static Compactness getAvgCompactness(ArrayList<District> districts) {
