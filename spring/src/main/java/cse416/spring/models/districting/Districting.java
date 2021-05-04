@@ -97,12 +97,15 @@ public class Districting {
         }
     }
 
-    public double getMMDistrictsCount(MinorityPopulation minority, double threshold) {
+    public int getMMDistrictsCount(MinorityPopulation minority, double threshold) {
         int count = 0;
         for (District district : districts) {
             MajorityMinorityInfo mmInfo = district.getMeasures().getMajorityMinorityInfo();
             if (mmInfo.isMajorityMinorityDistrict(minority, threshold)) {
                 count++;
+                district.getMeasures().setMajorityMinority(true);
+            } else {
+                district.getMeasures().setMajorityMinority(false);
             }
         }
         return count;

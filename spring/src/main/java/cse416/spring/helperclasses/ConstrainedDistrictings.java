@@ -28,7 +28,7 @@ public class ConstrainedDistrictings {
         List<Districting> districtingsList = new ArrayList<>(districtings);
         this.averageDistricting = districtingsList.get((int) (Math.random() * districtings.size()));
 
-        // TODO Assign each district a deviation from average after finding the average districting
+        // TODO Assign each district a deviation from average after finding the proper average districting
         for (Districting districting : districtings) {
             double totalDeviationFromAvgArea = 0;
             double totalDeviationFromAvgPop = 0;

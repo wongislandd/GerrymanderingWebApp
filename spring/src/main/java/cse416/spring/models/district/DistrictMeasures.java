@@ -26,6 +26,8 @@ public class DistrictMeasures {
     Deviation deviationFromAverage;
     @Transient
     int splitCounties;
+    @Transient
+    boolean isMajorityMinority;
 
     public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
         this.populationEquality = populationEquality;

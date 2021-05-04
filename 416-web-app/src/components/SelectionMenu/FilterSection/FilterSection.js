@@ -44,8 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function shouldDisableConstrain(props) {
-  console.log("READY TO CONSTRAIN CALLED")
-  console.log(props)
   return (props.PopulationSelection == null || props.MinoritySelection == null || props.CompactnessSelection == null);
 }
 
@@ -187,7 +185,7 @@ function FilterSection(props) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={activeStep == getSteps().length - 1 || !props.DistrictingsAreConstrained}
+                disabled={activeStep == getSteps().length - 1 || !props.DistrictingsAreConstrained || props.NumDistrictingsAvailable == 0}
                 className={classes.button + " redBrownBtn"}
               >
                 Next

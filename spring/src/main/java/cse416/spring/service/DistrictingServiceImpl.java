@@ -67,8 +67,10 @@ public class DistrictingServiceImpl implements DistrictingService {
         Set<Districting> filteredResults = new HashSet<>();
         for (Districting d : preliminaryResults) {
             // TODO Also filter by voting population
-            if(d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold()) > constraints.getMinMinorityDistricts()) {
+            int majorityMinorityDistrictsCount = d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold());
+            if(majorityMinorityDistrictsCount > constraints.getMinMinorityDistricts()) {
                 filteredResults.add(d);
+                d.getMeasures().setMajorityMinorityDistricts(majorityMinorityDistrictsCount);
             };
         }
         return filteredResults;

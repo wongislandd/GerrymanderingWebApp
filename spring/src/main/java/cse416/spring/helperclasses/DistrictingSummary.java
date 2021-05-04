@@ -24,6 +24,7 @@ public class DistrictingSummary {
     public DistrictingSummary(Districting districting) {
         id = districting.getId();
         measures = districting.getMeasures();
+        // TODO Calculate the actual districting's deviation from average
         measures.setDeviationFromAverageAvg(new Deviation(.5,.5));
         objectiveFunctionScore = districting.getObjectiveFunctionScore();
         districtSummaries = new HashSet<>();

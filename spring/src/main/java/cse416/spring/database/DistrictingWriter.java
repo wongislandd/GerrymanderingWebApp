@@ -29,7 +29,6 @@ import static cse416.spring.helperclasses.FileReader.readJsonFile;
  * districtings into the database.
  */
 public class DistrictingWriter {
-    // TODO Turn this into an SQL query within PrecinctService
     public static Set<Precinct> getPrecinctsFromKeys(JSONArray precinctKeys,
                                                            HashMap<Integer, Precinct> allPrecincts) {
         Set<Precinct> results = new HashSet<>();

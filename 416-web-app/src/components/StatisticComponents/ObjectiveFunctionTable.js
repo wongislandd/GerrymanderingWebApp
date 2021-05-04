@@ -83,16 +83,6 @@ export default class ObjectiveFunctionTable extends Component {
                 <LabelAndInfoIcon
                   label={
                     this.displayDistrictingInfo()
-                      ? "Average Political Fairness"
-                      : "Political Fairness"
-                  }
-                  description={StatUtilities.DESCRIPTIONS.POLITICAL_FAIRNESS}
-                />
-              </TableCell>
-              <TableCell>
-                <LabelAndInfoIcon
-                  label={
-                    this.displayDistrictingInfo()
                       ? "Majority Minority Districts"
                       : "Is Majority Minority District?"
                   }
@@ -133,7 +123,7 @@ export default class ObjectiveFunctionTable extends Component {
               <TableCell>
                 {this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures.majorityMinorityDistricts
-                  : this.props.DistrictToDisplay.isMajorityMinorityDistrict}
+                  : this.props.DistrictToDisplay.majorityMinorityDistrict ? "Yes" : "No"}
               </TableCell>
             </TableRow>
           </TableBody>

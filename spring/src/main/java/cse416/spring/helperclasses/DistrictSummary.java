@@ -16,12 +16,13 @@ public class DistrictSummary {
     double objectiveFunctionScore;
     Demographics demographics;
     DistrictMeasures measures;
-    boolean isMajorityMinorityDistrict = false;
+    boolean isMajorityMinorityDistrict;
 
     public DistrictSummary(District district) {
         this.districtNumber = district.getDistrictNumber();
         this.demographics = district.getDemographics();
         this.measures = district.getMeasures();
         this.objectiveFunctionScore = district.getObjectiveFunctionScore();
+        this.isMajorityMinorityDistrict = district.getMeasures().isMajorityMinority();
     }
 }
