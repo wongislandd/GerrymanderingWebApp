@@ -17,12 +17,17 @@ class CompareSection extends Component {
   /* Dictionary where key is the label to display and value is the value to look up */
   statsToCompare = {
     "Population Equality": ["populationEqualityAvg"],
-    "Split Counties": ["splitCountiesScore"],
-    "Deviation from Average":
+    "Split County Score": ["splitCountiesScore"],
+    "Deviation from Average Area" :
       [["deviationFromAverageAvg"],["areaDev"]],
-    "Deviation from Enacted":
+    "Deviation from Average Population" :
+      [["deviationFromAverageAvg"],["populationDev"]],
+    "Deviation from Enacted Area":
     [["deviationFromEnactedAvg"],["areaDev"]],
+    "Deviation from Enacted Population" :
+    [["deviationFromEnactedAvg"],["populationDev"]],
     Compactness: [["compactnessAvg"],["polsbyPopper"]],
+    "Majority Minority Districts" : ["majorityMinorityDistricts"]
   };
 
   readyToCompare() {
@@ -97,7 +102,7 @@ class CompareSection extends Component {
                           ? StatUtilities.COMPARISON_DIRECTIONS.UP
                           : StatUtilities.COMPARISON_DIRECTIONS.DOWN
                       }
-                      value={thisDistrictingVal}
+                      value={key == "Majority Minority Districts" ? thisDistrictingVal : StatUtilities.formatAsPercentage(thisDistrictingVal,5)}
                       pct={difference + "%"}
                     />
                   );
@@ -131,7 +136,7 @@ class CompareSection extends Component {
                           ? StatUtilities.COMPARISON_DIRECTIONS.UP
                           : StatUtilities.COMPARISON_DIRECTIONS.DOWN
                       }
-                      value={thisDistrictingVal}
+                      value={key == "Majority Minority Districts" ? thisDistrictingVal : StatUtilities.formatAsPercentage(thisDistrictingVal,5)}
                       pct={difference + "%"}
                     />
                   );

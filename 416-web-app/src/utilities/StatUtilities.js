@@ -43,6 +43,10 @@ function percentage(partialValue, totalValue) {
   return (100 * partialValue) / totalValue;
 }
 
+export function formatAsPercentage(decimal, places) {
+  let pctValue = decimal * 100;
+  return Number.parseFloat(Number.parseFloat(pctValue).toFixed(places))+"%"
+}
 
 
 export function formatResult(partialValue, totalValue) {
