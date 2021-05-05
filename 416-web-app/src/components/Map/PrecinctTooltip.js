@@ -30,63 +30,36 @@ class PrecinctTooltip extends Component {
               <b>
                 Precinct :{" "}
                 {
-                  locationToFeature.properties[
-                    MapUtilities.PROPERTY_LABELS.PRECINCT_NAME
-                  ]
+                  locationToFeature.properties.name
                 }
               </b>
             </li>
-            <li>County : {locationToFeature.properties["county_nam"]}</li>
+            <li>County : {locationToFeature.properties.county}</li>
             <li>
               Population :{" "}
               {StatUtilities.addCommas(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
-              )}
-            </li>
-            <li>
-              Democratic :{" "}
-              {StatUtilities.formatResult(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.DEMOCRAT_COUNT
-                ],
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
-              )}
-            </li>
-            <li>
-              Republican :{" "}
-              {StatUtilities.formatResult(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.REPUBLICAN_COUNT
-                ],
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
+                locationToFeature.properties.population
               )}
             </li>
             <li>
               White Population:{" "}
               {StatUtilities.formatResult(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.WHITE_COUNT
-                ],
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
+                locationToFeature.properties.white,
+                locationToFeature.properties.population,
               )}
             </li>
             <li>
               Black Population:{" "}
               {StatUtilities.formatResult(
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.BLACK_COUNT
-                ],
-                locationToFeature.properties[
-                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
-                ]
+                locationToFeature.properties.black,
+                locationToFeature.properties.population
+              )}
+            </li>
+            <li>
+              Hispanic Population:{" "}
+              {StatUtilities.formatResult(
+                locationToFeature.properties.hispanic,
+                locationToFeature.properties.population
               )}
             </li>
           </ul>

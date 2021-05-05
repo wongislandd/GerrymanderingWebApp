@@ -60,6 +60,17 @@ class DistrictTooltip extends Component {
                 ]
               )}
             </li>
+            <li>
+              Hispanic Population:{" "}
+              {StatUtilities.formatResult(
+                locationToFeature.properties[
+                  MapUtilities.PROPERTY_LABELS.HISPANIC_COUNT
+                ],
+                locationToFeature.properties[
+                  MapUtilities.PROPERTY_LABELS.TOTAL_POPULATION
+                ]
+              )}
+            </li>
           </ul>
         </div>
       );
