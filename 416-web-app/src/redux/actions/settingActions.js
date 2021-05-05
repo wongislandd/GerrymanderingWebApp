@@ -290,12 +290,6 @@ export const loadInJobs = (jobs) => {
   };
 };
 
-export const populateIncumbents = (incumbents) => {
-  return {
-    type: ActionTypes.POPULATE_INCUMBENTS,
-    Incumbents: incumbents,
-  };
-};
 
 export const populatePrecincts = (precinctsGeoJson) => {
   return {

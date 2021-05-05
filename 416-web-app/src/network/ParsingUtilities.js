@@ -19,15 +19,7 @@ export function parseJobJSONToObjects(jobsJSON) {
   return jobs;
 }
 
-export function parseIncumbentsJSONToObjects(incumbentsJSON) {
-  let incumbents = [];
-  for (let incumbent of incumbentsJSON) {
-    incumbents.push(
-      new Incumbent(incumbent.name, incumbent.residence, incumbent.id)
-    );
-  }
-  return incumbents;
-}
+
 
 export function parseAnalysis(analysisJSON) {
   let newAnalysis = {

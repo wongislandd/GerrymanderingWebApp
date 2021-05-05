@@ -58,14 +58,6 @@ export async function loadJobs(state) {
   return jobs;
 }
 
-export async function loadIncumbents(state) {
-  let fullUrl = baseURL + "/incumbents/" + state + "/loadIncumbents";
-  const response = await fetch(fullUrl);
-  let body = await response.json();
-  console.log(body);
-  let incumbents = ParsingUtilities.parseIncumbentsJSONToObjects(body);
-  return incumbents;
-}
 
 export async function loadPrecincts(state) {
   let fullUrl = baseURL + "/precincts/" + state + "/loadPrecincts";

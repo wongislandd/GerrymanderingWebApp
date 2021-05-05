@@ -2,6 +2,7 @@ package cse416.spring.helperclasses.builders;
 
 import cse416.spring.models.county.County;
 import cse416.spring.models.district.District;
+import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingMeasures;
 import cse416.spring.models.precinct.Precinct;
 import org.locationtech.jts.geom.Coordinate;
@@ -10,7 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 public class GeoJsonBuilder {
     public long id;
@@ -55,13 +58,30 @@ public class GeoJsonBuilder {
         return this;
     }
 
+    private static Comparator<District> districtNumberComparator = new Comparator<District>() {
+        @Override
+        public int compare(District district, District district2) {
+            if(district.getDistrictNumber() > district2.getDistrictNumber()) {
+                return 1;
+            } else if(district.getDistrictNumber() < district2.getDistrictNumber()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    };
+
+
     public GeoJsonBuilder buildDistricts(Collection<District> districts) throws IOException {
         geoJson = new JSONObject();
         geoJson.put("type", "FeatureCollection");
         geoJson.put("features", new JSONArray());
 
+        ArrayList<District> districtsOrdered = new ArrayList<>(districts);
+        /* Sort the GeoJson by district number so that it's generated MapBox ID can line up with the number. */
+        districtsOrdered.sort(districtNumberComparator);
         // For each geometry
-        for (District d : districts) {
+        for (District d : districtsOrdered) {
             JSONObject feature = new JSONObject();
             feature.put("type", "Feature");
             feature.put("properties", createPropertiesJsonObject(d));

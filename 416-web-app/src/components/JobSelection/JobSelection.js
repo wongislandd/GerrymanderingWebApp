@@ -15,7 +15,6 @@ import {
   populatePrecincts,
   populateCounties,
   populateCurrentDistrictingGeoJson,
-  populateIncumbents,
   populateCurrentDistrictingSummary,
 } from "../../redux/actions/settingActions";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
@@ -28,16 +27,8 @@ class JobSelection extends Component {
     this.loadEnactedDistricting();
     this.populateCounties();
     this.populatePrecincts();
-    this.populateIncumbents();
   }
 
-  async populateIncumbents() {
-    NetworkingUtilities.loadIncumbents(this.props.CurrentState).then(
-      (results) => {
-        this.props.populateIncumbents(results);
-      }
-    );
-  }
 
   async loadJobs() {
     NetworkingUtilities.loadJobs(this.props.CurrentState).then((jobs) =>
@@ -175,9 +166,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     populateCurrentDistrictingSummary: (summary) => {
       dispatch(populateCurrentDistrictingSummary(summary));
-    },
-    populateIncumbents: (incumbents) => {
-      dispatch(populateIncumbents(incumbents));
     },
     setCurrentJob: (job) => {
       dispatch(setCurrentJob(job));

@@ -23,6 +23,7 @@ import PrecinctTooltip from "./PrecinctTooltip";
 import MapIcon from "@material-ui/icons/Map";
 import { Icon } from "react-materialize";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
+import TestGeoJson from '../../data/NC/TestData.json'
 
 class MapBoxComponent extends Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class MapBoxComponent extends Component {
       map.setFeatureState(
         {
           source: source,
-          id: feature.id,
+          id: feature.districtNumber-1,
         },
         {
           hover: false,
@@ -85,7 +86,7 @@ class MapBoxComponent extends Component {
       map.setFeatureState(
         {
           source: source,
-          id: feature.id,
+          id: feature.districtNumber != null ? feature.districtNumber-1 : feature.id,
         },
         {
           hover: true,
@@ -107,7 +108,7 @@ class MapBoxComponent extends Component {
         );
       this.props.setFeaturedDistrict(hoveredFeature);
       if (hoveredFeature != undefined) {
-        this.props.addFeatureToHighlight(hoveredFeature);
+        this.props.addFeatureToHighlight(this.props.CurrentDistrictingSummary.districtSummaries.find((summary) => summary.districtNumber == hoveredFeature.id+1));
       }
     } else if (this.props.DisplayPrecincts) {
       this.props.resetAllHighlighting();
@@ -119,6 +120,7 @@ class MapBoxComponent extends Component {
         );
       this.props.setFeaturedPrecinct(hoveredFeature);
       if (hoveredFeature != undefined) {
+        // Assign the hovered feature a district number so that it can be read the same way as a district
         this.props.addFeatureToHighlight(hoveredFeature);
       }
     }
@@ -171,7 +173,6 @@ class MapBoxComponent extends Component {
       this.unhighlightFeatures();
       this.highlightFeatures();
     }
-    console.log(this.props.CurrentDistrictingGeoJson)
     return (
       <div
         onMouseMove={(e) => this.props.moveMouse(e)}

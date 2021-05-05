@@ -120,32 +120,30 @@ class DistrictingSummary extends Component {
                 /* The key tells the highlighting engine how to identify the feature 
                          This will work so long as the key matches the feature's ID in the visual object
                          that the map renders, which I think it always will since it's in order. */
-                // onMouseEnter={(e) => {
-                //   if (!this.props.InSelectionMenu) {
-                //     district.id = key;
-                //     this.props.addFeatureToHighlight(district);
-                //   }
-                // }}
-                // onMouseLeave={(e) => {
-                //   if (!this.props.InSelectionMenu) {
-                //     district.id = key;
-                //     this.props.removeFeatureHighlighting(district);
-                //   }
-                // }}
-                // onClick={(e) => {
-                //   /* The state refreshing along with the expanded attribute cause some buggy behavior
-                //             where the collapsible will be open but seen as closed, this is a price we can pay to
-                //             trade off for clicking on a district to display stats, but on anywhere else this is being
-                //             used we don't need that behavior. */
-                //   if (!this.props.InSelectionMenu) {
-                //     /* If they close the already open one. */
-                //     if (key == this.props.StatShowcasedDistrictID) {
-                //       this.props.setStatShowcasedDistrictID(null);
-                //     } else {
-                //       this.props.setStatShowcasedDistrictID(key);
-                //     }
-                //   }
-                // }}
+                onMouseEnter={(e) => {
+                  if (!this.props.InSelectionMenu) {
+                    this.props.addFeatureToHighlight(district);
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!this.props.InSelectionMenu) {
+                    this.props.removeFeatureHighlighting(district);
+                  }
+                }}
+                onClick={(e) => {
+                  /* The state refreshing along with the expanded attribute cause some buggy behavior
+                            where the collapsible will be open but seen as closed, this is a price we can pay to
+                            trade off for clicking on a district to display stats, but on anywhere else this is being
+                            used we don't need that behavior. */
+                  if (!this.props.InSelectionMenu) {
+                    /* If they close the already open one. */
+                    if (key == this.props.StatShowcasedDistrictID) {
+                      this.props.setStatShowcasedDistrictID(null);
+                    } else {
+                      this.props.setStatShowcasedDistrictID(key);
+                    }
+                  }
+                }}
                 expanded={
                   this.props.InSelectionMenu
                     ? false
