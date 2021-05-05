@@ -10,7 +10,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql4.cs.stonybrook.edu:3306/orioles" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql4.cs.stonybrook.edu:3306/orioles?autoReconnect=true" />
             <property name="javax.persistence.jdbc.user" value="orioles" />
             <property name="javax.persistence.jdbc.password" value="changeit" />
             <property name="hibernate.show_sql" value="false" />

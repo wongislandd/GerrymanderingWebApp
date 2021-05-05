@@ -42,9 +42,9 @@ const initState = {
 
   /* Objective Function Weights */
   ObjectiveFunctionSettings: [
-    new Filter("Population Equality", 0.5, 0, 1, 0.05),
-    new Filter("Split Counties", 0.5, 0, 1, 0.05),
-    new Filter("Deviation from Average Districting", 0.5, 0, 1, 0.05),
+    new Filter("Population Equality", 0.5, 0, 1, 0.01),
+    new Filter("Split Counties", 0.5, 0, 1, 0.01),
+    new Filter("Deviation from Average Districting", 0.5, 0, 1, 0.01),
     new Filter(
       "Deviation from Enacted Plan (Area and Population)",
       0.5,
@@ -53,7 +53,7 @@ const initState = {
       0.05,
       true
     ),
-    new Filter("Compactness", 0.5, 0, 1, 0.05, true),
+    new Filter("Compactness", 0.5, 0, 1, 0.01, true),
   ],
 
   /* Constraint Settings */
@@ -80,7 +80,7 @@ const initState = {
       0.5,
       0,
       1,
-      0.05,
+      0.01,
       true
     ),
     [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness]: new Filter(
@@ -98,11 +98,6 @@ const initState = {
   MinoritySelection: null,
 
   CompactnessSelection: null,
-
-  /* Gonna need like a function run early on to populate these names based on the
-    provided information for the state
-    All incumbents start off as false (not protected) */
-  IncumbentProtectionInfo: [],
 
   Jobs: [],
 
@@ -266,14 +261,6 @@ const rootReducer = (state = initState, action) => {
           ...state.ConstraintSliderSettings,
           [action.Key]: newFilter,
         },
-      };
-    case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
-      let updatedIncumbents = [...state.IncumbentProtectionInfo];
-      updatedIncumbents[action.Key].protected = action.NewValue;
-      console.log(updatedIncumbents);
-      return {
-        ...state,
-        IncumbentProtectionInfo: updatedIncumbents,
       };
     case ActionTypes.UPDATE_POPULATION_CONSTRAINT:
       return {
@@ -455,11 +442,6 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         StateCounties: action.Outlines,
-      };
-    case ActionTypes.POPULATE_INCUMBENTS:
-      return {
-        ...state,
-        IncumbentProtectionInfo: action.Incumbents,
       };
     case ActionTypes.POPULATE_PRECINCTS:
       return {

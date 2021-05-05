@@ -55,7 +55,7 @@ public class District {
     public District(Collection<Precinct> precincts, StateName stateName,
                     District enactedDistrict, DistrictReference districtReference) {
         this.demographics = compileDemographics(precincts);
-        this.geometry = UnionBuilder.getUnion(precincts);
+        //this.geometry = UnionBuilder.getUnion(precincts);
         this.districtReference = districtReference;
 
         JSONArray precinctKeysArr = new JSONArray();
@@ -65,8 +65,8 @@ public class District {
         int idealPopulation = IdealPopulation.getIdealPopulation(stateName);
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
         MajorityMinorityInfo majorityMinorityInfo = compileMinorityInfo(demographics);
-        Compactness compactness = calculateCompactness(geometry);
-
+        //Compactness compactness = calculateCompactness(geometry);
+        Compactness compactness = new Compactness(Math.random(),Math.random(),Math.random());
         this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo,
                 compactness);
     }

@@ -104,11 +104,6 @@ public class DistrictingWriter {
         String[] files = getFilesInFolder(jobFolderPath);
 
         EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
-        ArrayList<EntityManager> ems = new ArrayList<>();
-        for (int j = 0; j < numThreads; j++) {
-            ems.add(emf.createEntityManager());
-        }
-
         EntityManager em = emf.createEntityManager();
         EnactedDistricting enactedDistricting = new DistrictingServiceImpl(em).findEnactedByState(state);
 
@@ -116,7 +111,11 @@ public class DistrictingWriter {
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 20; i++) {
+            ArrayList<EntityManager> ems = new ArrayList<>();
+            for (int j = 0; j < numThreads; j++) {
+                ems.add(emf.createEntityManager());
+            }
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);
@@ -144,11 +143,10 @@ public class DistrictingWriter {
 
             final long fileEndTime = System.currentTimeMillis();
             System.out.println("[MAIN] Persisted " + files[i] + " in " + (fileEndTime - fileStartTime) + "ms");
-        }
-
-        /* Close entity managers */
-        for (EntityManager entityManager : ems) {
-            entityManager.close();
+            /* Close entity managers */
+            for (EntityManager entityManager : ems) {
+                entityManager.close();
+            }
         }
 
         final long endTime = System.currentTimeMillis();

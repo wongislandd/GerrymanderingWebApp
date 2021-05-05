@@ -90,13 +90,6 @@ export const updateConstraintSliderSettings = (key, newValue) => {
   };
 };
 
-export const updateIncumbentProtection = (key, newValue) => {
-  return {
-    type: ActionTypes.UPDATE_INCUMBENT_PROTECTION,
-    Key: key,
-    NewValue: newValue,
-  };
-};
 
 export const updatePopulationConstraint = (key) => {
   return {

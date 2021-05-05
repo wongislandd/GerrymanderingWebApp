@@ -6,7 +6,6 @@ import {
   loadInDistricting,
   setInSelectionMenu,
   updateConstraintSettings,
-  updateIncumbentProtection,
   updatePopulationConstraint,
   updateObjectiveFunctionSettings,
   setNumberOfDistrictingsAvailable,

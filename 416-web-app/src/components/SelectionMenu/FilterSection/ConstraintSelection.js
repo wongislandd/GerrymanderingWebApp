@@ -3,7 +3,6 @@ import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtiliti
 import {
   setEnabledStateOfConstraint,
   updateConstraintSliderSettings,
-  updateIncumbentProtection,
   updatePopulationConstraint,
   updateMinorityConstraint,
   updateCompactnessConstraint,
@@ -19,7 +18,6 @@ import {
 import LabelAndInfoIcon from "../../StatisticComponents/LabelAndInfoIcon";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import { connect } from "react-redux";
-import IncumbentModal from "./IncumbentModal";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 import ConstraintSlider from "./ConstraintSlider";
 
@@ -218,9 +216,6 @@ class ConstraintSelection extends Component {
             ]
           }
         />
-        <Row>
-          <IncumbentModal />
-        </Row>
       </div>
     );
   }
@@ -228,9 +223,6 @@ class ConstraintSelection extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateIncumbentProtection: (key, newVal) => {
-      dispatch(updateIncumbentProtection(key, newVal));
-    },
     updatePopulationConstraint: (key) => {
       dispatch(updatePopulationConstraint(key));
     },
