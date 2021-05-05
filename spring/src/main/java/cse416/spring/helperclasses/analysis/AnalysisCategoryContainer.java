@@ -6,9 +6,7 @@ public interface AnalysisCategoryContainer {
 
     boolean shouldInsert(Districting districting);
 
-    void sortEntries();
-
     void insert(Districting districting);
 
-
+    void sortEntries();
 }

@@ -2,9 +2,13 @@ package cse416.spring.helperclasses.analysis;
 
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.districting.Districting;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter
+@Setter
 public class HighScoringMajorityMinority implements AnalysisCategoryContainer {
     ArrayList<Districting> entries;
     MinorityPopulation minority;
@@ -19,14 +23,6 @@ public class HighScoringMajorityMinority implements AnalysisCategoryContainer {
         this.desiredMinorityDistrictUpperBound = desiredMinorityDistrictUpperBound;
         this.desiredMinorityDistrictLowerBound = desiredMinorityDistrictLowerBound;
         this.threshold = threshold;
-    }
-
-    public ArrayList<Districting> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(ArrayList<Districting> entries) {
-        this.entries = entries;
     }
 
     @Override

@@ -20,7 +20,6 @@ export default class ObjectiveFunctionTable extends Component {
   }
 
   render() {
-    console.log(this.props.DistrictingToDisplay);
     return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">

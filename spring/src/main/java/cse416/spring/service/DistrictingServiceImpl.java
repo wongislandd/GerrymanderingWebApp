@@ -49,7 +49,7 @@ public class DistrictingServiceImpl implements DistrictingService {
 
     @Override
     public Set<Districting> findByConstraints(DistrictingConstraints constraints) {
-        //TODO Implement
+        //TODO Move the entire filtering to the query, may need to add more properties to districting
         Query query;
         switch (constraints.getCompactnessType()) {
             case POLSBY_POPPER:

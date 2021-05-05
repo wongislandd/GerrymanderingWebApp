@@ -4,10 +4,14 @@ import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.Deviation;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingMeasures;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
+@Getter
+@Setter
 public class TopScoring implements AnalysisCategoryContainer{
     ArrayList<Districting> entries;
 
@@ -16,15 +20,6 @@ public class TopScoring implements AnalysisCategoryContainer{
     public TopScoring() {
         this.entries = new ArrayList<>();
     }
-
-    public ArrayList<Districting> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(ArrayList<Districting> entries) {
-        this.entries = entries;
-    }
-
 
     public void sortEntries() {
         entries.sort(new Comparator<Districting>() {
@@ -49,7 +44,6 @@ public class TopScoring implements AnalysisCategoryContainer{
 
     @Override
     public boolean shouldInsert(Districting districting) {
-        /* If this districting's score is greater than the lowest score on the list, replace.*/
         if (entries.size() < maxSize || entries.get(entries.size() - 1).getObjectiveFunctionScore() < districting.getObjectiveFunctionScore()) {
             return true;
         }

@@ -78,6 +78,8 @@ function getStepCompleteMsg(step) {
 async function constrainDistrictings(props) {
   NetworkingUtilities.applyConstraints().then((resultSize) => {
     props.setNumberOfDistrictingsAvailable(resultSize);
+  }).then(results => {
+    props.setDistrictingsAreConstrained(true);
   });
 }
 
@@ -136,7 +138,6 @@ function FilterSection(props) {
     if (activeStep == 0) {
       // CONSTRAIN DISTRICTINGS
       constrainDistrictings(props);
-      props.setDistrictingsAreConstrained(true);
     }
     if (activeStep == 1) {
       // UPDATE WEIGHTS

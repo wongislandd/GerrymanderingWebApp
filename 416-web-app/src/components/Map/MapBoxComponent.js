@@ -169,6 +169,7 @@ class MapBoxComponent extends Component {
       this.unhighlightFeatures();
       this.highlightFeatures();
     }
+    console.log(this.props.CurrentDistrictingGeoJson)
     return (
       <div
         onMouseMove={(e) => this.props.moveMouse(e)}
@@ -184,8 +185,8 @@ class MapBoxComponent extends Component {
             <MapIcon />
             <span onClick={(e) => (e) => this.props.setInSelectionMenu(true)}>
               {this.props.CurrentDistrictingGeoJson != null
-                ? this.props.CurrentDistrictingGeoJson.name
-                : "Loading districting."}
+                ? this.props.CurrentDistrictingGeoJson.name != null ? this.props.CurrentDistrictingGeoJson.name 
+                : this.props.CurrentDistrictingGeoJson.id : "Loading districting."}
             </span>
           </div>
         </div>
@@ -418,6 +419,7 @@ const mapStateToProps = (state, ownProps) => {
     DisplayCounties: state.DisplayCounties,
     ViewingDistrictDetails: state.ViewingDistrictDetails,
     CurrentDistrictingGeoJson: state.CurrentDistrictingGeoJson,
+    CurrentDistrictingSummary : state.CurrentDistrictingSummary,
     CurrentState: state.CurrentState,
     FeaturedDistrict: state.FeaturedDistrict,
     FeaturedPrecinct: state.FeaturedPrecinct,

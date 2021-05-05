@@ -84,7 +84,6 @@ class DistrictingSummary extends Component {
   }
 
   render() {
-    console.log(this.props);
     /* Don't want this behavior for the Selection Listing usage, since it's mostly meant for clicking on the map.*/
     if (!this.props.InSelectionMenu) {
       this.closeAllCollapsibles();

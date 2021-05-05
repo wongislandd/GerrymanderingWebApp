@@ -22,7 +22,6 @@ class DistrictingItem extends Component {
   }
 
   render() {
-    console.log(this.props.districting);
     return (
       <CollapsibleItem
         expanded={this.isDisplayed()}

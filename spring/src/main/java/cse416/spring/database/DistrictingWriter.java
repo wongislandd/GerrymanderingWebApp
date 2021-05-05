@@ -111,11 +111,12 @@ public class DistrictingWriter {
 
         EntityManager em = emf.createEntityManager();
         EnactedDistricting enactedDistricting = new DistrictingServiceImpl(em).findEnactedByState(state);
+
         JobWriter.persistJob(job, em);
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Starting file " + files[i]);

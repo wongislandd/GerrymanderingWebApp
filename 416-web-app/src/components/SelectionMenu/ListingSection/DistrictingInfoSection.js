@@ -5,6 +5,7 @@ import {
   setComparisonDistrictingA,
   setComparisonDistrictingB,
   populateCurrentDistrictingGeoJson,
+  populateCurrentDistrictingSummary,
 } from "../../../redux/actions/settingActions";
 import { Button } from "react-materialize";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
@@ -26,6 +27,8 @@ class DistrictingInfoSection extends Component {
     NetworkingUtilities.loadDistricting(id)
       .then((results) => {
         this.props.populateCurrentDistrictingGeoJson(results);
+      }).then((results) => {
+        this.props.populateCurrentDistrictingSummary(this.props.districting)
       })
       .then((x) =>
         this.setState({
@@ -35,6 +38,7 @@ class DistrictingInfoSection extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="districtingInfoSection">
         <DistrictingSummary DistrictingToDisplay={this.props.districting} />
@@ -99,6 +103,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     populateCurrentDistrictingGeoJson: (districting) => {
       dispatch(populateCurrentDistrictingGeoJson(districting));
+    },
+    populateCurrentDistrictingSummary : (summary) => {
+      dispatch(populateCurrentDistrictingSummary(summary))
     },
     setNewDistrictingSelected: (bool) => {
       dispatch(setNewDistrictingSelected(bool));

@@ -171,7 +171,7 @@ Add action type to ./ActionTypes.js and then make use of it here as well as in t
 */
 const rootReducer = (state = initState, action) => {
   if (!ACTIONS_TO_IGNORE_FOR_LOGGING.includes(action.type)) {
-    console.log(action);
+    //console.log(action);
   }
   switch (action.type) {
     case ActionTypes.SET_CURRENT_STATE:
