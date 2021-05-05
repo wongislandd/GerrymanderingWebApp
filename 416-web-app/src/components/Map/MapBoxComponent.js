@@ -67,7 +67,7 @@ class MapBoxComponent extends Component {
       map.setFeatureState(
         {
           source: source,
-          id: feature.districtNumber-1,
+          id: feature.districtNumber != null ? feature.districtNumber-1 : feature.id,
         },
         {
           hover: false,
