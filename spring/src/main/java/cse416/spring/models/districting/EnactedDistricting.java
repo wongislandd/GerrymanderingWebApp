@@ -2,6 +2,7 @@ package cse416.spring.models.districting;
 
 
 import cse416.spring.enums.StateName;
+import cse416.spring.helperclasses.DistrictingSummary;
 import cse416.spring.helperclasses.builders.GeoJsonBuilder;
 import cse416.spring.models.district.Compactness;
 import cse416.spring.models.district.Deviation;
@@ -30,6 +31,8 @@ public class EnactedDistricting {
     DistrictingMeasures measures;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<District> districts;
+    @Transient
+    double objectiveFunctionScore;
 
     public EnactedDistricting(StateName state, Collection<District> districts) {
         this.state = state;
@@ -43,9 +46,13 @@ public class EnactedDistricting {
         }
     }
 
+    public DistrictingSummary getSummary() {
+        return new DistrictingSummary(this);
+    }
+
 
     public String getGeoJson() throws IOException {
-        GeoJsonBuilder geoJson = new GeoJsonBuilder().buildDistricts(districts).objectiveFunctionProperties(measures).name("Enacted Districting");
+        GeoJsonBuilder geoJson = new GeoJsonBuilder().buildDistricts(districts).name("Enacted Districting");
         return geoJson.toString();
     }
 }

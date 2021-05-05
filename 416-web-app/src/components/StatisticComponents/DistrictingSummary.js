@@ -84,6 +84,7 @@ class DistrictingSummary extends Component {
   }
 
   render() {
+    console.log(this.props)
     /* Don't want this behavior for the Selection Listing usage, since it's mostly meant for clicking on the map.*/
     if (!this.props.InSelectionMenu) {
       this.closeAllCollapsibles();
@@ -99,6 +100,7 @@ class DistrictingSummary extends Component {
           {/* <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay} /> */}
         </div>
 
+        {this.props.DistrictingToDisplay.enacted ? <div/> : 
         <CollapsibleItem
           expanded={false}
           key={-1}
@@ -109,7 +111,7 @@ class DistrictingSummary extends Component {
             DistrictingToDisplay={this.props.DistrictingToDisplay}
           />
         </CollapsibleItem>
-
+          }
         {this.props.DistrictingToDisplay.districtSummaries.map(
           (district, key) => {
             return (
@@ -173,9 +175,13 @@ class DistrictingSummary extends Component {
                   <RacialPieChart district={district} />
                 </div>
 
-                <h5>Objective Function Details</h5>
+                {
+                  this.props.DistrictingToDisplay.enacted ? <div></div> :
+                  <div><h5>Objective Function Details</h5>
                 <ObjectiveFunctionTable DistrictToDisplay={district} />
+                </div>}
               </CollapsibleItem>
+
             );
           }
         )}

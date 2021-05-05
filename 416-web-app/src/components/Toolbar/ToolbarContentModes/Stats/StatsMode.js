@@ -22,7 +22,7 @@ class StatsMode extends Component {
         <h5 className="centerWithinMe">Displayed District Stats</h5>
         <Row>
           <DistrictingSummary
-            DistrictingToDisplay={this.props.CurrentDistricting}
+            DistrictingToDisplay={this.props.CurrentDistrictingSummary}
           />
         </Row>
       </div>
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    CurrentDistricting: state.CurrentDistricting,
+    CurrentDistrictingSummary: state.CurrentDistrictingSummary,
   };
 };
 

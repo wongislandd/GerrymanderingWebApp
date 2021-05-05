@@ -1,10 +1,7 @@
 package cse416.spring.controllers;
 
 import cse416.spring.enums.StateName;
-import cse416.spring.helperclasses.ConstrainedDistrictings;
-import cse416.spring.helperclasses.DistrictingConstraints;
-import cse416.spring.helperclasses.InterestingDistrictingAnalysis;
-import cse416.spring.helperclasses.ObjectiveFunctionWeights;
+import cse416.spring.helperclasses.*;
 import cse416.spring.helperclasses.analysis.CloseToEnacted;
 import cse416.spring.helperclasses.analysis.HighScoringMajorityMinority;
 import cse416.spring.helperclasses.analysis.TopAreaPairDeviation;
@@ -51,6 +48,12 @@ public class DistrictingController {
         return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
 
+    @GetMapping(value="/{state}/enacted/summary")
+    public ResponseEntity<DistrictingSummary> loadEnactedSummary(@PathVariable("state") StateName state) throws IOException {
+        EnactedDistricting enacted = districtingService.findEnactedByState(state);
+        DistrictingSummary summary = enacted.getSummary();
+        return new ResponseEntity<>(summary, HttpStatus.OK);
+    }
 
     @PostMapping(path = "/constrain", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")

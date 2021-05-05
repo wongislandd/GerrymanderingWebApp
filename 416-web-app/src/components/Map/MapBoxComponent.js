@@ -183,7 +183,7 @@ class MapBoxComponent extends Component {
           <div className="iconAndLabel">
             <MapIcon />
             <span onClick={(e) => (e) => this.props.setInSelectionMenu(true)}>
-              {this.props.CurrentDistricting != null ? this.props.CurrentDistricting.name : "Loading districting."}
+              {this.props.CurrentDistrictingGeoJson != null ? this.props.CurrentDistrictingGeoJson.name : "Loading districting."}
             </span>
           </div>
         </div>
@@ -313,11 +313,11 @@ class MapBoxComponent extends Component {
                 "line-opacity": 1,
               }}
             /></div> : <div></div>}
-          {this.props.CurrentDistricting != null ? <div>
+          {this.props.CurrentDistrictingGeoJson != null ? <div>
             <Source
               id={MapUtilities.IDs.DISTRICT_SOURCE_ID}
               type="geojson"
-              data={this.props.CurrentDistricting}
+              data={this.props.CurrentDistrictingGeoJson}
               generateId={true}
             />
             <Layer
@@ -406,7 +406,7 @@ const mapStateToProps = (state, ownProps) => {
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
     ViewingDistrictDetails: state.ViewingDistrictDetails,
-    CurrentDistricting: state.CurrentDistricting,
+    CurrentDistrictingGeoJson: state.CurrentDistrictingGeoJson,
     CurrentState: state.CurrentState,
     FeaturedDistrict: state.FeaturedDistrict,
     FeaturedPrecinct: state.FeaturedPrecinct,

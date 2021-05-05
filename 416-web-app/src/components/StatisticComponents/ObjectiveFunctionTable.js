@@ -20,6 +20,7 @@ export default class ObjectiveFunctionTable extends Component {
   }
 
   render() {
+    console.log(this.props.DistrictingToDisplay)
     return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
@@ -53,7 +54,7 @@ export default class ObjectiveFunctionTable extends Component {
                       : "Deviation from Average"
                   }
                   description={
-                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
+                     StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
                   }
                 />
               </TableCell>

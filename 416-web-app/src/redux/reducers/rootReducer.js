@@ -18,7 +18,8 @@ const initState = {
   DisplayPrecincts: false,
   DisplayCounties: false,
   DisplayDistricts: true,
-  CurrentDistricting: null,
+  CurrentDistrictingGeoJson : null,
+  CurrentDistrictingSummary: null,
   FeaturedDistrict: null,
   FeaturedPrecinct: null,
 
@@ -443,11 +444,15 @@ const rootReducer = (state = initState, action) => {
         ...state,
         CountiesGeoJson : action.CountiesGeoJson,
       }
-    case ActionTypes.POPULATE_CURRENT_DISTRICTING:
+    case ActionTypes.POPULATE_CURRENT_DISTRICTING_GEOJSON:
       return {
         ...state,
-        CurrentDistricting : action.DistrictingGeoJson,
-        TentativeDistricting: null,
+        CurrentDistrictingGeoJson : action.DistrictingGeoJson,
+      }
+    case ActionTypes.POPULATE_CURRENT_DISTRICTING_SUMMARY:
+      return {
+        ...state,
+        CurrentDistrictingSummary : action.DistrictingSummary
       }
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       let newExpandedSet = [...state.ExpandedSummaries];

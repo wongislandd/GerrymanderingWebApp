@@ -35,6 +35,7 @@ class ToolbarTabsManager extends Component {
             active={this.props.CurrentTab == ToolbarUtilities.MODES.STATS}
             options={TabOptions}
             title={ToolbarUtilities.MODES.STATS}
+            disabled={this.props.CurrentDistrictingSummary == null}
           >
             <ToolbarContentContainer topMode={ToolbarUtilities.MODES.STATS} />
           </Tab>
@@ -55,6 +56,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     CurrentTab: state.CurrentTab,
+    CurrentDistrictingSummary : state.CurrentDistrictingSummary
   };
 };
 

@@ -29,8 +29,6 @@ export async function loadDistricting(id) {
   return body;
 }
 
-
-
 export async function loadStateOutlines() {
   let fullUrl = baseURL + "/states/getOutlines";
   const response = await fetch(fullUrl);
@@ -46,6 +44,13 @@ export async function loadStateOutlines() {
 
 export async function loadEnacted(state) {
   let fullUrl = baseURL + "/districtings/" + state + "/enacted/load";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
+  return body;
+}
+
+export async function loadEnactedSummary(state) {
+  let fullUrl = baseURL + "/districtings/" + state + "/enacted/summary";
   const response = await fetch(fullUrl);
   let body = await response.json();
   return body;

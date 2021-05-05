@@ -50,16 +50,8 @@ public class GeoJsonBuilder {
         return this;
     }
 
-    public GeoJsonBuilder objectiveFunctionProperties(DistrictingMeasures dm) {
-        JSONObject properties = new JSONObject();
-        // TODO Replace these with actual values
-        properties.put("AVG_COMPACTNESS", Math.random());
-        properties.put("AVG_POPULATION_EQUALITY", Math.random());
-        properties.put("SPLIT_COUNTY_SCORE", Math.random());
-        properties.put("TOTAL_MAJORITY_MINORITY_DISTRICTS", Math.random());
-        properties.put("AVG_DEVIATION_FROM_ENACTED_DISTRICTING", Math.random());
-        properties.put("AVG_DEVIATION_FROM_AVG_DISTRICTING", Math.random());
-        geoJson.put("objectivefunc", properties);
+    public GeoJsonBuilder id(long id) {
+        geoJson.put("id", id);
         return this;
     }
 

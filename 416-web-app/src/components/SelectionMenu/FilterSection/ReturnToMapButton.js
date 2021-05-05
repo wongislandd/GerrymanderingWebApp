@@ -18,7 +18,7 @@ class ReturnToMapButton extends Component {
             this.props.restoreDefaultStateForNewDistricting();
           }
         }}
-        disabled={this.props.CurrentDistricting == null}
+        disabled={this.props.CurrentDistrictingGeoJson == null}
       >
         <Icon left>arrow_back</Icon>
         {SelectionMenuUtilities.LABELS.RETURN_TO_MAP}
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     NewDistrictingSelected: state.NewDistrictingSelected,
-    CurrentDistricting: state.CurrentDistricting,
+    CurrentDistrictingGeoJson : state.CurrentDistrictingGeoJson,
   };
 };
 

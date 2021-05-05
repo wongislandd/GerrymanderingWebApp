@@ -48,8 +48,7 @@ public class Districting {
     public String getGeoJson() throws IOException {
         GeoJsonBuilder geoJson = new GeoJsonBuilder()
                 .buildDistricts(districts)
-                .objectiveFunctionProperties(measures)
-                .name(Long.toString(id));
+                .id(id);
         return geoJson.toString();
     }
 

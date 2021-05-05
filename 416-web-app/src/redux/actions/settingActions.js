@@ -320,10 +320,17 @@ export const populateCounties = (countiesGeoJson) => {
   }
 }
 
-export const populateCurrentDistricting = (districtingGeoJson) => {
+export const populateCurrentDistrictingGeoJson = (districtingGeoJson) => {
   return {
-    type : ActionTypes.POPULATE_CURRENT_DISTRICTING,
+    type : ActionTypes.POPULATE_CURRENT_DISTRICTING_GEOJSON,
     DistrictingGeoJson : districtingGeoJson
+  }
+}
+
+export const populateCurrentDistrictingSummary = (summary) => {
+  return {
+    type: ActionTypes.POPULATE_CURRENT_DISTRICTING_SUMMARY,
+    DistrictingSummary : summary
   }
 }
 

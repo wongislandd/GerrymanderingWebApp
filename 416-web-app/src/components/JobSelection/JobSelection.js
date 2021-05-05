@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Col, Row, Collapsible, Icon, CollapsibleItem } from 'react-materialize'
 import { connect } from 'react-redux'
-import { loadInJobs, setCurrentState, setCurrentJob, populatePrecincts, populateCounties, populateCurrentDistricting, populateIncumbents } from '../../redux/actions/settingActions'
+import { loadInJobs, setCurrentState, setCurrentJob, populatePrecincts, populateCounties, populateCurrentDistrictingGeoJson, populateIncumbents, populateCurrentDistrictingSummary } from '../../redux/actions/settingActions'
 import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import * as ViewportUtilities from '../../utilities/ViewportUtilities'
 import * as NetworkingUtilities from '../../network/NetworkingUtilities'
@@ -27,9 +27,11 @@ class JobSelection extends Component {
     }
 
     async loadEnactedDistricting() {
+        NetworkingUtilities.loadEnactedSummary(this.props.CurrentState).then(summary => 
+            this.props.populateCurrentDistrictingSummary(summary)).then(
         NetworkingUtilities.loadEnacted(this.props.CurrentState).then(results => {
-            this.props.populateCurrentDistricting(results);
-        })
+            this.props.populateCurrentDistrictingGeoJson(results);
+        }))
     }
 
     async populatePrecincts() {
@@ -131,8 +133,11 @@ const mapDispatchToProps = (dispatch) => {
         populateCounties : (counties) => {
             dispatch(populateCounties(counties))
         },
-        populateCurrentDistricting : (districting) => {
-            dispatch(populateCurrentDistricting(districting))
+        populateCurrentDistrictingGeoJson : (districting) => {
+            dispatch(populateCurrentDistrictingGeoJson(districting))
+        },
+        populateCurrentDistrictingSummary : (summary) => {
+            dispatch(populateCurrentDistrictingSummary(summary));
         },
         populateIncumbents : (incumbents) => {
             dispatch(populateIncumbents(incumbents))

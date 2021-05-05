@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  setCurrentDistricting,
   setNewDistrictingSelected,
   setComparisonDistrictingA,
   setComparisonDistrictingB,
-  populateCurrentDistricting,
+  populateCurrentDistrictingGeoJson,
 } from "../../../redux/actions/settingActions";
 import { Button } from "react-materialize";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
@@ -26,7 +25,7 @@ class DistrictingInfoSection extends Component {
   async loadNewDistricting(id) {
     this.setState({loading : true})
     NetworkingUtilities.loadDistricting(id).then(results => {
-      this.props.populateCurrentDistricting(results);
+      this.props.populateCurrentDistrictingGeoJson(results);
     }).then(x =>
       this.setState({
         loading : false,
@@ -76,9 +75,9 @@ class DistrictingInfoSection extends Component {
               this.loadNewDistricting(this.props.districting.id);
               this.props.setNewDistrictingSelected(true);
             }}
-            disabled={this.state.loading || this.props.CurrentDistricting.name == this.props.districting.id}
+            disabled={this.state.loading || this.props.CurrentDistrictingSummary.id == this.props.districting.id}
           >
-            {this.props.CurrentDistricting.name == this.props.districting.id ? "Currently Displaying this Districting" : this.state.loading ? "Loading" : SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
+            {this.props.CurrentDistrictingSummary.id == this.props.districting.id ? "Currently Displaying this Districting" : this.state.loading ? "Loading" : SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
           </Button>
         </div>
       </div>
@@ -88,8 +87,8 @@ class DistrictingInfoSection extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    populateCurrentDistricting: (districting) => {
-      dispatch(populateCurrentDistricting(districting));
+    populateCurrentDistrictingGeoJson: (districting) => {
+      dispatch(populateCurrentDistrictingGeoJson(districting));
     },
     setNewDistrictingSelected: (bool) => {
       dispatch(setNewDistrictingSelected(bool));
@@ -107,7 +106,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ComparisonDistrictingA: state.ComparisonDistrictingA,
     ComparisonDistrictingB: state.ComparisonDistrictingB,
-    CurrentDistricting : state.CurrentDistricting
+    CurrentDistrictingSummary : state.CurrentDistrictingSummary
   };
 };
 
