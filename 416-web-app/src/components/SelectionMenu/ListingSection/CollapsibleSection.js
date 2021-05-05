@@ -3,7 +3,7 @@ import { Collapsible, CollapsibleItem } from "react-materialize";
 import DistrictingItem from "./DistrictingItem";
 import SortingCollapsible from "./SortingCollapsible";
 
-export default class  CollapsibleSection extends Component {
+export default class CollapsibleSection extends Component {
   render() {
     return (
       <div>

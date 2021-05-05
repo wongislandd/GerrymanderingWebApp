@@ -7,23 +7,24 @@ import {
   setViewport,
   loadStateOutlines,
   restoreDefaultStateForNewDistricting,
-  setDistrictingsAreConstrained
+  setDistrictingsAreConstrained,
 } from "../../redux/actions/settingActions";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
-import * as NetworkingUtilities from '../../network/NetworkingUtilities'
-
+import * as NetworkingUtilities from "../../network/NetworkingUtilities";
 
 class StateSelectionMap extends Component {
   componentDidMount() {
     // Fresh start
-    this.props.restoreDefaultStateForNewDistricting()
+    this.props.restoreDefaultStateForNewDistricting();
     this.props.setCurrentState(ViewportUtilities.STATE_OPTIONS.UNSELECTED);
     this.populateStateCounties();
   }
 
   async populateStateCounties() {
-    NetworkingUtilities.loadStateOutlines().then(results => this.props.loadStateOutlines(results))
+    NetworkingUtilities.loadStateOutlines().then((results) =>
+      this.props.loadStateOutlines(results)
+    );
   }
 
   _onClick = (event) => {
@@ -65,101 +66,105 @@ class StateSelectionMap extends Component {
 
   render() {
     if (this.props.StateCounties == null) {
-      return(
+      return (
         <div>
           <ReactMapGL
-          className="map-display"
-          {...this.props.MapViewport}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          onViewportChange={(viewport) => {
-            this.props.setViewport(viewport);
-          }}
-            onClick={(e)=>{}}
+            className="map-display"
+            {...this.props.MapViewport}
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+            onViewportChange={(viewport) => {
+              this.props.setViewport(viewport);
+            }}
+            onClick={(e) => {}}
           />
-      </div>
-      )
-    }
+        </div>
+      );
+    } else {
     /* Only load these if it's not empty*/
-    else {
-      const NCCountyGeoData = this.props.StateCounties[ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA]
-      const LACountyGeoData = this.props.StateCounties[ViewportUtilities.STATE_OPTIONS.LOUISIANA]
-      const TXCountyGeoData = this.props.StateCounties[ViewportUtilities.STATE_OPTIONS.TEXAS]
-    return (
-      <div>
-        <ReactMapGL
-          className="map-display"
-          {...this.props.MapViewport}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          onViewportChange={(viewport) => {
-            this.props.setViewport(viewport);
-          }}
-          onClick={this._onClick.bind(this)}
-        >
-          <Source
-            id={MapUtilities.IDs.COUNTY_SOURCE_ID + "NC"}
-            type="geojson"
-            data={NCCountyGeoData}
-            generateId={true}
-          />
-          <Layer
-            id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "NC"}
-            type="fill"
-            source={MapUtilities.IDs.COUNTY_SOURCE_ID + "NC"}
-            paint={{
-              "fill-color": "#abcdef",
-              "fill-opacity": [
-                "case",
-                ["boolean", ["feature-state", "hover"], false],
-                0.1,
-                0.6,
-              ],
+      const NCCountyGeoData = this.props.StateCounties[
+        ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA
+      ];
+      const LACountyGeoData = this.props.StateCounties[
+        ViewportUtilities.STATE_OPTIONS.LOUISIANA
+      ];
+      const TXCountyGeoData = this.props.StateCounties[
+        ViewportUtilities.STATE_OPTIONS.TEXAS
+      ];
+      return (
+        <div>
+          <ReactMapGL
+            className="map-display"
+            {...this.props.MapViewport}
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+            onViewportChange={(viewport) => {
+              this.props.setViewport(viewport);
             }}
-          />
-          <Source
-            id={MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
-            type="geojson"
-            data={LACountyGeoData}
-            generateId={true}
-          />
-          <Layer
-            id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "LA"}
-            type="fill"
-            source={MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
-            paint={{
-              "fill-color": "#8effba",
-              "fill-opacity": [
-                "case",
-                ["boolean", ["feature-state", "hover"], false],
-                0.1,
-                0.6,
-              ],
-            }}
-          />
-          <Source
-            id={MapUtilities.IDs.COUNTY_SOURCE_ID + "TX"}
-            type="geojson"
-            data={TXCountyGeoData}
-            generateId={true}
-          />
-          <Layer
-            id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "TX"}
-            type="fill"
-            source={MapUtilities.IDs.COUNTY_SOURCE_ID + "TX"}
-            paint={{
-              "fill-color": "#2ea3fa",
-              "fill-opacity": [
-                "case",
-                ["boolean", ["feature-state", "hover"], false],
-                0.1,
-                0.6,
-              ],
-            }}
-          />
-        </ReactMapGL>
-      </div>
-
-    )
-  };
+            onClick={this._onClick.bind(this)}
+          >
+            <Source
+              id={MapUtilities.IDs.COUNTY_SOURCE_ID + "NC"}
+              type="geojson"
+              data={NCCountyGeoData}
+              generateId={true}
+            />
+            <Layer
+              id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "NC"}
+              type="fill"
+              source={MapUtilities.IDs.COUNTY_SOURCE_ID + "NC"}
+              paint={{
+                "fill-color": "#abcdef",
+                "fill-opacity": [
+                  "case",
+                  ["boolean", ["feature-state", "hover"], false],
+                  0.1,
+                  0.6,
+                ],
+              }}
+            />
+            <Source
+              id={MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
+              type="geojson"
+              data={LACountyGeoData}
+              generateId={true}
+            />
+            <Layer
+              id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "LA"}
+              type="fill"
+              source={MapUtilities.IDs.COUNTY_SOURCE_ID + "LA"}
+              paint={{
+                "fill-color": "#8effba",
+                "fill-opacity": [
+                  "case",
+                  ["boolean", ["feature-state", "hover"], false],
+                  0.1,
+                  0.6,
+                ],
+              }}
+            />
+            <Source
+              id={MapUtilities.IDs.COUNTY_SOURCE_ID + "TX"}
+              type="geojson"
+              data={TXCountyGeoData}
+              generateId={true}
+            />
+            <Layer
+              id={MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "TX"}
+              type="fill"
+              source={MapUtilities.IDs.COUNTY_SOURCE_ID + "TX"}
+              paint={{
+                "fill-color": "#2ea3fa",
+                "fill-opacity": [
+                  "case",
+                  ["boolean", ["feature-state", "hover"], false],
+                  0.1,
+                  0.6,
+                ],
+              }}
+            />
+          </ReactMapGL>
+        </div>
+      );
+    }
   }
 }
 
@@ -174,21 +179,22 @@ const mapDispatchToProps = (dispatch) => {
     setTentativeState: (state) => {
       dispatch(setTentativeState(state));
     },
-    loadStateOutlines : (dict) => {
+    loadStateOutlines: (dict) => {
       dispatch(loadStateOutlines(dict));
     },
-    setDistrictingsAreConstrained : (bool) => {
-      dispatch(setDistrictingsAreConstrained(bool))
+    setDistrictingsAreConstrained: (bool) => {
+      dispatch(setDistrictingsAreConstrained(bool));
     },
-    restoreDefaultStateForNewDistricting : () => {
-      dispatch(restoreDefaultStateForNewDistricting())
+    restoreDefaultStateForNewDistricting: () => {
+      dispatch(restoreDefaultStateForNewDistricting());
     },
-}};
+  };
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {
     MapViewport: state.MapViewport,
-    StateCounties : state.StateCounties
+    StateCounties: state.StateCounties,
   };
 };
 

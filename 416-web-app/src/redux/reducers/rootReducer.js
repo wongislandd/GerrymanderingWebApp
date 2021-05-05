@@ -2,8 +2,8 @@ import * as ActionTypes from "../actions/ActionTypes";
 import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import TestGeneratedPlan from "../../data/NC/testGeneratedPlan.json";
-import EnactedDistrictingPlan2016 from '../../data/NC/EnactedDistrictingPlan2016WithData.json'
-import TestData from "../../data/NC/TestData3.json"
+import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
+import TestData from "../../data/NC/TestData3.json";
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
 import Job from "../../utilities/classes/models/Job";
@@ -11,14 +11,12 @@ import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as NetworkingUtilities from "../../network/NetworkingUtilities";
 
-
 /* Initial State */
 const initState = {
-
   DisplayPrecincts: false,
   DisplayCounties: false,
   DisplayDistricts: true,
-  CurrentDistrictingGeoJson : null,
+  CurrentDistrictingGeoJson: null,
   CurrentDistrictingSummary: null,
   FeaturedDistrict: null,
   FeaturedPrecinct: null,
@@ -30,7 +28,7 @@ const initState = {
   CurrentState: ViewportUtilities.STATE_OPTIONS.UNSELECTED,
 
   /* Default to null*/
-  CurrentJob : null,
+  CurrentJob: null,
 
   /* Map Reference */
   MapRef: React.createRef(),
@@ -60,34 +58,56 @@ const initState = {
 
   /* Constraint Settings */
   ConstraintSliderSettings: {
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference] : new Filter("Maximum Population Difference (%)", 20, 0, 100, 1, true),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts] : new Filter("Minimum Majority-Minority Districts", 5, 0, 10, 1, true),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold] : new Filter("Minority Threshold", 0.5, 0, 1, 0.05, true),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness] : new Filter("Compactness", 0.15, 0, .5, 0.01, true),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]: new Filter(
+      "Maximum Population Difference (%)",
+      20,
+      0,
+      100,
+      1,
+      true
+    ),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS
+      .MajorityMinorityDistricts]: new Filter(
+      "Minimum Majority-Minority Districts",
+      5,
+      0,
+      10,
+      1,
+      true
+    ),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold]: new Filter(
+      "Minority Threshold",
+      0.5,
+      0,
+      1,
+      0.05,
+      true
+    ),
+    [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness]: new Filter(
+      "Compactness",
+      0.15,
+      0,
+      0.5,
+      0.01,
+      true
+    ),
   },
-
-
-
 
   PopulationSelection: null,
 
   MinoritySelection: null,
 
-  CompactnessSelection : null,
-
-
+  CompactnessSelection: null,
 
   /* Gonna need like a function run early on to populate these names based on the
     provided information for the state
     All incumbents start off as false (not protected) */
   IncumbentProtectionInfo: [],
 
+  Jobs: [],
 
-  Jobs : [],
-
-  PrecinctsGeoJson : null,
-  CountiesGeoJson : null,
-
+  PrecinctsGeoJson: null,
+  CountiesGeoJson: null,
 
   /* Usable Map */
   Map: null,
@@ -121,7 +141,7 @@ const initState = {
 
   DistrictingsAreConstrained: false,
 
-  ConstrainedDistrictings : [],
+  ConstrainedDistrictings: [],
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
   AnalysisDistrictings: {
@@ -228,14 +248,14 @@ const rootReducer = (state = initState, action) => {
         ObjectiveFunctionSettings: newSettings,
       };
     case ActionTypes.UPDATE_CONSTRAINT_SLIDER_SETTINGS:
-      var newFilter = state.ConstraintSliderSettings[action.Key]
-      newFilter.value = action.NewValue
+      var newFilter = state.ConstraintSliderSettings[action.Key];
+      newFilter.value = action.NewValue;
       return {
         ...state,
         ConstraintSliderSettings: {
           ...state.ConstraintSliderSettings,
-           [action.Key] : newFilter
-        }
+          [action.Key]: newFilter,
+        },
       };
     case ActionTypes.SET_ENABLED_STATE_OF_CONSTRAINT:
       var newFilter = state.ConstraintSliderSettings[action.Key];
@@ -244,27 +264,27 @@ const rootReducer = (state = initState, action) => {
         ...state,
         ConstraintSliderSettings: {
           ...state.ConstraintSliderSettings,
-          [action.Key] : newFilter
-        }
+          [action.Key]: newFilter,
+        },
       };
     case ActionTypes.UPDATE_INCUMBENT_PROTECTION:
       let updatedIncumbents = [...state.IncumbentProtectionInfo];
       updatedIncumbents[action.Key].protected = action.NewValue;
-      console.log(updatedIncumbents)
+      console.log(updatedIncumbents);
       return {
         ...state,
-        IncumbentProtectionInfo : updatedIncumbents,
+        IncumbentProtectionInfo: updatedIncumbents,
       };
     case ActionTypes.UPDATE_POPULATION_CONSTRAINT:
       return {
         ...state,
         PopulationSelection: action.Key,
       };
-      case ActionTypes.UPDATE_COMPACTNESS_CONSTRAINT:
-        return {
-          ...state,
-          CompactnessSelection: action.Key,
-        };
+    case ActionTypes.UPDATE_COMPACTNESS_CONSTRAINT:
+      return {
+        ...state,
+        CompactnessSelection: action.Key,
+      };
     case ActionTypes.UPDATE_MINORITY_CONSTRAINT:
       return {
         ...state,
@@ -402,7 +422,7 @@ const rootReducer = (state = initState, action) => {
         CompareDistrict1: null,
         CompareDistrict2: null,
         ExpandedSummaries: [],
-        DistrictingsAreConstrained : false,
+        DistrictingsAreConstrained: false,
       };
     case ActionTypes.SET_NEW_DISTRICTING_SELECTED:
       return {
@@ -432,28 +452,28 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.POPULATE_INCUMBENTS:
       return {
         ...state,
-        IncumbentProtectionInfo : action.Incumbents,
-      }
+        IncumbentProtectionInfo: action.Incumbents,
+      };
     case ActionTypes.POPULATE_PRECINCTS:
       return {
         ...state,
-        PrecinctsGeoJson : action.PrecinctsGeoJson,
-      }
+        PrecinctsGeoJson: action.PrecinctsGeoJson,
+      };
     case ActionTypes.POPULATE_COUNTIES:
       return {
         ...state,
-        CountiesGeoJson : action.CountiesGeoJson,
-      }
+        CountiesGeoJson: action.CountiesGeoJson,
+      };
     case ActionTypes.POPULATE_CURRENT_DISTRICTING_GEOJSON:
       return {
         ...state,
-        CurrentDistrictingGeoJson : action.DistrictingGeoJson,
-      }
+        CurrentDistrictingGeoJson: action.DistrictingGeoJson,
+      };
     case ActionTypes.POPULATE_CURRENT_DISTRICTING_SUMMARY:
       return {
         ...state,
-        CurrentDistrictingSummary : action.DistrictingSummary
-      }
+        CurrentDistrictingSummary: action.DistrictingSummary,
+      };
     case ActionTypes.TOGGLE_EXPANDED_SUMMARY:
       let newExpandedSet = [...state.ExpandedSummaries];
       if (!newExpandedSet.includes(action.Name)) {
@@ -478,14 +498,14 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.LOAD_IN_JOBS:
       return {
         ...state,
-        Jobs : action.Jobs
-      }
+        Jobs: action.Jobs,
+      };
     case ActionTypes.SET_CURRENT_JOB:
       return {
         ...state,
-        CurrentJob : action.Job,
-        NumDistrictingsAvailable : action.Job.size
-      }
+        CurrentJob: action.Job,
+        NumDistrictingsAvailable: action.Job.size,
+      };
     default:
       return state;
   }

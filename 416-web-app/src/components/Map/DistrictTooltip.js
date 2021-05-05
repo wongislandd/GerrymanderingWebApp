@@ -28,7 +28,14 @@ class DistrictTooltip extends Component {
         >
           <ul>
             <li>
-              <b>District : {locationToFeature.properties[MapUtilities.PROPERTY_LABELS.DISTRICT_ID]}</b>
+              <b>
+                District :{" "}
+                {
+                  locationToFeature.properties[
+                    MapUtilities.PROPERTY_LABELS.DISTRICT_ID
+                  ]
+                }
+              </b>
             </li>
             <li>
               Total Population :{" "}

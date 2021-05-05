@@ -28,7 +28,7 @@ export const COMPARISON_DIRECTIONS = {
 };
 
 export function getPercentageChange(x, y) {
-  if(x == 0 && y == 0) {
+  if (x == 0 && y == 0) {
     return 0;
   }
   let decreaseValue = x - y;
@@ -45,9 +45,8 @@ function percentage(partialValue, totalValue) {
 
 export function formatAsPercentage(decimal, places) {
   let pctValue = decimal * 100;
-  return Number.parseFloat(Number.parseFloat(pctValue).toFixed(places))+"%"
+  return Number.parseFloat(Number.parseFloat(pctValue).toFixed(places)) + "%";
 }
-
 
 export function formatResult(partialValue, totalValue) {
   return (

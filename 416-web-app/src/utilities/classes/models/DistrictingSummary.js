@@ -1,2 +1,1 @@
-export default class DistrictingSummary {
-}
+export default class DistrictingSummary {}

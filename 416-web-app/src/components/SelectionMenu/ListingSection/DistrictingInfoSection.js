@@ -8,7 +8,7 @@ import {
 } from "../../../redux/actions/settingActions";
 import { Button } from "react-materialize";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
-import * as NetworkingUtilities from '../../../network/NetworkingUtilities';
+import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 import DistrictingSummary from "../../StatisticComponents/DistrictingSummary";
 
 /* Properties: 
@@ -16,23 +16,24 @@ import DistrictingSummary from "../../StatisticComponents/DistrictingSummary";
 */
 
 class DistrictingInfoSection extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {loading : false}
+    this.state = { loading: false };
   }
 
   async loadNewDistricting(id) {
-    this.setState({loading : true})
-    NetworkingUtilities.loadDistricting(id).then(results => {
-      this.props.populateCurrentDistrictingGeoJson(results);
-    }).then(x =>
-      this.setState({
-        loading : false,
+    this.setState({ loading: true });
+    NetworkingUtilities.loadDistricting(id)
+      .then((results) => {
+        this.props.populateCurrentDistrictingGeoJson(results);
       })
-    )
+      .then((x) =>
+        this.setState({
+          loading: false,
+        })
+      );
   }
-  
+
   render() {
     return (
       <div className="districtingInfoSection">
@@ -75,9 +76,18 @@ class DistrictingInfoSection extends Component {
               this.loadNewDistricting(this.props.districting.id);
               this.props.setNewDistrictingSelected(true);
             }}
-            disabled={this.state.loading || this.props.CurrentDistrictingSummary.id == this.props.districting.id}
+            disabled={
+              this.state.loading ||
+              this.props.CurrentDistrictingSummary.id ==
+                this.props.districting.id
+            }
           >
-            {this.props.CurrentDistrictingSummary.id == this.props.districting.id ? "Currently Displaying this Districting" : this.state.loading ? "Loading" : SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
+            {this.props.CurrentDistrictingSummary.id ==
+            this.props.districting.id
+              ? "Currently Displaying this Districting"
+              : this.state.loading
+              ? "Loading"
+              : SelectionMenuUtilities.LABELS.LOAD_THIS_DISTRICTING}
           </Button>
         </div>
       </div>
@@ -106,7 +116,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ComparisonDistrictingA: state.ComparisonDistrictingA,
     ComparisonDistrictingB: state.ComparisonDistrictingB,
-    CurrentDistrictingSummary : state.CurrentDistrictingSummary
+    CurrentDistrictingSummary: state.CurrentDistrictingSummary,
   };
 };
 

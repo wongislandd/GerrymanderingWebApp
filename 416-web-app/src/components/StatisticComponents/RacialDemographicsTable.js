@@ -34,9 +34,7 @@ export default class RacialDemographicsTable extends Component {
           <TableBody>
             <TableRow>
               <TableCell scope="row">
-                {StatUtilities.addCommas(
-                  district.demographics.tp
-                )}
+                {StatUtilities.addCommas(district.demographics.tp)}
               </TableCell>
               <TableCell align="right">
                 {StatUtilities.formatResult(
@@ -45,7 +43,7 @@ export default class RacialDemographicsTable extends Component {
                 )}
               </TableCell>
               <TableCell align="right">
-              {StatUtilities.formatResult(
+                {StatUtilities.formatResult(
                   district.demographics.black,
                   district.demographics.tp
                 )}
@@ -57,25 +55,25 @@ export default class RacialDemographicsTable extends Component {
                 )}
               </TableCell>
               <TableCell align="right">
-              {StatUtilities.formatResult(
+                {StatUtilities.formatResult(
                   district.demographics.asian,
                   district.demographics.tp
                 )}
               </TableCell>
               <TableCell align="right">
-              {StatUtilities.formatResult(
+                {StatUtilities.formatResult(
                   district.demographics.natives,
                   district.demographics.tp
                 )}
               </TableCell>
               <TableCell align="right">
-              {StatUtilities.formatResult(
+                {StatUtilities.formatResult(
                   district.demographics.pacific,
                   district.demographics.tp
                 )}
               </TableCell>
               <TableCell align="right">
-              {StatUtilities.formatResult(
+                {StatUtilities.formatResult(
                   district.demographics.otherRace,
                   district.demographics.tp
                 )}

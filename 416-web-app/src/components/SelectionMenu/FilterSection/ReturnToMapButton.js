@@ -34,14 +34,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     restoreDefaultStateForNewDistricting: () => {
       dispatch(restoreDefaultStateForNewDistricting());
-    }
+    },
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     NewDistrictingSelected: state.NewDistrictingSelected,
-    CurrentDistrictingGeoJson : state.CurrentDistrictingGeoJson,
+    CurrentDistrictingGeoJson: state.CurrentDistrictingGeoJson,
   };
 };
 

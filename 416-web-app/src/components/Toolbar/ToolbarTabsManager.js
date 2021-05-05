@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     CurrentTab: state.CurrentTab,
-    CurrentDistrictingSummary : state.CurrentDistrictingSummary
+    CurrentDistrictingSummary: state.CurrentDistrictingSummary,
   };
 };
 

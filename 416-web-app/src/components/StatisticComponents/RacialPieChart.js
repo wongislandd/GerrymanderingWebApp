@@ -7,8 +7,6 @@ export default class RacialPieChart extends Component {
     super(props);
   }
 
-  
-
   render() {
     return (
       <Chart
@@ -19,22 +17,10 @@ export default class RacialPieChart extends Component {
         loader={<div>Loading Chart</div>}
         data={[
           ["Race", "Count"],
-          [
-            "White",
-            this.props.district.demographics.white
-          ],
-          [
-            "Black",
-            this.props.district.demographics.black,
-          ],
-          [
-            "Hispanic",
-            this.props.district.demographics.hispanic,
-          ],
-          [
-            "Asian",
-            this.props.district.demographics.asian,
-          ],
+          ["White", this.props.district.demographics.white],
+          ["Black", this.props.district.demographics.black],
+          ["Hispanic", this.props.district.demographics.hispanic],
+          ["Asian", this.props.district.demographics.asian],
           [
             "Native American / Alaskan",
             this.props.district.demographics.natives,
@@ -43,10 +29,7 @@ export default class RacialPieChart extends Component {
             "Pacific Islander / Hawaiian",
             this.props.district.demographics.pacific,
           ],
-          [
-            "Other",
-            this.props.district.demographics.other,
-          ],
+          ["Other", this.props.district.demographics.other],
         ]}
         options={{
           pieSliceText: "none",

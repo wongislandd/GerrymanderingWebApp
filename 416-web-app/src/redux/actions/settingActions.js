@@ -32,10 +32,9 @@ export const toggleCountySwitch = (bool) => {
 export const setTentativeDistricting = (districting) => {
   return {
     type: ActionTypes.SET_TENTATIVE_DISTRICTING,
-    TentativeDistricting : districting,
+    TentativeDistricting: districting,
   };
 };
-
 
 export const moveMouse = (event) => {
   if (event.nativeEvent) {
@@ -108,10 +107,10 @@ export const updatePopulationConstraint = (key) => {
 
 export const updateCompactnessConstraint = (key) => {
   return {
-    type : ActionTypes.UPDATE_COMPACTNESS_CONSTRAINT,
-    Key : key
-  }
-}
+    type: ActionTypes.UPDATE_COMPACTNESS_CONSTRAINT,
+    Key: key,
+  };
+};
 
 export const updateMinorityConstraint = (key) => {
   return {
@@ -266,77 +265,76 @@ export const updateAnalysisDistrictings = (dict) => {
 
 export const loadStateOutlines = (dict) => {
   return {
-    type : ActionTypes.LOAD_STATE_OUTLINES,
-    Outlines : dict
-  }
-}
+    type: ActionTypes.LOAD_STATE_OUTLINES,
+    Outlines: dict,
+  };
+};
 
 export const toggleExpandedSummary = (name) => {
   return {
-    type : ActionTypes.TOGGLE_EXPANDED_SUMMARY,
-    Name : name
-  }
-}
+    type: ActionTypes.TOGGLE_EXPANDED_SUMMARY,
+    Name: name,
+  };
+};
 
 export const resetExpandedSummaries = () => {
   return {
-    type : ActionTypes.RESET_EXPANDED_SUMMARIES
-  }
-}
+    type: ActionTypes.RESET_EXPANDED_SUMMARIES,
+  };
+};
 
 export const setDistrictingsAreConstrained = (bool) => {
   return {
-    type : ActionTypes.SET_DISTRICTINGS_ARE_CONSTRAINED,
-    Bool : bool
-  }
-}
-
+    type: ActionTypes.SET_DISTRICTINGS_ARE_CONSTRAINED,
+    Bool: bool,
+  };
+};
 
 export const loadInJobs = (jobs) => {
   return {
-    type : ActionTypes.LOAD_IN_JOBS,
-    Jobs: jobs
-  }
-}
+    type: ActionTypes.LOAD_IN_JOBS,
+    Jobs: jobs,
+  };
+};
 
 export const populateIncumbents = (incumbents) => {
   return {
-    type : ActionTypes.POPULATE_INCUMBENTS,
-    Incumbents : incumbents,
-  }
-}
+    type: ActionTypes.POPULATE_INCUMBENTS,
+    Incumbents: incumbents,
+  };
+};
 
 export const populatePrecincts = (precinctsGeoJson) => {
   return {
-    type : ActionTypes.POPULATE_PRECINCTS,
-    PrecinctsGeoJson : precinctsGeoJson,
-  }
-} 
+    type: ActionTypes.POPULATE_PRECINCTS,
+    PrecinctsGeoJson: precinctsGeoJson,
+  };
+};
 
 export const populateCounties = (countiesGeoJson) => {
   return {
-    type : ActionTypes.POPULATE_COUNTIES,
-    CountiesGeoJson : countiesGeoJson,
-  }
-}
+    type: ActionTypes.POPULATE_COUNTIES,
+    CountiesGeoJson: countiesGeoJson,
+  };
+};
 
 export const populateCurrentDistrictingGeoJson = (districtingGeoJson) => {
   return {
-    type : ActionTypes.POPULATE_CURRENT_DISTRICTING_GEOJSON,
-    DistrictingGeoJson : districtingGeoJson
-  }
-}
+    type: ActionTypes.POPULATE_CURRENT_DISTRICTING_GEOJSON,
+    DistrictingGeoJson: districtingGeoJson,
+  };
+};
 
 export const populateCurrentDistrictingSummary = (summary) => {
   return {
     type: ActionTypes.POPULATE_CURRENT_DISTRICTING_SUMMARY,
-    DistrictingSummary : summary
-  }
-}
+    DistrictingSummary: summary,
+  };
+};
 
 export const setCurrentJob = (job) => {
   return {
-    type : ActionTypes.SET_CURRENT_JOB,
-    Job : job
-  }
-}
+    type: ActionTypes.SET_CURRENT_JOB,
+    Job: job,
+  };
+};

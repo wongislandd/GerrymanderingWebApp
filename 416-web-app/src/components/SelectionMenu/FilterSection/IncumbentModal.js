@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
 import { connect } from "react-redux";
-import {
-  updateIncumbentProtection,
-} from "../../../redux/actions/settingActions";
+import { updateIncumbentProtection } from "../../../redux/actions/settingActions";
 import { Row, Col, Modal, Button } from "react-materialize";
 import { FormControlLabel, Slider, Checkbox } from "@material-ui/core";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 
 class IncumbentModal extends Component {
-
   render() {
     return (
       <div>
@@ -54,7 +51,9 @@ class IncumbentModal extends Component {
                           id={key + "-protection-checkbox"}
                           className="incumbent-protection-option"
                           value={key}
-                          checked={this.props.IncumbentProtectionInfo[key].protected}
+                          checked={
+                            this.props.IncumbentProtectionInfo[key].protected
+                          }
                           onChange={(e) =>
                             this.props.updateIncumbentProtection(
                               key,
@@ -63,9 +62,13 @@ class IncumbentModal extends Component {
                           }
                         />
                       }
-                      label={this.props.IncumbentProtectionInfo[key].name + " (" + this.props.IncumbentProtectionInfo[key].residence + ")"}
+                      label={
+                        this.props.IncumbentProtectionInfo[key].name +
+                        " (" +
+                        this.props.IncumbentProtectionInfo[key].residence +
+                        ")"
+                      }
                     />
-
                   </Row>
                 </Col>
               );

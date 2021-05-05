@@ -27,25 +27,18 @@ class PrecinctTooltip extends Component {
         >
           <ul>
             <li>
-              <b>
-                Precinct :{" "}
-                {
-                  locationToFeature.properties.name
-                }
-              </b>
+              <b>Precinct : {locationToFeature.properties.name}</b>
             </li>
             <li>County : {locationToFeature.properties.county}</li>
             <li>
               Population :{" "}
-              {StatUtilities.addCommas(
-                locationToFeature.properties.population
-              )}
+              {StatUtilities.addCommas(locationToFeature.properties.population)}
             </li>
             <li>
               White Population:{" "}
               {StatUtilities.formatResult(
                 locationToFeature.properties.white,
-                locationToFeature.properties.population,
+                locationToFeature.properties.population
               )}
             </li>
             <li>

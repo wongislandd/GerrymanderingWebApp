@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Select, Button } from "react-materialize";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
-import * as NetworkingUtilities from '../../network/NetworkingUtilities'
+import * as NetworkingUtilities from "../../network/NetworkingUtilities";
 import { connect } from "react-redux";
 import {
   setCurrentState,

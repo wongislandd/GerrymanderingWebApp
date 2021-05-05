@@ -79,8 +79,8 @@ const mapStateToProps = (state, ownProps) => {
     DisplayPrecincts: state.DisplayPrecincts,
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
-    PrecinctsGeoJson : state.PrecinctsGeoJson,
-    CountiesGeoJson : state.CountiesGeoJson,
+    PrecinctsGeoJson: state.PrecinctsGeoJson,
+    CountiesGeoJson: state.CountiesGeoJson,
   };
 };
 

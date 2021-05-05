@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Row,
-  Switch,
-} from "react-materialize";
+import { Row, Switch } from "react-materialize";
 import {
   resetExpandedSummaries,
   setNewDistrictingSelected,
@@ -27,10 +24,12 @@ class ListingSection extends Component {
       <div className="SelectionMenuSection ListingSection">
         <Row>
           <div className="DistrictingResultsHeader">
-            <h5>{SelectionMenuUtilities.LABELS.CONSTRAINED_DISTRICTING_RESULTS}</h5>
+            <h5>
+              {SelectionMenuUtilities.LABELS.CONSTRAINED_DISTRICTING_RESULTS}
+            </h5>
           </div>
         </Row>
-          <SummaryListing />
+        <SummaryListing />
       </div>
     );
   }
@@ -41,16 +40,14 @@ const mapDispatchToProps = (dispatch) => {
     setNewDistrictingSelected: (bool) => {
       dispatch(setNewDistrictingSelected(bool));
     },
-    resetExpandedSummaries : () => {
-      dispatch(resetExpandedSummaries())
-    }
+    resetExpandedSummaries: () => {
+      dispatch(resetExpandedSummaries());
+    },
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListingSection);

@@ -20,7 +20,7 @@ export default class ObjectiveFunctionTable extends Component {
   }
 
   render() {
-    console.log(this.props.DistrictingToDisplay)
+    console.log(this.props.DistrictingToDisplay);
     return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
@@ -54,7 +54,7 @@ export default class ObjectiveFunctionTable extends Component {
                       : "Deviation from Average"
                   }
                   description={
-                     StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
+                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
                   }
                 />
               </TableCell>
@@ -98,7 +98,8 @@ export default class ObjectiveFunctionTable extends Component {
             <TableRow>
               <TableCell scope="row">
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures.populationEqualityAvg
+                  ? this.props.DistrictingToDisplay.measures
+                      .populationEqualityAvg
                   : this.props.DistrictToDisplay.measures.populationEquality}
               </TableCell>
               <TableCell>
@@ -108,23 +109,32 @@ export default class ObjectiveFunctionTable extends Component {
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures.deviationFromAverageAvg.areaDev
-                  : this.props.DistrictToDisplay.measures.deviationFromAverage.areaDev}
+                  ? this.props.DistrictingToDisplay.measures
+                      .deviationFromAverageAvg.areaDev
+                  : this.props.DistrictToDisplay.measures.deviationFromAverage
+                      .areaDev}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures.deviationFromEnactedAvg.areaDev
-                  : this.props.DistrictToDisplay.measures.deviationFromEnacted.areaDev}
+                  ? this.props.DistrictingToDisplay.measures
+                      .deviationFromEnactedAvg.areaDev
+                  : this.props.DistrictToDisplay.measures.deviationFromEnacted
+                      .areaDev}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures.compactnessAvg.polsbyPopper
-                  : this.props.DistrictToDisplay.measures.compactness.polsbyPopper}
+                  ? this.props.DistrictingToDisplay.measures.compactnessAvg
+                      .polsbyPopper
+                  : this.props.DistrictToDisplay.measures.compactness
+                      .polsbyPopper}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures.majorityMinorityDistricts
-                  : this.props.DistrictToDisplay.majorityMinorityDistrict ? "Yes" : "No"}
+                  ? this.props.DistrictingToDisplay.measures
+                      .majorityMinorityDistricts
+                  : this.props.DistrictToDisplay.majorityMinorityDistrict
+                  ? "Yes"
+                  : "No"}
               </TableCell>
             </TableRow>
           </TableBody>

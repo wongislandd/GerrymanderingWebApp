@@ -18,16 +18,18 @@ class CompareSection extends Component {
   statsToCompare = {
     "Population Equality": ["populationEqualityAvg"],
     "Split County Score": ["splitCountiesScore"],
-    "Deviation from Average Area" :
-      [["deviationFromAverageAvg"],["areaDev"]],
-    "Deviation from Average Population" :
-      [["deviationFromAverageAvg"],["populationDev"]],
-    "Deviation from Enacted Area":
-    [["deviationFromEnactedAvg"],["areaDev"]],
-    "Deviation from Enacted Population" :
-    [["deviationFromEnactedAvg"],["populationDev"]],
-    Compactness: [["compactnessAvg"],["polsbyPopper"]],
-    "Majority Minority Districts" : ["majorityMinorityDistricts"]
+    "Deviation from Average Area": [["deviationFromAverageAvg"], ["areaDev"]],
+    "Deviation from Average Population": [
+      ["deviationFromAverageAvg"],
+      ["populationDev"],
+    ],
+    "Deviation from Enacted Area": [["deviationFromEnactedAvg"], ["areaDev"]],
+    "Deviation from Enacted Population": [
+      ["deviationFromEnactedAvg"],
+      ["populationDev"],
+    ],
+    Compactness: [["compactnessAvg"], ["polsbyPopper"]],
+    "Majority Minority Districts": ["majorityMinorityDistricts"],
   };
 
   readyToCompare() {
@@ -80,12 +82,14 @@ class CompareSection extends Component {
               ? ""
               : Object.keys(this.statsToCompare).map((key) => {
                   let thisDistrictingVal = this.props.ComparisonDistrictingA
-                  .measures[this.statsToCompare[key][0]];
+                    .measures[this.statsToCompare[key][0]];
                   let otherDistrictingVal = this.props.ComparisonDistrictingB
-                  .measures[this.statsToCompare[key][0]];
-                  if(this.statsToCompare[key].length == 2) {
-                      thisDistrictingVal = thisDistrictingVal[this.statsToCompare[key][1]];
-                      otherDistrictingVal = otherDistrictingVal[this.statsToCompare[key][1]];
+                    .measures[this.statsToCompare[key][0]];
+                  if (this.statsToCompare[key].length == 2) {
+                    thisDistrictingVal =
+                      thisDistrictingVal[this.statsToCompare[key][1]];
+                    otherDistrictingVal =
+                      otherDistrictingVal[this.statsToCompare[key][1]];
                   }
                   let difference = StatUtilities.getPercentageChange(
                     thisDistrictingVal,
@@ -102,7 +106,14 @@ class CompareSection extends Component {
                           ? StatUtilities.COMPARISON_DIRECTIONS.UP
                           : StatUtilities.COMPARISON_DIRECTIONS.DOWN
                       }
-                      value={key == "Majority Minority Districts" ? thisDistrictingVal : StatUtilities.formatAsPercentage(thisDistrictingVal,5)}
+                      value={
+                        key == "Majority Minority Districts"
+                          ? thisDistrictingVal
+                          : StatUtilities.formatAsPercentage(
+                              thisDistrictingVal,
+                              5
+                            )
+                      }
                       pct={difference + "%"}
                     />
                   );
@@ -114,12 +125,14 @@ class CompareSection extends Component {
               ? ""
               : Object.keys(this.statsToCompare).map((key) => {
                   let thisDistrictingVal = this.props.ComparisonDistrictingB
-                  .measures[this.statsToCompare[key][0]];
+                    .measures[this.statsToCompare[key][0]];
                   let otherDistrictingVal = this.props.ComparisonDistrictingA
-                  .measures[this.statsToCompare[key][0]];
-                  if(this.statsToCompare[key].length == 2) {
-                      thisDistrictingVal = thisDistrictingVal[this.statsToCompare[key][1]];
-                      otherDistrictingVal = otherDistrictingVal[this.statsToCompare[key][1]];
+                    .measures[this.statsToCompare[key][0]];
+                  if (this.statsToCompare[key].length == 2) {
+                    thisDistrictingVal =
+                      thisDistrictingVal[this.statsToCompare[key][1]];
+                    otherDistrictingVal =
+                      otherDistrictingVal[this.statsToCompare[key][1]];
                   }
                   let difference = StatUtilities.getPercentageChange(
                     thisDistrictingVal,
@@ -136,7 +149,14 @@ class CompareSection extends Component {
                           ? StatUtilities.COMPARISON_DIRECTIONS.UP
                           : StatUtilities.COMPARISON_DIRECTIONS.DOWN
                       }
-                      value={key == "Majority Minority Districts" ? thisDistrictingVal : StatUtilities.formatAsPercentage(thisDistrictingVal,5)}
+                      value={
+                        key == "Majority Minority Districts"
+                          ? thisDistrictingVal
+                          : StatUtilities.formatAsPercentage(
+                              thisDistrictingVal,
+                              5
+                            )
+                      }
                       pct={difference + "%"}
                     />
                   );

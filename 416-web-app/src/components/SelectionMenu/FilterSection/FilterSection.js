@@ -12,7 +12,7 @@ import {
   setNumberOfDistrictingsAvailable,
   resetExpandedSummaries,
   setDistrictingsAreConstrained,
-  updateAnalysisDistrictings
+  updateAnalysisDistrictings,
 } from "../../../redux/actions/settingActions";
 import * as StatUtilities from "../../../utilities/StatUtilities";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,8 +24,6 @@ import ConstraintSelection from "./ConstraintSelection";
 import WeightSelection from "./WeightSelection";
 import ReturnToMapButton from "./ReturnToMapButton";
 import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,9 +42,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function shouldDisableConstrain(props) {
-  return (props.PopulationSelection == null || props.MinoritySelection == null || props.CompactnessSelection == null);
+  return (
+    props.PopulationSelection == null ||
+    props.MinoritySelection == null ||
+    props.CompactnessSelection == null
+  );
 }
-
 
 function getSteps() {
   return ["Select Constraints", "Apply Weights"];
@@ -74,15 +75,16 @@ function getStepCompleteMsg(step) {
   }
 }
 
-
 async function constrainDistrictings(props) {
-  NetworkingUtilities.applyConstraints().then(resultSize => {
-    props.setNumberOfDistrictingsAvailable(resultSize)
-  })
+  NetworkingUtilities.applyConstraints().then((resultSize) => {
+    props.setNumberOfDistrictingsAvailable(resultSize);
+  });
 }
 
 async function populateAnalysis(props) {
-  NetworkingUtilities.applyWeights().then(analysis => props.updateAnalysisDistrictings(analysis))
+  NetworkingUtilities.applyWeights().then((analysis) =>
+    props.updateAnalysisDistrictings(analysis)
+  );
 }
 
 function FilterSection(props) {
@@ -108,7 +110,7 @@ function FilterSection(props) {
   };
 
   const handleNext = () => {
-    console.log()
+    console.log();
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
@@ -133,14 +135,14 @@ function FilterSection(props) {
   const handleComplete = async () => {
     if (activeStep == 0) {
       // CONSTRAIN DISTRICTINGS
-      constrainDistrictings(props)
-      props.setDistrictingsAreConstrained(true)
+      constrainDistrictings(props);
+      props.setDistrictingsAreConstrained(true);
     }
     if (activeStep == 1) {
       // UPDATE WEIGHTS
       populateAnalysis(props);
       // RESET CURRENTLY DISPLAYED DISTRICTINGS
-      props.resetExpandedSummaries()
+      props.resetExpandedSummaries();
       // QUERY SERVER FOR NEW SUMMARY
     }
     const newCompleted = completed;
@@ -185,7 +187,11 @@ function FilterSection(props) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={activeStep == getSteps().length - 1 || !props.DistrictingsAreConstrained || props.NumDistrictingsAvailable == 0}
+                disabled={
+                  activeStep == getSteps().length - 1 ||
+                  !props.DistrictingsAreConstrained ||
+                  props.NumDistrictingsAvailable == 0
+                }
                 className={classes.button + " redBrownBtn"}
               >
                 Next
@@ -213,25 +219,25 @@ const mapDispatchToProps = (dispatch) => {
     setNumberOfDistrictingsAvailable: (number) => {
       dispatch(setNumberOfDistrictingsAvailable(number));
     },
-    resetExpandedSummaries : () => {
-      dispatch(resetExpandedSummaries())
+    resetExpandedSummaries: () => {
+      dispatch(resetExpandedSummaries());
     },
-    setDistrictingsAreConstrained : (bool) => {
-      dispatch(setDistrictingsAreConstrained(bool))
+    setDistrictingsAreConstrained: (bool) => {
+      dispatch(setDistrictingsAreConstrained(bool));
     },
-    updateAnalysisDistrictings : (analysisDict) => {
-      dispatch(updateAnalysisDistrictings(analysisDict))
-    }
+    updateAnalysisDistrictings: (analysisDict) => {
+      dispatch(updateAnalysisDistrictings(analysisDict));
+    },
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     NumDistrictingsAvailable: state.NumDistrictingsAvailable,
-    DistrictingsAreConstrained : state.DistrictingsAreConstrained,
-    PopulationSelection : state.PopulationSelection,
-    MinoritySelection : state.MinoritySelection,
-    CompactnessSelection : state.CompactnessSelection,
+    DistrictingsAreConstrained: state.DistrictingsAreConstrained,
+    PopulationSelection: state.PopulationSelection,
+    MinoritySelection: state.MinoritySelection,
+    CompactnessSelection: state.CompactnessSelection,
   };
 };
 

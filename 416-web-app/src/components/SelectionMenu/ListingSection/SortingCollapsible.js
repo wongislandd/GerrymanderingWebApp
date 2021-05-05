@@ -5,7 +5,6 @@ import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtiliti
 
 /* This should be able to change the sort direction and line up with the numbers displayed in the districting item component*/
 class SortingCollapsible extends Component {
-
   render() {
     return (
       <CollapsibleItem
@@ -41,6 +40,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {};
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortingCollapsible);

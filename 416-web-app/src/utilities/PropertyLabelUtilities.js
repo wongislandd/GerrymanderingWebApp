@@ -1,4 +1,1 @@
-export const DISTRICTING_LABELS = 
-{
-    
-}
+export const DISTRICTING_LABELS = {};

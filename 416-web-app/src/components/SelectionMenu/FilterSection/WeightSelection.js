@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
 import {
   updateObjectiveFunctionSettings,
-  resetExpandedSummaries
+  resetExpandedSummaries,
 } from "../../../redux/actions/settingActions";
 import { Row } from "react-materialize";
 import { Slider } from "@material-ui/core";

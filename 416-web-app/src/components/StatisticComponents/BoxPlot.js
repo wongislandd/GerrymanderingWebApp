@@ -5,11 +5,7 @@ export default class BoxPlot extends Component {
   render() {
     // Boxes
     const boxes = [];
-    for (
-      let i = 0;
-      i < this.props.DistrictingToDisplay.features.length;
-      i++
-    ) {
+    for (let i = 0; i < this.props.DistrictingToDisplay.features.length; i++) {
       let traceValues = [];
       for (let j = 0; j < 50; j++) {
         traceValues[j] =
@@ -27,11 +23,7 @@ export default class BoxPlot extends Component {
     }
     // Points
     const points = [];
-    for (
-      let i = 0;
-      i < this.props.DistrictingToDisplay.features.length;
-      i++
-    ) {
+    for (let i = 0; i < this.props.DistrictingToDisplay.features.length; i++) {
       // Have the same name to match the marker plot on top of the box plot
       points.push({
         x: ["District " + (i + 1)],

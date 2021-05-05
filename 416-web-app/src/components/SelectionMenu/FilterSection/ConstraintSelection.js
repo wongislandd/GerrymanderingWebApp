@@ -24,7 +24,6 @@ import * as NetworkingUtilities from "../../../network/NetworkingUtilities";
 import ConstraintSlider from "./ConstraintSlider";
 
 class ConstraintSelection extends Component {
-
   render() {
     return (
       <div className="filterSectionItem">
@@ -63,14 +62,25 @@ class ConstraintSelection extends Component {
               outDuration: 250,
             },
           }}
-          value={this.props.PopulationSelection != null ? this.props.PopulationSelection : ""}
+          value={
+            this.props.PopulationSelection != null
+              ? this.props.PopulationSelection
+              : ""
+          }
         >
           <option disabled value="">
             {SelectionMenuUtilities.LABELS.CHOOSE_A_VOTING_POPULATION}
           </option>
           {Object.keys(SelectionMenuUtilities.POPULATIONS).map((key) => {
             return (
-              <option key={key} value={key} disabled = {key=="CITIZEN_VOTING_AGE_POPULATION" || key =="VOTING_AGE_POPULATION"}>
+              <option
+                key={key}
+                value={key}
+                disabled={
+                  key == "CITIZEN_VOTING_AGE_POPULATION" ||
+                  key == "VOTING_AGE_POPULATION"
+                }
+              >
                 {SelectionMenuUtilities.POPULATIONS[key]}
               </option>
             );
@@ -78,63 +88,88 @@ class ConstraintSelection extends Component {
         </Select>
         {/* Section for Setting Constriants */}
         <div className="filterSectionItem">
-          <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]}/>
-        </div>
-        {/* Incumbent protection, part of constraints  */}
-          <LabelAndInfoIcon
-            label={
-              SelectionMenuUtilities.LABELS.MINORITY_POPULATION_TO_CONSTRAIN
+          <ConstraintSlider
+            filterKey={
+              SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference
             }
-            description={
-              SelectionMenuUtilities.DESCRIPTIONS.MINORITY_POPULATION_CONSTRAINT
+            filter={
+              this.props.ConstraintSliderSettings[
+                SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference
+              ]
             }
           />
-          <Select
-            icon={<Icon>people</Icon>}
-            id="Select-9"
-            multiple={false}
-            onChange={(e) =>
-              this.props.updateMinorityConstraint(e.target.value)
-            }
-            options={{
-              classes: "",
-              dropdownOptions: {
-                alignment: "left",
-                autoTrigger: true,
-                closeOnClick: true,
-                constrainWidth: true,
-                coverTrigger: true,
-                hover: false,
-                inDuration: 150,
-                onCloseEnd: null,
-                onCloseStart: null,
-                onOpenEnd: null,
-                onOpenStart: null,
-                outDuration: 250,
-              },
-            }}
-            value={this.props.MinoritySelection != null ? this.props.MinoritySelection : ""}
-          >
-            <option disabled value="">
-              {SelectionMenuUtilities.LABELS.CHOOSE_A_MINORITY_POPULATION}
-            </option>
-            {Object.keys(SelectionMenuUtilities.MINORITIES).map((key) => {
-              return (
-                <option key={key} value={key}>
-                  {SelectionMenuUtilities.MINORITIES[key]}
-                </option>
-              );
-            })}
-          </Select>
-          <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts]}/>
-          <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold]}/>
+        </div>
+        {/* Incumbent protection, part of constraints  */}
+        <LabelAndInfoIcon
+          label={SelectionMenuUtilities.LABELS.MINORITY_POPULATION_TO_CONSTRAIN}
+          description={
+            SelectionMenuUtilities.DESCRIPTIONS.MINORITY_POPULATION_CONSTRAINT
+          }
+        />
+        <Select
+          icon={<Icon>people</Icon>}
+          id="Select-9"
+          multiple={false}
+          onChange={(e) => this.props.updateMinorityConstraint(e.target.value)}
+          options={{
+            classes: "",
+            dropdownOptions: {
+              alignment: "left",
+              autoTrigger: true,
+              closeOnClick: true,
+              constrainWidth: true,
+              coverTrigger: true,
+              hover: false,
+              inDuration: 150,
+              onCloseEnd: null,
+              onCloseStart: null,
+              onOpenEnd: null,
+              onOpenStart: null,
+              outDuration: 250,
+            },
+          }}
+          value={
+            this.props.MinoritySelection != null
+              ? this.props.MinoritySelection
+              : ""
+          }
+        >
+          <option disabled value="">
+            {SelectionMenuUtilities.LABELS.CHOOSE_A_MINORITY_POPULATION}
+          </option>
+          {Object.keys(SelectionMenuUtilities.MINORITIES).map((key) => {
+            return (
+              <option key={key} value={key}>
+                {SelectionMenuUtilities.MINORITIES[key]}
+              </option>
+            );
+          })}
+        </Select>
+        <ConstraintSlider
+          filterKey={
+            SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts
+          }
+          filter={
+            this.props.ConstraintSliderSettings[
+              SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts
+            ]
+          }
+        />
+        <ConstraintSlider
+          filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold}
+          filter={
+            this.props.ConstraintSliderSettings[
+              SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold
+            ]
+          }
+        />
         <LabelAndInfoIcon
           label={SelectionMenuUtilities.LABELS.COMPACTNESS_TYPE}
           description={
             SelectionMenuUtilities.DESCRIPTIONS.COMPACTNESS_TYPE_CONSTRAINT
           }
         />
-                <Select
+        <Select
           icon={<Icon>people</Icon>}
           id="Select-9"
           multiple={false}
@@ -158,22 +193,33 @@ class ConstraintSelection extends Component {
               outDuration: 250,
             },
           }}
-          value={this.props.CompactnessSelection != null ? this.props.CompactnessSelection : ""}
+          value={
+            this.props.CompactnessSelection != null
+              ? this.props.CompactnessSelection
+              : ""
+          }
         >
           <option disabled value="">
             {SelectionMenuUtilities.LABELS.CHOOSE_A_TYPE_OF_COMPACTNESS}
           </option>
           {Object.keys(SelectionMenuUtilities.COMPACTNESS_TYPES).map((key) => {
             return (
-              <option key={key} value={key} disabled = {key=="CVAP"}>
+              <option key={key} value={key} disabled={key == "CVAP"}>
                 {SelectionMenuUtilities.COMPACTNESS_TYPES[key]}
               </option>
             );
           })}
         </Select>
-        <ConstraintSlider filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness} filter={this.props.ConstraintSliderSettings[SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness]}/>
+        <ConstraintSlider
+          filterKey={SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness}
+          filter={
+            this.props.ConstraintSliderSettings[
+              SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness
+            ]
+          }
+        />
         <Row>
-        <IncumbentModal />
+          <IncumbentModal />
         </Row>
       </div>
     );
@@ -192,7 +238,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(updateMinorityConstraint(key));
     },
     updateCompactnessConstraint: (key) => {
-      dispatch(updateCompactnessConstraint(key))
+      dispatch(updateCompactnessConstraint(key));
     },
   };
 };
@@ -201,9 +247,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     IncumbentProtectionInfo: state.IncumbentProtectionInfo,
     ConstraintSliderSettings: state.ConstraintSliderSettings,
-    PopulationSelection : state.PopulationSelection,
-    MinoritySelection : state.MinoritySelection,
-    CompactnessSelection : state.CompactnessSelection,
+    PopulationSelection: state.PopulationSelection,
+    MinoritySelection: state.MinoritySelection,
+    CompactnessSelection: state.CompactnessSelection,
   };
 };
 
