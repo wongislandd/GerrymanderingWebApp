@@ -10,7 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.mapping.Set;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 
 @Getter
@@ -20,7 +22,7 @@ public class DistrictingSummary {
     long id;
     double objectiveFunctionScore;
     DistrictingMeasures measures;
-    Collection<DistrictSummary> districtSummaries;
+    ArrayList<DistrictSummary> districtSummaries;
     boolean isEnacted;
 
     public DistrictingSummary(Districting districting) {
@@ -30,13 +32,13 @@ public class DistrictingSummary {
         // TODO Calculate the actual districting's deviation from average
         measures.setDeviationFromAverageAvg(new Deviation(.5,.5));
         objectiveFunctionScore = districting.getObjectiveFunctionScore();
-        districtSummaries = new HashSet<>();
+        districtSummaries = new ArrayList<>();
         for (District d : districting.getDistricts()) {
             // TODO Have all the transient properties of measures set before passing it in here.
             d.getMeasures().setDeviationFromAverage(new Deviation(.5,.5));
             districtSummaries.add(new DistrictSummary(d));
         }
-
+        districtSummaries.sort(districtNumberComparator);
     }
 
     public DistrictingSummary(EnactedDistricting enacted) {
@@ -46,12 +48,25 @@ public class DistrictingSummary {
         // TODO Calculate the actual districting's deviation from average
         measures.setDeviationFromAverageAvg(new Deviation(0,0));
 //        objectiveFunctionScore = enacted.getObjectiveFunctionScore();
-        districtSummaries = new HashSet<>();
+        districtSummaries = new ArrayList<>();
         for (District d : enacted.getDistricts()) {
             // TODO Have all the transient properties of measures set before passing it in here.
             d.getMeasures().setDeviationFromAverage(new Deviation(0,0));
             districtSummaries.add(new DistrictSummary(d));
         }
-
+        districtSummaries.sort(districtNumberComparator);
     }
+
+    public static Comparator<DistrictSummary> districtNumberComparator = new Comparator<DistrictSummary>() {
+        @Override
+        public int compare(DistrictSummary districtSummary, DistrictSummary districtSummary2) {
+            if (districtSummary.getDistrictNumber() > districtSummary2.getDistrictNumber()) {
+                return 1;
+            } else if (districtSummary.getDistrictNumber() < districtSummary2.getDistrictNumber()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    };
 }
