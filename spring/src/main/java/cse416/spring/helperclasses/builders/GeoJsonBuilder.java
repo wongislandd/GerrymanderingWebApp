@@ -1,5 +1,6 @@
 package cse416.spring.helperclasses.builders;
 
+import cse416.spring.helperclasses.RGB;
 import cse416.spring.models.county.County;
 import cse416.spring.models.district.District;
 import cse416.spring.models.districting.Districting;
@@ -11,9 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 
 public class GeoJsonBuilder {
     public long id;
@@ -111,8 +110,38 @@ public class GeoJsonBuilder {
         return geometry;
     }
 
+    private RGB getRGBBasedOnDistrictNumber(int districtNumber) {
+        switch(districtNumber) {
+            case 1:
+                return new RGB(47, 79, 79);
+            case 2:
+                return new RGB(139,69,19);
+            case 3:
+                return new RGB(34, 139, 34);
+            case 4:
+                return new RGB(75,0,130);
+            case 5:
+                return new RGB(255, 0,61);
+            case 6:
+                return  new RGB(255,215,0);
+            case 7:
+                return new RGB(0, 255, 176);
+            case 8:
+                return new RGB(0, 255, 255);
+            case 9:
+                return new RGB(0,0,255);
+            case 10:
+                return new RGB(255,0,255);
+            case 11:
+                return new RGB(100,149,237);
+            case 12:
+                return new RGB(245,222,179);
+            default:
+                return new RGB(255, 105, 180);
+        }
+    }
+
     private JSONObject createPropertiesJsonObject(District d) {
-        // TODO: Add properties
         JSONObject properties = new JSONObject();
         properties.put("id", d.getDistrictNumber());
         properties.put("TOTAL_POPULATION", d.getDemographics().getTP());
@@ -124,7 +153,10 @@ public class GeoJsonBuilder {
         properties.put("RACE_PACIFIC_ISLANDER_COUNT", d.getDemographics().getPacific());
         properties.put("RACE_OTHER_COUNT", d.getDemographics().getOtherRace());
         properties.put("OBJECTIVE_FUNCTION_SCORE", d.getObjectiveFunctionScore());
-        // TODO Add Objective Function properties
+        RGB coloring = getRGBBasedOnDistrictNumber(d.getDistrictNumber());
+        properties.put("rgb-R", coloring.getR());
+        properties.put("rgb-G", coloring.getG());
+        properties.put("rgb-B", coloring.getB());
         return properties;
     }
 

@@ -153,18 +153,6 @@ class DistrictingSummary extends Component {
                 }
                 key={key}
                 header={"District " + district.districtNumber}
-                // style={{
-                //   backgroundColor:
-                //     "rgba(" +
-                //     district.properties["rgb-R"] +
-                //     "," +
-                //     district.properties["rgb-G"] +
-                //     "," +
-                //     district.properties["rgb-B"] +
-                //     "," +
-                //     MapUtilities.VALUES.UNHIGHLIGHTED_DISTRICT_OPACITY +
-                //     ")",
-                // }}
               >
                 <h5>Racial Demographics</h5>
 
