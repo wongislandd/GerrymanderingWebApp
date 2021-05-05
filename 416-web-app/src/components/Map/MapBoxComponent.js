@@ -15,6 +15,8 @@ import {
   setViewport,
   setCurrentState,
   setStatShowcasedDistrictID,
+  setCurrentJob,
+  returnToStateSelection,
 } from "../../redux/actions/settingActions";
 import DistrictTooltip from "./DistrictTooltip";
 import PrecinctTooltip from "./PrecinctTooltip";
@@ -206,9 +208,7 @@ class MapBoxComponent extends Component {
         <div
           className="returnToStateSelectionOption"
           onClick={(e) => {
-            this.props.setCurrentState(
-              ViewportUtilities.STATE_OPTIONS.UNSELECTED
-            );
+            this.props.returnToStateSelection();
           }}
         >
           <div className="iconAndLabel">
@@ -409,6 +409,9 @@ const mapDispatchToProps = (dispatch) => {
     setStatShowcasedDistrictID: (districtID) => {
       dispatch(setStatShowcasedDistrictID(districtID));
     },
+    returnToStateSelection : () => {
+      dispatch(returnToStateSelection());
+    }
   };
 };
 

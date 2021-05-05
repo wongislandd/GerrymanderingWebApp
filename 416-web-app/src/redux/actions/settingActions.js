@@ -332,6 +332,12 @@ export const populateCurrentDistrictingSummary = (summary) => {
   };
 };
 
+export const returnToStateSelection = () => {
+  return {
+    type : ActionTypes.RETURN_TO_STATE_SELECTION
+  }
+}
+
 export const setCurrentJob = (job) => {
   return {
     type: ActionTypes.SET_CURRENT_JOB,

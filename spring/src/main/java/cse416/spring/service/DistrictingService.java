@@ -12,7 +12,7 @@ import java.util.Set;
 public interface DistrictingService {
     Districting findById(long id);
 
-    List<Districting> findByJob(int jobId);
+    List<Districting> findByJob(long jobId);
 
     List<Districting> findAllDistrictings();
 

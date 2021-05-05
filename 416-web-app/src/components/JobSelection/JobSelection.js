@@ -74,6 +74,11 @@ class JobSelection extends Component {
     );
   }
 
+  async selectJob(job) {
+    NetworkingUtilities.initializeJob(job.id)
+    this.props.setCurrentJob(job)
+  }
+
   render() {
     return (
       <div className="job-selection-screen centered">
@@ -137,7 +142,7 @@ class JobSelection extends Component {
                   })}
                   <Button
                     className="redBrownBtn"
-                    onClick={(e) => this.props.setCurrentJob(job)}
+                    onClick={(e) => this.selectJob(job)}
                   >
                     {SelectionMenuUtilities.LABELS.CONTINUE_WITH_THIS_JOB}
                   </Button>

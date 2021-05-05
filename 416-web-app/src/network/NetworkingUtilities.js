@@ -131,3 +131,9 @@ export async function applyWeights() {
     });
   return analysis;
 }
+
+export async function initializeJob(jobId) {
+  let fullUrl = baseURL + "/jobs/initialize/" + jobId;
+  console.log("CALLED")
+  axios.post(fullUrl)
+}

@@ -75,7 +75,6 @@ public class District {
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(districtReference.getState());
         this.precincts = new HashSet<>();
         JSONArray precinctIdsInDistrict = FileReader.getDistrictsPrecinctsFromJsonFile(districtReference);
-
         for (int i = 0; i < precinctIdsInDistrict.length(); i++) {
             int targetPrecinctId = precinctIdsInDistrict.getInt(i);
             this.precincts.add(precinctHash.get(targetPrecinctId));

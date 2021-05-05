@@ -303,6 +303,13 @@ const rootReducer = (state = initState, action) => {
           descending: action.Descending,
         },
       };
+    case ActionTypes.RETURN_TO_STATE_SELECTION:
+      return {
+        ...state,
+        CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
+        MapViewport : ViewportUtilities.UNSELECTED.Maximized,
+        CurrentJob : null
+      }
     case ActionTypes.SET_COMPARISON_DISTRICTING_A:
       console.log("UPDATING COMPARISON DISTRICT A");
       return {

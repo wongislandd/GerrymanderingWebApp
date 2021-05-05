@@ -9,6 +9,7 @@ import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
@@ -36,7 +37,7 @@ public class Districting {
     private DistrictingMeasures measures;
     @Transient
     private double objectiveFunctionScore;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<District> districts;
 
     public Districting(Job job, ArrayList<District> districts) {

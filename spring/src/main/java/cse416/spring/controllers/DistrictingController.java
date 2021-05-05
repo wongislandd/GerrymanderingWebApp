@@ -10,6 +10,7 @@ import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.EnactedDistricting;
 import cse416.spring.service.DistrictingService;
 import cse416.spring.service.PrecinctService;
+import cse416.spring.singletons.DistrictingsSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -58,7 +60,7 @@ public class DistrictingController {
     @PostMapping(path = "/constrain", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) {
-        Set<Districting> results = districtingService.findByConstraints(constraints);
+        Collection<Districting> results = DistrictingsSingleton.getDistrictingsByConstraints(constraints);
         if (results.size() > 0) {
             ConstrainedDistrictings cds = new ConstrainedDistrictings(results, constraints);
             request.getSession().setAttribute("constrainedDistrictings", cds);

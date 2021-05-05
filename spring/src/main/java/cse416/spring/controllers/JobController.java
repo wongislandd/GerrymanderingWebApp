@@ -3,6 +3,7 @@ package cse416.spring.controllers;
 import cse416.spring.enums.StateName;
 import cse416.spring.models.job.Job;
 import cse416.spring.service.JobService;
+import cse416.spring.singletons.DistrictingsSingleton;
 import cse416.spring.singletons.PrecinctHashSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,15 @@ public class JobController {
     public ResponseEntity<ArrayList<Job>> loadJobs(@PathVariable("state") StateName state) {
         PrecinctHashSingleton.getPrecinctHash(state);
         ArrayList<Job> jobs = getJobs(state);
-
         // TODO Get a way for jackson not to send the districting keys, no need for them on the client
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
+
+    @PostMapping(value="/initialize/{jobId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> initializeJob(@PathVariable("jobId") long jobId) {
+        DistrictingsSingleton.getDistrictings(jobId);
+        return new ResponseEntity<>("Done", HttpStatus.OK);
+    }
+
 }

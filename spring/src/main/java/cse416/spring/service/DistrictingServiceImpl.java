@@ -27,8 +27,8 @@ public class DistrictingServiceImpl implements DistrictingService {
     }
 
     @Override
-    public List<Districting> findByJob(int jobId) {
-        Query query = em.createQuery("SELECT d FROM Districtings d WHERE d.id =:id");
+    public List<Districting> findByJob(long jobId) {
+        Query query = em.createQuery("SELECT d FROM Districtings d WHERE d.job.id =:id");
         query.setParameter("id", jobId);
         return (List<Districting>) query.getResultList();
     }
