@@ -149,7 +149,7 @@ class DistrictingSummary extends Component {
                     ? false
                     : this.props.StatShowcasedDistrictID == null
                     ? false
-                    : this.props.StatShowcasedDistrictID == key
+                    : this.props.StatShowcasedDistrictID == district.districtNumber-1
                 }
                 key={key}
                 header={"District " + district.districtNumber}

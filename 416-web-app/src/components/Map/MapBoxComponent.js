@@ -23,7 +23,6 @@ import PrecinctTooltip from "./PrecinctTooltip";
 import MapIcon from "@material-ui/icons/Map";
 import { Icon } from "react-materialize";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
-import TestGeoJson from '../../data/NC/TestData.json'
 
 class MapBoxComponent extends Component {
   constructor(props) {

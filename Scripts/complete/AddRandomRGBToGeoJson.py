@@ -6,8 +6,8 @@ from random import randint
 # Takes the features in TestGeoJson.json and outputs it into output.json
 
 
-inputFile = "./datasets/EnactedDistrictingPlan2019.json"
-outputFile = "./datasets/EnactedDistrictingPlan2019.json"
+inputFile = "../input/precincts_output.json"
+outputFile = "../output/precincts_output.json"
 
 
 def getRandomRGBVal():
