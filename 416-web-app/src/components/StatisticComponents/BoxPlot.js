@@ -1,49 +1,31 @@
 import React, { Component } from "react";
 import Plot from "react-plotly.js";
+import { connect } from 'react-redux'
+import * as NetworkingUtilities from '../../network/NetworkingUtilities'
+import { updateBWPoints } from "../../redux/actions/settingActions";
 
-export default class BoxPlot extends Component {
+class BoxPlot extends Component {
+  componentDidMount() {
+    NetworkingUtilities.getPointsData(this.districtSummary.id).then((pointsData) =>
+      this.props.updateBWPoints(pointsData)
+    )
+  }
+
+  dataToShowInPlot() {
+    if (this.props.BWBoxes == null) {
+      return []
+    } else if (this.props.BWPoints == null) {
+      return this.props.BWBoxes
+    } else {
+        return this.props.BWBoxes.concat(this.props.BWPoints)
+    }
+  }
+
   render() {
-    // Boxes
-    const boxes = [];
-    for (let i = 0; i < this.props.DistrictingToDisplay.features.length; i++) {
-      let traceValues = [];
-      for (let j = 0; j < 50; j++) {
-        traceValues[j] =
-          (Math.random() * (i + 1)) /
-          this.props.DistrictingToDisplay.features.length;
-      }
-      boxes[i] = {
-        y: traceValues,
-        type: "box",
-        name: "District " + (i + 1),
-        fillcolor: "white",
-        color: "white",
-        marker: { color: "black" },
-      };
-    }
-    // Points
-    const points = [];
-    for (let i = 0; i < this.props.DistrictingToDisplay.features.length; i++) {
-      // Have the same name to match the marker plot on top of the box plot
-      points.push({
-        x: ["District " + (i + 1)],
-        y: [
-          (Math.random() * (i + 1)) /
-            this.props.DistrictingToDisplay.features.length,
-        ],
-        marker: {
-          size: 5,
-          color: "red",
-        },
-      });
-    }
-
-    const traces = boxes.concat(points);
-
     return (
       <div className="centerWithinMe">
         <Plot
-          data={traces}
+          data={this.dataToShowInPlot()}
           layout={{
             width: 900,
             height: 400,
@@ -55,3 +37,22 @@ export default class BoxPlot extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateBWPoints : (pointsData) => {
+      dispatch(updateBWPoints(pointsData))
+    }
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    BWBoxes : state.BWBoxes,
+    BWPoints : state.BWPoints,
+    CurrentDistrictingSummary : state.CurrentDistrictingSummary,
+    Jobs: state.Jobs,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoxPlot);

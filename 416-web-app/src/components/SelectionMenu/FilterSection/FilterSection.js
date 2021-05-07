@@ -12,6 +12,7 @@ import {
   resetExpandedSummaries,
   setDistrictingsAreConstrained,
   updateAnalysisDistrictings,
+  updateBWBoxes,
 } from "../../../redux/actions/settingActions";
 import * as StatUtilities from "../../../utilities/StatUtilities";
 import { makeStyles } from "@material-ui/core/styles";
@@ -77,8 +78,11 @@ function getStepCompleteMsg(step) {
 async function constrainDistrictings(props) {
   NetworkingUtilities.applyConstraints().then((resultSize) => {
     props.setNumberOfDistrictingsAvailable(resultSize);
-  }).then(results => {
+  }).then(() => {
     props.setDistrictingsAreConstrained(true);
+    NetworkingUtilities.getBoxData().then(boxData => {
+      props.updateBWBoxes(boxData)
+    })
   });
 }
 
@@ -228,6 +232,9 @@ const mapDispatchToProps = (dispatch) => {
     updateAnalysisDistrictings: (analysisDict) => {
       dispatch(updateAnalysisDistrictings(analysisDict));
     },
+    updateBWBoxes : (boxData) => {
+      dispatch(updateBWBoxes(boxData))
+    }
   };
 };
 

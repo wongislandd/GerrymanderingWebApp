@@ -96,7 +96,7 @@ class DistrictingSummary extends Component {
       >
         <div>
           <h6 className="title-text centerWithinMe">Box and Whisker</h6>
-          {/* <BoxPlot DistrictingToDisplay={this.props.DistrictingToDisplay} /> */}
+          <BoxPlot/>
         </div>
 
         {this.props.DistrictingToDisplay.enacted ? (

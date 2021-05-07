@@ -1,5 +1,6 @@
 package cse416.spring.helperclasses;
 
+import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.district.Deviation;
 import cse416.spring.models.district.District;
 import cse416.spring.models.districting.Districting;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -15,9 +17,36 @@ import java.util.List;
 public class ConstrainedDistrictings {
     Collection<Districting> districtings;
     Districting averageDistricting;
-    double[][] boxAndWhiskerData;
+    List<List<Double>> boxAndWhiskerData;
     ObjectiveFunctionWeights currentWeights;
     DistrictingConstraints constraints;
+
+    public Comparator<District> districtMinorityComparator = new Comparator<>() {
+        @Override
+        public int compare(District d1, District d2) {
+            if (d1.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation()) > d2.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation())) {
+                return 1;
+            } else if (d1.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation()) < d2.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation())) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    };
+
+    public List<List<Double>> getBoxAndWhiskerData() {
+        if (boxAndWhiskerData == null) {
+            boxAndWhiskerData = new ArrayList<>();
+            for (Districting districting : districtings) {
+                ArrayList<District> orderedDistricts = new ArrayList<>(districting.getDistricts());
+                orderedDistricts.sort(districtMinorityComparator);
+                for (int i=0;i<orderedDistricts.size();i++) {
+                    boxAndWhiskerData.get(i).add(orderedDistricts.get(i).getDemographics().getMinorityPercentage(constraints.getMinorityPopulation()));
+                }
+            }
+        }
+        return boxAndWhiskerData;
+    }
 
     public ConstrainedDistrictings(Collection<Districting> districtings, DistrictingConstraints constraints) {
         // TODO Calculate average, box and whisker (multithread?)
@@ -41,6 +70,6 @@ public class ConstrainedDistrictings {
                     new Deviation(totalDeviationFromAvgArea / districting.getDistricts().size(),
                             totalDeviationFromAvgPop / districting.getDistricts().size()));
         }
-
     }
+
 }

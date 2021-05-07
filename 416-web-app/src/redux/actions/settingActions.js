@@ -331,3 +331,17 @@ export const setCurrentJob = (job) => {
     Job: job,
   };
 };
+
+export const updateBWBoxes = (boxData) => {
+  return {
+    type : ActionTypes.UPDATE_BW_BOXES,
+    BoxData : boxData
+  }
+}
+
+export const updateBWPoints = (pointsData) => {
+  return {
+    type : ActionTypes.UPDATE_BW_POINTS,
+    PointData : pointsData,
+  }
+}

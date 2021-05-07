@@ -30,3 +30,46 @@ export function parseAnalysis(analysisJSON) {
   };
   return newAnalysis;
 }
+
+
+export function parseBoxAndWhisker(boxAndWhiskerJSON) {
+  // TODO See how Jackson serializes, parse the data here
+  const boxes = [];
+  for (let i = 0; i < 13; i++) {
+    let traceValues = [];
+    for (let j = 0; j < 50; j++) {
+      traceValues[j] =
+        (Math.random() * (i + 1)) /
+        13;
+    }
+    boxes[i] = {
+      y: traceValues,
+      type: "box",
+      name: "District " + (i + 1),
+      fillcolor: "white",
+      color: "white",
+      marker: { color: "black" },
+    };
+  }
+  return boxes;
+}
+
+export function parsePoints(pointsJSON) {
+  // TODO See how Jackson serializes, parse the data here
+  const points = [];
+  for (let i = 0; i < 13; i++) {
+    // Have the same name to match the marker plot on top of the box plot
+    points.push({
+      x: ["District " + (i + 1)],
+      y: [
+        (Math.random() * (i + 1)) /
+          13,
+      ],
+      marker: {
+        size: 5,
+        color: "red",
+      },
+    });
+  }
+  return points;
+}

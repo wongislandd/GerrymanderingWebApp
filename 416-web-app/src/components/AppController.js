@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import StateSelection from "./StateSelection/StateSelection";
 import * as ViewportUtilities from "../utilities/ViewportUtilities";
 import JobSelection from "./JobSelection/JobSelection";
+import BoxPlot from "./StatisticComponents/BoxPlot";
 
 class AppController extends Component {
   constructor(props) {

@@ -58,6 +58,21 @@ export async function loadJobs(state) {
   return jobs;
 }
 
+export async function getBoxData() {
+  let fullUrl = baseURL + "/districtings/getBoxAndWhisker";
+  const response = await fetch(fullUrl);
+  let body = await response.json();
+  let parsed = ParsingUtilities.parseBoxAndWhisker(body);
+  return parsed;
+}
+
+export async function getPointsData(id) {
+  let fullUrl = baseURL + "/districtings/getPoints/" + id
+  const response = await fetch(fullUrl);
+  let body = await response.json();
+  let parsed = ParsingUtilities.parsePoints(body);
+  return parsed;
+}
 
 export async function loadPrecincts(state) {
   let fullUrl = baseURL + "/precincts/" + state + "/loadPrecincts";

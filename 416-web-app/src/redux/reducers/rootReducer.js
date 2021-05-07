@@ -10,6 +10,40 @@ import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as NetworkingUtilities from "../../network/NetworkingUtilities";
 
+const boxes = [];
+  for (let i = 0; i < 13; i++) {
+    let traceValues = [];
+    for (let j = 0; j < 50; j++) {
+      traceValues[j] =
+        (Math.random() * (i + 1)) /
+        13;
+    }
+    boxes[i] = {
+      y: traceValues,
+      type: "box",
+      name: "District " + (i + 1),
+      fillcolor: "white",
+      color: "white",
+      marker: { color: "black" },
+    };
+  }
+
+const points = [];
+for (let i = 0; i < 13; i++) {
+  // Have the same name to match the marker plot on top of the box plot
+  points.push({
+    x: ["District " + (i + 1)],
+    y: [
+      (Math.random() * (i + 1)) /
+        13,
+    ],
+    marker: {
+      size: 5,
+      color: "red",
+    },
+  });
+}
+
 /* Initial State */
 const initState = {
   DisplayPrecincts: false,
@@ -102,6 +136,10 @@ const initState = {
 
   PrecinctsGeoJson: null,
   CountiesGeoJson: null,
+
+  BWBoxes : boxes,
+  BWPoints : points,
+
 
   /* Usable Map */
   Map: null,
@@ -494,6 +532,16 @@ const rootReducer = (state = initState, action) => {
         CurrentJob: action.Job,
         NumDistrictingsAvailable: action.Job.size,
       };
+    case ActionTypes.UPDATE_BW_BOXES:
+      return {
+        ...state,
+        BWBoxes : action.BoxData
+      }
+    case ActionTypes.UPDATE_BW_POINTS:
+      return {
+        ...state,
+        BWPoints : action.PointsData
+      }
     default:
       return state;
   }
