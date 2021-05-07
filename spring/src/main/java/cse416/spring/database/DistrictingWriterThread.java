@@ -88,7 +88,7 @@ public class DistrictingWriterThread extends Thread {
             }
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
-            //newDistricting.renumberDistricts(enactedDistricting);
+            newDistricting.renumberDistricts(enactedDistricting);
             em.persist(newDistricting);
             final long fileEndTime = System.currentTimeMillis();
             System.out.println("[THREAD " + name + "] Created Districting in " + (fileEndTime - fileStartTime) + "ms");

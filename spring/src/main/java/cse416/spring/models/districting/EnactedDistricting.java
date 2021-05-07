@@ -34,7 +34,7 @@ public class EnactedDistricting {
     @Transient
     double objectiveFunctionScore;
 
-    public EnactedDistricting(StateName state, Collection<District> districts) {
+    public EnactedDistricting(StateName state, Collection<District> districts) throws IOException {
         this.state = state;
         this.districts = districts;
         // Placeholder until we move the measure logic into the DistrictingMeasures constructor

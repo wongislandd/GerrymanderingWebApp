@@ -40,7 +40,7 @@ public class Districting {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<District> districts;
 
-    public Districting(Job job, ArrayList<District> districts) {
+    public Districting(Job job, ArrayList<District> districts) throws IOException {
         this.job = job;
         this.measures = new DistrictingMeasures(districts);
         this.districts = districts;
@@ -56,8 +56,7 @@ public class Districting {
     private static double getIntersectionArea(District d1, District d2) throws IOException {
         Geometry g1 = d1.getGeometry();
         Geometry g2 = d2.getGeometry();
-        double area = g1.intersection(g2).getArea();
-        return area;
+        return g1.intersection(g2).getArea();
     }
 
     private static SimpleWeightedGraph<District, Double> getBipartiteGraph(Collection<District> districts1,
@@ -90,10 +89,13 @@ public class Districting {
                 new HopcroftKarpMaximumCardinalityBipartiteMatching<>(bipartiteGraph, enactedDistricts, generatedDistricts);
 
         Graph<District, Double> matching = matcher.getMatching().getGraph();
+        System.out.println("Renumbered districts: ");
+
         for (District enactedDistrict : enactedDistricts) {
             District generatedDistrict = Graphs.neighborListOf(matching, enactedDistrict).get(0);
             int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
             generatedDistrict.setDistrictNumber(districtNumber);
+            System.out.println("    " + districtNumber);
         }
     }
 
@@ -119,17 +121,4 @@ public class Districting {
         }
         this.objectiveFunctionScore = totalObjectiveFunctionScore / districts.size();
     }
-
-
-    private static HashMap<Precinct, District> getPrecinctToDistrictMap(ArrayList<District> districts) throws IOException {
-        HashMap<Precinct, District> map = new HashMap<>();
-
-        for (District d : districts) {
-            for (Precinct p : d.getPrecincts()) {
-                map.put(p, d);
-            }
-        }
-        return map;
-    }
-
 }
