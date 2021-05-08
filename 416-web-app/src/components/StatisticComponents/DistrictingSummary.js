@@ -94,10 +94,15 @@ class DistrictingSummary extends Component {
         id="stat-collapsible"
         accordion={false}
       >
+        {this.props.DistrictingToDisplay.enacted ? (
+          <div />
+        ) :
         <div>
           <h6 className="title-text centerWithinMe">Box and Whisker</h6>
-          <BoxPlot/>
+          <p>Districts in the plot are ordered from lowest to greatest minority population.</p>
+          <BoxPlot districtingId = {this.props.DistrictingToDisplay.id}/>
         </div>
+        }
 
         {this.props.DistrictingToDisplay.enacted ? (
           <div />

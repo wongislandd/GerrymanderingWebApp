@@ -10,9 +10,14 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+<!--            Stony DB-->
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql4.cs.stonybrook.edu:3306/orioles?autoReconnect=true" />
             <property name="javax.persistence.jdbc.user" value="orioles" />
             <property name="javax.persistence.jdbc.password" value="changeit" />
+<!--            Local DB-->
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/orioles?autoReconnect=true" />-->
+<!--            <property name="javax.persistence.jdbc.user" value="root" />-->
+<!--            <property name="javax.persistence.jdbc.password" value="password" />-->
             <property name="hibernate.show_sql" value="false" />
             <property name="hibernate.hbm2ddl.auto" value="update" /></properties>
     

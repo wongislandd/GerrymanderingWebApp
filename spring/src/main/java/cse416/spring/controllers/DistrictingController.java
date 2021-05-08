@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -95,9 +97,18 @@ public class DistrictingController {
 
     @GetMapping(path = "/getBoxAndWhisker")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    public ResponseEntity<String> getBoxAndWhisker(HttpServletRequest request) {
+    public ResponseEntity<List<List<Double>>> getBoxAndWhisker(HttpServletRequest request) {
         ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
-        cds.getBoxAndWhiskerData();
-        return new ResponseEntity<>("", HttpStatus.OK);
+        List<List<Double>> bw = cds.getBoxAndWhiskerData();
+        return new ResponseEntity<>(bw, HttpStatus.OK);
+    }
+
+    @GetMapping(path="getMinorityPoints/{id}")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public ResponseEntity<List<Double>> getMinorityPointData(HttpServletRequest request, @PathVariable("id") long id) {
+        ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
+        Districting targetDistricting = cds.findDistrictingById(id);
+        List<Double> pointData = targetDistricting.getMinorityPointData(cds.getConstraints().getMinorityPopulation());
+        return new ResponseEntity<>(pointData, HttpStatus.OK);
     }
 }

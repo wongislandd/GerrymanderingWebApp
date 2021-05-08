@@ -23,7 +23,7 @@ public class County {
     private long id;
     @Column
     private String name;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Collection<Precinct> precincts;
     @Lob
     private Geometry geometry;

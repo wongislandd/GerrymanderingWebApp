@@ -1,4 +1,4 @@
-package cse416.spring.helperclasses;
+package cse416.spring.helperclasses.spring;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -9,6 +9,7 @@ import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.decimal4j.util.DoubleRounder;
 import org.hibernate.annotations.Fetch;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
@@ -18,10 +19,8 @@ import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Entity(name = "Districtings")
 @Getter
@@ -112,6 +111,34 @@ public class Districting {
         }
         return count;
     }
+
+    public ArrayList<District> getMinorityOrderedDistricts(MinorityPopulation minority) {
+        ArrayList<District> orderedDistricts = new ArrayList<>(districts);
+        orderedDistricts.sort(new Comparator<>() {
+            @Override
+            public int compare(District d1, District d2) {
+                if (d1.getDemographics().getMinorityPercentage(minority) > d2.getDemographics().getMinorityPercentage(minority)) {
+                    return 1;
+                } else if (d1.getDemographics().getMinorityPercentage(minority) < d2.getDemographics().getMinorityPercentage(minority)) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        return orderedDistricts;
+    }
+
+    public ArrayList<Double> getMinorityPointData(MinorityPopulation minority) {
+        ArrayList<Double> pointData = new ArrayList<>();
+        ArrayList<District> orderedDistricts = getMinorityOrderedDistricts(minority);
+        for (District orderedDistrict : orderedDistricts) {
+            double minorityPercentage = orderedDistrict.getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority);
+            pointData.add(DoubleRounder.round(minorityPercentage, 5));
+        }
+        return pointData;
+    }
+
 
     public void assignObjectiveFunctionScores(ObjectiveFunctionWeights weights) {
         double totalObjectiveFunctionScore = 0;

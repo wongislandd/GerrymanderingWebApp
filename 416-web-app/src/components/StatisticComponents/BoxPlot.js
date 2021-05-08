@@ -6,7 +6,7 @@ import { updateBWPoints } from "../../redux/actions/settingActions";
 
 class BoxPlot extends Component {
   componentDidMount() {
-    NetworkingUtilities.getPointsData(this.districtSummary.id).then((pointsData) =>
+    NetworkingUtilities.getPointsData(this.props.districtingId).then((pointsData) =>
       this.props.updateBWPoints(pointsData)
     )
   }
@@ -29,7 +29,7 @@ class BoxPlot extends Component {
           layout={{
             width: 900,
             height: 400,
-            title: "Enacted Districting Evaluation",
+            title: "Minority Population Evaluation",
             showlegend: false,
           }}
         />

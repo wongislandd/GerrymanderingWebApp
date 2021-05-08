@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DistrictingsSingleton {
-    private static Collection<Districting> districtings = null;
+    private static Collection<Districting> districtings;
 
     private DistrictingsSingleton() {}
 
@@ -34,10 +34,8 @@ public class DistrictingsSingleton {
     public static Collection<Districting> getDistrictingsByConstraints(DistrictingConstraints constraints) {
         //TODO Move the entire filtering to the query, may need to add more properties to districting
         HashSet<Districting> filteredDistrictings = new HashSet<Districting>();
-        if (districtings == null) {
-            return filteredDistrictings;
-        }
-        for (Districting d : districtings) {
+        Collection<Districting> fullJobSet = getDistrictings(constraints.getJobId());
+        for (Districting d : fullJobSet) {
             switch (constraints.getCompactnessType()) {
                 case POLSBY_POPPER:
                     if (d.getMeasures().getCompactnessAvg().getPolsbyPopper() < constraints.getCompactnessThreshold()) {

@@ -6,6 +6,7 @@ import cse416.spring.models.district.District;
 import cse416.spring.models.districting.Districting;
 import lombok.Getter;
 import lombok.Setter;
+import org.decimal4j.util.DoubleRounder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,32 +22,34 @@ public class ConstrainedDistrictings {
     ObjectiveFunctionWeights currentWeights;
     DistrictingConstraints constraints;
 
-    public Comparator<District> districtMinorityComparator = new Comparator<>() {
-        @Override
-        public int compare(District d1, District d2) {
-            if (d1.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation()) > d2.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation())) {
-                return 1;
-            } else if (d1.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation()) < d2.getDemographics().getMinorityPercentage(constraints.getMinorityPopulation())) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }
-    };
-
     public List<List<Double>> getBoxAndWhiskerData() {
         if (boxAndWhiskerData == null) {
+            /* Initialize box and whisker data */
             boxAndWhiskerData = new ArrayList<>();
+            for (int i=0; i<averageDistricting.getDistricts().size();i++) {
+                boxAndWhiskerData.add(new ArrayList<>());
+            }
+
             for (Districting districting : districtings) {
-                ArrayList<District> orderedDistricts = new ArrayList<>(districting.getDistricts());
-                orderedDistricts.sort(districtMinorityComparator);
+                ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
                 for (int i=0;i<orderedDistricts.size();i++) {
-                    boxAndWhiskerData.get(i).add(orderedDistricts.get(i).getDemographics().getMinorityPercentage(constraints.getMinorityPopulation()));
+                    double minorityPercentage = orderedDistricts.get(i).getMeasures().getMajorityMinorityInfo().getMinorityPercentage(constraints.getMinorityPopulation());
+                    boxAndWhiskerData.get(i).add(DoubleRounder.round(minorityPercentage, 5));
                 }
             }
         }
         return boxAndWhiskerData;
     }
+
+    public Districting findDistrictingById(long id) {
+        for (Districting districting : districtings) {
+            if (districting.getId() == id) {
+                return districting;
+            }
+        }
+        return averageDistricting;
+    }
+
 
     public ConstrainedDistrictings(Collection<Districting> districtings, DistrictingConstraints constraints) {
         // TODO Calculate average, box and whisker (multithread?)

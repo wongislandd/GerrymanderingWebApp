@@ -60,17 +60,21 @@ export async function loadJobs(state) {
 
 export async function getBoxData() {
   let fullUrl = baseURL + "/districtings/getBoxAndWhisker";
-  const response = await fetch(fullUrl);
-  let body = await response.json();
-  let parsed = ParsingUtilities.parseBoxAndWhisker(body);
+  let parsed = await axios
+    .get(fullUrl, { withCredentials: true })
+    .then((response) => {
+      return ParsingUtilities.parseBoxAndWhisker(response.data);
+    });
   return parsed;
 }
 
 export async function getPointsData(id) {
-  let fullUrl = baseURL + "/districtings/getPoints/" + id
-  const response = await fetch(fullUrl);
-  let body = await response.json();
-  let parsed = ParsingUtilities.parsePoints(body);
+  let fullUrl = baseURL + "/districtings/getMinorityPoints/" + id
+  let parsed = await axios
+    .get(fullUrl, { withCredentials: true })
+    .then((response) => {
+      return ParsingUtilities.parsePoints(response.data);
+    });
   return parsed;
 }
 

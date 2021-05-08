@@ -48,4 +48,19 @@ public class MajorityMinorityInfo {
         this.asianPercentage = asianPercentage;
         this.nativePercentage = nativePercentage;
     }
+
+    public double getMinorityPercentage(MinorityPopulation minority) {
+        switch (minority) {
+            case BLACK:
+                return blackPercentage;
+            case ASIAN:
+                return asianPercentage;
+            case HISPANIC:
+                return hispanicPercentage;
+            case NATIVE_AMERICAN:
+                return nativePercentage;
+            default:
+                return 0.0;
+        }
+    }
 }

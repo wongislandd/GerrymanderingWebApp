@@ -342,6 +342,6 @@ export const updateBWBoxes = (boxData) => {
 export const updateBWPoints = (pointsData) => {
   return {
     type : ActionTypes.UPDATE_BW_POINTS,
-    PointData : pointsData,
+    PointsData : pointsData,
   }
 }

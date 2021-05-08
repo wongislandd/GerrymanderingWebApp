@@ -31,39 +31,54 @@ export function parseAnalysis(analysisJSON) {
   return newAnalysis;
 }
 
+const minorityNumberedDistrictNames = [
+  "1st District",
+  "2nd District",
+  "3rd District",
+  "4th District",
+  "5th District",
+  "6th District",
+  "7th District",
+  "8th District",
+  "9th District",
+  "10th District",
+  "11th District",
+  "12th District",
+  "13th District"
+]
 
-export function parseBoxAndWhisker(boxAndWhiskerJSON) {
+export function parseBoxAndWhisker(boxAndWhiskerData) {
   // TODO See how Jackson serializes, parse the data here
+  console.log(boxAndWhiskerData)
   const boxes = [];
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < boxAndWhiskerData.length; i++) {
     let traceValues = [];
-    for (let j = 0; j < 50; j++) {
-      traceValues[j] =
-        (Math.random() * (i + 1)) /
-        13;
+    for (let j = 0; j < boxAndWhiskerData[i].length; j++) {
+      traceValues[j] = boxAndWhiskerData[i][j];
     }
     boxes[i] = {
       y: traceValues,
       type: "box",
-      name: "District " + (i + 1),
+      name: minorityNumberedDistrictNames[i],
       fillcolor: "white",
       color: "white",
       marker: { color: "black" },
     };
   }
+  console.log(boxes)
   return boxes;
 }
 
 export function parsePoints(pointsJSON) {
+  console.log(pointsJSON)
   // TODO See how Jackson serializes, parse the data here
   const points = [];
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < pointsJSON.length; i++) {
     // Have the same name to match the marker plot on top of the box plot
     points.push({
-      x: ["District " + (i + 1)],
+      x: [minorityNumberedDistrictNames[i]],
       y: [
-        (Math.random() * (i + 1)) /
-          13,
+        pointsJSON[i],
       ],
       marker: {
         size: 5,

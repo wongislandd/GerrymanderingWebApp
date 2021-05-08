@@ -78,11 +78,13 @@ function getStepCompleteMsg(step) {
 async function constrainDistrictings(props) {
   NetworkingUtilities.applyConstraints().then((resultSize) => {
     props.setNumberOfDistrictingsAvailable(resultSize);
+    if (resultSize > 0) {
+      NetworkingUtilities.getBoxData().then(boxData => {
+        props.updateBWBoxes(boxData)
+      })
+    }
   }).then(() => {
     props.setDistrictingsAreConstrained(true);
-    NetworkingUtilities.getBoxData().then(boxData => {
-      props.updateBWBoxes(boxData)
-    })
   });
 }
 
