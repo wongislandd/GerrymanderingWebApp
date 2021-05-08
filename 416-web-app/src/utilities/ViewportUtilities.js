@@ -64,7 +64,7 @@ export const ALABAMA = {
     longitude: -86.74877819203103,
     width: "75vw",
     height: window.innerHeight,
-    zoom: 5.5,
+    zoom: 6.5,
   },
   Minimized: {
     latitude: 33.0825645415423,
