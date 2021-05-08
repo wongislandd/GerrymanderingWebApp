@@ -178,8 +178,8 @@ const rootReducer = (state = initState, action) => {
         case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
           newViewport = ViewportUtilities.NORTH_CAROLINA.Maximized;
           break;
-        case ViewportUtilities.STATE_OPTIONS.TEXAS:
-          newViewport = ViewportUtilities.TEXAS.Maximized;
+        case ViewportUtilities.STATE_OPTIONS.ALABAMA:
+          newViewport = ViewportUtilities.ALABAMA.Maximized;
           break;
         case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
           newViewport = ViewportUtilities.LOUISIANA.Maximized;
@@ -361,8 +361,8 @@ const rootReducer = (state = initState, action) => {
         case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
           newViewport = ViewportUtilities.NORTH_CAROLINA.Maximized;
           break;
-        case ViewportUtilities.STATE_OPTIONS.TEXAS:
-          newViewport = ViewportUtilities.TEXAS.Maximized;
+        case ViewportUtilities.STATE_OPTIONS.ALABAMA:
+          newViewport = ViewportUtilities.ALABAMA.Maximized;
           break;
         case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
           newViewport = ViewportUtilities.LOUISIANA.Maximized;
@@ -381,8 +381,8 @@ const rootReducer = (state = initState, action) => {
         case ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA:
           newViewport = ViewportUtilities.NORTH_CAROLINA.Minimized;
           break;
-        case ViewportUtilities.STATE_OPTIONS.TEXAS:
-          newViewport = ViewportUtilities.TEXAS.Minimized;
+        case ViewportUtilities.STATE_OPTIONS.ALABAMA:
+          newViewport = ViewportUtilities.ALABAMA.Minimized;
           break;
         case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
           newViewport = ViewportUtilities.LOUISIANA.Minimized;

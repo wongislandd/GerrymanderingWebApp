@@ -38,10 +38,10 @@ class MapBoxComponent extends Component {
           ? ViewportUtilities.NORTH_CAROLINA.Minimized
           : ViewportUtilities.NORTH_CAROLINA.Maximized;
         break;
-      case ViewportUtilities.STATE_OPTIONS.TEXAS:
+      case ViewportUtilities.STATE_OPTIONS.ALABAMA:
         newViewport = this.props.MinimizedMap
-          ? ViewportUtilities.TEXAS.Minimized
-          : ViewportUtilities.TEXAS.Maximized;
+          ? ViewportUtilities.ALABAMA.Minimized
+          : ViewportUtilities.ALABAMA.Maximized;
         break;
       case ViewportUtilities.STATE_OPTIONS.LOUISIANA:
         newViewport = this.props.MinimizedMap

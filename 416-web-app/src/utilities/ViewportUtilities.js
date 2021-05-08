@@ -1,7 +1,7 @@
 export const STATE_OPTIONS = {
   UNSELECTED: "UNSELECTED",
   NORTH_CAROLINA: "NORTH_CAROLINA",
-  TEXAS: "TEXAS",
+  ALABAMA: "ALABAMA",
   LOUISIANA: "LOUISIANA",
 };
 
@@ -57,17 +57,18 @@ export const LOUISIANA = {
   },
 };
 
-export const TEXAS = {
+
+export const ALABAMA = {
   Maximized: {
-    latitude: 31.44340575349766,
-    longitude: -98.97300883275322,
+    latitude: 33.0825645415423,
+    longitude: -86.74877819203103,
     width: "75vw",
     height: window.innerHeight,
     zoom: 5.5,
   },
   Minimized: {
-    latitude: 31.44340575349766,
-    longitude: -98.97300883275322,
+    latitude: 33.0825645415423,
+    longitude: -86.74877819203103,
     width: "40vw",
     height: window.innerHeight,
     zoom: 4.5,

@@ -31,7 +31,7 @@ export async function loadStateOutlines() {
   let result = {
     [ViewportUtilities.STATE_OPTIONS.NORTH_CAROLINA]: JSON.parse(body.NC),
     [ViewportUtilities.STATE_OPTIONS.LOUISIANA]: JSON.parse(body.LA),
-    [ViewportUtilities.STATE_OPTIONS.TEXAS]: JSON.parse(body.TX),
+    [ViewportUtilities.STATE_OPTIONS.ALABAMA]: JSON.parse(body.AL),
   };
   return result;
 }

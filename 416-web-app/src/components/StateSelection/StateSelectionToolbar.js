@@ -22,9 +22,9 @@ class StateSelectionToolbar extends Component {
         this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.LOUISIANA);
         this.props.setViewport(ViewportUtilities.LOUISIANA.Maximized);
         break;
-      case ViewportUtilities.STATE_OPTIONS.TEXAS:
-        this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.TEXAS);
-        this.props.setViewport(ViewportUtilities.TEXAS.Maximized);
+      case ViewportUtilities.STATE_OPTIONS.ALABAMA:
+        this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.ALABAMA);
+        this.props.setViewport(ViewportUtilities.ALABAMA.Maximized);
         break;
       default:
         this.props.setTentativeState(
@@ -95,7 +95,7 @@ class StateSelectionToolbar extends Component {
             <option value={ViewportUtilities.STATE_OPTIONS.LOUISIANA}>
               Louisiana
             </option>
-            <option value={ViewportUtilities.STATE_OPTIONS.TEXAS}>Texas</option>
+            <option value={ViewportUtilities.STATE_OPTIONS.ALABAMA}>Alabama</option>
           </Select>
           <Button className="redBrownBtn" onClick={(e) => this.handleClick(e)}>
             Select this State

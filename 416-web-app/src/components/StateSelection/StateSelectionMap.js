@@ -52,8 +52,8 @@ class StateSelectionMap extends Component {
           );
           break;
         case MapUtilities.IDs.COUNTY_FILL_LAYER_ID + "TX":
-          this.props.setViewport(ViewportUtilities.TEXAS.Maximized);
-          this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.TEXAS);
+          this.props.setViewport(ViewportUtilities.ALABAMA.Maximized);
+          this.props.setTentativeState(ViewportUtilities.STATE_OPTIONS.ALABAMA);
           break;
         default:
           this.props.setViewport(ViewportUtilities.UNSELECTED.Maximized);
@@ -88,7 +88,7 @@ class StateSelectionMap extends Component {
         ViewportUtilities.STATE_OPTIONS.LOUISIANA
       ];
       const TXCountyGeoData = this.props.StateCounties[
-        ViewportUtilities.STATE_OPTIONS.TEXAS
+        ViewportUtilities.STATE_OPTIONS.ALABAMA
       ];
       return (
         <div>

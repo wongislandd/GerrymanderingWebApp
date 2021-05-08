@@ -31,8 +31,8 @@ public class StateController {
         switch (stateID) {
             case "LA":
                 return StateName.LOUISIANA;
-            case "TX":
-                return StateName.TEXAS;
+            case "AL":
+                return StateName.ALABAMA;
             default:
                 return StateName.NORTH_CAROLINA;
         }
@@ -50,10 +50,10 @@ public class StateController {
         try {
             File NC = ResourceUtils.getFile("src/main/resources/static/json/NC/NCBoundary.json");
             File LA = ResourceUtils.getFile("src/main/resources/static/json/LA/LABoundary.json");
-            File TX = ResourceUtils.getFile("src/main/resources/static/json/TX/TXBoundary.json");
+            File AL = ResourceUtils.getFile("src/main/resources/static/json/AL/ALBoundary.json");
             countiesByState.put("NC", new String(Files.readAllBytes(NC.toPath())).replaceAll("\\n",""));
             countiesByState.put("LA", new String(Files.readAllBytes(LA.toPath())).replaceAll("\\n",""));
-            countiesByState.put("TX", new String(Files.readAllBytes(TX.toPath())).replaceAll("\\n",""));
+            countiesByState.put("AL", new String(Files.readAllBytes(AL.toPath())).replaceAll("\\n",""));
             return countiesByState;
         } catch (Exception ex) {
             return countiesByState;
