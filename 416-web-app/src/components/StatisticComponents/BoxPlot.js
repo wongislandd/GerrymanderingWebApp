@@ -32,6 +32,16 @@ class BoxPlot extends Component {
             height: 400,
             title: SelectionMenuUtilities.MINORITIES[this.props.MinoritySelection] + " Minority Population Evaluation",
             showlegend: false,
+            xaxis: {
+              title: {
+                text: 'Minority-Percentage Ranked Districts',
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Minority Percentage',
+              }
+            }
           }}
         />
       </div>

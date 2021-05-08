@@ -98,8 +98,6 @@ class DistrictingSummary extends Component {
           <div />
         ) :
         <div>
-          <h6 className="title-text centerWithinMe">Box and Whisker</h6>
-          <p>Districts in the plot are ordered from lowest to greatest minority population.</p>
           <BoxPlot districtingId = {this.props.DistrictingToDisplay.id}/>
         </div>
         }
