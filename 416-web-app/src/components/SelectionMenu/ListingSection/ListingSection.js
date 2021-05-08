@@ -19,6 +19,10 @@ class ListingSection extends Component {
     this.props.resetExpandedSummaries();
   }
 
+  isAnalysisEmpty() {
+    return this.props.AnalysisDistrictings["TopScoring"].length === 0
+  }
+
   render() {
     return (
       <div className="SelectionMenuSection ListingSection">
@@ -29,7 +33,7 @@ class ListingSection extends Component {
             </h5>
           </div>
         </Row>
-        <SummaryListing />
+        {this.isAnalysisEmpty() ? <div/> : <SummaryListing />}
       </div>
     );
   }
@@ -47,7 +51,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {};
+  return {
+    AnalysisDistrictings : state.AnalysisDistrictings
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListingSection);

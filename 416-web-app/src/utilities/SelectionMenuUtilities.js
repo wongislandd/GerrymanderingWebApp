@@ -43,9 +43,9 @@ export const POPULATIONS = {
 };
 
 export const COMPACTNESS_TYPES = {
-  GRAPH_COMPACTNESS: "Graph Compactness",
   POLSBY_POPPER: "Polsby Popper",
   POPULATION_FATNESS: "Population Fatness",
+  GRAPH_COMPACTNESS: "Graph Compactness",
 };
 
 export const ANALYSIS_CATEGORIES = {

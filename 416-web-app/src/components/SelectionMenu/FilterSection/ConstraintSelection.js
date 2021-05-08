@@ -202,7 +202,7 @@ class ConstraintSelection extends Component {
           </option>
           {Object.keys(SelectionMenuUtilities.COMPACTNESS_TYPES).map((key) => {
             return (
-              <option key={key} value={key} disabled={key != "GRAPH_COMPACTNESS"}>
+              <option key={key} value={key} disabled={key == "GRAPH_COMPACTNESS"}>
                 {SelectionMenuUtilities.COMPACTNESS_TYPES[key]}
               </option>
             );

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Plot from "react-plotly.js";
 import { connect } from 'react-redux'
 import * as NetworkingUtilities from '../../network/NetworkingUtilities'
+import * as SelectionMenuUtilities from '../../utilities/SelectionMenuUtilities'
 import { updateBWPoints } from "../../redux/actions/settingActions";
 
 class BoxPlot extends Component {
@@ -29,7 +30,7 @@ class BoxPlot extends Component {
           layout={{
             width: 900,
             height: 400,
-            title: "Minority Population Evaluation",
+            title: SelectionMenuUtilities.MINORITIES[this.props.MinoritySelection] + " Minority Population Evaluation",
             showlegend: false,
           }}
         />
@@ -50,6 +51,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     BWBoxes : state.BWBoxes,
     BWPoints : state.BWPoints,
+    MinoritySelection : state.MinoritySelection,
     CurrentDistrictingSummary : state.CurrentDistrictingSummary,
     Jobs: state.Jobs,
   };

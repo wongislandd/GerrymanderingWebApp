@@ -434,6 +434,7 @@ const rootReducer = (state = initState, action) => {
     case ActionTypes.SET_NUMBER_OF_DISTRICTINGS_AVAILABLE:
       return {
         ...state,
+        AnalysisDistrictings : initState.AnalysisDistrictings,
         NumDistrictingsAvailable: action.Number,
       };
     case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS:
