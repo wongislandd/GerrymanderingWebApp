@@ -111,10 +111,10 @@ class ObjectiveFunctionTable extends Component {
           <TableBody>
             <TableRow>
               <TableCell scope="row">
-                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .populationEqualityAvg
-                  : this.props.DistrictToDisplay.measures.populationEquality)}
+                  : this.props.DistrictToDisplay.measures.populationEquality),2)}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
@@ -122,33 +122,33 @@ class ObjectiveFunctionTable extends Component {
                   : this.props.DistrictToDisplay.measures.splitCounties}
               </TableCell>
               <TableCell>
-                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .deviationFromAverageAvg.areaDev
                   : this.props.DistrictToDisplay.measures.deviationFromAverage
-                      .areaDev)} / 
-                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                      .areaDev),2)} / 
+                {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .deviationFromAverageAvg.populationDev
                   : this.props.DistrictToDisplay.measures.deviationFromAverage
-                      .populationDev)}
+                      .populationDev), 2)}
               </TableCell>
               <TableCell>
-                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .deviationFromEnactedAvg.areaDev
                   : this.props.DistrictToDisplay.measures.deviationFromEnacted
-                      .areaDev)} / 
-                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                      .areaDev), 0)} / 
+                {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .deviationFromEnactedAvg.populationDev
                   : this.props.DistrictToDisplay.measures.deviationFromEnacted
-                      .populationDev)}
+                      .populationDev), 0)}
               </TableCell>
               <TableCell>
-                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures.compactnessAvg[this.mapCompactnessTypeToJsonKey(this.props.CompactnessSelection)]
-                  : this.props.DistrictToDisplay.measures.compactness[this.mapCompactnessTypeToJsonKey(this.props.CompactnessSelection)])}
+                  : this.props.DistrictToDisplay.measures.compactness[this.mapCompactnessTypeToJsonKey(this.props.CompactnessSelection)]), 2)}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()

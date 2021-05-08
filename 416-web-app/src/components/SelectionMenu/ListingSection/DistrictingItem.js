@@ -32,7 +32,7 @@ class DistrictingItem extends Component {
             <Col s={2}>{this.props.districting.id}</Col>
             <Col s={2}>{this.props.districting.objectiveFunctionScore.toFixed(3)}</Col>
             <Col s={3}>
-              {StatUtilities.formatAsPercentage(this.props.districting.measures.populationEqualityAvg,5)}
+              {StatUtilities.formatAsPercentage(this.props.districting.measures.populationEqualityAvg,2)}
             </Col>
             <Col s={3}>
               {this.props.districting.measures.majorityMinorityDistricts}
