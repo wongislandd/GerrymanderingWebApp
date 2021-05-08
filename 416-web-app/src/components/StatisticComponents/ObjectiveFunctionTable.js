@@ -11,15 +11,30 @@ import {
 } from "@material-ui/core";
 import * as MapUtilities from "../../utilities/MapUtilities";
 import * as StatUtilities from "../../utilities/StatUtilities";
+import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import LabelAndInfoIcon from "./LabelAndInfoIcon";
+import { connect } from 'react-redux'
 
 /* If forDistricting is true, then this is for a districting, otherwise it's for an individual district and will display different values*/
-export default class ObjectiveFunctionTable extends Component {
+class ObjectiveFunctionTable extends Component {
+  mapCompactnessTypeToJsonKey(compactnessType) {
+    switch(compactnessType) {
+      case SelectionMenuUtilities.COMPACTNESS_TYPES.GRAPH_COMPACTNESS:
+        return "graphCompactness"
+      case SelectionMenuUtilities.COMPACTNESS_TYPES.POPULATION_FATNESS:
+        return "populationFatness"
+      default:
+        return "polsbyPopper"
+    }
+  }
+
+
   displayDistrictingInfo() {
     return this.props.DistrictingToDisplay != undefined;
   }
 
   render() {
+    console.log(this.props.CompactnessSelection)
     return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
@@ -49,8 +64,8 @@ export default class ObjectiveFunctionTable extends Component {
                 <LabelAndInfoIcon
                   label={
                     this.displayDistrictingInfo()
-                      ? "Average Deviation from Average"
-                      : "Deviation from Average"
+                      ? "Average Deviation from Average (Area/Pop)"
+                      : "Deviation from Average (Area/Pop)"
                   }
                   description={
                     StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
@@ -61,8 +76,8 @@ export default class ObjectiveFunctionTable extends Component {
                 <LabelAndInfoIcon
                   label={
                     this.displayDistrictingInfo()
-                      ? "Average Deviation from Enacted"
-                      : "Deviation from Enacted"
+                      ? "Average Deviation from Enacted (Area/Pop)"
+                      : "Deviation from Enacted (Area/Pop)"
                   }
                   description={
                     StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
@@ -96,10 +111,10 @@ export default class ObjectiveFunctionTable extends Component {
           <TableBody>
             <TableRow>
               <TableCell scope="row">
-                {this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .populationEqualityAvg
-                  : this.props.DistrictToDisplay.measures.populationEquality}
+                  : this.props.DistrictToDisplay.measures.populationEquality)}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
@@ -107,25 +122,33 @@ export default class ObjectiveFunctionTable extends Component {
                   : this.props.DistrictToDisplay.measures.splitCounties}
               </TableCell>
               <TableCell>
-                {this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .deviationFromAverageAvg.areaDev
                   : this.props.DistrictToDisplay.measures.deviationFromAverage
-                      .areaDev}
+                      .areaDev)} / 
+                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                  ? this.props.DistrictingToDisplay.measures
+                      .deviationFromAverageAvg.populationDev
+                  : this.props.DistrictToDisplay.measures.deviationFromAverage
+                      .populationDev)}
               </TableCell>
               <TableCell>
-                {this.displayDistrictingInfo()
+                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures
                       .deviationFromEnactedAvg.areaDev
                   : this.props.DistrictToDisplay.measures.deviationFromEnacted
-                      .areaDev}
+                      .areaDev)} / 
+                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                  ? this.props.DistrictingToDisplay.measures
+                      .deviationFromEnactedAvg.populationDev
+                  : this.props.DistrictToDisplay.measures.deviationFromEnacted
+                      .populationDev)}
               </TableCell>
               <TableCell>
-                {this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures.compactnessAvg
-                      .polsbyPopper
-                  : this.props.DistrictToDisplay.measures.compactness
-                      .polsbyPopper}
+                {StatUtilities.formatAsPercentage(this.displayDistrictingInfo()
+                  ? this.props.DistrictingToDisplay.measures.compactnessAvg[this.mapCompactnessTypeToJsonKey(this.props.CompactnessSelection)]
+                  : this.props.DistrictToDisplay.measures.compactness[this.mapCompactnessTypeToJsonKey(this.props.CompactnessSelection)])}
               </TableCell>
               <TableCell>
                 {this.displayDistrictingInfo()
@@ -142,3 +165,12 @@ export default class ObjectiveFunctionTable extends Component {
     );
   }
 }
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    CompactnessSelection : state.CompactnessSelection
+  };
+};
+
+export default connect(mapStateToProps)(ObjectiveFunctionTable);
