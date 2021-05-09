@@ -140,12 +140,10 @@ export async function applyWeights() {
     .then((response) => {
       return response.data;
     });
-  console.log(analysis)
   return analysis;
 }
 
 export async function initializeJob(jobId) {
   let fullUrl = baseURL + "/jobs/initialize/" + jobId;
-  console.log("CALLED")
   axios.post(fullUrl)
 }

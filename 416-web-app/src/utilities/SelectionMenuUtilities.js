@@ -15,7 +15,6 @@ export const LABELS = {
   CHOOSE_A_VOTING_POPULATION: "Choose a Voting Population",
   CHOOSE_A_TYPE_OF_COMPACTNESS: "Choose a Method of Compactness",
   ANALYSIS_RESULTS : "Top Scoring Objective Function Districtings",
-  DISTRICTING_BREAKDOWN: "Districting Breakdown",
   SELECT_A_JOB: "Select a Job",
   CONTINUE_WITH_THIS_JOB: "Continue with this Job",
 };

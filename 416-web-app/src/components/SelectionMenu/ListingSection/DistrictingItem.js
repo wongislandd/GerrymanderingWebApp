@@ -47,7 +47,7 @@ class DistrictingItem extends Component {
         {this.isDisplayed() ? (
           <div className="centerWithinMe">
             <h5 className="padBelowMe">
-              {SelectionMenuUtilities.LABELS.DISTRICTING_BREAKDOWN}
+              {"Districting Breakdown (" + this.props.districting.id + ")"}
             </h5>
             <DistrictingInfoSection districting={this.props.districting} />
           </div>

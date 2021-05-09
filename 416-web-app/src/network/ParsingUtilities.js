@@ -1,8 +1,5 @@
 import Incumbent from "../utilities/classes/models/Incumbent";
 import Job from "../utilities/classes/models/Job";
-export function parseStateCountyDict(stateCountyJSON) {
-  console.log(stateCountyJSON.TX);
-}
 
 export function parseJobJSONToObjects(jobsJSON) {
   let jobs = [];
@@ -49,7 +46,6 @@ const minorityNumberedDistrictNames = [
 
 export function parseBoxAndWhisker(boxAndWhiskerData) {
   // TODO See how Jackson serializes, parse the data here
-  console.log(boxAndWhiskerData)
   const boxes = [];
   for (let i = 0; i < boxAndWhiskerData.length; i++) {
     let traceValues = [];
@@ -65,12 +61,10 @@ export function parseBoxAndWhisker(boxAndWhiskerData) {
       marker: { color: "black" },
     };
   }
-  console.log(boxes)
   return boxes;
 }
 
 export function parsePoints(pointsJSON) {
-  console.log(pointsJSON)
   // TODO See how Jackson serializes, parse the data here
   const points = [];
   for (let i = 0; i < pointsJSON.length; i++) {

@@ -1,15 +1,9 @@
 import * as ActionTypes from "../actions/ActionTypes";
 import * as ToolbarUtilities from "../../utilities/ToolbarUtilities";
-import * as MapUtilities from "../../utilities/MapUtilities";
-import TestGeneratedPlan from "../../data/NC/testGeneratedPlan.json";
-import EnactedDistrictingPlan2016 from "../../data/NC/EnactedDistrictingPlan2016WithData.json";
 import React from "react";
 import Filter from "../../utilities/classes/Filter";
-import Job from "../../utilities/classes/models/Job";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
-import * as NetworkingUtilities from "../../network/NetworkingUtilities";
-
 /* Initial State */
 const initState = {
   DisplayPrecincts: false,
@@ -299,16 +293,16 @@ const rootReducer = (state = initState, action) => {
         ...state,
         CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
         MapViewport : ViewportUtilities.UNSELECTED.Maximized,
-        CurrentJob : null
+        CurrentJob : null,
+        CurrentDistrictingGeoJson : null,
+        CurrentDistrictingSummary : null,
       }
     case ActionTypes.SET_COMPARISON_DISTRICTING_A:
-      console.log("UPDATING COMPARISON DISTRICT A");
       return {
         ...state,
         ComparisonDistrictingA: action.Districting,
       };
     case ActionTypes.SET_COMPARISON_DISTRICTING_B:
-      console.log("UPDATING COMPARISON DISTRICT B");
       return {
         ...state,
         ComparisonDistrictingB: action.Districting,
@@ -439,7 +433,6 @@ const rootReducer = (state = initState, action) => {
         NumDistrictingsAvailable: action.Number,
       };
     case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS:
-      console.log(action.Analysis)
       return {
         ...state,
         AnalysisDistrictings: action.Analysis,

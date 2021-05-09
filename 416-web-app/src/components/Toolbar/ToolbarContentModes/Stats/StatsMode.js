@@ -19,7 +19,7 @@ class StatsMode extends Component {
   render() {
     return (
       <div className="ToolbarContent">
-        <h5 className="centerWithinMe">Displayed District Stats</h5>
+        <h5 className="centerWithinMe">Displayed District Stats ({this.props.CurrentDistrictingSummary.id})</h5>
         <Row>
           <DistrictingSummary
             DistrictingToDisplay={this.props.CurrentDistrictingSummary}

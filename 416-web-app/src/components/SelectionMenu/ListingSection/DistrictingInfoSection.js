@@ -38,7 +38,6 @@ class DistrictingInfoSection extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="districtingInfoSection">
         <DistrictingSummary DistrictingToDisplay={this.props.districting} />

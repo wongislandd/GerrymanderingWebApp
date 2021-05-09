@@ -79,7 +79,6 @@ class MapBoxComponent extends Component {
   highlightFeatures = () => {
     const map = this.props.MapRef.current.getMap();
     this.props.FeaturesToHighlight.forEach((feature) => {
-      console.log(feature)
       let source = this.props.DisplayDistricts
         ? MapUtilities.IDs.DISTRICT_SOURCE_ID
         : MapUtilities.IDs.PRECINCT_SOURCE_ID;
@@ -112,7 +111,6 @@ class MapBoxComponent extends Component {
         /* When the districtings aren't numbered and sorted properly, this will lead it to search for a key matching a 
         district number which isn't there, causing undefined. So for now  do an error check*/
         if (featureToHighlight) {
-          console.log(featureToHighlight)
           this.props.addFeatureToHighlight(featureToHighlight);
         }
       }

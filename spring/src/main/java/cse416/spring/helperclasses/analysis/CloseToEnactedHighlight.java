@@ -20,7 +20,7 @@ public class CloseToEnactedHighlight implements AnalysisCategoryContainer {
     @Override
     public boolean shouldInsert(DistrictingSummary summary) {
         if (entries.size() < maxSize || entries.get(entries.size() - 1).getMeasures().getDeviationFromEnactedAvg().getDeviationScore()
-                < summary.getMeasures().getDeviationFromEnactedAvg().getDeviationScore()) {
+                > summary.getMeasures().getDeviationFromEnactedAvg().getDeviationScore()) {
             return true;
         } else {
             return false;
@@ -33,9 +33,9 @@ public class CloseToEnactedHighlight implements AnalysisCategoryContainer {
                     double d1Value = d1.getMeasures().getDeviationFromEnactedAvg().getDeviationScore();
                     double d2Value = d2.getMeasures().getDeviationFromEnactedAvg().getDeviationScore();
                     if (d1Value - d2Value > 0) {
-                        return -1;
-                    } else if (d1Value - d2Value < 0) {
                         return 1;
+                    } else if (d1Value - d2Value < 0) {
+                        return -1;
                     } else {
                         return 0;
                     }

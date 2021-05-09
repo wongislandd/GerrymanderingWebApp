@@ -59,7 +59,6 @@ class JobSelection extends Component {
   async populateCounties() {
     NetworkingUtilities.loadCounties(this.props.CurrentState).then(
       (results) => {
-        console.log(results);
         this.props.populateCounties(results);
       }
     );

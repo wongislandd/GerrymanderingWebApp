@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class TopScoring implements AnalysisCategoryContainer {
     ArrayList<DistrictingSummary> entries;
 
-    int maxSize = 25;
+    int maxSize = 20;
 
     public TopScoring() {
         this.entries = new ArrayList<>();

@@ -34,7 +34,6 @@ class ObjectiveFunctionTable extends Component {
   }
 
   render() {
-    console.log(this.props.CompactnessSelection)
     return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
