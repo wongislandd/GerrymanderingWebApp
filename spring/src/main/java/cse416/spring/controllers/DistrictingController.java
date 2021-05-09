@@ -49,12 +49,14 @@ public class DistrictingController {
         return new ResponseEntity<>(geoJson, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{state}/enacted/summary")
+    @GetMapping(value = "/{state}/enacted/summary", produces = "application/json")
     public ResponseEntity<DistrictingSummary> loadEnactedSummary(@PathVariable("state") StateName state) throws IOException {
         EnactedDistricting enacted = districtingService.findEnactedByState(state);
         DistrictingSummary summary = enacted.getSummary();
         return new ResponseEntity<>(summary, HttpStatus.OK);
     }
+
+
 
     @PostMapping(path = "/constrain", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -104,6 +106,15 @@ public class DistrictingController {
         ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
         Districting targetDistricting = cds.findDistrictingById(id);
         List<Double> pointData = targetDistricting.getMinorityPointData(cds.getConstraints().getMinorityPopulation());
+        return new ResponseEntity<>(pointData, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{state}/enacted/getMinorityPoints")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public ResponseEntity<List<Double>> getEnactedPointData(HttpServletRequest request, @PathVariable("state") StateName state) throws IOException {
+        ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
+        EnactedDistricting enacted = districtingService.findEnactedByState(state);
+        List<Double> pointData = enacted.getMinorityPointData(cds.getConstraints().getMinorityPopulation());
         return new ResponseEntity<>(pointData, HttpStatus.OK);
     }
 }

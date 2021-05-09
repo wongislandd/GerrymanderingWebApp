@@ -13,6 +13,7 @@ import {
   setDistrictingsAreConstrained,
   updateAnalysisDistrictings,
   updateBWBoxes,
+  updateBWEnacted,
 } from "../../../redux/actions/settingActions";
 import * as StatUtilities from "../../../utilities/StatUtilities";
 import { makeStyles } from "@material-ui/core/styles";
@@ -81,6 +82,10 @@ async function constrainDistrictings(props) {
     if (resultSize > 0) {
       NetworkingUtilities.getBoxData().then(boxData => {
         props.updateBWBoxes(boxData)
+      }).then(() => {
+        NetworkingUtilities.getEnactedData().then(enactedData => {
+          props.updateBWEnacted(enactedData)
+        })
       })
     }
   }).then(() => {
@@ -235,6 +240,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateBWBoxes : (boxData) => {
       dispatch(updateBWBoxes(boxData))
+    },
+    updateBWEnacted : (enactedData) => {
+      dispatch(updateBWEnacted(enactedData))
     }
   };
 };

@@ -64,9 +64,8 @@ export function parseBoxAndWhisker(boxAndWhiskerData) {
   return boxes;
 }
 
-export function parsePoints(pointsJSON) {
+export function parsePoints(pointsJSON, enacted=false) {
   // TODO See how Jackson serializes, parse the data here
-  const points = [];
   for (let i = 0; i < pointsJSON.length; i++) {
     // Have the same name to match the marker plot on top of the box plot
     points.push({
@@ -76,9 +75,12 @@ export function parsePoints(pointsJSON) {
       ],
       marker: {
         size: 5,
-        color: "red",
+        color: enacted ? "blue" : "red",
       },
     });
+  }
+  var trace = {
+    x  = [x for x in y]
   }
   return points;
 }

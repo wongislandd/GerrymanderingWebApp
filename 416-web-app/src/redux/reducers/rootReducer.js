@@ -102,6 +102,7 @@ ConstraintSliderSettings: {
 
   BWBoxes : null,
   BWPoints : null,
+  BWEnacted : null,
 
   SelectedTags : [],
 
@@ -503,6 +504,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         BWPoints : action.PointsData
+      }
+    case ActionTypes.UPDATE_BW_ENACTED:
+      return {
+        ...state,
+        BWEnacted : action.EnactedData
       }
     case ActionTypes.UPDATE_SELECTED_TAGS:
       let newTags = [...state.SelectedTags];

@@ -13,13 +13,17 @@ class BoxPlot extends Component {
   }
 
   dataToShowInPlot() {
-    if (this.props.BWBoxes == null) {
-      return []
-    } else if (this.props.BWPoints == null) {
-      return this.props.BWBoxes
-    } else {
-        return this.props.BWBoxes.concat(this.props.BWPoints)
+    let ret = []
+    if (this.props.BWBoxes != null) {
+      ret = ret.concat(this.props.BWBoxes)
     }
+    if (this.props.BWPoints != null) {
+      ret = ret.concat(this.props.BWPoints)
+    }
+    if (this.props.BWEnacted != null) {
+      ret = ret.concat(this.props.BWEnacted)
+    }
+    return ret
   }
 
   render() {
@@ -31,7 +35,7 @@ class BoxPlot extends Component {
             width: 900,
             height: 400,
             title: SelectionMenuUtilities.MINORITIES[this.props.MinoritySelection] + " Minority Population Evaluation",
-            showlegend: false,
+            showlegend: true,
             xaxis: {
               title: {
                 text: 'Minority-Percentage Ranked Districts',
@@ -42,7 +46,8 @@ class BoxPlot extends Component {
                 text: 'Minority Percentage',
               }
             }
-          }}
+          }
+        }
         />
       </div>
     );
@@ -61,6 +66,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     BWBoxes : state.BWBoxes,
     BWPoints : state.BWPoints,
+    BWEnacted : state.BWEnacted,
     MinoritySelection : state.MinoritySelection,
     CurrentDistrictingSummary : state.CurrentDistrictingSummary,
     Jobs: state.Jobs,

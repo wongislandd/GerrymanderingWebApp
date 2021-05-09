@@ -78,6 +78,16 @@ export async function getPointsData(id) {
   return parsed;
 }
 
+export async function getEnactedData() {
+  let fullUrl = baseURL + "/districtings/" + state.getState().CurrentState + "/enacted/getMinorityPoints/"
+  let parsed = await axios
+    .get(fullUrl, { withCredentials: true })
+    .then((response) => {
+      return ParsingUtilities.parsePoints(response.data, true);
+    });
+  return parsed;
+}
+
 export async function loadPrecincts(state) {
   let fullUrl = baseURL + "/precincts/" + state + "/loadPrecincts";
   const response = await fetch(fullUrl);

@@ -346,6 +346,13 @@ export const updateBWPoints = (pointsData) => {
   }
 }
 
+export const updateBWEnacted = (enactedData) => {
+  return {
+    type : ActionTypes.UPDATE_BW_ENACTED,
+    EnactedData : enactedData
+  }
+}
+
 export const updateSelectedTags = (tag) => {
   return {
     type : ActionTypes.UPDATE_SELECTED_TAGS,
