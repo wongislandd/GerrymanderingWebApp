@@ -13,31 +13,56 @@ class ConstraintSlider extends Component {
 
   render() {
     let filter = this.props.filter;
-    return (
-      <Row key={this.props.filterKey}>
-        <div className="constraintAndCheckbox">
-          <h6>
-            {filter.name} <b>({filter.value})</b>
-          </h6>
-        </div>
-        <Slider
-          disabled={!filter.enabled}
-          onChange={(e, newValue) =>
-            this.props.updateConstraintSliderSettings(
-              this.props.filterKey,
-              newValue
-            )
-          }
-          value={filter.value}
-          max={filter.maxVal}
-          min={filter.minVal}
-          name={filter.name}
-          step={filter.step}
-          marks
-          valueLabelDisplay="auto"
-        />
-      </Row>
-    );
+    if(!Array.isArray(filter.value)) {
+      return (
+        <Row key={this.props.filterKey}>
+           <div className="constraintAndCheckbox">
+           <h6>
+             {filter.name} <b>({filter.value})</b>
+           </h6>
+          </div>
+            <Slider
+              disabled={!filter.enabled}
+              onChange={(e, newValue) =>
+                this.props.updateConstraintSliderSettings(
+                  this.props.filterKey,
+                  newValue
+                )
+              }
+              value={filter.value}
+              max={filter.maxVal}
+              min={filter.minVal}
+              name={filter.name}
+              step={filter.step}
+              marks
+              valueLabelDisplay="auto"
+            /> 
+            </Row>
+      )}
+    else {
+      return(
+        <Row key={this.props.filterKey}>
+           <div className="constraintAndCheckbox">
+           <h6>
+             {filter.name} <b>({filter.value[0]}-{filter.value[1]})</b>
+           </h6>
+          </div>
+          <Slider
+            value={filter.value}
+            onChange={(e, newValue) =>
+              this.props.updateConstraintSliderSettings(
+                this.props.filterKey,
+                newValue
+              )}
+            max={filter.maxVal}
+            min={filter.minVal}
+            name={filter.name}
+            valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
+          />
+          </Row>
+      )
+    }
   }
 }
 

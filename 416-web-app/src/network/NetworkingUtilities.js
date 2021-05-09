@@ -110,7 +110,11 @@ export async function applyConstraints() {
     minMinorityDistricts:
       currentState.ConstraintSliderSettings[
         SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts
-      ].value,
+      ].value[0],
+    maxMinorityDistricts:
+    currentState.ConstraintSliderSettings[
+      SelectionMenuUtilities.CONSTRAINT_KEYS.MajorityMinorityDistricts
+    ].value[1],
     compactnessType: currentState.CompactnessSelection,
     compactnessThreshold:
       currentState.ConstraintSliderSettings[

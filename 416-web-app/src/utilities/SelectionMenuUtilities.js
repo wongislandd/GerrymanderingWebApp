@@ -55,7 +55,7 @@ export const ANALYSIS_CATEGORIES = {
 };
 
 export const CONSTRAINT_KEYS = {
-  MajorityMinorityDistricts: "MajorityMinorityDistricts",
+  MajorityMinorityDistricts: "MinimumMajorityMinorityDistricts",
   MinorityThreshold: "MinorityThreshold",
   PopulationDifference: "PopulationDifference",
   Compactness: "Compactness",

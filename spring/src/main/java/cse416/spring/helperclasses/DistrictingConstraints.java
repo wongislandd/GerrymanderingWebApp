@@ -18,6 +18,7 @@ public class DistrictingConstraints {
     long jobId;
     MinorityPopulation minorityPopulation;
     int minMinorityDistricts;
+    int maxMinorityDistricts;
     double minorityThreshold;
     VotingPopulation votingPopulation;
     double maxPopulationDifference;

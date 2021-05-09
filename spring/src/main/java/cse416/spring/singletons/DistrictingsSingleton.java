@@ -31,6 +31,10 @@ public class DistrictingsSingleton {
         return districtings;
     }
 
+    private static boolean inMajorityMinorityDistrictRange(int count, DistrictingConstraints constraints) {
+        return (count >= constraints.getMinMinorityDistricts() && count<=constraints.getMaxMinorityDistricts());
+    }
+
     public static Collection<Districting> getDistrictingsByConstraints(DistrictingConstraints constraints) {
         //TODO Move the entire filtering to the query, may need to add more properties to districting
         HashSet<Districting> filteredDistrictings = new HashSet<Districting>();
@@ -54,7 +58,7 @@ public class DistrictingsSingleton {
             }
             int majorityMinorityDistrictsCount = d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold());
             double populationDiff = d.getMeasures().getPopulationEqualityAvg();
-            if(majorityMinorityDistrictsCount >= constraints.getMinMinorityDistricts() && populationDiff <= constraints.getMaxPopulationDifference()) {
+            if(inMajorityMinorityDistrictRange(majorityMinorityDistrictsCount, constraints) && populationDiff <= constraints.getMaxPopulationDifference()) {
                 filteredDistrictings.add(d);
                 d.getMeasures().setMajorityMinorityDistricts(majorityMinorityDistrictsCount);
             }

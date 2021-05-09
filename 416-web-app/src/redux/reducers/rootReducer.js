@@ -38,18 +38,18 @@ const initState = {
 ConstraintSliderSettings: {
   [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]: new Filter(
     "Maximum Population Difference (%)",
-    5,
+    1.5,
     0,
-    10,
-    .1,
+    5,
+    .05,
     true
   ),
   [SelectionMenuUtilities.CONSTRAINT_KEYS
     .MajorityMinorityDistricts]: new Filter(
-    "Minimum Majority-Minority Districts",
-    2,
+    "Desired Majority-Minority Districts",
+    [1,2],
     0,
-    10,
+    13,
     1,
     true
   ),

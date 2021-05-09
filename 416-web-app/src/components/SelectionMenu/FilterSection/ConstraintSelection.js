@@ -137,7 +137,7 @@ class ConstraintSelection extends Component {
           </option>
           {Object.keys(SelectionMenuUtilities.MINORITIES).map((key) => {
             return (
-              <option key={key} value={key}>
+              <option key={key} value={key} disabled={key != "BLACK" && key != "HISPANIC"}>
                 {SelectionMenuUtilities.MINORITIES[key]}
               </option>
             );

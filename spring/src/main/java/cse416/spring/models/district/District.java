@@ -104,7 +104,7 @@ public class District {
 
     private double calculatePopulationEquality(int idealPopulation) {
         double popRatio = (double) this.demographics.getTP() / idealPopulation;
-        return (Math.pow((popRatio - 1), 2)) * 100;
+        return (Math.pow((popRatio - 1), 2)) * 10;
     }
 
     public void assignObjectiveFunctionScore(ObjectiveFunctionWeights weights) {
