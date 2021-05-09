@@ -24,8 +24,8 @@ public class DistrictingsSingleton {
         return districtings;
     }
 
-    public static Collection<Districting> getDistrictings(long jobId) {
-        if (districtings == null) {
+    public static Collection<Districting>   getDistrictings(long jobId) {
+        if (districtings == null || districtings.size() == 0) {
             districtings = getDistrictingsFromDB(jobId);
         }
         return districtings;
@@ -53,7 +53,8 @@ public class DistrictingsSingleton {
                     }
             }
             int majorityMinorityDistrictsCount = d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold());
-            if(majorityMinorityDistrictsCount >= constraints.getMinMinorityDistricts()) {
+            double populationDiff = d.getMeasures().getPopulationEqualityAvg();
+            if(majorityMinorityDistrictsCount >= constraints.getMinMinorityDistricts() && populationDiff <= constraints.getMaxPopulationDifference()) {
                 filteredDistrictings.add(d);
                 d.getMeasures().setMajorityMinorityDistricts(majorityMinorityDistrictsCount);
             }

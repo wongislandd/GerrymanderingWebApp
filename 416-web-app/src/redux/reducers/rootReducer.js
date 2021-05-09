@@ -40,8 +40,8 @@ ConstraintSliderSettings: {
     "Maximum Population Difference (%)",
     5,
     0,
-    20,
-    1,
+    10,
+    .1,
     true
   ),
   [SelectionMenuUtilities.CONSTRAINT_KEYS

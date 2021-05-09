@@ -19,16 +19,6 @@ class ConstraintSlider extends Component {
           <h6>
             {filter.name} <b>({filter.value})</b>
           </h6>
-          <Switch
-            id={"Switch-" + this.props.filterKey}
-            offLabel=""
-            onChange={(e) => {
-              this.handleSwitch(e, this.props.filterKey);
-            }}
-            onLabel=""
-            checked={filter.enabled}
-            className="constraintSwitch"
-          />
         </div>
         <Slider
           disabled={!filter.enabled}

@@ -155,15 +155,22 @@ public class DistrictingMeasures {
         Deviation totalDeviationFromAverage = new Deviation();
 
         int numDistricts = districts.size();
+        int largestDistrictPop = 0;
+        int smallestPopulationPop = districts.get(0).getDemographics().getTP();
 
         for (District district : districts) {
             DistrictMeasures districtMeasures = district.getMeasures();
-
             totalPopulationEquality += districtMeasures.getPopulationEquality();
             totalDeviationFromEnacted.add(districtMeasures.getDeviationFromEnacted());
             totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
+            int districtPopulation = district.getDemographics().getTP();
+            if (districtPopulation > largestDistrictPop) {
+                largestDistrictPop = districtPopulation;
+            }
+            if (districtPopulation < smallestPopulationPop) {
+                smallestPopulationPop = districtPopulation;
+            }
         }
-
         this.compactnessAvg = getAvgCompactness(districts);
 
         this.populationEqualityAvg = totalPopulationEquality / numDistricts;

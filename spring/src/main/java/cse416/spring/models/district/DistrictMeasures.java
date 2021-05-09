@@ -16,6 +16,7 @@ public class DistrictMeasures {
     private long id;
     @Column
     double populationEquality;
+
     @OneToOne(cascade = CascadeType.ALL)
     MajorityMinorityInfo majorityMinorityInfo;
     @OneToOne(cascade = CascadeType.ALL)

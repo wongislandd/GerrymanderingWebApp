@@ -88,13 +88,13 @@ public class Districting {
                 new HopcroftKarpMaximumCardinalityBipartiteMatching<>(bipartiteGraph, enactedDistricts, generatedDistricts);
 
         Graph<District, Double> matching = matcher.getMatching().getGraph();
-        System.out.println("Renumbered districts: ");
+       // System.out.println("Renumbered districts: ");
 
         for (District enactedDistrict : enactedDistricts) {
             District generatedDistrict = Graphs.neighborListOf(matching, enactedDistrict).get(0);
             int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
             generatedDistrict.setDistrictNumber(districtNumber);
-            System.out.println("    " + districtNumber);
+            //System.out.println("    " + districtNumber);
         }
     }
 
