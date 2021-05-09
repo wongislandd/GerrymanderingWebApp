@@ -20,7 +20,7 @@ class ListingSection extends Component {
   }
 
   isAnalysisEmpty() {
-    return this.props.AnalysisDistrictings["TopScoring"].length === 0
+    return this.props.AnalysisDistrictings.length === 0
   }
 
   render() {
@@ -29,7 +29,7 @@ class ListingSection extends Component {
         <Row>
           <div className="DistrictingResultsHeader">
             <h5>
-              {SelectionMenuUtilities.LABELS.CONSTRAINED_DISTRICTING_RESULTS}
+              {SelectionMenuUtilities.LABELS.ANALYSIS_RESULTS}
             </h5>
           </div>
         </Row>

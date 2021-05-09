@@ -14,7 +14,7 @@ export const LABELS = {
   CHOOSE_A_MINORITY_POPULATION: "Choose a Minority Population",
   CHOOSE_A_VOTING_POPULATION: "Choose a Voting Population",
   CHOOSE_A_TYPE_OF_COMPACTNESS: "Choose a Method of Compactness",
-  CONSTRAINED_DISTRICTING_RESULTS: "Constrained Districting Results",
+  ANALYSIS_RESULTS : "Top Scoring Objective Function Districtings",
   DISTRICTING_BREAKDOWN: "Districting Breakdown",
   SELECT_A_JOB: "Select a Job",
   CONTINUE_WITH_THIS_JOB: "Continue with this Job",
@@ -62,12 +62,8 @@ export const CONSTRAINT_KEYS = {
   Compactness: "Compactness",
 };
 
-// Maps this ^ to something more user friendly, any change to the values above have to be changed
-// to the key below. Unfortunatly
-export const ANALYSIS_CATEGORIES_USER_FRIENDLY = {
-  TopScoring: "Top Districtings According to Objective Function",
-  HighScoringSimilarEnacted: "Highest Scoring Districtings Similar to Enacted",
-  HighScoringMajorityMinority:
-    "Highest Scoring Districtings with Desired Majority Minority",
-  TopAreaPairDeviation: "Districtings with the Greatest Area Pair-Deviations",
-};
+export const TAGS = {
+  CLOSE_TO_ENACTED : "Closest to Enacted",
+  MAJORITY_MINORITY : "Highest Majority Minority",
+  AREA_PAIR_DEVIATION : "Top Area Pair Deviation"
+}

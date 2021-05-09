@@ -138,8 +138,9 @@ export async function applyWeights() {
   let analysis = await axios
     .post(fullUrl, payload, { withCredentials: true })
     .then((response) => {
-      return ParsingUtilities.parseAnalysis(response.data);
+      return response.data;
     });
+  console.log(analysis)
   return analysis;
 }
 

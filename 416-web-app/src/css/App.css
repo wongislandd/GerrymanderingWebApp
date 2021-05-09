@@ -444,3 +444,7 @@ button:focus {
   position: relative;
   left: 50%;
 }
+
+.tag {
+  color: #a7877a;
+}

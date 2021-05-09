@@ -249,10 +249,10 @@ export const setNumberOfDistrictingsAvailable = (number) => {
   };
 };
 
-export const updateAnalysisDistrictings = (dict) => {
+export const updateAnalysisDistrictings = (analysis) => {
   return {
     type: ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS,
-    Dictionary: dict,
+    Analysis : analysis,
   };
 };
 
@@ -343,5 +343,12 @@ export const updateBWPoints = (pointsData) => {
   return {
     type : ActionTypes.UPDATE_BW_POINTS,
     PointsData : pointsData,
+  }
+}
+
+export const updateSelectedTags = (tag) => {
+  return {
+    type : ActionTypes.UPDATE_SELECTED_TAGS,
+    Tag : tag,
   }
 }

@@ -39,6 +39,44 @@ const initState = {
   /* Default to False*/
   InSelectionMenu: false,
 
+
+/* Constraint Settings */
+ConstraintSliderSettings: {
+  [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]: new Filter(
+    "Maximum Population Difference (%)",
+    5,
+    0,
+    20,
+    1,
+    true
+  ),
+  [SelectionMenuUtilities.CONSTRAINT_KEYS
+    .MajorityMinorityDistricts]: new Filter(
+    "Minimum Majority-Minority Districts",
+    2,
+    0,
+    10,
+    1,
+    true
+  ),
+  [SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold]: new Filter(
+    "Minority Threshold",
+    0.37,
+    0,
+    1,
+    0.01,
+    true
+  ),
+  [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness]: new Filter(
+    "Compactness",
+    0.15,
+    0,
+    0.5,
+    0.01,
+    true
+  ),
+},
+
   /* Objective Function Weights */
   ObjectiveFunctionSettings: [
     new Filter("Population Equality", 0.5, 0, 1, 0.01),
@@ -55,42 +93,7 @@ const initState = {
     new Filter("Compactness", 0.5, 0, 1, 0.01, true),
   ],
 
-  /* Constraint Settings */
-  ConstraintSliderSettings: {
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]: new Filter(
-      "Maximum Population Difference (%)",
-      20,
-      0,
-      100,
-      1,
-      true
-    ),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS
-      .MajorityMinorityDistricts]: new Filter(
-      "Minimum Majority-Minority Districts",
-      5,
-      0,
-      10,
-      1,
-      true
-    ),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.MinorityThreshold]: new Filter(
-      "Minority Threshold",
-      0.5,
-      0,
-      1,
-      0.01,
-      true
-    ),
-    [SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness]: new Filter(
-      "Compactness",
-      0.15,
-      0,
-      0.5,
-      0.01,
-      true
-    ),
-  },
+  
 
   PopulationSelection: null,
 
@@ -105,6 +108,9 @@ const initState = {
 
   BWBoxes : null,
   BWPoints : null,
+
+  SelectedTags : [],
+
 
 
   /* Usable Map */
@@ -142,12 +148,7 @@ const initState = {
   ConstrainedDistrictings: [],
 
   /* Keys must match ANALYSIS_CATEGORIES in SelectionMenuUtilities*/
-  AnalysisDistrictings: {
-    TopScoring: [],
-    HighScoringSimilarEnacted: [],
-    HighScoringMajorityMinority: [],
-    TopAreaPairDeviation: [],
-  },
+  AnalysisDistrictings: [],
 
   /* STATE VARIABLES TO BE LOADED IN THROUGH THE NETWORK? IS THIS THE BEST APPROACH? */
 
@@ -438,9 +439,10 @@ const rootReducer = (state = initState, action) => {
         NumDistrictingsAvailable: action.Number,
       };
     case ActionTypes.UPDATE_ANALYSIS_DISTRICTINGS:
+      console.log(action.Analysis)
       return {
         ...state,
-        AnalysisDistrictings: action.Dictionary,
+        AnalysisDistrictings: action.Analysis,
       };
     case ActionTypes.LOAD_STATE_OUTLINES:
       return {
@@ -508,6 +510,17 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         BWPoints : action.PointsData
+      }
+    case ActionTypes.UPDATE_SELECTED_TAGS:
+      let newTags = [...state.SelectedTags];
+      if (!newTags.includes(action.Tag)) {
+        newTags.push(action.Tag);
+      } else {
+        newTags = newTags.filter((name) => name != action.Tag);
+      }
+      return {
+        ...state,
+        SelectedTags : newTags
       }
     default:
       return state;

@@ -1,65 +1,59 @@
 package cse416.spring.helperclasses.analysis;
 
-import cse416.spring.models.district.Compactness;
-import cse416.spring.models.district.Deviation;
-import cse416.spring.models.districting.Districting;
-import cse416.spring.models.districting.DistrictingMeasures;
+import cse416.spring.helperclasses.DistrictingSummary;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 @Getter
 @Setter
-public class TopScoring implements AnalysisCategoryContainer{
-    ArrayList<Districting> entries;
+public class TopScoring implements AnalysisCategoryContainer {
+    ArrayList<DistrictingSummary> entries;
 
-    int maxSize = 10;
+    int maxSize = 25;
 
     public TopScoring() {
         this.entries = new ArrayList<>();
     }
 
     public void sortEntries() {
-        entries.sort(new Comparator<Districting>() {
-            @Override
-            public int compare(Districting d1, Districting d2) {
-                double difference = d1.getObjectiveFunctionScore() - d2.getObjectiveFunctionScore();
-                if (difference > 0) {
-                    return -1;
-                } else if(difference < 0) {
-                    return 1;
-                } else {
-                    return 0;
+        entries.sort((d1, d2) -> {
+                    double difference = d1.getObjectiveFunctionScore() - d2.getObjectiveFunctionScore();
+                    if (difference > 0) {
+                        return -1;
+                    } else if (difference < 0) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
                 }
-            }
-        });
-    }
-
-    // TODO Remove after testing
-    public void forceInsert(Districting d) {
-        entries.add(d);
+        );
     }
 
     @Override
-    public boolean shouldInsert(Districting districting) {
-        if (entries.size() < maxSize || entries.get(entries.size() - 1).getObjectiveFunctionScore() < districting.getObjectiveFunctionScore()) {
-            return true;
+    public void insertIfFit(DistrictingSummary summary) {
+        if (shouldInsert(summary)) {
+            insert(summary);
         }
-        else {
+    }
+
+    @Override
+    public boolean shouldInsert(DistrictingSummary summary) {
+        if (entries.size() < maxSize || entries.get(entries.size() - 1).getObjectiveFunctionScore() < summary.getObjectiveFunctionScore()) {
+            return true;
+        } else {
             return false;
         }
     }
 
     @Override
-    public void insert(Districting districting) {
+    public void insert(DistrictingSummary summary) {
         if (entries.size() < maxSize) {
-            entries.add(districting);
-        }
-        else {
+            entries.add(summary);
+        } else {
             entries.remove(entries.size() - 1);
-            entries.add(districting);
+            entries.add(summary);
         }
         sortEntries();
     }
