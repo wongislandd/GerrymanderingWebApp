@@ -137,14 +137,6 @@ public class District {
         this.objectiveFunctionScore = objectiveFunctionResult;
     }
 
-    private double calculateDeviationFromEnacted(Geometry hull, Demographics d) {
-        return Math.random();
-    }
-
-    private double calculateDeviationFromAverage(Geometry hull, Demographics d) {
-        return Math.random();
-    }
-
     private static Compactness calculateCompactness(Geometry geometry) {
         return new Compactness(
                 Compactness.calculatePolsbyPopper(geometry),

@@ -17,17 +17,6 @@ export function parseJobJSONToObjects(jobsJSON) {
 }
 
 
-
-// export function parseAnalysis(analysisJSON) {
-//   let newAnalysis = {
-//     TopScoring: analysisJSON.topOFScoring,
-//     HighScoringSimilarEnacted: analysisJSON.closeToEnacted,
-//     HighScoringMajorityMinority: analysisJSON.highScoringWithMajorityMinority,
-//     TopAreaPairDeviation: analysisJSON.topAreaPairDeviation,
-//   };
-//   return newAnalysis;
-// }
-
 const minorityNumberedDistrictNames = [
   "1st District",
   "2nd District",

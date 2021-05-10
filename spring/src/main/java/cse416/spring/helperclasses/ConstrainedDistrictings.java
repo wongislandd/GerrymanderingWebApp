@@ -50,15 +50,42 @@ public class ConstrainedDistrictings {
         return averageDistricting;
     }
 
+    public Districting calculateAverageDistricting(Collection<Districting> districtings, MinorityPopulation minority) {
+        double bestScore = 0;
+        Districting averageDistricting = null;
+        double[] districtMeanCalculator = new double[districtings.stream().findAny().get().getDistricts().size()];
+        // TODO Optimize?
+        // Calculate totals
+        for (Districting districting : districtings) {
+            ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(minority);
+            for(int j=0;j<orderedDistricts.size();j++) {
+                districtMeanCalculator[j] += orderedDistricts.get(j).getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority);
+            }
+        }
+        // Turn totals into means
+        for(int i=0;i<districtMeanCalculator.length;i++) {
+            districtMeanCalculator[i] = districtMeanCalculator[i]/districtings.size();
+        }
+        // Compare each districting
+        for (Districting districting : districtings) {
+            ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(minority);
+            double runningScore = 0;
+            for (int j=0;j<orderedDistricts.size();j++) {
+                runningScore += Math.pow(orderedDistricts.get(j).getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority) - districtMeanCalculator[j], 2);
+            }
+            if (runningScore > bestScore) {
+                bestScore = runningScore;
+                averageDistricting = districting;
+            }
+        }
+        return averageDistricting;
+    }
+
 
     public ConstrainedDistrictings(Collection<Districting> districtings, DistrictingConstraints constraints) {
-        // TODO Calculate average, box and whisker (multithread?)
         this.districtings = districtings;
         this.constraints = constraints;
-
-        // TODO Calculate the "average" districting, currently just getting a random one.
-        List<Districting> districtingsList = new ArrayList<>(districtings);
-        this.averageDistricting = districtingsList.get((int) (Math.random() * districtings.size()));
+        this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
 
         // TODO Assign each district a deviation from average after finding the proper average districting
         for (Districting districting : districtings) {
