@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InfoIcon from "@material-ui/icons/Info";
 import { Button, Modal } from "react-materialize";
+import ModalContentContainer from "./modals/ModalContentContainer";
 
 export default class LabelAndInfoIcon extends Component {
   render() {
@@ -33,7 +34,7 @@ export default class LabelAndInfoIcon extends Component {
           }}
           trigger={<InfoIcon style={{ fontSize: 22 }} className="infoIcon" />}
         >
-          <p>{this.props.description}</p>
+          {this.props.description ? <p>{this.props.description}</p> : <ModalContentContainer type={this.props.type}/>}
         </Modal>
       </div>
     );

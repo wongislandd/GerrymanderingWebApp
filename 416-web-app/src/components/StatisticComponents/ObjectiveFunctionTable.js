@@ -46,7 +46,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Population Equality"
                       : "Population Equality"
                   }
-                  description={StatUtilities.DESCRIPTIONS.POPULATION_EQUALITY}
+                  type="POPULATION"
                 />
               </TableCell>
               <TableCell>
@@ -56,7 +56,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Split County Score"
                       : "Split Counties"
                   }
-                  description={StatUtilities.DESCRIPTIONS.SPLIT_COUNTY_SCORE}
+                  type="SPLIT_COUNTIES"
                 />
               </TableCell>
               <TableCell>
@@ -66,9 +66,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Deviation from Average (Area/Pop)"
                       : "Deviation from Average (Area/Pop)"
                   }
-                  description={
-                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
-                  }
+                  type="AVG_DEVIATION"
                 />
               </TableCell>
               <TableCell>
@@ -78,9 +76,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Deviation from Enacted (Area/Pop)"
                       : "Deviation from Enacted (Area/Pop)"
                   }
-                  description={
-                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
-                  }
+                  type="ENACTED_DEVIATION"
                 />
               </TableCell>
               <TableCell>
@@ -90,7 +86,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Compactness"
                       : "Compactness"
                   }
-                  description={StatUtilities.DESCRIPTIONS.COMPACTNESS}
+                  type="COMPACTNESS"
                 />
               </TableCell>
               <TableCell>
@@ -100,9 +96,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Majority Minority Districts"
                       : "Is Majority Minority District?"
                   }
-                  description={
-                    StatUtilities.DESCRIPTIONS.MAJORITY_MINORITY_DISTRICT
-                  }
+                  type="MAJORITY_MINORITY"
                 />
               </TableCell>
             </TableRow>

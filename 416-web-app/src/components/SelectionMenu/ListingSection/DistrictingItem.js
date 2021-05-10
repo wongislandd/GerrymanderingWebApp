@@ -51,8 +51,7 @@ class DistrictingItem extends Component {
             <h5 className="padBelowMe">
               {"Districting Breakdown (" + this.props.districting.id + ")"}
             </h5>
-            {this.props.districting.tags.length != 0 ? 
-            <div> <Row>
+            <Row>
               {this.props.districting.tags.map((tag => {
                 return <Col>
                 <Chip 
@@ -63,9 +62,7 @@ class DistrictingItem extends Component {
                 />
                 </Col>
               }))}
-              </Row>
-            </div>
-          : <div/>}
+            </Row>
             <DistrictingInfoSection districting={this.props.districting} />
           </div>
         ) : (
