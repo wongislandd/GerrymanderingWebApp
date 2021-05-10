@@ -52,7 +52,6 @@ class MajorityMinorityModal extends Component {
                 </TableHead>
                 <TableBody>
                 {sortedSummaries.map((summary, key) => {
-                  console.log(key)
                   return(
                     <TableRow key={key}>
                       <TableCell component="th" scope="row">

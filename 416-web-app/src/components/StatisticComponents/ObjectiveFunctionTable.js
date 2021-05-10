@@ -60,11 +60,9 @@ class ObjectiveFunctionTable extends Component {
                       ? "Split County Score"
                       : "Split Counties"
                   }
-                  type={this.displayDistrictingInfo() ? "SPLIT_COUNTIES" : null}
-                  description={this.displayDistrictingInfo() ? null :
+                  description={
                     StatUtilities.DESCRIPTIONS.SPLIT_COUNTY_SCORE
                   }
-                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>
@@ -74,7 +72,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Deviation from Average (Area/Pop)"
                       : "Deviation from Average (Area/Pop)"
                   }
-                  type={this.displayDistrictingInfo() ? "AVG_DEVIATION" : null}
+                  type={this.displayDistrictingInfo() ? "DEVIATION_AVG" : null}
                   description={this.displayDistrictingInfo() ? null :
                     StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
                   }
@@ -88,7 +86,7 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Deviation from Enacted (Area/Pop)"
                       : "Deviation from Enacted (Area/Pop)"
                   }
-                  type={this.displayDistrictingInfo() ? "ENACTED_DEVIATION" : null}
+                  type={this.displayDistrictingInfo() ? "DEVIATION_ENACTED" : null}
                   description={this.displayDistrictingInfo() ? null :
                     StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
                   }
@@ -102,11 +100,9 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Compactness"
                       : "Compactness"
                   }
-                  type={this.displayDistrictingInfo() ? "COMPACTNESS" : null}
-                  description={this.displayDistrictingInfo() ? null :
+                  description={
                     StatUtilities.DESCRIPTIONS.COMPACTNESS
                   }
-                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>

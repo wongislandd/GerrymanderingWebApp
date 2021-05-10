@@ -67,3 +67,9 @@ export const TAGS = {
   MAJORITY_MINORITY : "Top Majority Minority",
   AREA_PAIR_DEVIATION : "Top Area Pair Deviation"
 }
+
+export const IDEAL_POPULATIONS = {
+  NORTH_CAROLINA : 733499,
+  LOUISIANA : 0,
+  ALABAMA : 0,
+}
