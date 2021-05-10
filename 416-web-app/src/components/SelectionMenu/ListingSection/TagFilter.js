@@ -20,8 +20,9 @@ class TagFilter extends Component {
             <Row>
                 {Object.keys(SelectionMenuUtilities.TAGS).map((tag) => {
                     return(
-                    <Col><Chip 
-                    key={tag}
+                    <Col
+                    key={tag}>
+                    <Chip 
                     className="tag"
                     clickable
                     value={tag}

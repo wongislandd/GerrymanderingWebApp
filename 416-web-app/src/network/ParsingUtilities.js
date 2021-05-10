@@ -54,6 +54,7 @@ export function parseBoxAndWhisker(boxAndWhiskerData) {
     }
     boxes[i] = {
       y: traceValues,
+      boxpoints : false,
       type: "box",
       name: minorityNumberedDistrictNames[i],
       fillcolor: "white",
