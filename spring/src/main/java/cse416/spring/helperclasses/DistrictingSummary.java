@@ -34,14 +34,12 @@ public class DistrictingSummary {
         isEnacted = false;
         id = districting.getId();
         measures = districting.getMeasures();
-        // TODO Calculate the actual districting's deviation from average
-        measures.setDeviationFromAverageAvg(new Deviation(.5,.5));
         objectiveFunctionScore = districting.getObjectiveFunctionScore();
         districtSummaries = new ArrayList<>();
         tags = new ArrayList<>();
         for (District d : districting.getDistricts()) {
             // TODO Have all the transient properties of measures set before passing it in here.
-            d.getMeasures().setDeviationFromAverage(new Deviation(.5,.5));
+            d.getMeasures().setDeviationFromAverage(d.getMeasures().getDeviationFromAverage());
             districtSummaries.add(new DistrictSummary(d));
         }
         districtSummaries.sort(districtNumberComparator);

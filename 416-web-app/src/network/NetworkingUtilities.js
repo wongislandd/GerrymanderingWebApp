@@ -159,5 +159,10 @@ export async function applyWeights() {
 
 export async function initializeJob(jobId) {
   let fullUrl = baseURL + "/jobs/initialize/" + jobId;
-  axios.post(fullUrl)
+  let response = await axios
+  .post(fullUrl)
+  .then((response) => {
+    return response.data
+  })
+  return response
 }

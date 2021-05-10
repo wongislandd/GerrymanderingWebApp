@@ -193,20 +193,20 @@ class MapBoxComponent extends Component {
             <span onClick={(e) => (e) => this.props.setInSelectionMenu(true)}>
               {this.props.CurrentDistrictingGeoJson != null
                 ? this.props.CurrentDistrictingGeoJson.name != null ? this.props.CurrentDistrictingGeoJson.name 
-                : this.props.CurrentDistrictingGeoJson.id : "Loading districting."}
+                : this.props.CurrentDistrictingGeoJson.id : "Loading districting..."}
             </span>
           </div>
         </div>
         {/* Option to enter the selection menu */}
         <div
-          className="viewAndFilterDistrictingsOption"
+          className={this.props.JobLoaded ? "viewAndFilterDistrictingsOption" : "disabledViewAndFilterDistrictingsOption"}
           onClick={(e) => {
             this.props.setInSelectionMenu(true);
           }}
         >
           <div className="iconAndLabel">
             <Icon>code</Icon>
-            <span>{MapUtilities.MESSAGES.ViewAndFilterDistrictingsMsg}</span>
+            <span>{this.props.JobLoaded ? MapUtilities.MESSAGES.ViewAndFilterDistrictingsMsg : "Loading Job..."}</span>
           </div>
         </div>
         {/* Option to return to state selection */}
@@ -441,6 +441,7 @@ const mapStateToProps = (state, ownProps) => {
     Loaded: state.Loaded,
     PrecinctsGeoJson: state.PrecinctsGeoJson,
     CountiesGeoJson: state.CountiesGeoJson,
+    JobLoaded : state.JobLoaded,
   };
 };
 

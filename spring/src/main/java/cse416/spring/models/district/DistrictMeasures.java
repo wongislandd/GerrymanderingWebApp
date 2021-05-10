@@ -30,12 +30,12 @@ public class DistrictMeasures {
     @Transient
     boolean isMajorityMinority;
 
-    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
+    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo,
+                            Deviation deviationFromEnacted, Compactness compactness) {
         this.populationEquality = populationEquality;
         this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
-        this.deviationFromAverage = new Deviation(Math.random(), Math.random());
-        this.deviationFromEnacted = new Deviation(Math.random(), Math.random());
+        this.deviationFromEnacted = deviationFromEnacted;
         // TODO Implement counting split counties
         this.splitCounties = (int) (Math.random() * 10);
     }

@@ -86,15 +86,19 @@ public class ConstrainedDistrictings {
         this.districtings = districtings;
         this.constraints = constraints;
         this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
-
-        // TODO Assign each district a deviation from average after finding the proper average districting
+        ArrayList<District> averageDistrictingOrdered = averageDistricting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
         for (Districting districting : districtings) {
             double totalDeviationFromAvgArea = 0;
             double totalDeviationFromAvgPop = 0;
-            for (District district : districting.getDistricts()) {
-                district.getMeasures().setDeviationFromAverage(new Deviation(Math.random(), Math.random()));
-                totalDeviationFromAvgArea += district.getMeasures().getDeviationFromAverage().getAreaDev();
-                totalDeviationFromAvgPop += district.getMeasures().getDeviationFromAverage().getPopulationDev();
+            ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
+            for (int i=0;i<orderedDistricts.size();i++) {
+                District currentDistrict = orderedDistricts.get(i);
+                District averageDistrict = averageDistrictingOrdered.get(i);
+                // Calculate and set deviation from enacted
+                Deviation deviationFromAvg = currentDistrict.calculateDeviationFrom(averageDistrict, constraints.getMinorityPopulation());
+                currentDistrict.getMeasures().setDeviationFromAverage(deviationFromAvg);
+                totalDeviationFromAvgArea += currentDistrict.getMeasures().getDeviationFromAverage().getAreaDev();
+                totalDeviationFromAvgPop += currentDistrict.getMeasures().getDeviationFromAverage().getPopulationDev();
             }
             districting.getMeasures().setDeviationFromAverageAvg(
                     new Deviation(totalDeviationFromAvgArea / districting.getDistricts().size(),

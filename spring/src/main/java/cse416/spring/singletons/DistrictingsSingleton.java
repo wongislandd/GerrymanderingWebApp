@@ -13,6 +13,7 @@ import java.util.Set;
 
 public class DistrictingsSingleton {
     private static Collection<Districting> districtings;
+    private static long currentJobId = -1;
 
     private DistrictingsSingleton() {}
 
@@ -24,9 +25,10 @@ public class DistrictingsSingleton {
         return districtings;
     }
 
-    public static Collection<Districting>   getDistrictings(long jobId) {
-        if (districtings == null || districtings.size() == 0) {
+    public static Collection<Districting> getDistrictings(long jobId) {
+        if (currentJobId != jobId || districtings == null || districtings.size() == 0) {
             districtings = getDistrictingsFromDB(jobId);
+            currentJobId = jobId;
         }
         return districtings;
     }

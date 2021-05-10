@@ -359,3 +359,10 @@ export const updateSelectedTags = (tag) => {
     Tag : tag,
   }
 }
+
+export const updateJobLoaded = (bool) => {
+  return {
+    type : ActionTypes.UPDATE_JOB_LOADED,
+    Loaded : bool,
+  }
+}

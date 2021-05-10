@@ -66,7 +66,8 @@ public class District {
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
         MajorityMinorityInfo majorityMinorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness(geometry);
-        this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo,
+        Deviation deviationFromEnacted = calculateDeviationFrom(enactedDistrict);
+        this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo, deviationFromEnacted,
                 compactness);
     }
 
@@ -96,10 +97,16 @@ public class District {
         return this.geometry;
     }
 
-    // TODO: Finish methods to calculate district measures
 
-    public double calculateDeviationFrom(District other) {
-        return Math.random();
+    // TODO: Finish methods to calculate district measures
+    public Deviation calculateDeviationFrom(District other, MinorityPopulation minority) {
+        double thisPct = measures.getMajorityMinorityInfo().getMinorityPercentage(minority);
+        double otherPct = other.getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority);
+        return new Deviation(Math.random(), Math.random());
+    }
+
+    public Deviation calculateDeviationFrom(District other) {
+        return new Deviation(Math.random(), Math.random());
     }
 
     private double calculatePopulationEquality(int idealPopulation) {

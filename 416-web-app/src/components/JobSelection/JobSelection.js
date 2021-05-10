@@ -16,6 +16,7 @@ import {
   populateCounties,
   populateCurrentDistrictingGeoJson,
   populateCurrentDistrictingSummary,
+  updateJobLoaded,
 } from "../../redux/actions/settingActions";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
@@ -65,8 +66,11 @@ class JobSelection extends Component {
   }
 
   async selectJob(job) {
-    NetworkingUtilities.initializeJob(job.id)
     this.props.setCurrentJob(job)
+    NetworkingUtilities.initializeJob(job.id)
+    .then((result) => {
+      this.props.updateJobLoaded(true)
+    })
   }
 
   render() {
@@ -168,6 +172,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setCurrentJob: (job) => {
       dispatch(setCurrentJob(job));
+    },
+    updateJobLoaded : (bool) => {
+      dispatch(updateJobLoaded(bool))
     },
   };
 };

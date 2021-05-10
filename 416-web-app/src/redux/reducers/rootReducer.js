@@ -97,6 +97,8 @@ ConstraintSliderSettings: {
 
   Jobs: [],
 
+  JobLoaded : false,
+
   PrecinctsGeoJson: null,
   CountiesGeoJson: null,
 
@@ -290,14 +292,7 @@ const rootReducer = (state = initState, action) => {
         },
       };
     case ActionTypes.RETURN_TO_STATE_SELECTION:
-      return {
-        ...state,
-        CurrentState : ViewportUtilities.STATE_OPTIONS.UNSELECTED,
-        MapViewport : ViewportUtilities.UNSELECTED.Maximized,
-        CurrentJob : null,
-        CurrentDistrictingGeoJson : null,
-        CurrentDistrictingSummary : null,
-      }
+      return initState;
     case ActionTypes.SET_COMPARISON_DISTRICTING_A:
       return {
         ...state,
@@ -509,6 +504,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         BWEnacted : action.EnactedData
+      }
+    case ActionTypes.UPDATE_JOB_LOADED:
+      return {
+        ...state,
+        JobLoaded : action.Loaded,
       }
     case ActionTypes.UPDATE_SELECTED_TAGS:
       let newTags = [...state.SelectedTags];
