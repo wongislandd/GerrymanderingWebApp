@@ -27,7 +27,6 @@ class BoxPlot extends Component {
   }
 
   render() {
-    console.log(this.dataToShowInPlot())
     return (
       <div className="centerWithinMe">
         <Plot

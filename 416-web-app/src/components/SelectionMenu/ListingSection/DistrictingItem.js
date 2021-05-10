@@ -4,6 +4,8 @@ import DistrictingInfoSection from "./DistrictingInfoSection";
 import * as MapUtilities from "../../../utilities/MapUtilities";
 import * as StatUtilities from "../../../utilities/StatUtilities";
 import * as SelectionMenuUtilities from "../../../utilities/SelectionMenuUtilities";
+import StarIcon from '@material-ui/icons/Star';
+import { Chip} from '@material-ui/core'
 import { connect } from "react-redux";
 import { toggleExpandedSummary } from "../../../redux/actions/settingActions";
 
@@ -49,6 +51,21 @@ class DistrictingItem extends Component {
             <h5 className="padBelowMe">
               {"Districting Breakdown (" + this.props.districting.id + ")"}
             </h5>
+            {this.props.districting.tags.length != 0 ? 
+            <div> <Row>
+              {this.props.districting.tags.map((tag => {
+                return <Col>
+                <Chip 
+                label={SelectionMenuUtilities.TAGS[tag]}
+                variant="outlined" 
+                size="small" 
+                icon={<StarIcon />}
+                />
+                </Col>
+              }))}
+              </Row>
+            </div>
+          : <div/>}
             <DistrictingInfoSection districting={this.props.districting} />
           </div>
         ) : (

@@ -64,6 +64,6 @@ export const CONSTRAINT_KEYS = {
 export const TAGS = {
   CLOSE_TO_ENACTED : "Closest to Enacted",
   CLOSE_TO_AVERAGE : "Closest to Average",
-  MAJORITY_MINORITY : "Highest Majority Minority",
+  MAJORITY_MINORITY : "Top Majority Minority",
   AREA_PAIR_DEVIATION : "Top Area Pair Deviation"
 }
