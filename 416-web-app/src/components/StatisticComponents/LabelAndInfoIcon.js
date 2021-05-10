@@ -34,7 +34,9 @@ export default class LabelAndInfoIcon extends Component {
           }}
           trigger={<InfoIcon style={{ fontSize: 22 }} className="infoIcon" />}
         >
-          {this.props.description ? <p>{this.props.description}</p> : <ModalContentContainer type={this.props.type}/>}
+          {this.props.description ? 
+          <p>{this.props.description}</p> : 
+          <ModalContentContainer type={this.props.type} districting={this.props.districting}/>}
         </Modal>
       </div>
     );

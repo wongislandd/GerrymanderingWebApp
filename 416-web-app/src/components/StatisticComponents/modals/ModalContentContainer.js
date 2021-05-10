@@ -5,9 +5,9 @@ export default class ModalContentContainer extends Component {
     render() {
         switch(this.props.type) {
             case "MAJORITY_MINORITY":
-                return <MajorityMinorityModal/>
+                return <MajorityMinorityModal districting={this.props.districting}/>
             default:
-                return <MajorityMinorityModal/>
+                return <MajorityMinorityModal districting={this.props.districting}/>
         }
     }
 }

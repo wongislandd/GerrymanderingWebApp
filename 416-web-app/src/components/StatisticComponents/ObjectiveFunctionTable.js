@@ -46,7 +46,11 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Population Equality"
                       : "Population Equality"
                   }
-                  type="POPULATION"
+                  type={this.displayDistrictingInfo() ? "POPULATION" : null}
+                  description={this.displayDistrictingInfo() ? null :
+                    StatUtilities.DESCRIPTIONS.POPULATION_EQUALITY
+                  }
+                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>
@@ -56,7 +60,11 @@ class ObjectiveFunctionTable extends Component {
                       ? "Split County Score"
                       : "Split Counties"
                   }
-                  type="SPLIT_COUNTIES"
+                  type={this.displayDistrictingInfo() ? "SPLIT_COUNTIES" : null}
+                  description={this.displayDistrictingInfo() ? null :
+                    StatUtilities.DESCRIPTIONS.SPLIT_COUNTY_SCORE
+                  }
+                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>
@@ -66,7 +74,11 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Deviation from Average (Area/Pop)"
                       : "Deviation from Average (Area/Pop)"
                   }
-                  type="AVG_DEVIATION"
+                  type={this.displayDistrictingInfo() ? "AVG_DEVIATION" : null}
+                  description={this.displayDistrictingInfo() ? null :
+                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
+                  }
+                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>
@@ -76,7 +88,11 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Deviation from Enacted (Area/Pop)"
                       : "Deviation from Enacted (Area/Pop)"
                   }
-                  type="ENACTED_DEVIATION"
+                  type={this.displayDistrictingInfo() ? "ENACTED_DEVIATION" : null}
+                  description={this.displayDistrictingInfo() ? null :
+                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
+                  }
+                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>
@@ -86,7 +102,11 @@ class ObjectiveFunctionTable extends Component {
                       ? "Average Compactness"
                       : "Compactness"
                   }
-                  type="COMPACTNESS"
+                  type={this.displayDistrictingInfo() ? "COMPACTNESS" : null}
+                  description={this.displayDistrictingInfo() ? null :
+                    StatUtilities.DESCRIPTIONS.COMPACTNESS
+                  }
+                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
               <TableCell>
@@ -96,7 +116,11 @@ class ObjectiveFunctionTable extends Component {
                       ? "Majority Minority Districts"
                       : "Is Majority Minority District?"
                   }
-                  type="MAJORITY_MINORITY"
+                  type={this.displayDistrictingInfo() ? "MAJORITY_MINORITY" : null}
+                  description={this.displayDistrictingInfo() ? null :
+                    StatUtilities.DESCRIPTIONS.MAJORITY_MINORITY_DISTRICT
+                  }
+                  districting={this.props.DistrictingToDisplay}
                 />
               </TableCell>
             </TableRow>
