@@ -1,6 +1,7 @@
 package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
+import cse416.spring.models.district.Deviation;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictReference;
 import cse416.spring.models.districting.Districting;
@@ -81,7 +82,8 @@ public class DistrictingWriterThread extends Thread {
                 Collection<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
                 DistrictReference districtReference = new DistrictReference(stateName, filePath, i, districtKey);
-                // TODO: Change the null to the enacted districting
+                // TODO: Change the null to the enacted districting's district, do we even need the enacted to be passed in here?
+                // We'll never be able to compare it until after all districts in the districting are in
                 District d = new District(precincts, stateName, null, districtReference);
                 districtsInDistricting.add(d);
                 em.persist(d);
@@ -89,6 +91,15 @@ public class DistrictingWriterThread extends Thread {
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
             newDistricting.renumberDistricts(enactedDistricting);
+            
+            /* Assign deviation from enacted, now that the districts line up */
+            for (District d : newDistricting.getDistricts()) {
+                District correspondingDistrict = enactedDistricting.getDistrictByNumber(d.getDistrictNumber());
+                Deviation devFromEnacted = d.calculateDeviationFrom(correspondingDistrict);
+                d.getMeasures().setDeviationFromEnacted(devFromEnacted);
+            }
+
+
             em.persist(newDistricting);
             final long fileEndTime = System.currentTimeMillis();
             System.out.println("[THREAD " + name + "] Created Districting in " + (fileEndTime - fileStartTime) + "ms");

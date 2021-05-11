@@ -53,10 +53,10 @@ public class District {
     private double objectiveFunctionScore;
 
     public District(Collection<Precinct> precincts, StateName stateName,
-                    District enactedDistrict, DistrictReference districtReference) {
+                    District enactedDistrict, DistrictReference districtReference) throws IOException {
         this.demographics = compileDemographics(precincts);
-        this.geometry = UnionBuilder.getUnion(precincts);
         this.districtReference = districtReference;
+        this.geometry = getGeometry();
 
         JSONArray precinctKeysArr = new JSONArray();
         for (Precinct p : precincts) {
@@ -99,14 +99,17 @@ public class District {
 
 
     // TODO: Finish methods to calculate district measures
-    public Deviation calculateDeviationFrom(District other, MinorityPopulation minority) {
-        double thisPct = measures.getMajorityMinorityInfo().getMinorityPercentage(minority);
-        double otherPct = other.getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority);
-        return new Deviation(Math.random(), Math.random());
-    }
-
-    public Deviation calculateDeviationFrom(District other) {
-        return new Deviation(Math.random(), Math.random());
+    public Deviation calculateDeviationFrom(District other) throws IOException {
+        if (other == null) {
+            return new Deviation(0,0);
+        }
+        double thisPopulation = demographics.getTP();
+        double otherPopulation = other.getDemographics().getTP();
+        double popPctChange = (otherPopulation - thisPopulation) / thisPopulation;
+        double thisArea = getGeometry().getArea();
+        double otherArea = other.getGeometry().getArea();
+        double areaPctChange = (otherArea - thisArea) / thisArea;
+        return new Deviation(popPctChange, areaPctChange);
     }
 
     private double calculatePopulationEquality(int idealPopulation) {

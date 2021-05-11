@@ -152,7 +152,7 @@ public class DistrictingMeasures {
     public DistrictingMeasures(ArrayList<District> districts) throws IOException {
         double totalPopulationEquality = 0;
         Deviation totalDeviationFromEnacted = new Deviation();
-        Deviation totalDeviationFromAverage = new Deviation();
+//        Deviation totalDeviationFromAverage = new Deviation();
 
         int numDistricts = districts.size();
         int largestDistrictPop = 0;
@@ -162,7 +162,7 @@ public class DistrictingMeasures {
             DistrictMeasures districtMeasures = district.getMeasures();
             totalPopulationEquality += districtMeasures.getPopulationEquality();
             totalDeviationFromEnacted.add(districtMeasures.getDeviationFromEnacted());
-            totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
+//            totalDeviationFromAverage.add(districtMeasures.getDeviationFromAverage());
             int districtPopulation = district.getDemographics().getTP();
             if (districtPopulation > largestDistrictPop) {
                 largestDistrictPop = districtPopulation;
@@ -175,7 +175,7 @@ public class DistrictingMeasures {
 
         this.populationEqualityAvg = totalPopulationEquality / numDistricts;
         this.deviationFromEnactedAvg = totalDeviationFromEnacted.getAverage(numDistricts);
-        this.deviationFromAverageAvg = totalDeviationFromAverage.getAverage(numDistricts);
+//        this.deviationFromAverageAvg = totalDeviationFromAverage.getAverage(numDistricts);
 
         this.splitCountiesScore = calculateSplitCountyScore(districts);
     }

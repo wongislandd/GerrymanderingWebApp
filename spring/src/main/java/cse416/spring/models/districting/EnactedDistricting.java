@@ -67,6 +67,15 @@ public class EnactedDistricting {
         return orderedDistricts;
     }
 
+    public District getDistrictByNumber(int targetDistrictNumber) {
+        for (District d : districts) {
+            if (d.getDistrictNumber() == targetDistrictNumber) {
+                return d;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Double> getMinorityPointData(MinorityPopulation minority) {
         ArrayList<Double> pointData = new ArrayList<>();
         ArrayList<District> orderedDistricts = getMinorityOrderedDistricts(minority);

@@ -60,7 +60,7 @@ public class DistrictingController {
 
     @PostMapping(path = "/constrain", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) {
+    public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) throws IOException {
         Collection<Districting> results = DistrictingsSingleton.getDistrictingsByConstraints(constraints);
         if (results.size() > 0) {
             ConstrainedDistrictings cds = new ConstrainedDistrictings(results, constraints);
