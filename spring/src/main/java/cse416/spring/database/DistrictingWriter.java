@@ -113,7 +113,7 @@ public class DistrictingWriter {
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             ArrayList<EntityManager> ems = new ArrayList<>();
             for (int j = 0; j < numThreads; j++) {
                 ems.add(emf.createEntityManager());

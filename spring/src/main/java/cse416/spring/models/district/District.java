@@ -13,6 +13,7 @@ import cse416.spring.singletons.PrecinctHashSingleton;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
 import org.json.JSONArray;
 import org.locationtech.jts.geom.Geometry;
 
@@ -39,6 +40,8 @@ public class District {
      */
     @Column
     private int districtNumber;
+    @Column
+    double area;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Demographics demographics;
     @OneToOne(cascade = CascadeType.ALL)
@@ -56,9 +59,9 @@ public class District {
         this.demographics = compileDemographics(precincts);
         this.districtReference = districtReference;
         this.geometry = getGeometry();
-
+        this.area = geometry.getArea();
         // TODO This should get overwritten by renumbering, remove once renumbering is right
-        districtNumber = Integer.parseInt(districtReference.getDistrictKey())+1;
+        districtNumber = Integer.parseInt(districtReference.getDistrictKey());
 
         JSONArray precinctKeysArr = new JSONArray();
         for (Precinct p : precincts) {
@@ -101,22 +104,17 @@ public class District {
 
     // TODO: Finish methods to calculate district measures
     public Deviation calculateDeviationFrom(District other) throws IOException {
-        //return new Deviation(0,0);
+        // For the enacted districting
         if (other == null) {
             return new Deviation(0,0);
         }
         double thisPopulation = demographics.getTP();
         double otherPopulation = other.getDemographics().getTP();
         double popPctChange = (otherPopulation - thisPopulation) / thisPopulation;
-
-        // TODO CALCULATING THE GEOMETRY ON THE FLY HERE IS EXTREMELY INEFFICIENT, GOT TO CHANGE
-        final long startTime = System.currentTimeMillis();
-        double thisArea = getGeometry().getArea();
-        double otherArea = other.getGeometry().getArea();
-        final long endTime = System.currentTimeMillis();
-        System.out.println("GOT GEOMETRY IN " + (endTime-startTime) + "ms");
+        double thisArea = getArea();
+        double otherArea = other.getArea();
         double areaPctChange = (otherArea - thisArea) / thisArea;
-        return new Deviation(popPctChange, areaPctChange);
+        return new Deviation(areaPctChange, popPctChange);
     }
 
     private double calculatePopulationEquality(int idealPopulation) {

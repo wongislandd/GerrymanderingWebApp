@@ -6,6 +6,7 @@ import * as StatUtilities from '../../../utilities/StatUtilities'
 
 class DeviationFromEnactedModal extends Component {
     render() {
+        console.log(this.props.districting.districtSummaries)
         return (
             <TableContainer component={Paper}>
               <Table className="" aria-label="simple table">

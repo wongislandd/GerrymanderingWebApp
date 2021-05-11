@@ -24,7 +24,6 @@ class DistrictingItem extends Component {
   }
 
   render() {
-    console.log(this.props.districting)
     return (
       <CollapsibleItem
         expanded={this.isDisplayed()}
@@ -54,7 +53,8 @@ class DistrictingItem extends Component {
             </h5>
             <Row>
               {this.props.districting.tags.map((tag => {
-                return <Col>
+                return <Col
+                key={tag}>
                 <Chip 
                 label={SelectionMenuUtilities.TAGS[tag]}
                 variant="outlined" 

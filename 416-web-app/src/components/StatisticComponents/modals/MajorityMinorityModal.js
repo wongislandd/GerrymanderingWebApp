@@ -38,7 +38,7 @@ class MajorityMinorityModal extends Component {
     }
 
     render() {
-        let sortedSummaries = this.sortDistrictSummaries(this.props.districting.districtSummaries)
+        let sortedSummaries = this.sortDistrictSummaries([...this.props.districting.districtSummaries])
         return (
             <TableContainer component={Paper}>
               <Table className="" aria-label="simple table">

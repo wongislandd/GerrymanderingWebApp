@@ -26,20 +26,21 @@ public class ConstrainedDistrictings {
         this.districtings = districtings;
         this.constraints = constraints;
         this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
+        calculateDeviationFromAvg();
+    }
+
+    public void calculateDeviationFromAvg() throws IOException {
         ArrayList<District> averageDistrictingOrdered = averageDistricting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
         for (Districting districting : districtings) {
             Deviation totalDeviationFromAvg = new Deviation();
             ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
             for (int i = 0; i < orderedDistricts.size(); i++) {
-                long startTime = System.currentTimeMillis();
                 District currentDistrict = orderedDistricts.get(i);
                 District averageDistrict = averageDistrictingOrdered.get(i);
                 // Calculate and set deviation from enacted
                 Deviation deviationFromAvg = currentDistrict.calculateDeviationFrom(averageDistrict);
                 currentDistrict.getMeasures().setDeviationFromAverage(deviationFromAvg);
                 totalDeviationFromAvg.add(currentDistrict.getMeasures().getDeviationFromAverage());
-                long endTime = System.currentTimeMillis();
-                System.out.println("Calculated deviation from avg in " + (endTime-startTime) + "ms");
             }
             Deviation avgDeviation = totalDeviationFromAvg.getAverage(orderedDistricts.size());
             districting.getMeasures().setDeviationFromAverageAvg(avgDeviation);

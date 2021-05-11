@@ -35,7 +35,7 @@ public class Deviation {
     }
 
     public Deviation getAverage(int numDistricts) {
-        return new Deviation(this.populationDev / numDistricts, this.areaDev / numDistricts);
+        return new Deviation(this.areaDev / numDistricts, this.populationDev / numDistricts);
     }
 
     public double getDeviationScore() {

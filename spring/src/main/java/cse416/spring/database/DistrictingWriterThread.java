@@ -101,8 +101,6 @@ public class DistrictingWriterThread extends Thread {
                 totalDeviationFromEnacted.add(devFromEnacted);
             }
             newDistricting.getMeasures().setDeviationFromEnactedAvg(totalDeviationFromEnacted.getAverage(newDistricting.getDistricts().size()));
-
-
             em.persist(newDistricting);
             final long fileEndTime = System.currentTimeMillis();
             System.out.println("[THREAD " + name + "] Created Districting in " + (fileEndTime - fileStartTime) + "ms");

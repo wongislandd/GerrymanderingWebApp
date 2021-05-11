@@ -36,6 +36,8 @@ public class Districting {
     private DistrictingMeasures measures;
     @Transient
     private double objectiveFunctionScore;
+    @Transient
+    private GeoJsonBuilder geoJson = null;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<District> districts;
 
@@ -45,11 +47,13 @@ public class Districting {
         this.districts = districts;
     }
 
-    public String getGeoJson() throws IOException {
-        GeoJsonBuilder geoJson = new GeoJsonBuilder()
-                .buildDistricts(districts)
-                .id(id);
-        return geoJson.toString();
+    public GeoJsonBuilder getGeoJson() throws IOException {
+        if (geoJson == null) {
+            geoJson = new GeoJsonBuilder()
+                    .buildDistricts(districts)
+                    .id(id);
+        }
+        return geoJson;
     }
 
     private static double getIntersectionArea(District d1, District d2) throws IOException {
