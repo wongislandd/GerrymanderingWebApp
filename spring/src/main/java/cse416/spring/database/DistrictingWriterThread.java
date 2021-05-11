@@ -84,20 +84,23 @@ public class DistrictingWriterThread extends Thread {
                 DistrictReference districtReference = new DistrictReference(stateName, filePath, i, districtKey);
                 // TODO: Change the null to the enacted districting's district, do we even need the enacted to be passed in here?
                 // We'll never be able to compare it until after all districts in the districting are in
-                District d = new District(precincts, stateName, null, districtReference);
+                District d = new District(precincts, stateName, districtReference);
                 districtsInDistricting.add(d);
                 em.persist(d);
             }
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
-            newDistricting.renumberDistricts(enactedDistricting);
-            
+            //newDistricting.renumberDistricts(enactedDistricting);
+
+            Deviation totalDeviationFromEnacted = new Deviation();
             /* Assign deviation from enacted, now that the districts line up */
             for (District d : newDistricting.getDistricts()) {
                 District correspondingDistrict = enactedDistricting.getDistrictByNumber(d.getDistrictNumber());
                 Deviation devFromEnacted = d.calculateDeviationFrom(correspondingDistrict);
                 d.getMeasures().setDeviationFromEnacted(devFromEnacted);
+                totalDeviationFromEnacted.add(devFromEnacted);
             }
+            newDistricting.getMeasures().setDeviationFromEnactedAvg(totalDeviationFromEnacted.getAverage(newDistricting.getDistricts().size()));
 
 
             em.persist(newDistricting);

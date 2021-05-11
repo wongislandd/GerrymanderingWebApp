@@ -1,6 +1,7 @@
 package cse416.spring.database;
 
 import cse416.spring.enums.StateName;
+import cse416.spring.models.district.Deviation;
 import cse416.spring.models.job.MGGGParams;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.DistrictReference;
@@ -66,7 +67,8 @@ public class DistrictingWriter {
 
             // TODO: Change the null to the enacted districting
             DistrictReference districtReference = new DistrictReference(stateName, enactedFilePath, 0, districtKey);
-            District d = new District(precincts, stateName, null, districtReference);
+            District d = new District(precincts, stateName,districtReference);
+            d.getMeasures().setDeviationFromEnacted(new Deviation(0,0));
             districtsInDistricting.add(d);
         }
         EntityManager em = emf.createEntityManager();
@@ -111,7 +113,7 @@ public class DistrictingWriter {
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             ArrayList<EntityManager> ems = new ArrayList<>();
             for (int j = 0; j < numThreads; j++) {
                 ems.add(emf.createEntityManager());

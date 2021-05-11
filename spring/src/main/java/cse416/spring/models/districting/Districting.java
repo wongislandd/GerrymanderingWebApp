@@ -91,7 +91,8 @@ public class Districting {
        // System.out.println("Renumbered districts: ");
 
         for (District enactedDistrict : enactedDistricts) {
-            District generatedDistrict = Graphs.neighborListOf(matching, enactedDistrict).get(0);
+            List<District> neighborList = Graphs.neighborListOf(matching, enactedDistrict);
+            District generatedDistrict = neighborList.get(0);
             int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
             generatedDistrict.setDistrictNumber(districtNumber);
             //System.out.println("    " + districtNumber);

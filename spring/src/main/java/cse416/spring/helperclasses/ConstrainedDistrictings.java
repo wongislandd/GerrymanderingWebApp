@@ -11,7 +11,6 @@ import org.decimal4j.util.DoubleRounder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -23,17 +22,38 @@ public class ConstrainedDistrictings {
     ObjectiveFunctionWeights currentWeights;
     DistrictingConstraints constraints;
 
+    public ConstrainedDistrictings(Collection<Districting> districtings, DistrictingConstraints constraints) throws IOException {
+        this.districtings = districtings;
+        this.constraints = constraints;
+        this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
+        ArrayList<District> averageDistrictingOrdered = averageDistricting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
+        for (Districting districting : districtings) {
+            Deviation totalDeviationFromAvg = new Deviation();
+            ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
+            for (int i = 0; i < orderedDistricts.size(); i++) {
+                District currentDistrict = orderedDistricts.get(i);
+                District averageDistrict = averageDistrictingOrdered.get(i);
+                // Calculate and set deviation from enacted
+                Deviation deviationFromAvg = currentDistrict.calculateDeviationFrom(averageDistrict);
+                currentDistrict.getMeasures().setDeviationFromAverage(deviationFromAvg);
+                totalDeviationFromAvg.add(currentDistrict.getMeasures().getDeviationFromAverage());
+            }
+            Deviation avgDeviation = totalDeviationFromAvg.getAverage(orderedDistricts.size());
+            districting.getMeasures().setDeviationFromAverageAvg(avgDeviation);
+        }
+    }
+
     public List<List<Double>> getBoxAndWhiskerData() {
         if (boxAndWhiskerData == null) {
             /* Initialize box and whisker data */
             boxAndWhiskerData = new ArrayList<>();
-            for (int i=0; i<averageDistricting.getDistricts().size();i++) {
+            for (int i = 0; i < averageDistricting.getDistricts().size(); i++) {
                 boxAndWhiskerData.add(new ArrayList<>());
             }
 
             for (Districting districting : districtings) {
                 ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
-                for (int i=0;i<orderedDistricts.size();i++) {
+                for (int i = 0; i < orderedDistricts.size(); i++) {
                     double minorityPercentage = orderedDistricts.get(i).getMeasures().getMajorityMinorityInfo().getMinorityPercentage(constraints.getMinorityPopulation());
                     boxAndWhiskerData.get(i).add(DoubleRounder.round(minorityPercentage, 5));
                 }
@@ -59,19 +79,19 @@ public class ConstrainedDistrictings {
         // Calculate totals
         for (Districting districting : districtings) {
             ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(minority);
-            for(int j=0;j<orderedDistricts.size();j++) {
+            for (int j = 0; j < orderedDistricts.size(); j++) {
                 districtMeanCalculator[j] += orderedDistricts.get(j).getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority);
             }
         }
         // Turn totals into means
-        for(int i=0;i<districtMeanCalculator.length;i++) {
-            districtMeanCalculator[i] = districtMeanCalculator[i]/districtings.size();
+        for (int i = 0; i < districtMeanCalculator.length; i++) {
+            districtMeanCalculator[i] = districtMeanCalculator[i] / districtings.size();
         }
         // Compare each districting
         for (Districting districting : districtings) {
             ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(minority);
             double runningScore = 0;
-            for (int j=0;j<orderedDistricts.size();j++) {
+            for (int j = 0; j < orderedDistricts.size(); j++) {
                 runningScore += Math.pow(orderedDistricts.get(j).getMeasures().getMajorityMinorityInfo().getMinorityPercentage(minority) - districtMeanCalculator[j], 2);
             }
             if (runningScore > bestScore) {
@@ -80,32 +100,6 @@ public class ConstrainedDistrictings {
             }
         }
         return averageDistricting;
-    }
-
-
-    public ConstrainedDistrictings(Collection<Districting> districtings, DistrictingConstraints constraints) throws IOException {
-        this.districtings = districtings;
-        this.constraints = constraints;
-        this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
-        ArrayList<District> averageDistrictingOrdered = averageDistricting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
-        for (Districting districting : districtings) {
-            double totalAreaDeviationFromAvg = 0;
-            double totalPopDeviationFromAvg = 0;
-            ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
-            for (int i=0;i<orderedDistricts.size();i++) {
-                District currentDistrict = orderedDistricts.get(i);
-                District averageDistrict = averageDistrictingOrdered.get(i);
-                // Calculate and set deviation from enacted
-                Deviation deviationFromAvg = currentDistrict.calculateDeviationFrom(averageDistrict);
-                currentDistrict.getMeasures().setDeviationFromAverage(deviationFromAvg);
-                totalAreaDeviationFromAvg += currentDistrict.getMeasures().getDeviationFromAverage().getAreaDev();
-                totalPopDeviationFromAvg += currentDistrict.getMeasures().getDeviationFromAverage().getPopulationDev();
-            }
-            double avgAreaDeviationFromAvg = totalAreaDeviationFromAvg / districting.getDistricts().size();
-            double avgPopDeviationFromAvg = totalPopDeviationFromAvg / districting.getDistricts().size();
-            districting.getMeasures().setDeviationFromAverageAvg(
-                    new Deviation(avgAreaDeviationFromAvg,avgPopDeviationFromAvg));
-        }
     }
 
 }

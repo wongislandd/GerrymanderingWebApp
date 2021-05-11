@@ -52,11 +52,13 @@ public class District {
     @Transient
     private double objectiveFunctionScore;
 
-    public District(Collection<Precinct> precincts, StateName stateName,
-                    District enactedDistrict, DistrictReference districtReference) throws IOException {
+    public District(Collection<Precinct> precincts, StateName stateName, DistrictReference districtReference) throws IOException {
         this.demographics = compileDemographics(precincts);
         this.districtReference = districtReference;
         this.geometry = getGeometry();
+
+        // TODO This should get overwritten by renumbering, remove once renumbering is right
+        districtNumber = Integer.parseInt(districtReference.getDistrictKey())+1;
 
         JSONArray precinctKeysArr = new JSONArray();
         for (Precinct p : precincts) {
@@ -66,8 +68,7 @@ public class District {
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
         MajorityMinorityInfo majorityMinorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness(geometry);
-        Deviation deviationFromEnacted = calculateDeviationFrom(enactedDistrict);
-        this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo, deviationFromEnacted,
+        this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo,
                 compactness);
     }
 
