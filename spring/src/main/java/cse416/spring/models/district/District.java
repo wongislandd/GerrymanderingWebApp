@@ -39,7 +39,7 @@ public class District {
      */
     @Column
     private int districtNumber;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Demographics demographics;
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictMeasures measures;
@@ -101,14 +101,20 @@ public class District {
 
     // TODO: Finish methods to calculate district measures
     public Deviation calculateDeviationFrom(District other) throws IOException {
+        //return new Deviation(0,0);
         if (other == null) {
             return new Deviation(0,0);
         }
         double thisPopulation = demographics.getTP();
         double otherPopulation = other.getDemographics().getTP();
         double popPctChange = (otherPopulation - thisPopulation) / thisPopulation;
+
+        // TODO CALCULATING THE GEOMETRY ON THE FLY HERE IS EXTREMELY INEFFICIENT, GOT TO CHANGE
+        final long startTime = System.currentTimeMillis();
         double thisArea = getGeometry().getArea();
         double otherArea = other.getGeometry().getArea();
+        final long endTime = System.currentTimeMillis();
+        System.out.println("GOT GEOMETRY IN " + (endTime-startTime) + "ms");
         double areaPctChange = (otherArea - thisArea) / thisArea;
         return new Deviation(popPctChange, areaPctChange);
     }

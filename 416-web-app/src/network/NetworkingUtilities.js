@@ -131,11 +131,13 @@ export async function applyConstraints() {
         SelectionMenuUtilities.CONSTRAINT_KEYS.Compactness
       ].value,
   };
+  console.log("SENDING POST")
   let resultSize = await axios
     .post(fullUrl, payload, { withCredentials: true })
     .then((response) => {
       return response.data;
     });
+  console.log(resultSize);
   return resultSize;
 }
 

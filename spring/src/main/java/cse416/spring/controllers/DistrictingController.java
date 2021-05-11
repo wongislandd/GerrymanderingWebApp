@@ -61,11 +61,13 @@ public class DistrictingController {
     @PostMapping(path = "/constrain", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) throws IOException {
+        System.out.println("Constrian called.");
         Collection<Districting> results = DistrictingsSingleton.getDistrictingsByConstraints(constraints);
         if (results.size() > 0) {
             ConstrainedDistrictings cds = new ConstrainedDistrictings(results, constraints);
             request.getSession().setAttribute("constrainedDistrictings", cds);
         }
+        System.out.println("Returning " + results.size());
         return new ResponseEntity<>(results.size(), HttpStatus.OK);
     }
 
@@ -73,6 +75,7 @@ public class DistrictingController {
     @PostMapping(path = "/applyWeights", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<List<DistrictingSummary>> applyWeight(HttpServletRequest request, @RequestBody ObjectiveFunctionWeights weights) {
+        System.out.println("Apply weight called.");
         ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
         cds.setCurrentWeights(weights);
         for (Districting d : cds.getDistrictings()) {

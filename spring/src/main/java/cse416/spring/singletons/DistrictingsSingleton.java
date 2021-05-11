@@ -38,9 +38,9 @@ public class DistrictingsSingleton {
     }
 
     public static Collection<Districting> getDistrictingsByConstraints(DistrictingConstraints constraints) {
-        //TODO Move the entire filtering to the query, may need to add more properties to districting
         HashSet<Districting> filteredDistrictings = new HashSet<Districting>();
         Collection<Districting> fullJobSet = getDistrictings(constraints.getJobId());
+        System.out.println("Received full job set.");
         for (Districting d : fullJobSet) {
             switch (constraints.getCompactnessType()) {
                 case POLSBY_POPPER:
