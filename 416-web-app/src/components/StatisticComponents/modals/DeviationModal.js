@@ -14,7 +14,9 @@ class DeviationFromEnactedModal extends Component {
                   <TableRow>
                     <TableCell>District Number</TableCell>
                     <TableCell align="left">Area Difference</TableCell>
+                    <TableCell align="left">Area Difference %</TableCell>
                     <TableCell align="left">Population Difference</TableCell>
+                    <TableCell align="left">Population Difference %</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -22,8 +24,20 @@ class DeviationFromEnactedModal extends Component {
                   return(
                     <TableRow key={key}>
                     <TableCell>{summary.districtNumber}</TableCell>
-                    <TableCell align="left">{StatUtilities.formatAsPercentage(this.props.type == "enacted" ? summary.measures.deviationFromEnacted.areaDev : summary.measures.deviationFromAverage.areaDev, 2)}</TableCell>
-                    <TableCell align="left">{StatUtilities.formatAsPercentage(this.props.type == "enacted" ? summary.measures.deviationFromEnacted.populationDev : summary.measures.deviationFromAverage.populationDev,2)}</TableCell>
+                      <TableCell align="left">
+                        {/* {MATH MATH MATH MATH, HOW TO GET ORIGINAL VALUE FROM NEW VALUE AND PCT CHANGE?} */}
+                        {(summary.area * (this.props.type == "enacted" ? summary.measures.deviationFromEnacted.areaDev : summary.measures.deviationFromAverage.areaDev)).toFixed(2)}
+                      </TableCell>
+                      <TableCell align="left">
+                        {StatUtilities.formatAsPercentage(this.props.type == "enacted" ? summary.measures.deviationFromEnacted.areaDev : summary.measures.deviationFromAverage.areaDev, 2)}
+                      </TableCell>
+                      <TableCell align="left">
+                        {/* {FIX HERE TOO} */}
+                        {(summary.demographics.tp * (this.props.type == "enacted" ? summary.measures.deviationFromEnacted.populationDev : summary.measures.deviationFromAverage.populationDev)).toFixed(2)}
+                      </TableCell>
+                      <TableCell align="left">
+                        {StatUtilities.formatAsPercentage(this.props.type == "enacted" ? summary.measures.deviationFromEnacted.populationDev : summary.measures.deviationFromAverage.populationDev,2)}
+                      </TableCell>
                     </TableRow>
                   )})}
                 </TableBody>

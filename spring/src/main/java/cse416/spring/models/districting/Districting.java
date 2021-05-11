@@ -49,7 +49,7 @@ public class Districting {
 
     public GeoJsonBuilder getGeoJson() throws IOException {
         if (geoJson == null) {
-            geoJson = new GeoJsonBuilder()
+            this.geoJson = new GeoJsonBuilder()
                     .buildDistricts(districts)
                     .id(id);
         }

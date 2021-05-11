@@ -17,6 +17,7 @@ public class DistrictSummary {
     Demographics demographics;
     DistrictMeasures measures;
     boolean isMajorityMinorityDistrict;
+    double area;
 
     public DistrictSummary(District district) {
         this.districtNumber = district.getDistrictNumber();
@@ -24,5 +25,6 @@ public class DistrictSummary {
         this.measures = district.getMeasures();
         this.objectiveFunctionScore = district.getObjectiveFunctionScore();
         this.isMajorityMinorityDistrict = district.getMeasures().isMajorityMinority();
+        this.area = district.getArea();
     }
 }
