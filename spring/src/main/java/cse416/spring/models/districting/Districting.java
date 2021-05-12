@@ -98,6 +98,7 @@ public class Districting {
         HashSet<District> enactedDistricts = new HashSet<>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<>(this.districts);
         HashSet<Integer> numbersSeen = new HashSet<>();
+        List<District> districtsThatNeedHomes = new ArrayList<>();
         SimpleWeightedGraph<District, Edge> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
 
         // Match each enacted district with a generated district
@@ -107,11 +108,24 @@ public class Districting {
         Set<Edge> matching = matcher.getMatching().getEdges();
         for (Edge e : matching) {
             District generatedDistrict = e.generatedDistrict;
-            generatedDistrict.setDistrictNumber(e.enactedNum);
             if (numbersSeen.contains(e.enactedNum)) {
                 System.out.println("REPEAT DETECTED ON #" + e.enactedNum);
+                districtsThatNeedHomes.add(generatedDistrict);
             } else {
+                generatedDistrict.setDistrictNumber(e.enactedNum);
                 numbersSeen.add(e.enactedNum);
+            }
+        }
+        /* Fill in the blanks */
+        if (!districtsThatNeedHomes.isEmpty()) {
+            List<Integer> numbersNotSeen = new ArrayList<>();
+            for (int i=1;i<=generatedDistricts.size();i++) {
+                if (!numbersSeen.contains(i)) {
+                    numbersNotSeen.add(i);
+                }
+            }
+            for (int i=0;i<districtsThatNeedHomes.size();i++) {
+                districtsThatNeedHomes.get(i).setDistrictNumber(numbersNotSeen.get(i));
             }
         }
     }

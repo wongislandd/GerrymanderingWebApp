@@ -113,18 +113,19 @@ public class DistrictingWriter {
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
-        int numFiles = 1;
+        int startFileNum = 0;
+        int endFileNum = 300;
+        int numFiles = endFileNum-startFileNum;
         int districtingsPerFile = 50;
         int totalDistrictingsToMake = numFiles * districtingsPerFile;
         String[] files = getFilesInFolder(jobFolderPath);
         EnactedDistricting enactedDistricting = new DistrictingServiceImpl(em).findEnactedByState(state);
 
-
         JobWriter.persistJob(job, em);
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < numFiles; i++) {
+        for (int i = startFileNum; i < endFileNum; i++) {
             ArrayList<EntityManager> ems = new ArrayList<>();
             for (int j = 0; j < numThreads; j++) {
                 ems.add(emf.createEntityManager());
