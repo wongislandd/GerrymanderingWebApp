@@ -3,23 +3,19 @@ package cse416.spring.models.districting;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.helperclasses.ObjectiveFunctionWeights;
 import cse416.spring.helperclasses.builders.GeoJsonBuilder;
-import cse416.spring.models.district.*;
+import cse416.spring.models.district.District;
+import cse416.spring.models.district.MajorityMinorityInfo;
 import cse416.spring.models.job.Job;
-import cse416.spring.models.precinct.Precinct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.decimal4j.util.DoubleRounder;
-import org.hibernate.annotations.Fetch;
-import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
-import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
+import org.jgrapht.alg.matching.MaximumWeightBipartiteMatching;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 @Entity(name = "Districtings")
@@ -62,10 +58,20 @@ public class Districting {
         return g1.intersection(g2).getArea();
     }
 
-    private static SimpleWeightedGraph<District, Double> getBipartiteGraph(Collection<District> districts1,
+    static class Edge {
+        public int enactedNum;
+        public District generatedDistrict;
+
+        public Edge(int enactedNum, District generatedDistrict, double weight) {
+            this.enactedNum = enactedNum;
+            this.generatedDistrict = generatedDistrict;
+        }
+    }
+
+    private static SimpleWeightedGraph<District, Edge> getBipartiteGraph(Collection<District> districts1,
                                                                            Collection<District> districts2) throws IOException {
 
-        SimpleWeightedGraph<District, Double> bipartiteGraph = new SimpleWeightedGraph<>(Double.class);
+        SimpleWeightedGraph<District, Edge> bipartiteGraph = new SimpleWeightedGraph<>(Edge.class);
         for (District d : districts1)
             bipartiteGraph.addVertex(d);
         for (District d : districts2)
@@ -73,9 +79,13 @@ public class Districting {
 
         // Add edges. An edge has a weight which is the area of the intersection between two districts
         for (District d1 : districts1) {
+            int districtNumber = Integer.parseInt(d1.getDistrictReference().getDistrictKey());
+
             for (District d2 : districts2) {
                 double interArea = getIntersectionArea(d1, d2);
-                bipartiteGraph.addEdge(d1, d2, interArea);
+                Edge edge = new Edge(districtNumber, d2, interArea);
+                bipartiteGraph.addEdge(d1, d2, edge);
+                bipartiteGraph.setEdgeWeight(d1, d2, interArea);
             }
         }
         return bipartiteGraph;
@@ -85,21 +95,25 @@ public class Districting {
         // Make a bipartite graph matching enacted districts to generated districts
         HashSet<District> enactedDistricts = new HashSet<>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<>(this.districts);
-        SimpleWeightedGraph<District, Double> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
+        SimpleWeightedGraph<District, Edge> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
 
         // Match each enacted district with a generated district
-        HopcroftKarpMaximumCardinalityBipartiteMatching<District, Double> matcher =
-                new HopcroftKarpMaximumCardinalityBipartiteMatching<>(bipartiteGraph, enactedDistricts, generatedDistricts);
+        MaximumWeightBipartiteMatching<District, Edge> matcher =
+                new MaximumWeightBipartiteMatching<>(bipartiteGraph, enactedDistricts, generatedDistricts);
 
-        Graph<District, Double> matching = matcher.getMatching().getGraph();
-       // System.out.println("Renumbered districts: ");
+        Set<Edge> matching = matcher.getMatching().getEdges();
+        System.out.println("Number of edges: " + matcher.getMatching().getEdges().size());
+        System.out.println("Weight of graph: " + matcher.getMatching().getWeight());
+        System.out.println("Renumbered districts: ");
 
-        for (District enactedDistrict : enactedDistricts) {
-            List<District> neighborList = Graphs.neighborListOf(matching, enactedDistrict);
-            District generatedDistrict = neighborList.get(0);
-            int districtNumber = Integer.parseInt(enactedDistrict.getDistrictReference().getDistrictKey());
-            generatedDistrict.setDistrictNumber(districtNumber);
-            //System.out.println("    " + districtNumber);
+        for (Edge e : matching) {
+            District generatedDistrict = e.generatedDistrict;
+            generatedDistrict.setDistrictNumber(e.enactedNum);
+        }
+
+        // Check if district numbers were assigned correctly
+        for (District d : this.districts) {
+            System.out.println("    " + d.getDistrictNumber());
         }
     }
 

@@ -90,7 +90,7 @@ public class DistrictingWriterThread extends Thread {
             }
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
-            //newDistricting.renumberDistricts(enactedDistricting);
+            newDistricting.renumberDistricts(enactedDistricting);
 
             Deviation totalDeviationFromEnacted = new Deviation();
             /* Assign deviation from enacted, now that the districts line up */

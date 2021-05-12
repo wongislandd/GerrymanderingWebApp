@@ -44,10 +44,10 @@ public class EnactedDistricting {
         // Placeholder until we move the measure logic into the DistrictingMeasures constructor
         this.measures = new DistrictingMeasures(new ArrayList<>(districts));
 
-        for (District district : this.districts) {
-            String districtKey = district.getDistrictReference().getDistrictKey();
-            district.setDistrictNumber(Integer.parseInt(districtKey));
-        }
+//        for (District district : this.districts) {
+//            String districtKey = district.getDistrictReference().getDistrictKey();
+//            district.setDistrictNumber(Integer.parseInt(districtKey));
+//        }
     }
 
     public ArrayList<District> getMinorityOrderedDistricts(MinorityPopulation minority) {
