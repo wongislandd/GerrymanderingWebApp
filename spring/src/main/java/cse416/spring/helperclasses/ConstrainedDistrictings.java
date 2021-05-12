@@ -25,7 +25,12 @@ public class ConstrainedDistrictings {
     public ConstrainedDistrictings(Collection<Districting> districtings, DistrictingConstraints constraints) throws IOException {
         this.districtings = districtings;
         this.constraints = constraints;
-        this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
+
+        if (districtings.size() == 1) {
+            this.averageDistricting = districtings.stream().findAny().get();
+        } else {
+            this.averageDistricting = calculateAverageDistricting(districtings, constraints.getMinorityPopulation());
+        }
         calculateDeviationFromAvg();
     }
 

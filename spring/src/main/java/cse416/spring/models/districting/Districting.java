@@ -3,6 +3,8 @@ package cse416.spring.models.districting;
 import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.helperclasses.ObjectiveFunctionWeights;
 import cse416.spring.helperclasses.builders.GeoJsonBuilder;
+import cse416.spring.models.district.Compactness;
+import cse416.spring.models.district.Deviation;
 import cse416.spring.models.district.District;
 import cse416.spring.models.district.MajorityMinorityInfo;
 import cse416.spring.models.job.Job;
@@ -95,6 +97,7 @@ public class Districting {
         // Make a bipartite graph matching enacted districts to generated districts
         HashSet<District> enactedDistricts = new HashSet<>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<>(this.districts);
+        HashSet<Integer> numbersSeen = new HashSet<>();
         SimpleWeightedGraph<District, Edge> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
 
         // Match each enacted district with a generated district
@@ -105,6 +108,11 @@ public class Districting {
         for (Edge e : matching) {
             District generatedDistrict = e.generatedDistrict;
             generatedDistrict.setDistrictNumber(e.enactedNum);
+            if (numbersSeen.contains(e.enactedNum)) {
+                System.out.println("REPEAT DETECTED ON #" + e.enactedNum);
+            } else {
+                numbersSeen.add(e.enactedNum);
+            }
         }
     }
 
@@ -149,13 +157,42 @@ public class Districting {
         return pointData;
     }
 
+    public double getMaxDeviationFromIdeal() {
+        double highestScore = 0;
+        for (District d : districts) {
+            if (Math.abs(d.getMeasures().getPopulationDiffFromIdeal()) > highestScore) {
+                highestScore = Math.abs(d.getMeasures().getPopulationDiffFromIdeal());
+            }
+        }
+        return highestScore;
+    }
 
     public void assignObjectiveFunctionScores(ObjectiveFunctionWeights weights) {
-        double totalObjectiveFunctionScore = 0;
-        for (District d : districts) {
-            d.assignObjectiveFunctionScore(weights);
-            totalObjectiveFunctionScore += d.getObjectiveFunctionScore();
-        }
-        this.objectiveFunctionScore = totalObjectiveFunctionScore / districts.size();
+        double populationEquality = measures.getPopulationEqualityAvg();
+        double splitCountiesScore = measures.getSplitCountiesScore();
+        Deviation deviationFromAverage = measures.getDeviationFromAverageAvg();
+        double areaDeviationAverage = deviationFromAverage.getAreaDev();
+        double populationDeviationAverage = deviationFromAverage.getPopulationDev();
+
+        Deviation deviationFromEnacted = measures.getDeviationFromEnactedAvg();
+        double areaDeviationEnacted = deviationFromEnacted.getAreaDev();
+        double populationDeviationEnacted = deviationFromEnacted.getPopulationDev();
+
+        Compactness compactness = measures.getCompactnessAvg();
+        double polsbyPopper = compactness.getPolsbyPopper();
+        double populationFatness = compactness.getPopulationFatness();
+        double graphCompactness = compactness.getGraphCompactness();
+
+        double populationEqualityWeight = weights.getPopulationEquality();
+        double splitCountiesScoreWeight = weights.getSplitCounties();
+        double deviationAverageWeight = weights.getDeviationFromAverage();
+        double deviationEnactedWeight = weights.getDeviationFromEnacted();
+        double compactnessWeight = weights.getCompactness();
+
+        double objectiveFunctionResult = (populationEqualityWeight * populationEquality) + (splitCountiesScoreWeight * splitCountiesScore) +
+                (deviationAverageWeight * areaDeviationAverage) + (deviationAverageWeight * populationDeviationAverage) +
+                (deviationEnactedWeight * areaDeviationEnacted) + (deviationEnactedWeight * populationDeviationEnacted) +
+                (compactnessWeight * polsbyPopper) + (compactnessWeight * populationFatness) + (compactnessWeight * graphCompactness);
+        this.objectiveFunctionScore = objectiveFunctionResult;
     }
 }

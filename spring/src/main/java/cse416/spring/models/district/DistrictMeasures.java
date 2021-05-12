@@ -16,6 +16,8 @@ public class DistrictMeasures {
     private long id;
     @Column
     double populationEquality;
+    @Column
+    double populationDiffFromIdeal;
 
     @OneToOne(cascade = CascadeType.ALL)
     MajorityMinorityInfo majorityMinorityInfo;
@@ -26,15 +28,12 @@ public class DistrictMeasures {
     @Transient
     Deviation deviationFromAverage;
     @Transient
-    int splitCounties;
-    @Transient
     boolean isMajorityMinority;
 
-    public DistrictMeasures(double populationEquality, MajorityMinorityInfo minorityInfo, Compactness compactness) {
+    public DistrictMeasures(double populationEquality, double populationDiffFromIdeal, MajorityMinorityInfo minorityInfo, Compactness compactness) {
         this.populationEquality = populationEquality;
+        this.populationDiffFromIdeal = populationDiffFromIdeal;
         this.majorityMinorityInfo = minorityInfo;
         this.compactness = compactness;
-        // TODO Implement counting split counties
-        this.splitCounties = (int) (Math.random() * 10);
     }
 }

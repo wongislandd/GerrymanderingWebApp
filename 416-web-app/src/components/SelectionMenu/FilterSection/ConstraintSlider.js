@@ -13,6 +13,7 @@ class ConstraintSlider extends Component {
 
   render() {
     let filter = this.props.filter;
+    console.log(filter)
     if(!Array.isArray(filter.value)) {
       return (
         <Row key={this.props.filterKey}>

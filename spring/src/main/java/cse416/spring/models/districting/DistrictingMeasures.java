@@ -38,18 +38,6 @@ public class DistrictingMeasures {
     @GeneratedValue
     private long id;
 
-    /* Calculate districting measures from the collection of district measures */
-    public DistrictingMeasures(Compactness compactnessAvg, double populationEqualityAvg,
-                               double splitCountiesScore, Deviation deviationFromEnactedAvg, Deviation deviationFromAverageAvg) {
-        this.populationEqualityAvg = populationEqualityAvg;
-        this.compactnessAvg = compactnessAvg;
-        this.splitCountiesScore = splitCountiesScore;
-        this.deviationFromEnactedAvg = deviationFromEnactedAvg;
-        this.deviationFromAverageAvg = deviationFromAverageAvg;
-        // TODO Access actual data by parsing through districts dynamically.
-        this.majorityMinorityDistricts = (int) (Math.random() * 10);
-    }
-
     private static Compactness getAvgCompactness(ArrayList<District> districts) {
         // TODO: Use streams?
         double totalPolsbyPopperCompactness = 0;
@@ -80,6 +68,7 @@ public class DistrictingMeasures {
         }
         return map;
     }
+
 
     private static int sum(ArrayList<Integer> list) {
         int sum = 0;

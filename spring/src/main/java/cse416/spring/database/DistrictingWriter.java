@@ -90,7 +90,7 @@ public class DistrictingWriter {
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;
-        int jobId = 2;
+        int jobId = 1;
         MGGGParams params = new MGGGParams(10000, .1);
         int jobSize = 100000;
 

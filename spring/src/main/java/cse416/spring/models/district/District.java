@@ -71,7 +71,8 @@ public class District {
         double populationEquality = this.calculatePopulationEquality(idealPopulation);
         MajorityMinorityInfo majorityMinorityInfo = compileMinorityInfo(demographics);
         Compactness compactness = calculateCompactness(geometry);
-        this.measures = new DistrictMeasures(populationEquality, majorityMinorityInfo,
+        double populationDiffFromIdeal = (double) (demographics.getTP() - idealPopulation) / idealPopulation;
+        this.measures = new DistrictMeasures(populationEquality, populationDiffFromIdeal, majorityMinorityInfo,
                 compactness);
     }
 
@@ -119,38 +120,10 @@ public class District {
 
     private double calculatePopulationEquality(int idealPopulation) {
         double popRatio = (double) this.demographics.getTP() / idealPopulation;
-        return (Math.pow((popRatio - 1), 2)) * 10;
+        return (Math.pow((popRatio - 1), 2));
     }
 
-    public void assignObjectiveFunctionScore(ObjectiveFunctionWeights weights) {
 
-        double populationEquality = measures.getPopulationEquality();
-        double splitCountiesScore = measures.getSplitCounties();
-        Deviation deviationFromAverage = measures.getDeviationFromAverage();
-        double areaDeviationAverage = deviationFromAverage.getAreaDev();
-        double populationDeviationAverage = deviationFromAverage.getPopulationDev();
-
-        Deviation deviationFromEnacted = measures.getDeviationFromEnacted();
-        double areaDeviationEnacted = deviationFromEnacted.getAreaDev();
-        double populationDeviationEnacted = deviationFromEnacted.getPopulationDev();
-
-        Compactness compactness = measures.getCompactness();
-        double polsbyPopper = compactness.getPolsbyPopper();
-        double populationFatness = compactness.getPopulationFatness();
-        double graphCompactness = compactness.getGraphCompactness();
-
-        double populationEqualityWeight = weights.getPopulationEquality();
-        double splitCountiesScoreWeight = weights.getSplitCounties();
-        double deviationAverageWeight = weights.getDeviationFromAverage();
-        double deviationEnactedWeight = weights.getDeviationFromEnacted();
-        double compactnessWeight = weights.getCompactness();
-
-        double objectiveFunctionResult = (populationEqualityWeight * populationEquality) + (splitCountiesScoreWeight * splitCountiesScore) +
-                (deviationAverageWeight * areaDeviationAverage) + (deviationAverageWeight * populationDeviationAverage) +
-                (deviationEnactedWeight * areaDeviationEnacted) + (deviationEnactedWeight * populationDeviationEnacted) +
-                (compactnessWeight * polsbyPopper) + (compactnessWeight * populationFatness) + (compactnessWeight * graphCompactness);
-        this.objectiveFunctionScore = objectiveFunctionResult;
-    }
 
     private static Compactness calculateCompactness(Geometry geometry) {
         return new Compactness(

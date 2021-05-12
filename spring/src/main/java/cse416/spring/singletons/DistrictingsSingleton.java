@@ -6,10 +6,8 @@ import cse416.spring.service.DistrictingServiceImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 public class DistrictingsSingleton {
     private static Collection<Districting> districtings;
@@ -28,8 +26,11 @@ public class DistrictingsSingleton {
     public static Collection<Districting> getDistrictings(long jobId) {
         if (currentJobId != jobId || districtings == null || districtings.size() == 0) {
             System.out.println("Initializing Districtings Singleton");
+            final long startTime = System.currentTimeMillis();
             districtings = getDistrictingsFromDB(jobId);
             currentJobId = jobId;
+            final long endTime = System.currentTimeMillis();
+            System.out.println("LOADED DISTRICTINGS FROM THE DB IN " + (endTime-startTime) + "ms");
         }
         return districtings;
     }
@@ -60,8 +61,9 @@ public class DistrictingsSingleton {
                     }
             }
             int majorityMinorityDistrictsCount = d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold());
-            double populationDiff = d.getMeasures().getPopulationEqualityAvg();
-            if(inMajorityMinorityDistrictRange(majorityMinorityDistrictsCount, constraints) && populationDiff <= constraints.getMaxPopulationDifference()) {
+            double populationDiff = d.getMaxDeviationFromIdeal();
+            double maxPopulationDiff = constraints.getMaxPopulationDifference()/100;
+            if(inMajorityMinorityDistrictRange(majorityMinorityDistrictsCount, constraints) && populationDiff <= maxPopulationDiff) {
                 filteredDistrictings.add(d);
                 d.getMeasures().setMajorityMinorityDistricts(majorityMinorityDistrictsCount);
             }

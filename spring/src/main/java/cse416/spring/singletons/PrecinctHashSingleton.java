@@ -26,8 +26,10 @@ public class PrecinctHashSingleton {
 
     private static HashMap<Integer, Precinct> getPrecinctHashNC() {
         if (precinctHashNC == null) {
-            System.out.println("Initializing Precinct Hash Singleton");
+            final long startTime = System.currentTimeMillis();
             precinctHashNC = getPrecinctHashFromDB(StateName.NORTH_CAROLINA);
+            final long endTime = System.currentTimeMillis();
+            System.out.println("LOADED PRECINCT HASH FROM THE DB IN " + (endTime-startTime) + "ms");
         }
         return precinctHashNC;
     }

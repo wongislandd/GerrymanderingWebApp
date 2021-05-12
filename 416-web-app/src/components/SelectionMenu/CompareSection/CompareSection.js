@@ -16,7 +16,7 @@ class CompareSection extends Component {
 
   /* Dictionary where key is the label to display and value is the value to look up */
   statsToCompare = {
-    "Population Equality": ["populationEqualityAvg"],
+    "Population Difference": ["populationEqualityAvg"],
     "Split County Score": ["splitCountiesScore"],
     "Deviation from Average Area": [["deviationFromAverageAvg"], ["areaDev"]],
     "Deviation from Average Population": [

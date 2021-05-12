@@ -12,19 +12,20 @@ class EqualPopulationModal extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>District Number</TableCell>
-                    <TableCell align="left">Population Equality</TableCell>
                     <TableCell align="left">Total Population</TableCell>
                     <TableCell align="left">Deviation from Ideal (Ideal: {SelectionMenuUtilities.IDEAL_POPULATIONS[this.props.CurrentState]})</TableCell>
+                    <TableCell align="left">Contribution to OF</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                 {this.props.districting.districtSummaries.map((summary, key) => {
+                    console.log(summary)
                   return(
                     <TableRow key={key}>
                     <TableCell>{summary.districtNumber}</TableCell>
-                    <TableCell align="left">{StatUtilities.formatAsPercentage(summary.measures.populationEquality,2)}</TableCell>
-                    <TableCell align="left">{summary.demographics.tp}</TableCell>
-                    <TableCell align="left">{StatUtilities.getPercentageChange(summary.demographics.tp, SelectionMenuUtilities.IDEAL_POPULATIONS[this.props.CurrentState])}%</TableCell>
+                    <TableCell align="left">{StatUtilities.addCommas(summary.demographics.tp)}</TableCell>
+                    <TableCell align="left">{StatUtilities.addCommas(summary.demographics.tp-SelectionMenuUtilities.IDEAL_POPULATIONS[this.props.CurrentState]) + " (" + StatUtilities.formatAsPercentage(summary.measures.populationDiffFromIdeal,2)})</TableCell>
+                    <TableCell align="left">{summary.measures.populationEquality}</TableCell>
                     </TableRow>
                   )})}
                 </TableBody>

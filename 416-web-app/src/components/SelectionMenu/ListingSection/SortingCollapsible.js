@@ -18,7 +18,7 @@ class SortingCollapsible extends Component {
               <Row>OF Score</Row>
             </Col>
             <Col s={3}>
-              <Row>Population Equality</Row>
+              <Row>Population Difference</Row>
             </Col>
             <Col s={3}>
               <Row>Majority Minority Districts</Row>
