@@ -15,10 +15,7 @@ import org.json.JSONObject;
 import org.locationtech.jts.util.Stopwatch;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cse416.spring.database.DistrictingWriter.getPrecinctsFromKeys;
@@ -91,6 +88,15 @@ public class DistrictingWriterThread extends Thread {
 
             Districting newDistricting = new Districting(job, districtsInDistricting);
             newDistricting.renumberDistricts(enactedDistricting);
+            HashSet<Integer> districtNumbersSeen = new HashSet<>();
+            for (District d : newDistricting.getDistricts()) {
+                if (districtNumbersSeen.contains(d.getDistrictNumber())) {
+                    System.out.println("[FIRST] DUPLICATE NUMBER " + d.getDistrictNumber());
+                } else {
+                    districtNumbersSeen.add(d.getDistrictNumber());
+                }
+            }
+
 
             Deviation totalDeviationFromEnacted = new Deviation();
             /* Assign deviation from enacted, now that the districts line up */

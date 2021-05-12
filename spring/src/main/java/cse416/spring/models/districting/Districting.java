@@ -12,12 +12,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.decimal4j.util.DoubleRounder;
-import org.jgrapht.alg.matching.MaximumWeightBipartiteMatching;
+import org.jgrapht.alg.matching.GreedyWeightedMatching;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Entity(name = "Districtings")
@@ -102,10 +103,12 @@ public class Districting {
         SimpleWeightedGraph<District, Edge> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
 
         // Match each enacted district with a generated district
-        MaximumWeightBipartiteMatching<District, Edge> matcher =
-                new MaximumWeightBipartiteMatching<>(bipartiteGraph, enactedDistricts, generatedDistricts);
+        GreedyWeightedMatching<District, Edge> matcher =
+                new GreedyWeightedMatching<>(bipartiteGraph, false);
 
         Set<Edge> matching = matcher.getMatching().getEdges();
+        System.out.println(" NUMBER OF EDGES IS " + bipartiteGraph.edgeSet().size());
+        System.out.println(" SIZE OF MATCHING IS " + matching.size());
         for (Edge e : matching) {
             District generatedDistrict = e.generatedDistrict;
             if (numbersSeen.contains(e.enactedNum)) {
@@ -114,8 +117,11 @@ public class Districting {
             } else {
                 generatedDistrict.setDistrictNumber(e.enactedNum);
                 numbersSeen.add(e.enactedNum);
+                System.out.println("SAW NUMBER " + e.enactedNum);
             }
         }
+        System.out.println("SAW " + numbersSeen.size() + " UNIQUE NUMBERS");
+        System.out.println("------------------------------------");
         /* Fill in the blanks */
         if (!districtsThatNeedHomes.isEmpty()) {
             List<Integer> numbersNotSeen = new ArrayList<>();
