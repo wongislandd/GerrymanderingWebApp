@@ -98,7 +98,7 @@ public class DistrictingWriterThread extends Thread {
                 District correspondingDistrict = enactedDistricting.getDistrictByNumber(d.getDistrictNumber());
                 Deviation devFromEnacted = d.calculateDeviationFrom(correspondingDistrict);
                 d.getMeasures().setDeviationFromEnacted(devFromEnacted);
-                totalDeviationFromEnacted.add(devFromEnacted);
+                totalDeviationFromEnacted.addAbsolute(devFromEnacted);
             }
             newDistricting.getMeasures().setDeviationFromEnactedAvg(totalDeviationFromEnacted.getAverage(newDistricting.getDistricts().size()));
             em.persist(newDistricting);
