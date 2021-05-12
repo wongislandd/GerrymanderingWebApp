@@ -110,10 +110,10 @@ public class District {
         }
         double thisPopulation = demographics.getTP();
         double otherPopulation = other.getDemographics().getTP();
-        double popPctChange = (otherPopulation - thisPopulation) / thisPopulation;
+        double popPctChange = (thisPopulation - otherPopulation) / otherPopulation;
         double thisArea = getArea();
         double otherArea = other.getArea();
-        double areaPctChange = (otherArea - thisArea) / thisArea;
+        double areaPctChange = (thisArea - otherArea) / otherArea;
         return new Deviation(areaPctChange, popPctChange);
     }
 

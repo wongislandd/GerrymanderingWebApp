@@ -40,7 +40,7 @@ public class ConstrainedDistrictings {
                 // Calculate and set deviation from enacted
                 Deviation deviationFromAvg = currentDistrict.calculateDeviationFrom(averageDistrict);
                 currentDistrict.getMeasures().setDeviationFromAverage(deviationFromAvg);
-                totalDeviationFromAvg.add(currentDistrict.getMeasures().getDeviationFromAverage());
+                totalDeviationFromAvg.addAbsolute(currentDistrict.getMeasures().getDeviationFromAverage());
             }
             Deviation avgDeviation = totalDeviationFromAvg.getAverage(orderedDistricts.size());
             districting.getMeasures().setDeviationFromAverageAvg(avgDeviation);

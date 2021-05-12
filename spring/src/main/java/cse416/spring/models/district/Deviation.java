@@ -34,6 +34,12 @@ public class Deviation {
         this.areaDev += other.getAreaDev();
     }
 
+    public void addAbsolute(Deviation other) {
+        this.populationDev += Math.abs(other.getPopulationDev());
+        this.areaDev += Math.abs(other.getAreaDev());
+    }
+
+
     public Deviation getAverage(int numDistricts) {
         return new Deviation(this.areaDev / numDistricts, this.populationDev / numDistricts);
     }
