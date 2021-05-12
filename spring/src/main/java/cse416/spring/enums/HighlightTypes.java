@@ -5,4 +5,5 @@ public enum HighlightTypes {
     CLOSE_TO_AVERAGE,
     MAJORITY_MINORITY,
     AREA_PAIR_DEVIATION,
+    POP_PAIR_DEVIATION,
 }

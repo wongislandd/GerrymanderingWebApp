@@ -102,18 +102,9 @@ public class Districting {
                 new MaximumWeightBipartiteMatching<>(bipartiteGraph, enactedDistricts, generatedDistricts);
 
         Set<Edge> matching = matcher.getMatching().getEdges();
-        System.out.println("Number of edges: " + matcher.getMatching().getEdges().size());
-        System.out.println("Weight of graph: " + matcher.getMatching().getWeight());
-        System.out.println("Renumbered districts: ");
-
         for (Edge e : matching) {
             District generatedDistrict = e.generatedDistrict;
             generatedDistrict.setDistrictNumber(e.enactedNum);
-        }
-
-        // Check if district numbers were assigned correctly
-        for (District d : this.districts) {
-            System.out.println("    " + d.getDistrictNumber());
         }
     }
 

@@ -10,6 +10,7 @@ import cse416.spring.models.job.Job;
 import cse416.spring.models.job.JobSummary;
 import cse416.spring.models.precinct.Precinct;
 import cse416.spring.service.DistrictingServiceImpl;
+import cse416.spring.service.JobServiceImpl;
 import cse416.spring.singletons.EmfSingleton;
 import cse416.spring.singletons.PrecinctHashSingleton;
 import org.json.JSONArray;
@@ -84,10 +85,12 @@ public class DistrictingWriter {
 
     public static void persistDistrictings() throws IOException {
         final long startTime = System.currentTimeMillis();
+        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;
-        int jobId = 1;
+        int jobId = 2;
         MGGGParams params = new MGGGParams(10000, .1);
         int jobSize = 100000;
 
@@ -95,7 +98,14 @@ public class DistrictingWriter {
         JobSummary js = new JobSummary("North Carolina 10% max population difference.", params, jobSize);
         String jobFolderPath = "/json/NC/districtings";
 
-        Job job = new Job(state, js);
+        Job existingJob = new JobServiceImpl(em).findById(jobId);
+        Job job;
+        if (existingJob == null) {
+            job = new Job(jobId, state, js);
+        } else {
+            job = existingJob;
+        }
+
         // ************************************ /
 
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(state);
@@ -103,23 +113,25 @@ public class DistrictingWriter {
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
+        int numFiles = 1;
+        int districtingsPerFile = 50;
+        int totalDistrictingsToMake = numFiles * districtingsPerFile;
         String[] files = getFilesInFolder(jobFolderPath);
-
-        EntityManagerFactory emf = EmfSingleton.getEntityManagerFactory();
-        EntityManager em = emf.createEntityManager();
         EnactedDistricting enactedDistricting = new DistrictingServiceImpl(em).findEnactedByState(state);
+
 
         JobWriter.persistJob(job, em);
         em.close();
 
         // For every file in the folder . . .
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < numFiles; i++) {
             ArrayList<EntityManager> ems = new ArrayList<>();
             for (int j = 0; j < numThreads; j++) {
                 ems.add(emf.createEntityManager());
             }
             // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
+            System.out.println("Completed " + (districtingsPerFile*i) + "/" + totalDistrictingsToMake + " districtings.");
             System.out.println("Starting file " + files[i]);
             JSONObject jo = readJsonFile("/NC/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");

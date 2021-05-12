@@ -48,11 +48,11 @@ public class DistrictingWriterThread extends Thread {
 
         while (true) {
             if (availableRef.compareAndSet(true, false)) {
-                System.out.println("[THREAD " + name + "] Starting commit");
+                //System.out.println("[THREAD " + name + "] Starting commit");
                 final long startTime = System.currentTimeMillis();
                 em.getTransaction().commit();
                 final long endTime = System.currentTimeMillis();
-                System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
+                //System.out.println("[THREAD " + name + "] Committed in: " + (endTime - startTime) + "ms");
                 availableRef.set(true);
                 break;
             } else {
@@ -103,7 +103,7 @@ public class DistrictingWriterThread extends Thread {
             newDistricting.getMeasures().setDeviationFromEnactedAvg(totalDeviationFromEnacted.getAverage(newDistricting.getDistricts().size()));
             em.persist(newDistricting);
             final long fileEndTime = System.currentTimeMillis();
-            System.out.println("[THREAD " + name + "] Created Districting in " + (fileEndTime - fileStartTime) + "ms");
+            //System.out.println("[THREAD " + name + "] Created Districting in " + (fileEndTime - fileStartTime) + "ms");
         }
         commit();
     }

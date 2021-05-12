@@ -14,14 +14,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Job {
     @Id
-    @GeneratedValue
     private long id;
     @Column
     StateName state;
     @OneToOne(cascade = CascadeType.ALL)
     JobSummary summary;
 
-    public Job(StateName state, JobSummary summary) {
+    public Job(long id, StateName state, JobSummary summary) {
+        this.id = id;
         this.state = state;
         this.summary = summary;
     }
