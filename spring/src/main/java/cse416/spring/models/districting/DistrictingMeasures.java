@@ -70,12 +70,12 @@ public class DistrictingMeasures {
                 totalGraphCompactness / numDistricts);
     }
 
-    private static HashMap<Precinct, District> getPrecinctToDistrictMap(ArrayList<District> districts) throws IOException {
-        HashMap<Precinct, District> map = new HashMap<>();
+    private static HashMap<Integer, District> getPrecinctToDistrictMap(ArrayList<District> districts) throws IOException {
+        HashMap<Integer, District> map = new HashMap<>();
 
         for (District d : districts) {
             for (Precinct p : d.getPrecincts()) {
-                map.put(p, d);
+                map.put(p.getPrecinctId(), d);
             }
         }
         return map;
@@ -96,14 +96,14 @@ public class DistrictingMeasures {
            ...
          */
         HashMap<County, HashMap<District, Set<Precinct>>> districtsPerCounty = new HashMap<>();
-        HashMap<Precinct, District> precinctToDistrict = getPrecinctToDistrictMap(districts);
+        HashMap<Integer, District> precinctToDistrict = getPrecinctToDistrictMap(districts);
         Set<County> countySet = CountiesSetSingleton.getCountiesSet(StateName.NORTH_CAROLINA);
 
         for (County c : countySet) {
             districtsPerCounty.put(c, new HashMap<>());
 
             for (Precinct p : c.getPrecincts()) {
-                District d = precinctToDistrict.get(p);
+                District d = precinctToDistrict.get(p.getPrecinctId());
                 if (!districtsPerCounty.get(c).containsKey(d))
                     districtsPerCounty.get(c).put(d, new HashSet<>());
 
