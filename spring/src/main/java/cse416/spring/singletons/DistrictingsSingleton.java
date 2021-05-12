@@ -27,6 +27,7 @@ public class DistrictingsSingleton {
 
     public static Collection<Districting> getDistrictings(long jobId) {
         if (currentJobId != jobId || districtings == null || districtings.size() == 0) {
+            System.out.println("Initializing Districtings Singleton");
             districtings = getDistrictingsFromDB(jobId);
             currentJobId = jobId;
         }

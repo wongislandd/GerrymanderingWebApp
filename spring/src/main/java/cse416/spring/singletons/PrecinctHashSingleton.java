@@ -26,9 +26,9 @@ public class PrecinctHashSingleton {
 
     private static HashMap<Integer, Precinct> getPrecinctHashNC() {
         if (precinctHashNC == null) {
+            System.out.println("Initializing Precinct Hash Singleton");
             precinctHashNC = getPrecinctHashFromDB(StateName.NORTH_CAROLINA);
         }
-
         return precinctHashNC;
     }
 
