@@ -6,16 +6,21 @@ import zipfile
 
 
 def get_counties_list():
-    return list(range(37001, 37201, 2))
+    counties = []
+    for c in range(1001, 1135, 2):
+        counties.append('0' + str(c))
+
+    return counties
 
 
 def get_useful_atrs(atrs):
     new_atrs = {
         'state': atrs['STATEFP10'],
         'county': atrs['COUNTYFP10'],
-        'name': atrs['NAME10']
+        'name': atrs['NAME10'][:90]
     }
 
+    print(atrs['NAME10'][:90])
     return new_atrs
 
 
@@ -30,7 +35,7 @@ if __name__ == '__main__':
         print(f'Processing county {county}')
 
         # Get the zip file from the web
-        url = f'https://www2.census.gov/geo/pvs/tiger2010st/37_North_Carolina/{county}/tl_2010_{county}_vtd10.zip'
+        url = f'https://www2.census.gov/geo/pvs/tiger2010st/01_Alabama/{county}/tl_2010_{county}_vtd10.zip'
         r = requests.get(url, allow_redirects=True)
 
         # Extract the zip file
@@ -60,7 +65,7 @@ if __name__ == '__main__':
 
             buffer.append(dict(type='Feature', geometry=geom, properties=atr))
 
-    geojson = open('precincts_input.json', 'w')
+    geojson = open('al_precincts_input.json', 'w')
     geojson.write(json.dumps({
         'type': 'FeatureCollection',
         'features': buffer

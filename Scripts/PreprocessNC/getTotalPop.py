@@ -23,7 +23,7 @@ def read_precincts():
 
 
 def get_pop_data(record_nums):
-    pop_file = 'pop_data/nc1.pl'
+    pop_file = 'pop_data/al1.pl'
     record_to_pop = {}
 
     with open(pop_file) as f:
@@ -49,7 +49,7 @@ def get_pop_data(record_nums):
 
 
 def get_records():
-    headers_file = 'pop_data/nc_headers.pl'
+    headers_file = 'pop_data/al_headers.pl'
     prec_to_record = {}
     prec_to_pop = {}
 
@@ -57,17 +57,13 @@ def get_records():
 
     with open(headers_file) as f:
         for line in f:
-            if 'NC700' in line:
-                pattern = r'Voting District (.*)'
-                match = re.findall(pattern, line[:300])
+            if 'AL700' in line:
+                prec_id = line[226:316].strip()
+                county_id = get_county_id(line)
+                record_num = get_record_num(line)
 
-                if match:
-                    prec_id = match[0].strip()
-                    county_id = get_county_id(line)
-                    record_num = get_record_num(line)
-
-                    prec_to_record[(county_id, prec_id)] = record_num
-                    record_nums.add(record_num)
+                prec_to_record[(county_id, prec_id)] = record_num
+                record_nums.add(record_num)
 
     record_to_pop = get_pop_data(record_nums)
 
@@ -79,7 +75,7 @@ def get_records():
 
 def main():
     prec_to_pop = get_records()
-    precinct_input_file = 'precincts_input.json'
+    precinct_input_file = 'al_precincts_input.json'
 
     with open(precinct_input_file) as f:
         precincts = json.load(f)
@@ -87,12 +83,13 @@ def main():
     for precinct in precincts['features']:
         county_id = precinct['properties']['county']
         prec_id = precinct['properties']['name']
+        print(prec_id)
 
         pop = prec_to_pop[(county_id, prec_id)]
         props = precinct['properties'] | pop
         precinct['properties'] = props
 
-    precinct_output_file = 'precincts_output.json'
+    precinct_output_file = 'al_precincts_output.json'
 
     with open(precinct_output_file, 'w') as f:
         json.dump(precincts, f)
