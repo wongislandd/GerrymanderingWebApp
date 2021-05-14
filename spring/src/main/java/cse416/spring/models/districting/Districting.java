@@ -122,7 +122,6 @@ public class Districting {
         }
         /* Fill in the blanks */
         if (!districtsThatNeedHomes.isEmpty()) {
-            System.out.println(districtsThatNeedHomes.size() + " DISTRICT(S) NEEDS A HOME");
             List<Integer> numbersNotSeen = new ArrayList<>();
             for (int i=1;i<=generatedDistricts.size();i++) {
                 if (!numbersSeen.contains(i)) {
@@ -132,7 +131,6 @@ public class Districting {
             for (int i=0;i<districtsThatNeedHomes.size();i++) {
                 districtsThatNeedHomes.get(i).setDistrictNumber(numbersNotSeen.get(i));
             }
-            System.out.println("ADJUSTED " + districtsThatNeedHomes.size() + " DISTRICTS");
         }
 
     }
