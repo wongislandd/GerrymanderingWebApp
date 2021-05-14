@@ -98,7 +98,6 @@ public class Districting {
         // Make a bipartite graph matching enacted districts to generated districts
         HashSet<District> enactedDistricts = new HashSet<>(enactedDistricting.getDistricts());
         HashSet<District> generatedDistricts = new HashSet<>(this.districts);
-        HashSet<Integer> numbersSeen = new HashSet<>();
         List<District> districtsThatNeedHomes = new ArrayList<>();
         SimpleWeightedGraph<District, Edge> bipartiteGraph = getBipartiteGraph(enactedDistricts, generatedDistricts);
 
@@ -107,23 +106,23 @@ public class Districting {
                 new GreedyWeightedMatching<>(bipartiteGraph, false);
 
         Set<Edge> matching = matcher.getMatching().getEdges();
-        System.out.println(" NUMBER OF EDGES IS " + bipartiteGraph.edgeSet().size());
-        System.out.println(" SIZE OF MATCHING IS " + matching.size());
+//        System.out.println(" NUMBER OF EDGES IS " + bipartiteGraph.edgeSet().size());
+//        System.out.println(" SIZE OF MATCHING IS " + matching.size());
         for (Edge e : matching) {
             District generatedDistrict = e.generatedDistrict;
-            if (numbersSeen.contains(e.enactedNum)) {
-                System.out.println("REPEAT DETECTED ON #" + e.enactedNum);
-                districtsThatNeedHomes.add(generatedDistrict);
+            generatedDistrict.setDistrictNumber(e.enactedNum);
+        }
+        HashSet<Integer> numbersSeen = new HashSet<>();
+        for (District d : generatedDistricts) {
+            if (numbersSeen.contains(d.getDistrictNumber())) {
+                districtsThatNeedHomes.add(d);
             } else {
-                generatedDistrict.setDistrictNumber(e.enactedNum);
-                numbersSeen.add(e.enactedNum);
-                System.out.println("SAW NUMBER " + e.enactedNum);
+                numbersSeen.add(d.getDistrictNumber());
             }
         }
-        System.out.println("SAW " + numbersSeen.size() + " UNIQUE NUMBERS");
-        System.out.println("------------------------------------");
         /* Fill in the blanks */
         if (!districtsThatNeedHomes.isEmpty()) {
+            System.out.println(districtsThatNeedHomes.size() + " DISTRICT(S) NEEDS A HOME");
             List<Integer> numbersNotSeen = new ArrayList<>();
             for (int i=1;i<=generatedDistricts.size();i++) {
                 if (!numbersSeen.contains(i)) {
@@ -133,7 +132,9 @@ public class Districting {
             for (int i=0;i<districtsThatNeedHomes.size();i++) {
                 districtsThatNeedHomes.get(i).setDistrictNumber(numbersNotSeen.get(i));
             }
+            System.out.println("ADJUSTED " + districtsThatNeedHomes.size() + " DISTRICTS");
         }
+
     }
 
     public int getMMDistrictsCount(MinorityPopulation minority, double threshold) {

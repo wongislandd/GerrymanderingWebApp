@@ -111,8 +111,8 @@ public class DistrictingWriter {
         HashMap<Integer, Precinct> precinctHash = PrecinctHashSingleton.getPrecinctHash(state);
 
         // Create entity managers for the threads
-        int numThreads = 1;
-        int workForEachThread = 50;
+        int numThreads = 5;
+        int workForEachThread = 10;
         int startFileNum = 0;
         int endFileNum = 1;
         int numFiles = endFileNum-startFileNum;

@@ -3,14 +3,20 @@ package cse416.spring.controllers;
 import cse416.spring.database.CountyWriter;
 import cse416.spring.database.DistrictingWriter;
 import cse416.spring.database.PrecinctWriter;
+import cse416.spring.enums.StateName;
+import cse416.spring.models.districting.Districting;
+import cse416.spring.models.districting.EnactedDistricting;
+import cse416.spring.service.DistrictingServiceImpl;
+import cse416.spring.singletons.EmfSingleton;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * A controller that provides methods for persisting precincts, counties
@@ -65,4 +71,5 @@ public class DatabaseWritingController {
         System.out.println("Wrote the entire database in " + (fileEndTime - fileStartTime) + "ms");
         return new ResponseEntity<>("Written.", HttpStatus.OK);
     }
+
 }
