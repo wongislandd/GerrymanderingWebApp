@@ -90,9 +90,9 @@ public class DistrictingWriter {
 
         // Adjust job parameters here
         StateName state = StateName.NORTH_CAROLINA;
-        int jobId = 1;
+        int jobId = 2;
         MGGGParams params = new MGGGParams(10000, .1);
-        int jobSize = 100000;
+        int jobSize = 30000;
 
         // Size will be set adaptively later
         JobSummary js = new JobSummary("North Carolina 10% max population difference.", params, jobSize);
@@ -114,7 +114,7 @@ public class DistrictingWriter {
         int numThreads = 5;
         int workForEachThread = 10;
         int startFileNum = 0;
-        int endFileNum = 1;
+        int endFileNum = 300;
         int numFiles = endFileNum-startFileNum;
         int districtingsPerFile = 50;
         int totalDistrictingsToMake = numFiles * districtingsPerFile;
@@ -130,7 +130,6 @@ public class DistrictingWriter {
             for (int j = 0; j < numThreads; j++) {
                 ems.add(emf.createEntityManager());
             }
-            // Read districtings from the file
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Completed " + (districtingsPerFile*(i-startFileNum)) + "/" + totalDistrictingsToMake + " districtings.");
             System.out.println("Starting file " + files[i]);
