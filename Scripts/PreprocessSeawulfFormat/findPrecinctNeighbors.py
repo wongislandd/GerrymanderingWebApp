@@ -3,7 +3,7 @@ import json
 
 # Must share at least 200 feet to be considered as neighbors
 NEIGHBOR_THRESH = 60.96
-NUM_DISTRICTS = 13
+NUM_DISTRICTS = 6
 
 
 # Given a precinct, find which district contains the precinct.
@@ -32,7 +32,7 @@ def find_district(districts, precinct):
 
 if __name__ == '__main__':
     # Read precincts
-    precinct_file = '../PreprocessNC/precincts_output.json'
+    precinct_file = '../PreprocessNC/al_precincts_output.json'
 
     with open(precinct_file) as f:
         precincts = geopandas.read_file(f)
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     precincts.to_crs('EPSG:32119', inplace=True)
 
     # Read districts
-    districts_file = '../../416-web-app/src/data/NC/EnactedDistrictingPlan2016WithData.json'
+    districts_file = 'alabamaEnacted2016.json'
 
     with open(districts_file) as f:
         districts = geopandas.read_file(f)
@@ -78,5 +78,5 @@ if __name__ == '__main__':
         neighbors[p1_id_str]['district'] = find_district(districts, p1_geom)
 
     # Dump to JSON file
-    with open('precinctNeighbors.json', 'w') as f:
+    with open('al_precinctNeighbors.json', 'w') as f:
         json.dump(neighbors, f)
