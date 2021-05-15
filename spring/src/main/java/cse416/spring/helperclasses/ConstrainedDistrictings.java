@@ -39,7 +39,9 @@ public class ConstrainedDistrictings {
         ArrayList<District> averageDistrictingOrdered = averageDistricting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
         for (Districting districting : districtings) {
             Deviation totalDeviationFromAvg = new Deviation();
+            double sumOfSquares = 0.0;
             ArrayList<District> orderedDistricts = districting.getMinorityOrderedDistricts(constraints.getMinorityPopulation());
+
             for (int i = 0; i < orderedDistricts.size(); i++) {
                 District currentDistrict = orderedDistricts.get(i);
                 District averageDistrict = averageDistrictingOrdered.get(i);
@@ -47,7 +49,14 @@ public class ConstrainedDistrictings {
                 Deviation deviationFromAvg = currentDistrict.calculateDeviationFrom(averageDistrict);
                 currentDistrict.getMeasures().setDeviationFromAverage(deviationFromAvg);
                 totalDeviationFromAvg.addAbsolute(currentDistrict.getMeasures().getDeviationFromAverage());
+
+                double minorityPercentage = currentDistrict.getMeasures().getMajorityMinorityInfo().getMinorityPercentage(constraints.getMinorityPopulation());
+                sumOfSquares += minorityPercentage;
             }
+
+            double avgSumOfSquares = sumOfSquares / orderedDistricts.size();
+            districting.getMeasures().setMinorityDeviationFromAvg(avgSumOfSquares);
+
             Deviation avgDeviation = totalDeviationFromAvg.getAverage(orderedDistricts.size());
             districting.getMeasures().setDeviationFromAverageAvg(avgDeviation);
         }

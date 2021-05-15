@@ -32,6 +32,8 @@ public class DistrictingMeasures {
     @Transient
     Deviation deviationFromAverageAvg;
     @Transient
+    double minorityDeviationFromAvg;
+    @Transient
     int majorityMinorityDistricts;
 
     @Id
