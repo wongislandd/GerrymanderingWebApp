@@ -13,8 +13,9 @@ class DeviationFromEnactedModal extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>District Number</TableCell>
-                    <TableCell align="left">Area Difference</TableCell>
-                    <TableCell align="left">Area Difference %</TableCell>
+                    <TableCell align="left">Area (km<sup>2</sup>)</TableCell>
+                    <TableCell align="left">Area Difference (km<sup>2</sup>)</TableCell>
+                    <TableCell align="left">Area Difference % (km<sup>2</sup>)</TableCell>
                     <TableCell align="left">Population Difference</TableCell>
                     <TableCell align="left">Population Difference %</TableCell>
                   </TableRow>
@@ -24,9 +25,10 @@ class DeviationFromEnactedModal extends Component {
                   return(
                     <TableRow key={key}>
                     <TableCell>{summary.districtNumber}</TableCell>
+                        <p>{StatUtilities.convertArea(summary.area)}</p>
                       <TableCell align="left">
                         {/* {MATH MATH MATH MATH, HOW TO GET ORIGINAL VALUE FROM NEW VALUE AND PCT CHANGE?} */}
-                        {(summary.area * (this.props.type == "enacted" ? summary.measures.deviationFromEnacted.areaDev : summary.measures.deviationFromAverage.areaDev)).toFixed(2)}
+                        {StatUtilities.convertArea(StatUtilities.getDifference(summary.area, (this.props.type == "enacted" ? summary.measures.deviationFromEnacted.areaDev : summary.measures.deviationFromAverage.areaDev)))}
                       </TableCell>
                       <TableCell align="left">
                         {StatUtilities.formatAsPercentage(this.props.type == "enacted" ? summary.measures.deviationFromEnacted.areaDev : summary.measures.deviationFromAverage.areaDev, 2)}

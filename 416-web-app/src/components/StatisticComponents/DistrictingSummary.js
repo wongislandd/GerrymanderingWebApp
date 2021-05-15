@@ -115,10 +115,13 @@ class DistrictingSummary extends Component {
             onSelect={() => {}}
           >
             <h5 className="title-text">Normalized Values</h5>
+            <p>These values are used to create the objective function score.</p>
+            <p>Values were normalized by the min and max of the weighted set.</p>
             <NormalizedTable
               DistrictingToDisplay={this.props.DistrictingToDisplay}
             />
             <h5 className="title-text">Raw Values</h5>
+            <p>These values represent the calculated measures.</p>
             <ObjectiveFunctionTable
               DistrictingToDisplay={this.props.DistrictingToDisplay}
             />

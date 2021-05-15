@@ -17,18 +17,15 @@ public class InterestingDistrictingAnalysis {
         CloseToAverageHighlight closeToAverage = new CloseToAverageHighlight();
         MajorityMinorityHighlight majorityMinority = new MajorityMinorityHighlight(constraints.getMinorityPopulation());
         AreaPairDeviationHighlight areaPairDeviation = new AreaPairDeviationHighlight();
-        PopPairDeviationHighlight popPairDeviation = new PopPairDeviationHighlight();
         for (DistrictingSummary summary : summaries) {
             closeToEnacted.insertIfFit(summary);
             closeToAverage.insertIfFit(summary);
             majorityMinority.insertIfFit(summary);
             areaPairDeviation.insertIfFit(summary);
-            popPairDeviation.insertIfFit(summary);
         }
         closeToEnacted.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.CLOSE_TO_ENACTED);});
         closeToAverage.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.CLOSE_TO_AVERAGE);});
         majorityMinority.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.MAJORITY_MINORITY);});
         areaPairDeviation.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.AREA_PAIR_DEVIATION);});
-        popPairDeviation.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.POP_PAIR_DEVIATION);});
     }
 }

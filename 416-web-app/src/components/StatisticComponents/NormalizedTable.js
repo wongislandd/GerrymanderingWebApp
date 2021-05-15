@@ -46,11 +46,11 @@ class NormalizedTable extends Component {
                       "Split County Score"}
               </TableCell>
               <TableCell>
-                {"Deviation from Average (Area/Pop)"}
+                {"Deviation from Average"}
               </TableCell>
               <TableCell>
                 {
-                      "Deviation from Enacted (Area/Pop)"
+                      "Deviation from Enacted"
                   }
               </TableCell>
               <TableCell>

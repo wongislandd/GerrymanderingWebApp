@@ -43,6 +43,20 @@ function percentage(partialValue, totalValue) {
   return (100 * partialValue) / totalValue;
 }
 
+export function convertArea(area) {
+  let next2 = area * 10062;
+  return addCommas(next2.toFixed(0))
+}
+
+export function getOriginalValue(newValue, pctChange) {
+  return (newValue) / (pctChange+1)
+}
+
+export function getDifference(newValue, pctChange) {
+  let originalValue = getOriginalValue(newValue, pctChange)
+  return newValue - originalValue
+}
+
 export function formatAsPercentage(decimal, places) {
   let pctValue = decimal * 100;
   return Number.parseFloat(Number.parseFloat(pctValue).toFixed(places)) + "%";
