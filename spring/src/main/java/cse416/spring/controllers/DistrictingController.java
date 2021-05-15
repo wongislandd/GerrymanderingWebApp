@@ -93,6 +93,7 @@ public class DistrictingController {
            topScoring.insertIfFit(summary);
         }
         InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, constraints);
+
         return new ResponseEntity<>(analysis.getSummaries(), HttpStatus.OK);
     }
 

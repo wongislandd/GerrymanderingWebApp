@@ -156,6 +156,7 @@ export async function applyWeights() {
     .then((response) => {
       return response.data;
     });
+  console.log(analysis)
   return analysis;
 }
 

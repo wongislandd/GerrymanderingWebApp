@@ -32,6 +32,26 @@ public class DistrictingSummary {
         tags.add(tag);
     }
 
+    public void calculateNormalizedObjectiveFunctionScore(ObjectiveFunctionWeights weights) {
+        double populationEquality = normalizedMeasures.getPopulationEquality();
+        double splitCountiesScore = normalizedMeasures.getSplitCountyScore();
+        double deviationFromAverage = normalizedMeasures.getDeviationFromAverage();
+        double deviationFromEnacted = normalizedMeasures.getDeviationFromEnacted();
+        double compactness = normalizedMeasures.getCompactness();
+
+        double populationEqualityWeight = weights.getPopulationEquality();
+        double splitCountiesScoreWeight = weights.getSplitCounties();
+        double deviationAverageWeight = weights.getDeviationFromAverage();
+        double deviationEnactedWeight = weights.getDeviationFromEnacted();
+        double compactnessWeight = weights.getCompactness();
+
+        double objectiveFunctionResult = (populationEquality * populationEqualityWeight) + (splitCountiesScore * splitCountiesScoreWeight)
+                + (deviationFromAverage*deviationAverageWeight) + (deviationFromEnacted*deviationEnactedWeight)
+                + (compactness * compactnessWeight);
+        this.objectiveFunctionScore = objectiveFunctionResult;
+    }
+
+
     public DistrictingSummary(Districting districting) {
         isEnacted = false;
         id = districting.getId();
