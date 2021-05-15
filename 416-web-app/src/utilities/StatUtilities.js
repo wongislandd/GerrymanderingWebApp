@@ -5,7 +5,7 @@ export const DESCRIPTIONS = {
     "How close in population the districts are to each other.",
 
   SPLIT_COUNTY_SCORE:
-    "Counties that are part of two or more districts are considered split counties.",
+    "Counties that are part of two or more districts are considered split counties. Counties that are split into more districts receive higher scores.",
 
   DEVIATION_FROM_AVERAGE:
     "How different a given districting is from the average of the districts.",

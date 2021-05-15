@@ -32,7 +32,7 @@ class DistrictingItem extends Component {
           //Line up with the Sorting Collapsible
           <Row className="ListingColumnsContainer" onClick={(e) => {}}>
             <Col s={2}>{this.props.districting.id}</Col>
-            <Col s={2}>{this.props.districting.objectiveFunctionScore.toFixed(3)}</Col>
+            <Col s={2}>{this.props.districting.objectiveFunctionScore.toFixed(2)}</Col>
             <Col s={3}>
               {StatUtilities.formatAsPercentage(this.props.districting.measures.populationEqualityAvg,2)}
             </Col>
@@ -40,7 +40,7 @@ class DistrictingItem extends Component {
               {this.props.districting.measures.majorityMinorityDistricts}
             </Col>
             <Col s={2}>
-              {this.props.districting.measures.splitCountiesScore}
+              {this.props.districting.measures.splitCountiesScore.toFixed(2)}
             </Col>
           </Row>
         }

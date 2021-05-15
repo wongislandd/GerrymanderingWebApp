@@ -33,7 +33,7 @@ class DeviationFromEnactedModal extends Component {
                       </TableCell>
                       <TableCell align="left">
                         {/* {FIX HERE TOO} */}
-                        {(summary.demographics.tp * (this.props.type == "enacted" ? summary.measures.deviationFromEnacted.populationDev : summary.measures.deviationFromAverage.populationDev)).toFixed(2)}
+                        {StatUtilities.addCommas((summary.demographics.tp * (this.props.type == "enacted" ? summary.measures.deviationFromEnacted.populationDev : summary.measures.deviationFromAverage.populationDev)).toFixed(0))}
                       </TableCell>
                       <TableCell align="left">
                         {StatUtilities.formatAsPercentage(this.props.type == "enacted" ? summary.measures.deviationFromEnacted.populationDev : summary.measures.deviationFromAverage.populationDev,2)}

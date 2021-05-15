@@ -24,7 +24,7 @@ class SortingCollapsible extends Component {
               <Row>Majority Minority Districts</Row>
             </Col>
             <Col s={2}>
-              <Row>Split Counties</Row>
+              <Row>Split County Score</Row>
             </Col>
           </Row>
         }

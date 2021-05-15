@@ -111,7 +111,7 @@ class CompareSection extends Component {
                           ? thisDistrictingVal
                           : StatUtilities.formatAsPercentage(
                               thisDistrictingVal,
-                              5
+                              2
                             )
                       }
                       pct={difference + "%"}
@@ -154,7 +154,7 @@ class CompareSection extends Component {
                           ? thisDistrictingVal
                           : StatUtilities.formatAsPercentage(
                               thisDistrictingVal,
-                              5
+                              2
                             )
                       }
                       pct={difference + "%"}

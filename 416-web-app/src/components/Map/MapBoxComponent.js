@@ -278,7 +278,7 @@ class MapBoxComponent extends Component {
                   visibility: this.props.DisplayPrecincts ? "visible" : "none",
                 }}
                 paint={{
-                  "line-opacity": 1,
+                  "line-opacity": .5,
                 }}
               />
             </div>

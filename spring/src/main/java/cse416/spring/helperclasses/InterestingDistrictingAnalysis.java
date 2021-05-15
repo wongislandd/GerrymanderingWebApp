@@ -23,6 +23,7 @@ public class InterestingDistrictingAnalysis {
             closeToAverage.insertIfFit(summary);
             majorityMinority.insertIfFit(summary);
             areaPairDeviation.insertIfFit(summary);
+            popPairDeviation.insertIfFit(summary);
         }
         closeToEnacted.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.CLOSE_TO_ENACTED);});
         closeToAverage.getEntries().forEach(summary -> {summary.addTag(HighlightTypes.CLOSE_TO_AVERAGE);});
