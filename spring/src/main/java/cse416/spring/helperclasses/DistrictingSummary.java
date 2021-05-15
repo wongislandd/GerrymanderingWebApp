@@ -24,6 +24,7 @@ public class DistrictingSummary {
     DistrictingMeasures measures;
     NormalizedDistrictingMeasures normalizedMeasures;
     ArrayList<DistrictSummary> districtSummaries;
+    double areaPairDeviation;
     boolean isEnacted;
     List<HighlightTypes> tags;
 
@@ -64,6 +65,28 @@ public class DistrictingSummary {
             districtSummaries.add(new DistrictSummary(d));
         }
         districtSummaries.sort(districtNumberComparator);
+    }
+
+    public void setAreaPairDeviation(List<DistrictingSummary> others) {
+        double total = 0;
+
+        for (DistrictingSummary other : others) {
+            double deviationFromOther = 0;
+
+            for (int i = 0; i < districtSummaries.size(); i++) {
+                DistrictSummary d1 = this.districtSummaries.get(i);
+                DistrictSummary d2 = other.getDistrictSummaries().get(i);
+                double area1 = d1.getArea();
+                double area2 = d2.getArea();
+
+                double avgArea = (area1 + area2) / 2;
+                double deviation = (area1 - area2) / avgArea;
+                deviationFromOther += Math.pow(deviation, 2);
+            }
+            total += deviationFromOther;
+        }
+
+        areaPairDeviation = total;
     }
 
     public static Comparator<DistrictSummary> districtNumberComparator = new Comparator<DistrictSummary>() {

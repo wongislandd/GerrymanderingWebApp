@@ -92,6 +92,12 @@ public class DistrictingController {
         for (DistrictingSummary summary : summaries) {
            topScoring.insertIfFit(summary);
         }
+
+        // Calculate area pair deviation
+        for (DistrictingSummary summary : summaries) {
+            summary.setAreaPairDeviation(summaries);
+        }
+
         InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, constraints);
         return new ResponseEntity<>(analysis.getSummaries(), HttpStatus.OK);
     }
