@@ -99,6 +99,7 @@ public class DistrictingController {
         }
 
         InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, constraints);
+
         return new ResponseEntity<>(analysis.getSummaries(), HttpStatus.OK);
     }
 

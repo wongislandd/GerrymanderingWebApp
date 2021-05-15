@@ -28,6 +28,7 @@ import ReactMapGL, { Layer, Source } from "react-map-gl";
 import BoxPlot from "./BoxPlot";
 import ObjectiveFunctionTable from "./ObjectiveFunctionTable";
 import RacialDemographicsTable from "./RacialDemographicsTable";
+import NormalizedTable from "./NormalizedTable";
 
 class DistrictingSummary extends Component {
   constructor(props) {
@@ -111,6 +112,11 @@ class DistrictingSummary extends Component {
             header={"Objective Function Details"}
             onSelect={() => {}}
           >
+            <h5 className="title-text">Normalized Values</h5>
+            <NormalizedTable
+              DistrictingToDisplay={this.props.DistrictingToDisplay}
+            />
+            <h5 className="title-text">Raw Values</h5>
             <ObjectiveFunctionTable
               DistrictingToDisplay={this.props.DistrictingToDisplay}
             />

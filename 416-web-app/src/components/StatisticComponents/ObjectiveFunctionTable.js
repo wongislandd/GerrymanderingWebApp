@@ -131,7 +131,7 @@ class ObjectiveFunctionTable extends Component {
                   : this.props.DistrictToDisplay.measures.populationEquality),2)}
               </TableCell>
               {this.displayDistrictingInfo()
-                  ? <TableCell>{this.props.DistrictingToDisplay.measures.splitCountiesScore}</TableCell> : <div/>}
+                  ? <TableCell>{this.props.DistrictingToDisplay.measures.splitCountiesScore.toFixed(2)}</TableCell> : <div/>}
               <TableCell>
                 {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
                   ? this.props.DistrictingToDisplay.measures

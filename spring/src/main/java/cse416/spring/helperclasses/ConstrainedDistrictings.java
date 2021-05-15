@@ -115,7 +115,7 @@ public class ConstrainedDistrictings {
             double normalizedCompactness = normalize(measures.getCompactnessAvg().getCompactness(constraints.getCompactnessType()), compactnessMin, compactnessMax, true);
             double normalizedDeviationEnacted = normalize(measures.getDeviationFromEnactedAvg().getDeviationScore(), deviationEnactedMin, deviationEnactedMax, false);
             double normalizedDeviationAverage = normalize(measures.getDeviationFromAverageAvg().getDeviationScore(), deviationAverageMin, deviationAverageMax, false);
-            double splitCountyScore  = normalize(measures.getSplitCountiesScore(), splitCountyMin, splitCountyMax, false);;
+            double splitCountyScore = normalize(measures.getSplitCountiesScore(), splitCountyMin, splitCountyMax, false);;
             NormalizedDistrictingMeasures normalizedMeasures = new NormalizedDistrictingMeasures(normalizedCompactness, normalizedPop, normalizedDeviationEnacted, normalizedDeviationAverage, splitCountyScore);
             districting.setNormalizedMeasures(normalizedMeasures);
         }
