@@ -61,12 +61,13 @@ public class DistrictingsSingleton {
                     }
             }
             int majorityMinorityDistrictsCount = d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold());
-            double populationDiff = d.getMeasures().getPopulationEqualityAvg();
+            double populationDiff = d.getMaxDeviationFromIdeal();
             double maxPopulationDiff = constraints.getMaxPopulationDifference()/100;
             if(inMajorityMinorityDistrictRange(majorityMinorityDistrictsCount, constraints) && populationDiff <= maxPopulationDiff) {
                 filteredDistrictings.add(d);
                 d.getMeasures().setMajorityMinorityDistricts(majorityMinorityDistrictsCount);
             }
+
         }
         return filteredDistrictings;
     }

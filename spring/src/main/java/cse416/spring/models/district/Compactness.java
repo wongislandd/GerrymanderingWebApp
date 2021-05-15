@@ -1,5 +1,6 @@
 package cse416.spring.models.district;
 
+import cse416.spring.enums.CompactnessType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,5 +52,16 @@ public class Compactness {
            the ratios of the squares of the radii
          */
         return Math.pow(inscribedRadius, 2) / Math.pow(boundingRadius, 2);
+    }
+
+    public double getCompactness(CompactnessType type) {
+        switch (type) {
+            case POLSBY_POPPER:
+                return polsbyPopper;
+            case POPULATION_FATNESS:
+                return populationFatness;
+            default:
+                return graphCompactness;
+        }
     }
 }

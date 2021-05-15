@@ -65,6 +65,7 @@ public class DistrictingController {
         Collection<Districting> results = DistrictingsSingleton.getDistrictingsByConstraints(constraints);
         if (results.size() > 0) {
             ConstrainedDistrictings cds = new ConstrainedDistrictings(results, constraints);
+            cds.calculateNormalizedMeasures();
             request.getSession().setAttribute("constrainedDistrictings", cds);
         }
         System.out.println("Returning " + results.size());

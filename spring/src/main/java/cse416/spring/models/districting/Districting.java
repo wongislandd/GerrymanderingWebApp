@@ -34,6 +34,8 @@ public class Districting {
     @OneToOne(cascade = CascadeType.ALL)
     private DistrictingMeasures measures;
     @Transient
+    private NormalizedDistrictingMeasures normalizedMeasures;
+    @Transient
     private double objectiveFunctionScore;
     @Transient
     private GeoJsonBuilder geoJson = null;
@@ -54,6 +56,8 @@ public class Districting {
         }
         return geoJson;
     }
+
+
 
     private static double getIntersectionArea(District d1, District d2) throws IOException {
         Geometry g1 = d1.getGeometry();

@@ -7,6 +7,7 @@ import cse416.spring.models.district.District;
 import cse416.spring.models.districting.Districting;
 import cse416.spring.models.districting.DistrictingMeasures;
 import cse416.spring.models.districting.EnactedDistricting;
+import cse416.spring.models.districting.NormalizedDistrictingMeasures;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.mapping.Array;
@@ -21,6 +22,7 @@ public class DistrictingSummary {
     long id;
     double objectiveFunctionScore;
     DistrictingMeasures measures;
+    NormalizedDistrictingMeasures normalizedMeasures;
     ArrayList<DistrictSummary> districtSummaries;
     boolean isEnacted;
     List<HighlightTypes> tags;
@@ -34,6 +36,7 @@ public class DistrictingSummary {
         isEnacted = false;
         id = districting.getId();
         measures = districting.getMeasures();
+        normalizedMeasures = districting.getNormalizedMeasures();
         objectiveFunctionScore = districting.getObjectiveFunctionScore();
         districtSummaries = new ArrayList<>();
         tags = new ArrayList<>();
@@ -52,6 +55,7 @@ public class DistrictingSummary {
         measures = enacted.getMeasures();
         // TODO Calculate the actual districting's deviation from average
         measures.setDeviationFromAverageAvg(new Deviation(0,0));
+        normalizedMeasures = new NormalizedDistrictingMeasures(0,0,0,0,0);
         districtSummaries = new ArrayList<>();
         tags = new ArrayList<>();
         for (District d : enacted.getDistricts()) {

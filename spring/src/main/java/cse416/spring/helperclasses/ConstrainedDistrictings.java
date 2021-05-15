@@ -4,14 +4,15 @@ import cse416.spring.enums.MinorityPopulation;
 import cse416.spring.models.district.Deviation;
 import cse416.spring.models.district.District;
 import cse416.spring.models.districting.Districting;
+import cse416.spring.models.districting.DistrictingMeasures;
+import cse416.spring.models.districting.NormalizedDistrictingMeasures;
 import lombok.Getter;
 import lombok.Setter;
 import org.decimal4j.util.DoubleRounder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -79,6 +80,48 @@ public class ConstrainedDistrictings {
         }
         return averageDistricting;
     }
+
+    public void calculateNormalizedMeasures() {
+        List<Double> populationEqualities = districtings.stream().map(districting -> districting.getMeasures().getPopulationEqualityAvg()).collect(Collectors.toList());
+        double popMax = populationEqualities.stream().max(Comparator.naturalOrder()).get();
+        double popMin = populationEqualities.stream().min(Comparator.naturalOrder()).get();
+        List<Double> compactnesses = districtings.stream().map(districting -> districting.getMeasures().getCompactnessAvg().getCompactness(constraints.compactnessType)).collect(Collectors.toList());
+        double compactnessMax = compactnesses.stream().max(Comparator.naturalOrder()).get();
+        double compactnessMin = compactnesses.stream().min(Comparator.naturalOrder()).get();
+        List<Double> deviationsFromEnacted = districtings.stream().map(districting -> districting.getMeasures().getDeviationFromEnactedAvg().getDeviationScore()).collect(Collectors.toList());
+        double deviationEnactedMax = deviationsFromEnacted.stream().max(Comparator.naturalOrder()).get();
+        double deviationEnactedMin = deviationsFromEnacted.stream().min(Comparator.naturalOrder()).get();
+        List<Double> deviationsFromAverage = districtings.stream().map(districting -> districting.getMeasures().getDeviationFromAverageAvg().getDeviationScore()).collect(Collectors.toList());
+        double deviationAverageMax = deviationsFromAverage.stream().max(Comparator.naturalOrder()).get();
+        double deviationAverageMin = deviationsFromAverage.stream().min(Comparator.naturalOrder()).get();
+        List<Double> splitCountyScores = districtings.stream().map(districting -> districting.getMeasures().getSplitCountiesScore()).collect(Collectors.toList());
+        double splitCountyMax = splitCountyScores.stream().max(Comparator.naturalOrder()).get();
+        double splitCountyMin = splitCountyScores.stream().min(Comparator.naturalOrder()).get();
+
+        for (Districting districting : districtings) {
+            DistrictingMeasures measures = districting.getMeasures();
+            double normalizedPop = normalize(measures.getPopulationEqualityAvg(), popMin, popMax, false);
+            double normalizedCompactness = normalize(measures.getCompactnessAvg().getCompactness(constraints.getCompactnessType()), compactnessMin, compactnessMax, true);
+            double normalizedDeviationEnacted = normalize(measures.getDeviationFromEnactedAvg().getDeviationScore(), deviationEnactedMin, deviationEnactedMax, false);
+            double normalizedDeviationAverage = normalize(measures.getDeviationFromAverageAvg().getDeviationScore(), deviationAverageMin, deviationAverageMax, false);
+            double splitCountyScore  = normalize(measures.getSplitCountiesScore(), splitCountyMin, splitCountyMax, false);;
+            NormalizedDistrictingMeasures normalizedMeasures = new NormalizedDistrictingMeasures(normalizedCompactness, normalizedPop, normalizedDeviationEnacted, normalizedDeviationAverage, splitCountyScore);
+            districting.setNormalizedMeasures(normalizedMeasures);
+        }
+
+    }
+
+    public double normalize(double value, double min, double max, boolean higherIsGood) {
+        if (min == max) {
+            return 1;
+        }
+        if (higherIsGood) {
+            return (value-min)/(max-min);
+        } else {
+            return (max-value)/(max-min);
+        }
+    }
+
 
     public Districting calculateAverageDistricting(Collection<Districting> districtings, MinorityPopulation minority) {
         double bestScore = 0;

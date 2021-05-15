@@ -70,6 +70,8 @@ public class DistrictingMeasures {
     }
 
 
+
+
     private static int sum(ArrayList<Integer> list) {
         int sum = 0;
         for (int i : list) {
@@ -137,6 +139,7 @@ public class DistrictingMeasures {
 
         return (count2split * w2) + (mc * count3split * w3);
     }
+
 
     public DistrictingMeasures(ArrayList<District> districts) throws IOException {
         double totalPopulationEquality = 0;

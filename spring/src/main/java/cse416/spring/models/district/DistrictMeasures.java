@@ -16,6 +16,7 @@ public class DistrictMeasures {
     private long id;
     @Column
     double populationEquality;
+
     @Column
     double populationDiffFromIdeal;
 
