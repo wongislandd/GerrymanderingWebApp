@@ -61,7 +61,7 @@ public class DistrictingsSingleton {
                     }
             }
             int majorityMinorityDistrictsCount = d.getMMDistrictsCount(constraints.getMinorityPopulation(), constraints.getMinorityThreshold());
-            double populationDiff = d.getMaxDeviationFromIdeal();
+            double populationDiff = d.getMeasures().getPopulationEqualityAvg();
             double maxPopulationDiff = constraints.getMaxPopulationDifference()/100;
             if(inMajorityMinorityDistrictRange(majorityMinorityDistrictsCount, constraints) && populationDiff <= maxPopulationDiff) {
                 filteredDistrictings.add(d);
