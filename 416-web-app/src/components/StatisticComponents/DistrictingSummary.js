@@ -100,6 +100,8 @@ class DistrictingSummary extends Component {
         ) :
         <div>
           <BoxPlot districtingId = {this.props.DistrictingToDisplay.id}/>
+          <h5>Minority Deviation from Average</h5>
+          <div className="padBelowMe">{this.props.DistrictingToDisplay.areaPairDeviation.toFixed(2)}</div>
         </div>
         }
 

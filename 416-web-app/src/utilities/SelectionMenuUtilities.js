@@ -66,7 +66,6 @@ export const TAGS = {
   CLOSE_TO_AVERAGE : "Closest to Average",
   MAJORITY_MINORITY : "Top Majority Minority",
   AREA_PAIR_DEVIATION : "Top Area Pair Deviation",
-  POP_PAIR_DEVIATION : "Top Population Pair Deviation",
 }
 
 export const IDEAL_POPULATIONS = {

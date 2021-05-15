@@ -40,57 +40,22 @@ class NormalizedTable extends Component {
           <TableHead>
             <TableRow>
               <TableCell>
-                <LabelAndInfoIcon
-                  label={
-                    "Population Equality"
-                  }
-                  description={
-                    StatUtilities.DESCRIPTIONS.POPULATION_EQUALITY
-                  }
-                  districting={this.props.DistrictingToDisplay}
-                />
+                    {"Population Equality"}
+              </TableCell>
+              <TableCell>{
+                      "Split County Score"}
               </TableCell>
               <TableCell>
-                <LabelAndInfoIcon
-                  label={
-                      "Split County Score"
-                  }
-                  description={
-                    StatUtilities.DESCRIPTIONS.SPLIT_COUNTY_SCORE
-                  }
-                />
+                {"Deviation from Average (Area/Pop)"}
               </TableCell>
               <TableCell>
-                <LabelAndInfoIcon
-                  label={
-                      "Deviation from Average (Area/Pop)"
-                  }
-                  description={
-                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_AVERAGE
-                  }
-                  districting={this.props.DistrictingToDisplay}
-                />
-              </TableCell>
-              <TableCell>
-                <LabelAndInfoIcon
-                  label={
+                {
                       "Deviation from Enacted (Area/Pop)"
                   }
-                  description={
-                    StatUtilities.DESCRIPTIONS.DEVIATION_FROM_ENACTED
-                  }
-                  districting={this.props.DistrictingToDisplay}
-                />
               </TableCell>
               <TableCell>
-                <LabelAndInfoIcon
-                  label={
-                      "Compactness"
-                  }
-                  description={
-                    StatUtilities.DESCRIPTIONS.COMPACTNESS
-                  }
-                />
+                
+                      {"Compactness"}
               </TableCell>
             </TableRow>
           </TableHead>

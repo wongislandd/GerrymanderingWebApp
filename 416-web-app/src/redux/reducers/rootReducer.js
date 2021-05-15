@@ -38,7 +38,7 @@ const initState = {
 ConstraintSliderSettings: {
   [SelectionMenuUtilities.CONSTRAINT_KEYS.PopulationDifference]: new Filter(
     "Maximum Population Difference (%)",
-    1.5,
+    15,
     0,
     50,
     1,

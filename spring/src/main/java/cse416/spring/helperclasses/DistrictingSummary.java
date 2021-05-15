@@ -49,7 +49,7 @@ public class DistrictingSummary {
         double objectiveFunctionResult = (populationEquality * populationEqualityWeight) + (splitCountiesScore * splitCountiesScoreWeight)
                 + (deviationFromAverage*deviationAverageWeight) + (deviationFromEnacted*deviationEnactedWeight)
                 + (compactness * compactnessWeight);
-        this.objectiveFunctionScore = objectiveFunctionResult;
+        this.objectiveFunctionScore = objectiveFunctionResult;      
     }
 
 
