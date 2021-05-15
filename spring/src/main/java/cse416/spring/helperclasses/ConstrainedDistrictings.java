@@ -53,7 +53,7 @@ public class ConstrainedDistrictings {
                 double minorityPercentage = currentDistrict.getMeasures().getMajorityMinorityInfo().getMinorityPercentage(constraints.getMinorityPopulation());
                 double avgMinorityPercentage = averageDistrict.getMeasures().getMajorityMinorityInfo().getMinorityPercentage(constraints.getMinorityPopulation());
                 double deviation = (minorityPercentage - avgMinorityPercentage) / avgMinorityPercentage;
-                sumOfSquares += Math.pow(deviation, 2);
+                sumOfSquares += deviation;
             }
 
             double avgSumOfSquares = sumOfSquares / orderedDistricts.size();
