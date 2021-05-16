@@ -57,7 +57,6 @@ public class DistrictingController {
     }
 
 
-
     @PostMapping(path = "/constrain", consumes = "application/json")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<Integer> constrain(HttpServletRequest request, @RequestBody DistrictingConstraints constraints) throws IOException {
