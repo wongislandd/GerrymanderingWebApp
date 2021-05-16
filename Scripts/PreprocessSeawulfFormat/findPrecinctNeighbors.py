@@ -3,7 +3,7 @@ import json
 
 # Must share at least 200 feet to be considered as neighbors
 NEIGHBOR_THRESH = 60.96
-NUM_DISTRICTS = 6
+NUM_DISTRICTS = 7
 
 
 # Given a precinct, find which district contains the precinct.
