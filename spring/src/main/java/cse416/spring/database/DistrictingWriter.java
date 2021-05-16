@@ -89,7 +89,7 @@ public class DistrictingWriter {
         EntityManager em = emf.createEntityManager();
 
         // Adjust job parameters here
-        StateName state = StateName.ALABAMA;
+        StateName state = StateName.NORTH_CAROLINA;
         int jobId = 2;
         MGGGParams params = new MGGGParams(10000, .10);
         int jobSize = 50000;
@@ -132,7 +132,6 @@ public class DistrictingWriter {
                 ems.add(emf.createEntityManager());
             }
             final long fileStartTime = System.currentTimeMillis();
-            System.out.println("Completed " + (districtingsPerFile*(i-startFileNum)) + "/" + totalDistrictingsToMake + " districtings.");
             System.out.println("Starting file " + files[i]);
             JSONObject jo = readJsonFile("/"+stateId+"/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");
@@ -162,6 +161,7 @@ public class DistrictingWriter {
             for (EntityManager entityManager : ems) {
                 entityManager.close();
             }
+            System.out.println("Completed " + (districtingsPerFile*(i+1-startFileNum)) + "/" + totalDistrictingsToMake + " districtings.");
         }
 
         final long endTime = System.currentTimeMillis();
