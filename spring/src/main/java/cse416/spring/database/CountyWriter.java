@@ -26,8 +26,8 @@ public class CountyWriter {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
-        String countiesFilePath = "/LA/counties/CountiesPrecinctsMapping.json";
-        StateName stateName = StateName.LOUISIANA;
+        String countiesFilePath = "/AL/counties/CountiesPrecinctsMapping.json";
+        StateName stateName = StateName.NORTH_CAROLINA;
 
         JSONObject jo = readJsonFile(countiesFilePath);
         HashMap<Integer, Precinct> allPrecincts = PrecinctHashSingleton.getPrecinctHash(stateName);

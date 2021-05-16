@@ -14,7 +14,6 @@ class EqualPopulationModal extends Component {
                     <TableCell>District Number</TableCell>
                     <TableCell align="left">Total Population</TableCell>
                     <TableCell align="left">Deviation from Ideal (Ideal: {SelectionMenuUtilities.IDEAL_POPULATIONS[this.props.CurrentState]})</TableCell>
-                    <TableCell align="left">Contribution to OF</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -25,7 +24,6 @@ class EqualPopulationModal extends Component {
                     <TableCell>{summary.districtNumber}</TableCell>
                     <TableCell align="left">{StatUtilities.addCommas(summary.demographics.tp)}</TableCell>
                     <TableCell align="left">{StatUtilities.addCommas(summary.demographics.tp-SelectionMenuUtilities.IDEAL_POPULATIONS[this.props.CurrentState]) + " (" + StatUtilities.formatAsPercentage(summary.measures.populationDiffFromIdeal,2)})</TableCell>
-                    <TableCell align="left">{summary.measures.populationEquality}</TableCell>
                     </TableRow>
                   )})}
                 </TableBody>

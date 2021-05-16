@@ -4,17 +4,38 @@ import {
   updateObjectiveFunctionSettings,
   resetExpandedSummaries,
 } from "../../../redux/actions/settingActions";
-import { Row } from "react-materialize";
+import { Row, Switch} from "react-materialize";
 import { Slider } from "@material-ui/core";
 import { connect } from "react-redux";
 
 class WeightSelection extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { negWeights: false };
+  }
+
+  toggleNegativeWeights(e) {
+    this.setState({
+      negWeights : e.target.checked
+    })
+  }
+
   render() {
+    console.log(this.state.negWeights)
     return (
       <div className="filterSectionItem">
         <h4 className="center-title">
           {SelectionMenuUtilities.LABELS.OBJECTIVE_FUNCTION_WEIGHTS_HEADER}
         </h4>
+        <div className="centerWithinMe">
+          <p>Allow Negative Weights</p>
+        <Switch
+          id="Switch-11"
+          offLabel="Off"
+          onChange={(e)=> this.toggleNegativeWeights(e)}
+          onLabel="On"
+        />
+        </div>
         {Object.keys(this.props.ObjectiveFunctionSettings).map((key) => {
           let filter = this.props.ObjectiveFunctionSettings[key];
           if (!Array.isArray(filter.value)) {
@@ -30,7 +51,7 @@ class WeightSelection extends Component {
                   }
                   value={filter.value}
                   max={filter.maxVal}
-                  min={filter.minVal}
+                  min={this.state.negWeights ? -1 : 0}
                   name={filter.name}
                   step={filter.step}
                   marks

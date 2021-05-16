@@ -73,18 +73,18 @@ ConstraintSliderSettings: {
 
   /* Objective Function Weights */
   ObjectiveFunctionSettings: [
-    new Filter("Population Equality", 0.5, 0, 1, 0.01),
-    new Filter("Split Counties", 0.5, 0, 1, 0.01),
-    new Filter("Deviation from Average Districting", 0.5, 0, 1, 0.01),
+    new Filter("Population Equality", 0.0, -1, 1, 0.05),
+    new Filter("Split Counties", 0.0, -1, 1, 0.05),
+    new Filter("Deviation from Average Districting", 0.0, -1, 1, 0.05),
     new Filter(
       "Deviation from Enacted Plan (Area and Population)",
-      0.5,
-      0,
+      0.0,
+      -1,
       1,
       0.05,
       true
     ),
-    new Filter("Compactness", 0.5, 0, 1, 0.01, true),
+    new Filter("Compactness", 0.0, -1, 1, 0.05, true),
   ],
 
   

@@ -51,7 +51,7 @@ public class DistrictingWriter {
 
     public static void persistEnactedDistrictings() throws IOException {
         StateName stateName = StateName.LOUISIANA;
-        String enactedFilePath = "/LA/la_enacted.json";
+        String enactedFilePath = "/AL/al_enacted.json";
         JSONObject enactedJson = readJsonFile(enactedFilePath);
         JSONObject districting = enactedJson.getJSONArray("districtings").getJSONObject(0);
         Iterator<String> keys = districting.keys();
@@ -90,13 +90,14 @@ public class DistrictingWriter {
 
         // Adjust job parameters here
         StateName state = StateName.LOUISIANA;
-        int jobId = 42;
-        MGGGParams params = new MGGGParams(10000, .1);
-        int jobSize = 2000;
+        int jobId = 10;
+        MGGGParams params = new MGGGParams(10000, .15);
+        int jobSize = 1000;
+        String stateId = "AL";
 
         // Size will be set adaptively later
-        JobSummary js = new JobSummary("Louisiana 10% max population difference.", params, jobSize);
-        String jobFolderPath = "/json/LA/districtings";
+        JobSummary js = new JobSummary("Alabama 10% max population difference.", params, jobSize);
+        String jobFolderPath = "/json/"+stateId+"/districtings";
 
         Job existingJob = new JobServiceImpl(em).findById(jobId);
         Job job;
@@ -133,7 +134,7 @@ public class DistrictingWriter {
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Completed " + (districtingsPerFile*(i-startFileNum)) + "/" + totalDistrictingsToMake + " districtings.");
             System.out.println("Starting file " + files[i]);
-            JSONObject jo = readJsonFile("/LA/districtings/" + files[i]);
+            JSONObject jo = readJsonFile("/"+stateId+"/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");
 
             ArrayList<DistrictingWriterThread> threads = new ArrayList<>();
@@ -142,7 +143,7 @@ public class DistrictingWriter {
             // Create threads
             for (int j = 0; j < numThreads; j++) {
                 DistrictingWriterThread newThread = new DistrictingWriterThread(state, job, "T" + j,
-                        ems.get(j), enactedDistricting, districtings, "/LA/districtings/" + files[i],
+                        ems.get(j), enactedDistricting, districtings, "/"+stateId+"/districtings/" + files[i],
                         precinctHash, workForEachThread * (j), (j+1) * workForEachThread,
                         availableRef);
                 threads.add(newThread);
