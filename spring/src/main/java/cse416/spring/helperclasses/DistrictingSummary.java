@@ -18,13 +18,13 @@ import java.util.*;
 @Getter
 @Setter
 public class DistrictingSummary {
-    // TODO Implement
     long id;
     double objectiveFunctionScore;
     DistrictingMeasures measures;
     NormalizedDistrictingMeasures normalizedMeasures;
     ArrayList<DistrictSummary> districtSummaries;
     double areaPairDeviation;
+    double averageDeviationFromIdeal;
     boolean isEnacted;
     List<HighlightTypes> tags;
 
@@ -59,6 +59,7 @@ public class DistrictingSummary {
         measures = districting.getMeasures();
         normalizedMeasures = districting.getNormalizedMeasures();
         objectiveFunctionScore = districting.getObjectiveFunctionScore();
+        averageDeviationFromIdeal = districting.getAverageDeviationFromIdeal();
         districtSummaries = new ArrayList<>();
         tags = new ArrayList<>();
         for (District d : districting.getDistricts()) {

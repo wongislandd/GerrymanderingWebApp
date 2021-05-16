@@ -190,6 +190,14 @@ public class Districting {
         return highestScore;
     }
 
+    public double getAverageDeviationFromIdeal() {
+        double total = 0;
+        for (District d : districts) {
+            total += Math.abs(d.getMeasures().getPopulationDiffFromIdeal());
+        }
+        return total/districts.size();
+    }
+
     public void assignObjectiveFunctionScores(ObjectiveFunctionWeights weights) {
         double populationEquality = measures.getPopulationEqualityAvg();
         double splitCountiesScore = measures.getSplitCountiesScore();

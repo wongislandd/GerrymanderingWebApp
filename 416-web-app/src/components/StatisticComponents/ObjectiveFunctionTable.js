@@ -43,8 +43,8 @@ class ObjectiveFunctionTable extends Component {
                 <LabelAndInfoIcon
                   label={
                     this.displayDistrictingInfo()
-                      ? "Average Population Difference"
-                      : "Population Difference"
+                      ? "Average Population Deviation from Ideal"
+                      : "Population Deviation From Ideal"
                   }
                   type={this.displayDistrictingInfo() ? "POPULATION" : null}
                   description={this.displayDistrictingInfo() ? null :
@@ -126,9 +126,8 @@ class ObjectiveFunctionTable extends Component {
             <TableRow>
               <TableCell scope="row">
                 {StatUtilities.formatAsPercentage((this.displayDistrictingInfo()
-                  ? this.props.DistrictingToDisplay.measures
-                      .populationEqualityAvg
-                  : this.props.DistrictToDisplay.measures.populationEquality),2)}
+                  ? this.props.DistrictingToDisplay.averageDeviationFromIdeal
+                  : this.props.DistrictToDisplay.measures.populationDiffFromIdeal),2)}
               </TableCell>
               {this.displayDistrictingInfo()
                   ? <TableCell>{this.props.DistrictingToDisplay.measures.splitCountiesScore.toFixed(2)}</TableCell> : <div/>}

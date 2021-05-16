@@ -114,7 +114,7 @@ public class DistrictingWriter {
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
-        int startFileNum = 1200;
+        int startFileNum = 1218;
         int endFileNum = 1500;
         int numFiles = endFileNum-startFileNum;
         int districtingsPerFile = 50;
