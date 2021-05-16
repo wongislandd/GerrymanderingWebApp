@@ -51,8 +51,8 @@ public class PrecinctWriter {
 
 
         /* Customization */
-        String precinctsFilePath = "/NC/precincts_output.json";
-        StateName stateName = StateName.NORTH_CAROLINA;
+        String precinctsFilePath = "/LA/precincts_output.json";
+        StateName stateName = StateName.LOUISIANA;
 
         JSONObject jo = readJsonFile(precinctsFilePath);
         JSONArray features = jo.getJSONArray("features");

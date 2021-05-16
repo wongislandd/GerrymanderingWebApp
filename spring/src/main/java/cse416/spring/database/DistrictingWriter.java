@@ -50,8 +50,8 @@ public class DistrictingWriter {
     }
 
     public static void persistEnactedDistrictings() throws IOException {
-        StateName stateName = StateName.NORTH_CAROLINA;
-        String enactedFilePath = "/NC/nc_enacted.json";
+        StateName stateName = StateName.LOUISIANA;
+        String enactedFilePath = "/LA/la_enacted.json";
         JSONObject enactedJson = readJsonFile(enactedFilePath);
         JSONObject districting = enactedJson.getJSONArray("districtings").getJSONObject(0);
         Iterator<String> keys = districting.keys();
@@ -89,14 +89,14 @@ public class DistrictingWriter {
         EntityManager em = emf.createEntityManager();
 
         // Adjust job parameters here
-        StateName state = StateName.NORTH_CAROLINA;
-        int jobId = 2;
+        StateName state = StateName.LOUISIANA;
+        int jobId = 42;
         MGGGParams params = new MGGGParams(10000, .1);
-        int jobSize = 30000;
+        int jobSize = 2000;
 
         // Size will be set adaptively later
-        JobSummary js = new JobSummary("North Carolina 10% max population difference.", params, jobSize);
-        String jobFolderPath = "/json/NC/districtings";
+        JobSummary js = new JobSummary("Louisiana 10% max population difference.", params, jobSize);
+        String jobFolderPath = "/json/LA/districtings";
 
         Job existingJob = new JobServiceImpl(em).findById(jobId);
         Job job;
@@ -113,8 +113,8 @@ public class DistrictingWriter {
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
-        int startFileNum = 0;
-        int endFileNum = 300;
+        int startFileNum = 7;
+        int endFileNum = 20;
         int numFiles = endFileNum-startFileNum;
         int districtingsPerFile = 50;
         int totalDistrictingsToMake = numFiles * districtingsPerFile;
@@ -133,7 +133,7 @@ public class DistrictingWriter {
             final long fileStartTime = System.currentTimeMillis();
             System.out.println("Completed " + (districtingsPerFile*(i-startFileNum)) + "/" + totalDistrictingsToMake + " districtings.");
             System.out.println("Starting file " + files[i]);
-            JSONObject jo = readJsonFile("/NC/districtings/" + files[i]);
+            JSONObject jo = readJsonFile("/LA/districtings/" + files[i]);
             JSONArray districtings = jo.getJSONArray("districtings");
 
             ArrayList<DistrictingWriterThread> threads = new ArrayList<>();
@@ -142,7 +142,7 @@ public class DistrictingWriter {
             // Create threads
             for (int j = 0; j < numThreads; j++) {
                 DistrictingWriterThread newThread = new DistrictingWriterThread(state, job, "T" + j,
-                        ems.get(j), enactedDistricting, districtings, "/NC/districtings/" + files[i],
+                        ems.get(j), enactedDistricting, districtings, "/LA/districtings/" + files[i],
                         precinctHash, workForEachThread * (j), (j+1) * workForEachThread,
                         availableRef);
                 threads.add(newThread);
