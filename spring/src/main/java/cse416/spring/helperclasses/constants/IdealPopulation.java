@@ -10,7 +10,7 @@ public class IdealPopulation {
     static {
         populationMap.put(StateName.NORTH_CAROLINA, 733499);
         populationMap.put(StateName.LOUISIANA, 755562);
-        populationMap.put(StateName.ALABAMA, 0);
+        populationMap.put(StateName.ALABAMA, 676293);
     }
 
     public static int getIdealPopulation(StateName stateName) {
