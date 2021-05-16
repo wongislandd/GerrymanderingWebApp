@@ -1,6 +1,7 @@
 import json
 
-inputFile = "../input/nc_precincts_output.json"
+inputFile = "../input/precincts_output.json"
+outputFile ="../output/CountiesPrecinctsMapping.json"
 
 
 countyPrecinctsDict = {}
@@ -8,8 +9,13 @@ countyPrecinctsDict = {}
 with open(inputFile) as f:
     data = json.load(f)
     features = data["features"]
-    totalPop = 0
     for feature in features:
         properties = feature["properties"]
-        totalPop += properties["population"]
-    print(totalPop/13)
+        countyID = properties["county"]
+        if countyID not in countyPrecinctsDict:
+            countyPrecinctsDict[countyID] = {'name' : countyID, 'precincts' : [properties['id']]}
+        else:
+            countyPrecinctsDict[countyID]['precincts'].append(properties["id"])
+    with open(outputFile, 'w+') as json_file:
+        print("Writing output file.")
+        json.dump(countyPrecinctsDict, json_file)
