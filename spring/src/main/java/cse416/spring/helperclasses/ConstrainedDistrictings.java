@@ -93,7 +93,7 @@ public class ConstrainedDistrictings {
     }
 
     public void calculateNormalizedMeasures() {
-        List<Double> populationEqualities = districtings.stream().map(districting -> districting.getMeasures().getPopulationEqualityAvg()).collect(Collectors.toList());
+        List<Double> populationEqualities = districtings.stream().map(districting -> districting.getAverageDeviationFromIdeal()).collect(Collectors.toList());
         double popMax = populationEqualities.stream().max(Comparator.naturalOrder()).get();
         double popMin = populationEqualities.stream().min(Comparator.naturalOrder()).get();
         List<Double> compactnesses = districtings.stream().map(districting -> districting.getMeasures().getCompactnessAvg().getCompactness(constraints.compactnessType)).collect(Collectors.toList());
@@ -111,7 +111,7 @@ public class ConstrainedDistrictings {
 
         for (Districting districting : districtings) {
             DistrictingMeasures measures = districting.getMeasures();
-            double normalizedPop = normalize(measures.getPopulationEqualityAvg(), popMin, popMax, false);
+            double normalizedPop = normalize(districting.getAverageDeviationFromIdeal(), popMin, popMax, false);
             double normalizedCompactness = normalize(measures.getCompactnessAvg().getCompactness(constraints.getCompactnessType()), compactnessMin, compactnessMax, true);
             double normalizedDeviationEnacted = normalize(measures.getDeviationFromEnactedAvg().getDeviationScore(), deviationEnactedMin, deviationEnactedMax, false);
             double normalizedDeviationAverage = normalize(measures.getDeviationFromAverageAvg().getDeviationScore(), deviationAverageMin, deviationAverageMax, false);

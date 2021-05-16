@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -87,7 +86,7 @@ public class DistrictingController {
         TopScoring topScoring = new TopScoring();
         for (DistrictingSummary summary : summaries) {
             summary.calculateNormalizedObjectiveFunctionScore(weights);
-           topScoring.insertIfFit(summary);
+            topScoring.insertIfFit(summary);
         }
 
         // Calculate area pair deviation
@@ -108,7 +107,7 @@ public class DistrictingController {
         return new ResponseEntity<>(bw, HttpStatus.OK);
     }
 
-    @GetMapping(path="getMinorityPoints/{id}")
+    @GetMapping(path = "getMinorityPoints/{id}")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     public ResponseEntity<List<Double>> getMinorityPointData(HttpServletRequest request, @PathVariable("id") long id) {
         ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
