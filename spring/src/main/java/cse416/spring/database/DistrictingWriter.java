@@ -50,7 +50,7 @@ public class DistrictingWriter {
     }
 
     public static void persistEnactedDistrictings() throws IOException {
-        StateName stateName = StateName.LOUISIANA;
+        StateName stateName = StateName.ALABAMA;
         String enactedFilePath = "/AL/al_enacted.json";
         JSONObject enactedJson = readJsonFile(enactedFilePath);
         JSONObject districting = enactedJson.getJSONArray("districtings").getJSONObject(0);
@@ -89,14 +89,14 @@ public class DistrictingWriter {
         EntityManager em = emf.createEntityManager();
 
         // Adjust job parameters here
-        StateName state = StateName.LOUISIANA;
-        int jobId = 10;
-        MGGGParams params = new MGGGParams(10000, .15);
-        int jobSize = 1000;
-        String stateId = "AL";
+        StateName state = StateName.ALABAMA;
+        int jobId = 2;
+        MGGGParams params = new MGGGParams(10000, .10);
+        int jobSize = 50000;
+        String stateId = "NC";
 
         // Size will be set adaptively later
-        JobSummary js = new JobSummary("Alabama 10% max population difference.", params, jobSize);
+        JobSummary js = new JobSummary("North Carolina 10% max population difference.", params, jobSize);
         String jobFolderPath = "/json/"+stateId+"/districtings";
 
         Job existingJob = new JobServiceImpl(em).findById(jobId);
@@ -114,8 +114,8 @@ public class DistrictingWriter {
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
-        int startFileNum = 7;
-        int endFileNum = 20;
+        int startFileNum = 1200;
+        int endFileNum = 1500;
         int numFiles = endFileNum-startFileNum;
         int districtingsPerFile = 50;
         int totalDistrictingsToMake = numFiles * districtingsPerFile;

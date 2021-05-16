@@ -49,7 +49,7 @@ public class PrecinctHashSingleton {
     private static HashMap<Integer, Precinct> getPrecinctHashAL() {
         if (precinctHashAL == null) {
             final long startTime = System.currentTimeMillis();
-            precinctHashNC = getPrecinctHashFromDB(StateName.ALABAMA);
+            precinctHashAL = getPrecinctHashFromDB(StateName.ALABAMA);
             final long endTime = System.currentTimeMillis();
             System.out.println("LOADED PRECINCT HASH FROM THE DB IN " + (endTime-startTime) + "ms");
         }
