@@ -79,9 +79,6 @@ public class DistrictingController {
         System.out.println("Apply weight called.");
         ConstrainedDistrictings cds = (ConstrainedDistrictings) request.getSession().getAttribute("constrainedDistrictings");
         cds.setCurrentWeights(weights);
-        for (Districting d : cds.getDistrictings()) {
-            d.assignObjectiveFunctionScores(weights);
-        }
         request.getSession().setAttribute("constrainedDistrictings", cds);
         DistrictingConstraints constraints = cds.getConstraints();
         ArrayList<DistrictingSummary> summaries = new ArrayList<>();
@@ -90,13 +87,13 @@ public class DistrictingController {
         }
         TopScoring topScoring = new TopScoring();
         for (DistrictingSummary summary : summaries) {
+            summary.calculateNormalizedObjectiveFunctionScore(weights);
            topScoring.insertIfFit(summary);
         }
 
         // Calculate area pair deviation
         for (DistrictingSummary summary : topScoring.getEntries()) {
             summary.setAreaPairDeviation(summaries);
-            summary.calculateNormalizedObjectiveFunctionScore(weights);
         }
 
         InterestingDistrictingAnalysis analysis = new InterestingDistrictingAnalysis(topScoring, constraints);
