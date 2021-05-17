@@ -366,3 +366,17 @@ export const updateJobLoaded = (bool) => {
     Loaded : bool,
   }
 }
+
+export const updateEnactedGeoJson = (geoJson) => {
+  return {
+    type : ActionTypes.UPDATE_ENACTED_GEOJSON,
+    GeoJson : geoJson
+  }
+}
+
+export const toggleEnactedSwitch = (bool) => {
+  return {
+    type : ActionTypes.TOGGLE_ENACTED_SWITCH,
+    DisplayEnacted : bool
+  }
+}

@@ -79,7 +79,6 @@ public class DistrictingWriterThread extends Thread {
                 Collection<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
                 DistrictReference districtReference = new DistrictReference(stateName, filePath, i, districtKey);
-                // TODO: Change the null to the enacted districting's district, do we even need the enacted to be passed in here?
                 // We'll never be able to compare it until after all districts in the districting are in
                 District d = new District(precincts, stateName, districtReference);
                 districtsInDistricting.add(d);

@@ -11,6 +11,8 @@ export const MESSAGES = {
 export const IDs = {
   PRECINCT_LINE_LAYER_ID: "precinct-outline-layer",
   PRECINCT_FILL_LAYER_ID: "precinct-fill-layer",
+  ENACTED_DISTRICT_LINE_LAYER_ID: "enacted-district-outline-layer",
+  ENACTED_DISTRICT_FILL_LAYER_ID: "enacted-district-fill-layer",
   DISTRICT_LINE_LAYER_ID: "district-outline-layer",
   DISTRICT_FILL_LAYER_ID: "district-fill-layer",
   COUNTY_LINE_LAYER_ID: "county-outline-layer",
@@ -18,6 +20,7 @@ export const IDs = {
   PRECINCT_SOURCE_ID: "precinct-source",
   DISTRICT_SOURCE_ID: "district-source",
   COUNTY_SOURCE_ID: "county-source",
+  ENACTED_SOURCE_ID: "enacted-source"
 };
 
 /* To correspond with the labels in the GeoJsonBuilder */

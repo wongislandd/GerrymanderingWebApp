@@ -6,6 +6,7 @@ import {
   togglePrecinctSwitch,
   toggleDistrictSwitch,
   toggleCountySwitch,
+  toggleEnactedSwitch,
 } from "../../../../redux/actions/settingActions";
 
 class SettingsMode extends Component {
@@ -17,6 +18,7 @@ class SettingsMode extends Component {
           <Row>{ToolbarUtilities.LABELS.TOGGLE_PRECINCT_DISPLAY_LABEL}</Row>
           <Row>{ToolbarUtilities.LABELS.TOGGLE_COUNTY_DISPLAY_LABEL}</Row>
           <Row>{ToolbarUtilities.LABELS.TOGGLE_DISTRICT_DISPLAY_LABEL}</Row>
+          <Row>{ToolbarUtilities.LABELS.TOGGLE_ENACTED_DISPLAY_LABEL}</Row>
         </Col>
         <Col>
           <Row>
@@ -54,6 +56,17 @@ class SettingsMode extends Component {
               checked={this.props.DisplayDistricts}
             />
           </Row>
+          <Row>
+            <Switch
+              id={ToolbarUtilities.CONSTANTS.ENACTED_SWITCH_ID}
+              offLabel="Off"
+              onLabel="On"
+              onChange={(e) =>
+                this.props.toggleEnactedSwitch(!this.props.DisplayEnacted)
+              }
+              checked={this.props.DisplayEnacted}
+            />
+          </Row>
         </Col>
       </div>
     );
@@ -71,6 +84,9 @@ const mapDispatchToProps = (dispatch) => {
     toggleDistrictSwitch: (bool) => {
       dispatch(toggleDistrictSwitch(bool));
     },
+    toggleEnactedSwitch: (bool) => {
+      dispatch(toggleEnactedSwitch(bool))
+    }
   };
 };
 
@@ -79,6 +95,7 @@ const mapStateToProps = (state, ownProps) => {
     DisplayPrecincts: state.DisplayPrecincts,
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
+    DisplayEnacted : state.DisplayEnacted,
     PrecinctsGeoJson: state.PrecinctsGeoJson,
     CountiesGeoJson: state.CountiesGeoJson,
   };

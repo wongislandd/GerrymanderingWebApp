@@ -17,6 +17,7 @@ import {
   populateCurrentDistrictingGeoJson,
   populateCurrentDistrictingSummary,
   updateJobLoaded,
+  updateEnactedGeoJson,
 } from "../../redux/actions/settingActions";
 import * as SelectionMenuUtilities from "../../utilities/SelectionMenuUtilities";
 import * as ViewportUtilities from "../../utilities/ViewportUtilities";
@@ -44,6 +45,7 @@ class JobSelection extends Component {
         NetworkingUtilities.loadEnacted(this.props.CurrentState).then(
           (results) => {
             this.props.populateCurrentDistrictingGeoJson(results);
+            this.props.updateEnactedGeoJson(results);
           }
         )
       );
@@ -175,6 +177,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateJobLoaded : (bool) => {
       dispatch(updateJobLoaded(bool))
+    },
+    updateEnactedGeoJson : (geoJson) => {
+      dispatch(updateEnactedGeoJson(geoJson))
     },
   };
 };

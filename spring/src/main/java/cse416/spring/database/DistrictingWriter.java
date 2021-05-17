@@ -66,7 +66,6 @@ public class DistrictingWriter {
             JSONArray precinctKeysInDistrict = districting.getJSONArray(districtKey);
             Set<Precinct> precincts = getPrecinctsFromKeys(precinctKeysInDistrict, precinctHash);
 
-            // TODO: Change the null to the enacted districting
             DistrictReference districtReference = new DistrictReference(stateName, enactedFilePath, 0, districtKey);
             District d = new District(precincts, stateName,districtReference);
             d.getMeasures().setDeviationFromEnacted(new Deviation(0,0));
@@ -92,7 +91,7 @@ public class DistrictingWriter {
         StateName state = StateName.NORTH_CAROLINA;
         int jobId = 2;
         MGGGParams params = new MGGGParams(10000, .10);
-        int jobSize = 50000;
+        int jobSize = 10000;
         String stateId = "NC";
 
         // Size will be set adaptively later
@@ -114,8 +113,8 @@ public class DistrictingWriter {
         // Create entity managers for the threads
         int numThreads = 5;
         int workForEachThread = 10;
-        int startFileNum = 1218;
-        int endFileNum = 1500;
+        int startFileNum = 1925;
+        int endFileNum = 2000;
         int numFiles = endFileNum-startFileNum;
         int districtingsPerFile = 50;
         int totalDistrictingsToMake = numFiles * districtingsPerFile;

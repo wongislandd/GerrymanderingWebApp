@@ -9,6 +9,7 @@ const initState = {
   DisplayPrecincts: false,
   DisplayCounties: false,
   DisplayDistricts: true,
+  DisplayEnacted : false,
   CurrentDistrictingGeoJson: null,
   CurrentDistrictingSummary: null,
   FeaturedDistrict: null,
@@ -88,7 +89,8 @@ ConstraintSliderSettings: {
   ],
 
   
-
+  EnactedGeoJson : null,
+  
   PopulationSelection: null,
 
   MinoritySelection: null,
@@ -205,6 +207,11 @@ const rootReducer = (state = initState, action) => {
         ...state,
         DisplayCounties: action.DisplayCounties,
       };
+    case ActionTypes.TOGGLE_ENACTED_SWITCH:
+      return {
+        ...state,
+        DisplayEnacted : action.DisplayEnacted
+      }
     case ActionTypes.SET_TENTATIVE_DISTRICTING:
       return {
         ...state,
@@ -520,6 +527,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         SelectedTags : newTags
+      }
+    case ActionTypes.UPDATE_ENACTED_GEOJSON:
+      return {
+        ...state,
+        EnactedGeoJson : action.GeoJson
       }
     default:
       return state;

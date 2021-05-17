@@ -4,7 +4,7 @@ import * as ViewportUtilities from "../utilities/ViewportUtilities";
 import * as SelectionMenuUtilities from "../utilities/SelectionMenuUtilities";
 
 const axios = require("axios").default;
-const baseURL = "http://localhost:8081";
+const baseURL = "http://localhost:8080";
 
 export const HTTPMETHODS = {
   GET: "GET",
