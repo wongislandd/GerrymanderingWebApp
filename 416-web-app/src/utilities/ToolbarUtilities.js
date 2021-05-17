@@ -15,5 +15,5 @@ export const LABELS = {
   TOGGLE_PRECINCT_DISPLAY_LABEL: "Display Precincts",
   TOGGLE_DISTRICT_DISPLAY_LABEL: "Display Districts",
   TOGGLE_COUNTY_DISPLAY_LABEL: "Display Counties",
-  TOGGLE_ENACTED_DISPLAY_LABEL : "Display Enacted",
+  TOGGLE_ENACTED_DISPLAY_LABEL : "View Enacted",
 };

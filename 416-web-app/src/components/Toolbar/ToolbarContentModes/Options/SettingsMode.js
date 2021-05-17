@@ -8,6 +8,8 @@ import {
   toggleCountySwitch,
   toggleEnactedSwitch,
 } from "../../../../redux/actions/settingActions";
+import ReactMapGL, { Layer, Source } from "react-map-gl";
+import * as MapUtilities from '../../../../utilities/MapUtilities'
 
 class SettingsMode extends Component {
   render() {
@@ -68,6 +70,65 @@ class SettingsMode extends Component {
             />
           </Row>
         </Col>
+        {this.props.DisplayEnacted ? 
+          <div className="centerWithinMe lowerMap">
+          <h5>Enacted Districting</h5>
+          <ReactMapGL
+          className="map-display"
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          {...this.props.MapViewport}
+          width="400px"
+          height="200px"
+          zoom={4}
+          ref={this.props.MapRef}
+        >
+          {this.props.EnactedGeoJson != null ? (
+            <div>
+              <Source
+                id={MapUtilities.IDs.ENACTED_SOURCE_ID}
+                type="geojson"
+                data={this.props.EnactedGeoJson}
+                generateId={true}
+              />
+              <Layer
+                id={MapUtilities.IDs.ENACTED_DISTRICT_FILL_LAYER_ID}
+                type="fill"
+                source={MapUtilities.IDs.ENACTED_SOURCE_ID}
+                layout={{
+                  visibility: this.props.DisplayEnacted ? "visible" : "none",
+                }}
+                paint={{
+                  "fill-color": [
+                    "rgb",
+                    ["get", "rgb-R"],
+                    ["get", "rgb-G"],
+                    ["get", "rgb-B"],
+                  ],
+                  "fill-opacity": [
+                    "case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    0.6,
+                    0.3,
+                  ],
+                }}
+              />
+              <Layer
+                id={MapUtilities.IDs.ENACTED_DISTRICT_LINE_LAYER_ID}
+                type="line"
+                source={MapUtilities.IDs.ENACTED_SOURCE_ID}
+                layout={{
+                  visibility: this.props.DisplayEnacted ? "visible" : "none",
+                }}
+                paint={{
+                  "line-opacity": 1,
+                }}
+              />
+            </div>
+          ) : (
+            <div></div>
+          )}
+          </ReactMapGL>              
+          </div>: <div/>}
       </div>
     );
   }
@@ -96,8 +157,10 @@ const mapStateToProps = (state, ownProps) => {
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
     DisplayEnacted : state.DisplayEnacted,
+    EnactedGeoJson : state.EnactedGeoJson,
     PrecinctsGeoJson: state.PrecinctsGeoJson,
     CountiesGeoJson: state.CountiesGeoJson,
+    MapViewport : state.MapViewport
   };
 };
 

@@ -462,3 +462,8 @@ button:focus {
 .tag {
   color: #a7877a;
 }
+
+.lowerMap {
+  position: absolute;
+  top: 30%;
+}

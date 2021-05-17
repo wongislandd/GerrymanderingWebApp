@@ -370,51 +370,6 @@ class MapBoxComponent extends Component {
           ) : (
             <div />
           )}
-          {this.props.EnactedGeoJson != null ? (
-            <div>
-              <Source
-                id={MapUtilities.IDs.ENACTED_SOURCE_ID}
-                type="geojson"
-                data={this.props.EnactedGeoJson}
-                generateId={true}
-              />
-              <Layer
-                id={MapUtilities.IDs.ENACTED_DISTRICT_FILL_LAYER_ID}
-                type="fill"
-                source={MapUtilities.IDs.ENACTED_SOURCE_ID}
-                layout={{
-                  visibility: this.props.DisplayEnacted ? "visible" : "none",
-                }}
-                paint={{
-                  "fill-color": [
-                    "rgb",
-                    ["get", "rgb-R"],
-                    ["get", "rgb-G"],
-                    ["get", "rgb-B"],
-                  ],
-                  "fill-opacity": [
-                    "case",
-                    ["boolean", ["feature-state", "hover"], false],
-                    0.6,
-                    0.3,
-                  ],
-                }}
-              />
-              <Layer
-                id={MapUtilities.IDs.ENACTED_DISTRICT_LINE_LAYER_ID}
-                type="line"
-                source={MapUtilities.IDs.ENACTED_SOURCE_ID}
-                layout={{
-                  visibility: this.props.DisplayEnacted ? "visible" : "none",
-                }}
-                paint={{
-                  "line-opacity": 1,
-                }}
-              />
-            </div>
-          ) : (
-            <div></div>
-          )}
         </ReactMapGL>
       </div>
     );
@@ -470,9 +425,7 @@ const mapStateToProps = (state, ownProps) => {
     DisplayPrecincts: state.DisplayPrecincts,
     DisplayDistricts: state.DisplayDistricts,
     DisplayCounties: state.DisplayCounties,
-    DisplayEnacted : state.DisplayEnacted,
     ViewingDistrictDetails: state.ViewingDistrictDetails,
-    EnactedGeoJson : state.EnactedGeoJson,
     CurrentDistrictingGeoJson: state.CurrentDistrictingGeoJson,
     CurrentDistrictingSummary : state.CurrentDistrictingSummary,
     CurrentState: state.CurrentState,
