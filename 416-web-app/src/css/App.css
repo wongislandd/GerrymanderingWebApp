@@ -184,7 +184,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
   font: 15px/24px monospace;
   z-index: 1;
   position: absolute;
-  top: 850px;
+  top: 90%;
   left: 0;
   margin: 12px;
   border-radius: 4px;
@@ -200,7 +200,7 @@ Ex. You only want one content box, set size of top to 100%, bottom to 0% or some
 }
 
 .SelectionMenuSection {
-  height: 937px;
+  height: 946px;
   max-height: 1000px;
   background: var(--primary-color);
   border-color: var(--secondary-color);

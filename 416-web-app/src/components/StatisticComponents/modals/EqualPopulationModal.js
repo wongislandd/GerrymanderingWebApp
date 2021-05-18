@@ -18,7 +18,6 @@ class EqualPopulationModal extends Component {
                 </TableHead>
                 <TableBody>
                 {this.props.districting.districtSummaries.map((summary, key) => {
-                    console.log(summary)
                   return(
                     <TableRow key={key}>
                     <TableCell>{summary.districtNumber}</TableCell>

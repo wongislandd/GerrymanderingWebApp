@@ -98,7 +98,7 @@ class DistrictingSummary extends Component {
         {this.props.DistrictingToDisplay.enacted ? (
           <div />
         ) :
-        <div>
+        <div className="centerWithinMe">
           <BoxPlot districtingId = {this.props.DistrictingToDisplay.id}/>
           <h5>Minority Deviation from Average</h5>
           <div className="padBelowMe">{StatUtilities.formatAsPercentage(this.props.DistrictingToDisplay.measures.minorityDeviationFromAvg, 2)}</div>

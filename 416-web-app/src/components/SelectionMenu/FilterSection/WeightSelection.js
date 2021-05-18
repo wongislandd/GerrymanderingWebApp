@@ -21,7 +21,6 @@ class WeightSelection extends Component {
   }
 
   render() {
-    console.log(this.state.negWeights)
     return (
       <div className="filterSectionItem">
         <h4 className="center-title">

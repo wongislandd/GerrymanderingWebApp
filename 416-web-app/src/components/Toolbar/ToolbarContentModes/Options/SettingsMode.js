@@ -79,7 +79,7 @@ class SettingsMode extends Component {
           {...this.props.MapViewport}
           width="400px"
           height="200px"
-          zoom={4}
+          zoom={this.props.MapViewport.zoom-1.5}
           ref={this.props.MapRef}
         >
           {this.props.EnactedGeoJson != null ? (

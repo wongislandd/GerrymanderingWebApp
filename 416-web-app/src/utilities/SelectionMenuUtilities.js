@@ -23,7 +23,7 @@ export const DESCRIPTIONS = {
   MINORITY_POPULATION_CONSTRAINT:
     "A box-and-whisker plot showcasing the distribution of the selected minority in each districting will be generated.",
   VOTING_POPULATION_CONSTRAINT:
-    "The selected voting population will be the one considered when applying a limit to the maximum population difference.",
+    "The selected voting population will be the one considered when applying a limit to the maximum population difference. Maximum population difference constrains the average deviation from ideal from a districting's districts.",
   COMPACTNESS_TYPE_CONSTRAINT:
     "Add info about each individual compactness here. Ex. Why you'd pick one over the other",
 };
